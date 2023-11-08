@@ -54,8 +54,6 @@ public class MemberController extends HttpServlet {
 			LocalDate now = LocalDate.now();
 			int year = now.getYear();
 			
-			
-			
 			//int s_no = year*100000;
 			//s_no += (int)(Math.random() * 89999);
 			//중복 체크하는 메소드 필요
