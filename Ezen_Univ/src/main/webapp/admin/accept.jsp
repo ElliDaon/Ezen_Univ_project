@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +43,69 @@
             width: 80%;
         }
     </style>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function(){
+  	
+		$('#professorAllList').hide(); //초기값
+    		$("#view").on("click",function(){
+	    	// 교수클릭시
+	    	if($("input[name='MemberList']:checked").val() == 'professorAll'){
+	    		$('#studentAllList').hide();
+	    		$('#professorAllList').show();
+	    	}// 학생클릭시
+	    	else if($("input[name='MemberList']:checked").val() == 'studentAll'){
+	    		$('#professorAllList').hide();
+	    		$('#studentAllList').show();
+	    	}
+	    });
+    });
+    
+     function acceptStudentOk(sidx){
+    	
+    	$.ajax({
+    		type : "post",
+    		url : "${pageContext.request.contextPath}/admin/acceptStudent.do?sidx="+sidx,
+    		data:{"sidx":sidx},
+    		dataType : "json",
+    		cache : false,
+    		success : function(data){
+    			alert("통신성공");
+    			document.location.href = document.location.href;		
+    			
+    		},
+    		error : function(){
+    			alert("통신오류 실패");			
+    		}		
+    	});	
+    	
+    	return;
+    }
+     
+     function acceptProfessorOk(pidx){
+     	
+     	$.ajax({
+     		type : "post",
+     		url : "${pageContext.request.contextPath}/admin/acceptProfessor.do?pidx="+pidx,
+     		data:{"pidx":pidx},
+     		dataType : "json",
+     		cache : false,
+     		success : function(data){
+     			alert("통신성공");
+     			document.location.href = document.location.href;		
+     			
+     		},
+     		error : function(){
+     			alert("통신오류 실패");			
+     		}		
+     	});	
+     	
+     	return;
+     }
+    
+    
+    </script>
 </head>
 <body>
 
@@ -62,7 +129,7 @@
                         <td>
                             <input type="radio" name="MemberList" value="studentAll" checked>학생
                             <input type="radio" name="MemberList" value="professorAll" >교수
-                            <button>선택보기</button>
+                            <input type="button" name="bbtn" value="선택보기" id="view">
                         </td>
                         
                         <td>
@@ -72,7 +139,9 @@
                     </tr>
 
                 </div>
-                <div class="std-list">
+       
+                <!-- 학생리스트 -->
+                <div id ="studentAllList" class="std-list">
                     <table>
                         <thead>
                             <tr>
@@ -89,51 +158,64 @@
                             </tr>
                         </thead>
                         <tbody>
+                        	<c:forEach var="mv" items="${slist}">
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="student" value="sidx1">
+                                    <input type="checkbox" name="student" value="${mv.sidx}">
                                 </td>
-                                <td>1</td>
+                                <td>${mv.sidx}</td>
                                 <td>학생</td>
-                                <td>김이젠1</td>
-                                <td>20040225</td>
-                                <td>ezen1@naver.com</td>
-                                <td>정보통신공학과</td>
+                                <td>${mv.s_name}</td>
+                                <td>${mv.s_birth}</td>
+                                <td>${mv.s_email}</td>
+                                <td>${mv.s_major}</td>
                                 <td style="padding-right:10px">
-                                    <button type="button" id="btn" onclick="">승인</button>
+                                    <button type="button" id="btn" onclick='acceptStudentOk(${mv.sidx})'>승인</button>
+                                    <button type="button" id="btn2" onclick="acceptNo()">거부</button>
+                                    
+                                </td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 교수리스트 -->
+                
+                <div id ="professorAllList" class="std-list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td style="width: 50px;">
+                                    <input type="checkbox" name="professor" value="selectAll" onclick="selectAtt(this)"/>
+                                </td>
+                                <td style="width: 50px;">순번</td>
+                                <td style="width: 50px;">구분</td>
+                                <td style="width: 100px;">이름</td>
+                                <td style="width: 150px;">생년월일</td>
+                                <td style="width: 150px;">이메일</td>
+                                <td style="width: 200px;">전공</td>
+                                <td colspan="2" width: 50px;>처리</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	<c:forEach var="mv" items="${plist}">
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="professor" value="${mv.pidx}">
+                                </td>
+                                <td>${mv.pidx}</td>
+                                <td>교수</td>
+                                <td>${mv.p_name}</td>
+                                <td>${mv.p_birth}</td>
+                                <td>${mv.p_email}</td>
+                                <td>${mv.p_major}</td>
+                                <td style="padding-right:10px">
+                                    <button type="button" id="btn" onclick='acceptProfessorOk(${mv.pidx})'>승인</button>
                                     <button type="button" id="btn2" onclick="">거부</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="student" value="sidx2">
-                                </td>
-                                <td>2</td>
-                                <td>학생</td>
-                                <td>김이젠2</td>
-                                <td>20041221</td>
-                                <td>ezen2@naver.com</td>
-                                <td>정보통신공학과</td>
-                                <td style="padding-right:10px">
-                                    <button type="button" id="btn">승인</button>
-                                    <button type="button" id="btn2" >거부</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="student" value="sidx3">
-                                </td>
-                                <td>3</td>
-                                <td>학생</td>
-                                <td>김이젠3</td>
-                                <td>20041127</td>
-                                <td>ezen3@naver.com</td>
-                                <td>정보통신공학과</td>
-                                <td style="padding-right:10px">
-                                    <button type="button" id="btn">승인</button>
-                                    <button type="button" id="btn2" >거부</button>
-                                </td>
-                            </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
