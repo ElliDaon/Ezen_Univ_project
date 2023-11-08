@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*" %>
+<%@ page import = "app.domain.*" %>
+<%
+//포워든 공유속성때문에 넘겨받을 수 있다
+ArrayList<AttendanceVo> list = null;
+list = (ArrayList<AttendanceVo>)request.getAttribute("clist"); %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +50,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <% for(AttendanceVo av : list ) {%>
                         <tr>
                             <td>전공필수</td>
                             <td>치과위생학개론</td>
@@ -53,46 +61,7 @@
                             <td>0% / N</td>
                             <td></td>
                         </tr>
-                        <tr>
-                            <td>전공필수</td>
-                            <td>치아형태학</td>
-                            <td>3</td>
-                            <td>전주희</td>
-                            <td>보건관203</td>
-                            <td>목2 목3 목4</td>
-                            <td>5% / N</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>전공선택</td>
-                            <td>구강해부학</td>
-                            <td>3</td>
-                            <td>최부영</td>
-                            <td>문화관B102</td>
-                            <td>월1 월2 수1</td>
-                            <td>40% / N</td>
-                            <td>출석미달</td>
-                        </tr>
-                        <tr>
-                            <td>교양필수</td>
-                            <td>생활영어1</td>
-                            <td>2</td>
-                            <td>네시포라</td>
-                            <td>학림관</td>
-                            <td>금3 금4</td>
-                            <td>0% / N</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>교양필수</td>
-                            <td>대인관계능력</td>
-                            <td>2</td>
-                            <td>이성희</td>
-                            <td>문화관201</td>
-                            <td>화3 화4</td>
-                            <td>0% / N</td>
-                            <td></td>
-                        </tr>
+                       <% } %>
                     </tbody>
                 </table>
             </div>
