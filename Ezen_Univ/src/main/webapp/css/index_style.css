@@ -1,0 +1,301 @@
+@charset "UTF-8";
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+body{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/mainback.jpg') no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+header{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px 100px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 99;
+}
+.logo{
+	font-size: 2em;
+	user-select: none;
+	font-family: 'Passion One', sans-serif;
+	font-weight: 400;
+}
+.logo a{
+	text-decoration: none;
+	color: white;
+}
+.navigation a{
+	position: relative;
+	font-size: 1.1em;
+	color: white;
+	text-decoration: none;
+	font-weight: 400;
+	margin-left: 40px;
+	font-family: 'Quicksand', sans-serif;
+}
+.navigation a::after{
+	content: '';
+	left: 0;
+	bottom: -6px;
+	position: absolute;
+	width: 100%;
+	height: 3px;
+	background: white;
+	border-radius: 5px;
+	transform-origin: right;
+	transform: scaleX(0);
+	transition: transform .5s;
+}
+.navigation a:hover::after{
+	transform: scaleX(1);
+	transform-origin: left;
+}
+.navigation .btnLogin-popup{
+	width: 130px;
+	height: 50px;
+	background: transparent;
+	border: 2px solid white;
+	outline: none;
+	border-radius: 15px;
+	cursor: pointer;
+	font-size: 1.1em;
+	color: white;
+	font-weight: 500;
+	margin-left: 40px;
+	transition: .5s;
+}
+.navigation .btnLogin-popup:hover{
+	background: white;
+	color: #162938;
+}
+.first{
+	position: relative;
+	width: 800px;
+	height: 300px;
+	display: block;
+	text-align: center;
+	padding-top: 80px;
+	background: rgba(0, 0, 0, 0.5);
+	border: none;
+	backdrop-filter: blur(20px);
+	color: white;
+	transition: .5s;
+}
+.first h1{
+	font-family: 'Passion One', sans-serif;
+	font-weight: 400;
+	font-size: 60px;
+}
+.first p{
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: regular 400;
+}
+.first.active-popup{
+	transform: scale(0);
+}
+.wrapper{
+	position: absolute;
+	width: 430px;
+	height: 500px;
+	background-color:rgba(255, 255, 255, 0.7);
+	border: 2px solid rgba(255,255,255,.5);
+	border-radius: 20px;
+	backdrop-filter: blur(20px);
+	box-shadow: 0 0 30px rgba(255,255,255,.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	transform: scale(0);
+	transition: transform .5s ease, height .5s ease;
+}
+.wrapper.active-popup{
+	transform: scale(1);
+}
+.wrapper.active{
+	height: 810px;
+	top: 80px;
+}
+.wrapper .form-box{
+	width: 80%;
+	padding: 30px;
+}
+.wrapper .form-box.login{
+	transition: transform .3s ease;
+	transform: translateX(0);
+}
+.wrapper.active .form-box.login{
+	transition: none;
+	transform: translateX(-400px);
+}
+.wrapper .form-box.register{
+	position: absolute;
+	transition: none;
+	transform: translateX(400px);
+}
+.wrapper.active .form-box.register{
+	transition: transform .3s ease;
+	transform: translateX(0);
+}
+.wrapper .icon-close{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 45px;
+	height: 45px;
+	font-size: 2em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: black;
+	color: white;
+	border-bottom-left-radius: 20px;
+	cursor: pointer;
+	z-index: 1;
+}
+.form-box h2{
+	font-size: 3em;
+	color: black;
+	text-align: center;
+	font-family: 'Kanit', sans-serif;
+	font-weight: bold 700;
+}
+.input-box{
+	position: relative;
+	width: 100%;
+	height: 50px;
+	border-bottom: 2px solid black;
+	margin: 20px 0;
+}
+.input-box label{
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	transform: translateY(-50%);
+	color: black;
+	font-size: 1em;
+	font-weight: 500;
+	pointer-events: none;
+	transition: .5s;
+}
+.input-box label span{
+	color: rgb(75, 75, 75);
+}
+.input-box input:focus~label,
+.input-box input:valid~label{
+	top:-5px;
+}
+.input-box input{
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: black;
+	font-size: 1em;
+	font-weight: 600;
+	padding: 0 35px 0 5px;
+}
+.input-box .icon{
+	position: absolute;
+	right: 8px;
+	font-size: 1.4em;
+	color: black;
+	line-height: 57px;
+}
+.choose{
+	font-size: 17px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.choose input[type=radio]{
+    display: none;
+}
+.choose input[type=radio]+label{
+    cursor: pointer;
+    border: none;
+    line-height: 24px;
+    font-weight:bold;
+	padding-bottom: 0px;
+	color: black;
+}
+.choose input[type=radio]:checked+label{
+    color: blue;
+}
+
+.remember-forgot{
+	font-size: .9em;
+	color: black;
+	font-weight: 500;
+	margin: -15px 0 15px;
+	display: flex;
+	justify-content: space-between;
+}
+.remember-forgot button{
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+.remember-forgot button:hover{
+	text-decoration: underline;
+}
+.remember-forgot a:hover{
+	text-decoration: underline;
+}
+
+.btn{
+	width: 100%;
+	height: 45px;
+	background: #162938;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 1.1em;
+	font-weight: 500px;
+}
+.login-register{
+	font-size: .9em;
+	text-align: center;
+	font-weight: 500;
+	margin: 25px 0 10px;
+}
+.login-register a{
+	color: #162938;
+	text-decoration: none;
+	font-weight: 600;
+}
+.login-register a:hover{
+	text-decoration: underline;
+}
+.choosejoin{
+	font-size: 17px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.choosejoin input[type=radio]{
+    display: none;
+}
+.choosejoin input[type=radio]+label{
+    cursor: pointer;
+    border: none;
+    line-height: 24px;
+    font-weight:bold;
+	padding-bottom: 0px;
+	color: black;
+}
+.choosejoin input[type=radio]:checked+label{
+    color: blue;
+}
