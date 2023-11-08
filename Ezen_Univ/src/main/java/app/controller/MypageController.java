@@ -28,12 +28,12 @@ public class MypageController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		if(location.equals("courseList_s.jsp")) {
+		if(location.equals("courseList_s.do")) {
 			System.out.println("컨트롤러 왔음");
 			CourseDao cd = new CourseDao();
 			
 			HttpSession session = request.getSession();
-			int sidx = Integer.parseInt((String) session.getAttribute("sidx"));
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
 			ArrayList<CourseVo> list = cd.studentCourseList(sidx);
 			

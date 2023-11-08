@@ -18,14 +18,49 @@
             color:azure;
         }
     </style>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+    $(document).ready(function(){
+		  professorInfo();
+    });
+    /* $.studentInfo = function(){
+    	$.ajax({
+    		type : "get",
+    		url : "${pageContext.request.contextPath}/member/studentState.do",
+    		dataType : "json",
+    		cache : false,
+    		success : function(data){
+    			alert("data");
+    			studentInfo(data);
+    		},
+    		error : function(){
+    			alert("실패");
+    		}
+    		
+    	});
+    } */
+    function professorInfo(){
+    	
+
+    	var str = "";
+    	
+    	var p_no =${sessionScope.p_no};
+    	var p_name = "${sessionScope.p_name}"
+    	var p_major = "${sessionScope.p_major}";
+    	
+    	str = "<strong>[교수]</strong><br>"
+    		 + p_name + "("+ p_no +")<br>"
+    		 + "[" + p_major + "]";
+    	
+    	$("#myinfo").html(str);
+    	return;
+    }
+</script>
 </head>
 <body>
-    <div class="myinfo" style="margin-top:30px">
-        [교수]<br>
-        홍길동 (20131105)<br>
-        [공과대학]<br>
-        정보통신공학과<br>
-        <a href="#">logout</a>
+    <div id="myinfo" class="myinfo" style="margin-top:30px">
+
     </div>
+        <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
 </body>
 </html>

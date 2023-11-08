@@ -22,15 +22,15 @@
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
                 개인정보
                 <ul>
-                    <li><a href="../mypage/personalinfo_p.jsp" target="mbody">- 개인정보</a></li>
-                    <li><a href="../mypage/modifyinfo_p.jsp" target="mbody">- 개인정보 수정</a></li>
+                    <li><a href="../mypage/personalinfo_p.jsp" target="_parent">- 개인정보</a></li>
+                    <li><a href="../mypage/modifyinfo_p.jsp" target="_parent">- 개인정보 수정</a></li>
                 </ul>
             </li>
             <li class="personalinfo">
                 <i class="fa fa-book" aria-hidden="true"></i>
                 강의정보
                 <ul>
-                    <li><a href="../mypage/courseList_p.jsp" target="mbody">- 강의 현황</a></li>
+                    <li><a href="../mypage/courseList_p.jsp" target="_parent">- 강의 현황</a></li>
                 </ul>
             </li>
         </ul>

@@ -19,13 +19,13 @@
                 </div>
             </li>
             <li class="personalinfo">
-                <a href="../notice/noticeList_s.jsp" target="mbody">
+                <a href="../notice/noticeList_s.jsp" target="_parent">
                 <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
                 휴보강 공지
                 </a>
             </li>
             <li class="personalinfo" >
-                <a href="#" target="mbody">
+                <a href="#" target="_parent">
                 <i class="fa fa-newspaper-o" aria-hidden="true"></i>
                 공지사항
                 </a>
