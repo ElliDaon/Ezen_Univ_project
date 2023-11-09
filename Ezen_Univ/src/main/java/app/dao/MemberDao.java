@@ -11,7 +11,6 @@ import app.domain.MemberVo;
 
 public class MemberDao {
 	
-	//멤버변수 선언하고 전역으로 활용하려고 한다.
 	
 	private Connection conn; //멤버 변수는 선언만해도 자동초기화됨
 	private PreparedStatement pstmt;
