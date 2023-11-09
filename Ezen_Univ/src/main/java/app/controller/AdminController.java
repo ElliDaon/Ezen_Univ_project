@@ -26,7 +26,7 @@ public class AdminController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(location.equals("acceptlist.do")) {
+		if(location.equals("accept.do")) {
 			
 			AdminDao add= new AdminDao();
 			ArrayList<MemberVo> slist = add.studentAll();
@@ -38,7 +38,7 @@ public class AdminController extends HttpServlet {
 			String path = "/admin/accept.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
-		}else if(location.equals("acceptStudent.do")) {
+		}else if(location.equals("acceptStudentOk.do")) {
 			
 			String sidx = request.getParameter("sidx");
 			//System.out.println("sidx?"+sidx);
@@ -51,7 +51,87 @@ public class AdminController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println(str);
 			
+		}else if(location.equals("acceptProfessorOk.do")) {
+			
+			String pidx = request.getParameter("pidx");
+			
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.professorAccept(Integer.parseInt(pidx));
+			
+			
+			String str ="{\"value\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
+		}else if(location.equals("acceptStudentNo.do")) {
+			
+			String sidx = request.getParameter("sidx");
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.studentDeny(Integer.parseInt(sidx));
+			
+			//System.out.println("value?"+value);
+			String str ="{\"value\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
+		}else if(location.equals("acceptProfessorNo.do")) {
+			
+			String pidx = request.getParameter("pidx");
+			
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.professorDeny(Integer.parseInt(pidx));
+			
+			
+			String str ="{\"value\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
+		}else if(location.equals("acceptStudentAllOk.do")) {
+			
+			String[] selectedOptions = request.getParameterValues("student");
+			int[] intSelectedOptions = new int[selectedOptions.length];
+
+			for (int i = 0; i < selectedOptions.length; i++) {
+				intSelectedOptions[i] = Integer.parseInt(selectedOptions[i]);
+			}
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.studentCheckedAccept(intSelectedOptions);
+			
+			if (value !=0) { 
+				String path = request.getContextPath()+"/admin/accept.do";
+				response.sendRedirect(path);
+			}else {			
+				String path = request.getContextPath()+"/admin/accept.do";
+				response.sendRedirect(path);
+			}
+			
+		}else if(location.equals("acceptStudentAllNo.do")) {
+			
+			String[] selectedOptions = request.getParameterValues("student");
+			int[] intSelectedOptions = new int[selectedOptions.length];
+
+			for (int i = 0; i < selectedOptions.length; i++) {
+				intSelectedOptions[i] = Integer.parseInt(selectedOptions[i]);
+			}
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.studentCheckedADeny(intSelectedOptions);
+			
+			if (value !=0) { 
+				String path = request.getContextPath()+"/admin/accept.do";
+				response.sendRedirect(path);
+			}else {			
+				String path = request.getContextPath()+"/admin/accept.do";
+				response.sendRedirect(path);
+			}
+			
 		}
+		
+		
 	}
 
 }

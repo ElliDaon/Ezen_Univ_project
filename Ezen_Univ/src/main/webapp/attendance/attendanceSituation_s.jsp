@@ -4,8 +4,8 @@
 <%@ page import = "app.domain.*" %>
 <%
 //포워든 공유속성때문에 넘겨받을 수 있다
-ArrayList<AttendanceVo> list = null;
-list = (ArrayList<AttendanceVo>)request.getAttribute("clist"); %>
+//ArrayList<AttendanceVo> list = null;
+//list = (ArrayList<AttendanceVo>)request.getAttribute("list"); %>
 
 <!DOCTYPE html>
 <html>
@@ -16,6 +16,7 @@ list = (ArrayList<AttendanceVo>)request.getAttribute("clist"); %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
     <div class="header">
@@ -39,6 +40,7 @@ list = (ArrayList<AttendanceVo>)request.getAttribute("clist"); %>
                 <table>
                     <thead>
                         <tr>
+                            <td style="width:10px">NO</td>
                             <td style="width:30px">이수구분</td>
                             <td style="width:50px">과목명</td>
                             <td style="width:10px">학점</td>
@@ -50,18 +52,19 @@ list = (ArrayList<AttendanceVo>)request.getAttribute("clist"); %>
                         </tr>
                     </thead>
                     <tbody>
-                    <% for(AttendanceVo av : list ) {%>
+                    <c:forEach var="av" items="${list}">
                         <tr>
-                            <td>전공필수</td>
-                            <td>치과위생학개론</td>
-                            <td>2</td>
-                            <td>남용옥</td>
-                            <td>보건관203</td>
-                            <td>화1 화2</td>
-                            <td>0% / N</td>
+                            <td>1</td>
+                            <td>${av.c_sep}</td>
+                            <td>${av.c_name}</td>
+                            <td>${av.c_score}</td>
+                            <td>${av.p_name}</td>
+                            <td>${av.ct_room}</td>
+                            <td>${av.c_times}</td>
+                            <td></td>
                             <td></td>
                         </tr>
-                       <% } %>
+                       </c:forEach>
                     </tbody>
                 </table>
             </div>

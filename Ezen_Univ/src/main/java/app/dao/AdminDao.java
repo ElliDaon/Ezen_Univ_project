@@ -28,10 +28,10 @@ public class AdminDao {
 		try{
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			//rs.next() -> ´ÙÀ½°ªÀÌ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ¸Þ¼­µå(ÀÖÀ¸¸é true, ¾øÀ¸¸é false)
+			
 			while(rs.next()){
 				MemberVo mv = new MemberVo();
-				//rs¿¡¼­ °ª ²¨³»¼­ mv¿¡ ¿Å°Ü´ã´Â´Ù.
+				
 				mv.setSidx( rs.getInt("sidx") ); 
 				mv.setS_name( rs.getString("s_name") );
 				mv.setS_birth( rs.getInt("s_birth"));
@@ -63,10 +63,10 @@ public class AdminDao {
 		try{
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			//rs.next() -> ´ÙÀ½°ªÀÌ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ¸Þ¼­µå(ÀÖÀ¸¸é true, ¾øÀ¸¸é false)
+			
 			while(rs.next()){
 				MemberVo mv = new MemberVo();
-				//rs¿¡¼­ °ª ²¨³»¼­ mv¿¡ ¿Å°Ü´ã´Â´Ù.
+				
 				mv.setPidx( rs.getInt("pidx") ); 
 				mv.setP_name( rs.getString("p_name") );
 				mv.setP_birth( rs.getInt("p_birth"));
@@ -110,6 +110,142 @@ public class AdminDao {
 			}
 		}
 		return exec;
+	}
+	
+	public int professorAccept(int pidx) {
+		int exec = 0;
+		String sql = "update professor set p_yn='Y' where pidx=?";
+		
+		try{
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, pidx);
+		exec = pstmt.executeUpdate();
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return exec;
+	}
+	
+	public int studentDeny(int sidx) {
+		int exec = 0;
+		String sql = "delete from student where sidx=?";
+		
+		try{
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, sidx);
+		exec = pstmt.executeUpdate();
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return exec;
+	}
+	
+	public int professorDeny(int pidx) {
+		int exec = 0;
+		String sql = "delete from professor where pidx=?";
+		
+		try{
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, pidx);
+		exec = pstmt.executeUpdate();
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return exec;
+	}
+	
+	public int studentCheckedAccept(int[] selectedData) {
+		int exec=0;
+		String sql = "update student set s_yn='Y' where sidx=?";
+		
+		try{
+			pstmt = conn.prepareStatement(sql);
+			for (int value : selectedData) {
+                pstmt.setInt(1, value);
+                int rowsAffected = pstmt.executeUpdate();
+                exec += rowsAffected;
+            }
+		}catch (SQLException e) {
+            // ì˜ˆì™¸ ì²˜ë¦¬
+            e.printStackTrace();
+        }finally {
+            // ë¦¬ì†ŒìŠ¤ í•´ì œ
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+		return exec;
+		
+	}
+
+	public int studentCheckedADeny(int[] selectedData) {
+		int exec=0;
+		String sql = "delete from professor where pidx=?";
+		
+		try{
+			pstmt = conn.prepareStatement(sql);
+			for (int value : selectedData) {
+                pstmt.setInt(1, value);
+                int rowsAffected = pstmt.executeUpdate();
+                exec += rowsAffected;
+            }
+		}catch (SQLException e) {
+            // ì˜ˆì™¸ ì²˜ë¦¬
+            e.printStackTrace();
+        }finally {
+            // ë¦¬ì†ŒìŠ¤ í•´ì œ
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+		return exec;
+		
 	}
 	
 }
