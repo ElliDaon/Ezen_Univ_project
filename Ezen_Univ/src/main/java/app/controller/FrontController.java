@@ -46,6 +46,10 @@ public class FrontController extends HttpServlet {
 			 AdminController adc = new AdminController(location); 
 			 adc.doGet(request, response); 
 		 }
+		 else if(str.equals("main")) {
+			 MainController adc = new MainController(location); 
+			 adc.doGet(request, response);
+		 }
 			
 	}
 

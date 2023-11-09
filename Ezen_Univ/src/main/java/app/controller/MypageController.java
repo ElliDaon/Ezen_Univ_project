@@ -1,6 +1,7 @@
 package app.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import app.dao.CourseDao;
+import app.dao.MemberDao;
 import app.domain.CourseVo;
+import app.domain.MemberVo;
+import app.domain.TableVo;
 
 @WebServlet("/CourseController")
 public class MypageController extends HttpServlet{
@@ -29,7 +33,6 @@ public class MypageController extends HttpServlet{
 		
 		
 		if(location.equals("courseList_s.do")) {
-			System.out.println("컨트롤러 왔음");
 			CourseDao cd = new CourseDao();
 			
 			HttpSession session = request.getSession();
@@ -41,6 +44,144 @@ public class MypageController extends HttpServlet{
 			request.setAttribute("list", list);
 			
 			String path = "/mypage/courseList_s.jsp";
+			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("personalinfo_s.do")) {
+
+			MemberDao md = new MemberDao();
+			
+			HttpSession session = request.getSession();
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			
+			MemberVo mv = md.studentInfo(sidx);
+			
+			request.setAttribute("mv", mv);
+			
+			String path = "/mypage/personalinfo_s.jsp";
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("modifyinfo_s.do")) {
+			MemberDao md = new MemberDao();
+			
+			HttpSession session = request.getSession();
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			
+			MemberVo mv = md.studentInfo(sidx);
+			
+			request.setAttribute("mv", mv);
+			
+			String path = "/mypage/modifyinfo_s.jsp";
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("modifyinfo_sAction.do")) {
+			
+			HttpSession session = request.getSession();
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			
+			String studentPhone = request.getParameter("studentPhone");
+			String studentEmail = request.getParameter("studentEmail");
+			
+			int value = 0;
+			MemberDao md = new MemberDao();
+			value = md.studentInfoModify(sidx, studentPhone, studentEmail);
+			
+			if(value ==0) {
+				PrintWriter out = response.getWriter();
+				out.println("<script language='javascript' type='text/javascript'> alert('수정 실패'); </script>");
+				out.println("<script>location.href='modifyinfo_s.do';</script>");
+			}else {
+				response.sendRedirect(request.getContextPath()+"/mypage/personalinfo_s.do");
+			}
+			
+		}else if(location.equals("mytable_s.do")) {
+			CourseDao cd = new CourseDao();
+			
+			HttpSession session = request.getSession();
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			
+			ArrayList<TableVo> list = new ArrayList<>();
+			list = cd.studentMyTable(sidx);
+			
+			request.setAttribute("list", list);
+			
+			String path = "/mypage/mytable_s.jsp";
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("personalinfo_p.do")) {
+			MemberDao md = new MemberDao();
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			MemberVo mv = md.professorInfo(pidx);
+			
+			String phone = mv.getP_phone();
+			phone = phone.substring(0, 3)+"-"+phone.substring(3, 7)+"-"+phone.substring(7);
+			mv.setP_phone(phone);
+			
+			
+			request.setAttribute("mv", mv);
+			String path = "/mypage/personalinfo_p.jsp";
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("modifyinfo_p.do")) {
+			MemberDao md = new MemberDao();
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			MemberVo mv = md.professorInfo(pidx);
+			
+			request.setAttribute("mv", mv);
+			
+			String path = "/mypage/modifyinfo_p.jsp";
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("modifyinfo_pAction.do")) {
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			String professorPhone = request.getParameter("professorPhone");
+			String professorEmail = request.getParameter("professorEmail");
+			
+			int value = 0;
+			MemberDao md = new MemberDao();
+			value = md.professorInfoModify(pidx, professorPhone, professorEmail);
+			
+			if(value ==0) {
+				PrintWriter out = response.getWriter();
+				out.println("<script language='javascript' type='text/javascript'> alert('수정 실패'); </script>");
+				out.println("<script>location.href='modifyinfo_p.do';</script>");
+			}else {
+				response.sendRedirect(request.getContextPath()+"/mypage/personalinfo_p.do");
+			}
+			
+		}else if(location.equals("courseList_p.do")) {
+			CourseDao cd = new CourseDao();
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			ArrayList<CourseVo> courselist = cd.professorCourseList(pidx);
+			ArrayList<TableVo> tablelist = cd.professorMyTable(pidx);
+			
+			request.setAttribute("courselist", courselist);
+			request.setAttribute("tablelist", tablelist);
+			
+			String path = "/mypage/courseList_p.jsp";
 			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);

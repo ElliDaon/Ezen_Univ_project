@@ -84,7 +84,7 @@ table td{
 }
 .p-table{
     display: flex;
-    width: 60%;
+    width: 70%;
     height: auto;
     justify-content: center;
     text-align: center;
@@ -100,3 +100,4 @@ table td{
 .p-table table tbody tr{
     height: 50px;
 }
+
