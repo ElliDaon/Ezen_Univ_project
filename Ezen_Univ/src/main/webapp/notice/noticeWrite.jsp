@@ -1,9 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!-- %
+ if (session.getAttribute("pidx") ==null){
+	 out.println("<script>alert('ë¡œê·¸ì¸í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.');location.href='"+request.getContextPath()+"/member/memberLogin.do'</script>");	 
+ }
+
+%-->    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script>
+function check(){
+
+	var fm = document.frm; //ë¬¸ì„œê°ì²´ì•ˆì˜ í¼ê°ì²´ì´ë¦„
+	
+	if(fm.when.value ==""){
+		alert("ë‚ ì§œë¥¼ ì„ íƒí•˜ì„¸ìš”");
+		fm.when.focus();
+		return;
+	}else if (fm.contents.value ==""){
+		alert("ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”");
+		fm.contents.focus();
+		return;		
+	}
+	
+	//ì²˜ë¦¬í•˜ê¸°ìœ„í•´ ì´ë™í•˜ëŠ” ì£¼ì†Œ
+	fm.action ="<%=request.getContextPath()%>/notice/noticeWriteAction.do";  
+	fm.method = "post";  //ì´ë™í•˜ëŠ” ë°©ì‹  get ë…¸ì¶œì‹œí‚´ post ê°ì¶”ì–´ì„œ ì „ë‹¬
+	fm.submit(); //ì „ì†¡ì‹œí‚´
+	return;
+}
+
+</script>
+
 <title></title>
 <link rel="stylesheet" href="../css/iframe.css">
 <style>
@@ -89,21 +121,23 @@
             </div>
         </div> 
     <div class="contents">
-        <h1>ÈŞº¸°­ °øÁöµî·Ï</h1>
-        <table class="noticewrite">
+        <h1>íœ´ë³´ê°• ê³µì§€ë“±ë¡</h1>
+        
+        <form name="frm">
+        <table class="noticeWrite">
         <tr class="subject">
-            <td>Á¦¸ñ</td>
+            <td>ì œëª©</td>
             <td>
             <select name="noticetype">
-                <option value="skip">ÈŞ°­</option>
-                <option value="sup">º¸°­</option>
+                <option value="skip">íœ´ê°•</option>
+                <option value="sup">ë³´ê°•</option>
             </select>
             </td>
             <td>
                 <select name="coursetype">
-                    <option value="cidx1">°í±ŞÇÁ·Î±×·¡¹Ö</option>
-                    <option value="cidx2">»ç¹°ÀÎÅÍ³İÅë½Å</option>
-                    <option value="cidx3">½Ã½ºÅÛ¼ÒÇÁÆ®¿ş¾î¼³°è</option>
+                	<c:forEach var="cv" items="${courselist}">
+                    <option value="${cv.cidx}">${cv.c_name}</option>
+                    </c:forEach>
                 </select>
             </td>
             <td>
@@ -112,17 +146,20 @@
         </tr>
         <tr>
             <td>
-                <textarea class="text-area"></textarea>
+                <textarea name="contents" class="text-area"></textarea>
             </td>
         </tr>
         <tr>
             <td class="list1">
-                <a class="list" href="noticeList_p.jsp">¸ñ·Ï</a>
+                <a class="list" href="noticeList_p.jsp">ëª©ë¡</a>
             
-                <button type="submit" class="writebtn">±Û¾²±â</button> 
+                <input type="submit" class="writebtn" value="ê¸€ì“°ê¸°" onclick="check();" ></input> 
             </td>
         </tr> 
         </table>
+        </form>
+       
+        
         </div>
     </div>
 </body>
