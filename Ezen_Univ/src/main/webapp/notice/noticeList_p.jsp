@@ -105,7 +105,7 @@
             <td style="width:700px"></td>
             <td>
                 <div class="writediv"> 
-                    <a class="noticewrite" href="noticewrite.jsp">
+                    <a class="noticeWrite" href="noticeWrite.do">
                         ±Û¾²±â
                     </a>
                 </div>
