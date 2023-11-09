@@ -252,4 +252,103 @@ public class MemberDao {
 		
 		return mv;
 	}
+	
+	public MemberVo studentInfo(int sidx) {
+		MemberVo mv = new MemberVo();
+		
+		String sql = "select s_id,s_no, s_name, s_grade, s_phone,s_birth, s_major, s_email from student where sidx=?;";
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sidx);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				mv.setS_id(rs.getString("s_id"));
+				mv.setS_no(rs.getInt("s_no"));
+				mv.setS_name(rs.getString("s_name"));
+				mv.setS_grade(rs.getInt("s_grade"));
+				mv.setS_phone(rs.getString("s_phone"));
+				mv.setS_birth(rs.getInt("s_birth"));
+				mv.setS_major(rs.getString("s_major"));
+				mv.setS_email(rs.getString("s_email"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
+	public int studentInfoModify(int sidx, String studentPhone, String studentEmail) {
+		int value=0;
+		
+		String sql = "update student set s_phone=?, s_email=?\r\n"
+				+ "where sidx=?\r\n";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, studentPhone);
+			pstmt.setString(2, studentEmail);
+			pstmt.setInt(3, sidx);
+			value=pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return value;
+	}
+	public MemberVo professorInfo(int pidx) {
+		MemberVo mv = new MemberVo();
+		
+		String sql = "select p_id, p_no, p_name, p_phone, p_birth, p_major, p_email from professor where pidx=?;";
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pidx);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				mv.setP_id(rs.getString("p_id"));
+				mv.setP_no(rs.getInt("p_no"));
+				mv.setP_name(rs.getString("p_name"));
+				mv.setP_phone(rs.getString("p_phone"));
+				mv.setP_birth(rs.getInt("p_birth"));
+				mv.setP_major(rs.getString("p_major"));
+				mv.setP_email(rs.getString("p_email"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
+	public int professorInfoModify(int pidx, String professorPhone, String professorEmail) {
+		int value=0;
+		
+		String sql = "update professor set p_phone=?, p_email=?\r\n"
+				+ "where pidx=?\r\n";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, professorPhone);
+			pstmt.setString(2, professorEmail);
+			pstmt.setInt(3, pidx);
+			value=pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return value;
+	}
+	
 }

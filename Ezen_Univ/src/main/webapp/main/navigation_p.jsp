@@ -18,7 +18,7 @@
                     </a>
                 </td>
                 <td>
-                    <a href="../mypage/personalinfo_p.jsp" target="_parent">마이페이지</a>
+                    <a href="../mypage/personalinfo_p.do" target="_parent">마이페이지</a>
                 </td>
                 <td>
                     <a href="../attendance/attendanceSituation_p.jsp" target="_parent">출석관리</a>
