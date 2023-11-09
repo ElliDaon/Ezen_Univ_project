@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/iframe.css">
 	<link rel="stylesheet" href="../css/modifyinfo.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <style>
         .container{
             display: flex;
@@ -24,6 +25,26 @@
             width: 100%;
         }
     </style>
+    <script>
+    function check(){
+    	var fm = document.modify;
+    	
+    	if(fm.studentPhone.value==""){
+    		alert("번호를 입력해주세요.");
+    		fm.professorPhone.focus();
+    		return;
+    	}else if(fm.studentEmail.value==""){
+    		alert("이메일을 입력해주세요.");
+    		fm.professorEmail.focus();
+    		return;
+    	}
+    	
+    	fm.action = "<%=request.getContextPath()%>/mypage/modifyinfo_sAction.do";
+    	fm.method = "post"; 
+    	fm.submit();
+    	return;
+    }
+    </script>
 </head>
 <body>
     <div class="header">
@@ -49,35 +70,35 @@
 				  </table>
 				  
 				  <table width="100%">
-				   <form action="professorInfoUpdate.do" method="post" name="frm">
+				   <form action="" method="" name="modify">
 					<table class="table2">
 					   <tr>
 						   <td width="35%" align="right">아이디</td>
-						   <td width="65%">ezen_professor</td>
+						   <td width="65%">${mv.s_id}</td>
 					   </tr>
 					   <tr>
 						   <td width="35%" align="right">이   름</td>
-						   <td width="65%">김이젠</td>
+						   <td width="65%">${mv.s_name}</td>
 					   </tr>
 					   <tr>
 						   <td width="35%" align="right">학   번</td>
-						   <td width="65%">20230111</td>
+						   <td width="65%">${mv.s_no}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">소속대학</td>
-						   <td width="65%">공과대학</td>
+						   <td width="35%" align="right">생년월일</td>
+						   <td width="65%">${mv.s_birth}</td>
 					   </tr>
 					   <tr>
 						   <td width="35%" align="right">학   과</td>
-						   <td width="65%">정보통신공학과</td>
+						   <td width="65%">${mv.s_major}</td>
 					   </tr>
 					   <tr>
 						   <td align="right">연락처</td>
-						   <td><input type="tel" name="professorPhone" placeholder="01000000000" value="01020231101" /></td>
+						   <td><input type="tel" id="studentPhone" name="studentPhone" placeholder="01000000000" value="${mv.s_phone}" /></td>
 					   </tr>
 					   <tr>
 						   <td align="right">이메일</td>
-						   <td><input type="email" name="professorEmail" placeholder="id@ezen_univ.com" value="kimezen@gmail.com" /></td>
+						   <td><input type="email" id="studentEmail" name="studentEmail" placeholder="id@ezen_univ.com" value="${mv.s_email}" /></td>
 					   </tr>
 					</table>
 					<table class="table3" width="100%">

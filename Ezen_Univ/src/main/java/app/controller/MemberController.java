@@ -143,7 +143,7 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("s_name", mv.getS_name());
 				session.setAttribute("s_major", mv.getS_major());
 				
-				response.sendRedirect(request.getContextPath()+"/main/main_s.jsp");
+				response.sendRedirect(request.getContextPath()+"/main/main_s.do");
 				
 			}else{//아이디 비번 불일치
 				response.setCharacterEncoding("UTF-8");
@@ -174,7 +174,7 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("p_name", mv.getP_name());
 				session.setAttribute("p_major", mv.getP_major());
 				
-				response.sendRedirect(request.getContextPath()+"/main/main_p.jsp");
+				response.sendRedirect(request.getContextPath()+"/main/main_p.do");
 				
 			}else{//아이디 비번 불일치
 				response.setCharacterEncoding("UTF-8");

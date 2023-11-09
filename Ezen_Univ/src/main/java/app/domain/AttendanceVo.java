@@ -1,6 +1,6 @@
 package app.domain;
 
-public class AttendanceVo {
+public class AttendanceVo extends CourseVo  {
 	private int aidx;
 	private int ctidx;
 	private String a_date;

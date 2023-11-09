@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/courseList.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <style>
         
     </style>
@@ -45,70 +46,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                        	<c:forEach var="tv" items="${list}">
                             <tr>
-                                <td>1</td>
-                                <td>생활영어 1<br> 문화관 201</td>
-                                <td>대인관계능력<br> 문화관 202</td>
-                                <td></td>
-                                <td></td>
-                                <td>치위생학개론<br> 보건관 203</td>
+                                <td>${tv.pe_period}</td>
+                                <td>${tv.mon}</td>
+                                <td>${tv.two}</td>
+                                <td>${tv.wed}</td>
+                                <td>${tv.thu}</td>
+                                <td>${tv.fri}</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>생활영어 1<br> 문화관 201</td>
-                                <td>대인관계능력<br> 문화관 202</td>
-                                <td></td>
-                                <td>치아형태학<br> 보건관 203</td>
-                                <td>치위생학개론<br> 보건관 203</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>치아형태학<br> 보건관 203</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>치아형태학<br> 보건관 203</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>보건교육학<br> 문화관 504</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>보건교육학<br> 문화관 504</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
