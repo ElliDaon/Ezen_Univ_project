@@ -19,7 +19,7 @@
                 </div>
             </li>
             <li class="personalinfo">
-                <a href="../notice/noticeList_s.jsp" target="_parent">
+                <a href="../notice/noticeList_s.do" target="_parent">
                 <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
                 휴보강 공지
                 </a>

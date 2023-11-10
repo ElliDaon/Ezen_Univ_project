@@ -19,19 +19,19 @@
                 </div>
             </li>
             <li class="personalinfo">
-                <a href="../attendance/attendanceSituation_p.jsp" target="_parent">
+                <a href="../attendance/attendanceSituation_p.do" target="_parent">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
                 출석현황 조회
                 </a>
             </li>
             <li class="personalinfo">
-                <a href="../attendance/attendancePreManagement.jsp" target="_parent">
+                <a href="../attendance/attendancePreManagement.do" target="_parent">
                 <i class="fa fa-address-book-o" aria-hidden="true"></i>
                 출석 관리
                 </a>
             </li>
             <li class="personalinfo">
-                <a href="../attendance/lackOfAttendance.jsp" target="_parent">
+                <a href="../attendance/lackOfAttendance.do" target="_parent">
                 <i class="fa fa-calendar-times-o" aria-hidden="true" ></i>
                 출석 미달 관리
                 </a>

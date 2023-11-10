@@ -19,7 +19,7 @@
                 </div>
             </li>
             <li class="personalinfo">
-                <a href="../attendance/attendanceSituation_s.jsp"  target="_parent">
+                <a href="../attendance/attendanceSituation_s.do"  target="_parent">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
                 출석현황 조회
                 </a>

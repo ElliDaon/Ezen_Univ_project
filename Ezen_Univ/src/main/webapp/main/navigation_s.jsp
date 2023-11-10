@@ -13,7 +13,7 @@
             <tbody>
             <tr>
                 <td class="nav_logo" align="center">
-                    <a href="./main_s.jsp" target="_parent">
+                    <a href="./main_s.do" target="_parent">
                         <img src="../images/ezen_univ.png" width="150">
                     </a>
                 </td>
@@ -21,10 +21,10 @@
                     <a href="../mypage/personalinfo_s.do" target="_parent">마이페이지</a>
                 </td>
                 <td>
-                    <a href="../attendance/attendanceSituation_s.jsp" target="_parent">출석관리</a>
+                    <a href="../attendance/attendanceSituation_s.do" target="_parent">출석관리</a>
                 </td>
                 <td>
-                    <a href="../notice/noticeList_s.jsp" target="_parent">공지사항</a>
+                    <a href="../notice/noticeList_s.do" target="_parent">공지사항</a>
                 </td>
                 <td width="500"></td>
             </tr>

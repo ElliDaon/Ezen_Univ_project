@@ -351,4 +351,85 @@ public class MemberDao {
 		return value;
 	}
 	
+	public String studentSearchId(int sidx) {
+		String s_id = "";
+		ResultSet rs = null;
+		
+		String sql="select s_id from student where sidx=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sidx);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				s_id = rs.getString("s_id");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return s_id;
+	}
+	
+	public int studentPwdModify(int sidx, String s_pwd, String s_newpwd) {
+		int value = 0;
+		
+		String sql = "update student set s_pwd=?\r\n"
+				+ "where sidx=? and s_pwd=?\r\n";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, s_newpwd);
+			pstmt.setInt(2, sidx);
+			pstmt.setString(3, s_pwd);
+			value=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return value;
+	}
+	
+	public String professorSearchId(int pidx) {
+		String p_id = "";
+		ResultSet rs = null;
+		
+		String sql="select p_id from professor where pidx=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pidx);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				p_id = rs.getString("p_id");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return p_id;
+	}
+	
+	public int professorPwdModify(int pidx, String p_pwd, String p_newpwd) {
+		int value = 0;
+		
+		String sql = "update professor set p_pwd=?\r\n"
+				+ "where pidx=? and p_pwd=?\r\n";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p_newpwd);
+			pstmt.setInt(2, pidx);
+			pstmt.setString(3, p_pwd);
+			value=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return value;
+	}
 }

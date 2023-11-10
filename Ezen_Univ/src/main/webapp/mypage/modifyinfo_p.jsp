@@ -119,7 +119,7 @@
 				 <td>
 				  <table class="table4" width="100%">
 				   <tr>
-					<td class="pwd" onClick="location.href='../mypage/modifypassword_p.jsp'" style="cursor:pointer;">
+					<td class="pwd" onClick="location.href='../mypage/modifypassword_p.do'" style="cursor:pointer;">
 					<b><i class="fa fa-key" aria-hidden="true"></i> 비밀번호 변경하기</b>
 					</td>
 				   </tr>

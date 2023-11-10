@@ -99,6 +99,43 @@ public class MypageController extends HttpServlet{
 				response.sendRedirect(request.getContextPath()+"/mypage/personalinfo_s.do");
 			}
 			
+		}else if(location.equals("modifypassword_s.do")) {
+			
+			HttpSession session = request.getSession();
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			
+			String s_id = "";
+			MemberDao md = new MemberDao();
+			s_id = md.studentSearchId(sidx);
+			
+			request.setAttribute("s_id", s_id);
+			
+			String path = "/mypage/modifypassword_s.jsp";
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("modifypassword_sAction.do")) {
+			
+			HttpSession session = request.getSession();
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			
+			String s_pwd = request.getParameter("nowPass");
+			String s_newpwd = request.getParameter("newPass");
+			
+			int value = 0;
+			MemberDao md = new MemberDao();
+			
+			value = md.studentPwdModify(sidx, s_pwd, s_newpwd);
+			PrintWriter out = response.getWriter();
+			if(value != 0) {
+				out.println("<script language='javascript' type='text/javascript'> alert('비밀번호가 정상적으로 변경되었습니다.'); </script>");
+				out.println("<script>location.href='modifypassword_s.do';</script>");
+			}else {
+				out.println("<script language='javascript' type='text/javascript'> alert('현재 비밀번호가 일치하지 않습니다.'); </script>");
+				out.println("<script>location.href='modifypassword_s.do';</script>");
+			}
+			
 		}else if(location.equals("mytable_s.do")) {
 			CourseDao cd = new CourseDao();
 			
@@ -168,6 +205,42 @@ public class MypageController extends HttpServlet{
 			}else {
 				response.sendRedirect(request.getContextPath()+"/mypage/personalinfo_p.do");
 			}
+			
+		}else if(location.equals("modifypassword_p.do")) {
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			String p_id = "";
+			MemberDao md = new MemberDao();
+			p_id = md.professorSearchId(pidx);
+			
+			request.setAttribute("p_id", p_id);
+			
+			String path = "/mypage/modifypassword_p.jsp";
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("modifypassword_pAction.do")) {
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			String p_pwd = request.getParameter("nowPass");
+			String p_newpwd = request.getParameter("newPass");
+			
+			int value = 0;
+			MemberDao md = new MemberDao();
+			
+			value = md.professorPwdModify(pidx, p_pwd, p_newpwd);
+			PrintWriter out = response.getWriter();
+			if(value != 0) {
+				out.println("<script language='javascript' type='text/javascript'> alert('비밀번호가 정상적으로 변경되었습니다.'); </script>");
+			}else {
+				out.println("<script language='javascript' type='text/javascript'> alert('현재 비밀번호가 일치하지 않습니다.'); </script>");
+			}
+			out.println("<script>location.href='modifypassword_p.do';</script>");
 			
 		}else if(location.equals("courseList_p.do")) {
 			CourseDao cd = new CourseDao();
