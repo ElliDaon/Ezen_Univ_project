@@ -3,6 +3,7 @@ package app.domain;
 public class CourseVo extends CourseTimeVo {
 	private int cidx;
 	private int pidx;
+	private int p_no;
 	private String p_name;
 	private String c_name;
 	private int c_grade;
@@ -72,6 +73,11 @@ public class CourseVo extends CourseTimeVo {
 	public void setC_times(String c_times) {
 		this.c_times = c_times;
 	}
-	
+	public int getP_no() {
+		return p_no;
+	}
+	public void setP_no(int p_no) {
+		this.p_no = p_no;
+	}
 
 }

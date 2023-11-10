@@ -49,16 +49,17 @@
         	// 새로고침되도 기존 라디오버튼 값 로컬스토리에 저장해서 불러오기
         	// and 새로고침 되도 해당 회원목록 유지하기
         	
-            // 로컬 스토리지에서 "selectedMember" 값을 가져옵니다.
+            // 로컬 스토리지에서 "selectedMember" 값을 가져오기
             const selectedMember = localStorage.getItem('selectedMember');
 
-            // 로컬 스토리지에서 "isStudentChecked" 값을 가져옵니다.
+            // 로컬 스토리지에서 "isStudentChecked" 값을 가져오기
             const isStudentChecked = localStorage.getItem('isStudentChecked') === 'true';
 
-            // 로컬 스토리지에서 "isProfessorChecked" 값을 가져옵니다.
+            // 로컬 스토리지에서 "isProfessorChecked" 값을 가져오기
             const isProfessorChecked = localStorage.getItem('isProfessorChecked') === 'true';
 
-            // "selectedMember" 값에 따라 초기 가시성 설정
+            
+            // "selectedMember" 값에 따라 처음 화면 목록 설정
             if (selectedMember === 'professorAll') {
                 $('#studentAllList').hide();
                 $('#professorAllList').show();
@@ -74,7 +75,7 @@
             // 라디오 버튼 변경 이벤트 핸들러
             $('input[name="MemberList"]').on('change', function() {
                 const selectedValue = $("input[name='MemberList']:checked").val();
-
+                
                 if (selectedValue === 'studentAll') {
                     localStorage.setItem('isStudentChecked', 'true');
                     localStorage.setItem('isProfessorChecked', 'false');
@@ -91,13 +92,15 @@
                 // 상태를 로컬 스토리지에 저장
                 localStorage.setItem('selectedMember', selectedValue);
 
-                // 목록 가시성 설정
+                // 목록보기 설정
                 if (selectedValue === 'studentAll') {
                     $('#professorAllList').hide();
                     $('#studentAllList').show();
+                    $('#professorAllList input[type="checkbox"]').prop('checked', false);
                 } else {
                     $('#studentAllList').hide();
                     $('#professorAllList').show();
+                    $('#studentAllList input[type="checkbox"]').prop('checked', false);
                 }
 
             });
@@ -113,19 +116,31 @@
                 $("[name='professor']").prop("checked", isChecked);
             });
 			
-         // 일괄승인 버튼 클릭 이벤트
+	        // 학생 일괄승인 버튼 클릭 이벤트
             $('#submitButton1').on('click', function(event) {
                 var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllOk.do';
-                $('#studentAccept').prop('action', newAction); // 첫 번째 버튼의 동작에 해당하는 URL로 변경
-                console.log('액션값 변경: ' + newAction);
+                $('#studentAccept').prop('action', newAction); 
+                
             });
-
-            // 일괄거부 버튼 클릭 이벤트
+            // 학생 일괄거부 버튼 클릭 이벤트
             $('#submitButton2').on('click', function(event) {
                 var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllNo.do';
-                $('#studentAccept').prop('action', newAction); // 두 번째 버튼의 동작에 해당하는 URL로 변경
-                console.log('액션값 변경: ' + newAction);
+                $('#studentAccept').prop('action', newAction); 
+                
             });
+	        // 교수 일괄승인 버튼 클릭 이벤트
+            $('#submitButton3').on('click', function(event) {
+                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do';
+                $('#professorAccept').prop('action', newAction); 
+                
+            });
+            // 교수 일괄거부 버튼 클릭 이벤트
+            $('#submitButton4').on('click', function(event) {
+                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllNo.do';
+                $('#professorAccept').prop('action', newAction); 
+                
+            });
+
         });
         
         
@@ -233,11 +248,11 @@
                 </div>
        
                 <!-- 학생리스트 -->
-                <form id ="studentAccept" action="${pageContext.request.contextPath}/admin/acceptStudentAllOk.do" method="post">
+                <form id ="studentAccept" action="" method="post">
                 <div id ="studentAllList" class="std-list">
-                	<div style="width:35%;float:right;">
-                        <input type="submit" name="submitButton1" value="일괄승인">
-                        <input type="submit" name="submitButton2" value="일괄거부">
+                	<div style="width:30%;float:right;">
+                        <input type="submit" id="submitButton1" value="일괄승인">
+                        <input type="submit" id="submitButton2" value="일괄거부">
                 	</div>
                     <table>
                         <thead>
@@ -255,12 +270,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                        	<c:forEach var="mv" items="${slist}">
+                        	<c:forEach var="mv" items="${slist}" varStatus="status">
                             <tr>
                                 <td>
                                     <input type="checkbox" name="student" value="${mv.sidx}">
                                 </td>
-                                <td>${mv.sidx}</td>
+                                <td>${slist.size()-status.count+1}</td>
                                 <td>학생</td>
                                 <td>${mv.s_name}</td>
                                 <td>${mv.s_birth}</td>
@@ -279,11 +294,11 @@
                 </form>
                 
                 <!-- 교수리스트 -->
-                <form action="${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do" method="post">
+                <form id="professorAccept" action="" method="post">
                 <div id ="professorAllList" class="std-list">
-                    <div style="width:35%;float:right;">
-                        <input type="submit" value="일괄승인">
-                        <input type="submit" value="일괄거부">
+                    <div style="width:30%;float:right;">
+                        <input type="submit" id="submitButton3" value="일괄승인">
+                        <input type="submit" id="submitButton4" value="일괄거부">
                 	</div>
                     <table>
                         <thead>
@@ -301,12 +316,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                        	<c:forEach var="mv" items="${plist}">
+                        	<c:forEach var="mv" items="${plist}" varStatus="status">
                             <tr>
                                 <td>
                                     <input type="checkbox" name="professor" value="${mv.pidx}">
                                 </td>
-                                <td>${mv.pidx}</td>
+                                <td>${plist.size()-status.count+1}</td>
                                 <td>교수</td>
                                 <td>${mv.p_name}</td>
                                 <td>${mv.p_birth}</td>
