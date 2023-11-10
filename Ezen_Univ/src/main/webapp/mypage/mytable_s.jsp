@@ -30,7 +30,7 @@
         <div class="contents">
             <h3>강의현황조회</h3>
             <div class="first_line">
-                년도 <input type="text" name="year" value="2023" disabled/> 학기 <input type="text" name="turm" value="1" disabled/>
+                년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="turm" value="${semester}" disabled/>
             </div>
             <div class="my_table">
                 <div class="mytable">

@@ -1,6 +1,7 @@
 package app.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -32,7 +33,17 @@ public class MainController extends HttpServlet{
 			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
-			ArrayList<TableVo> tablelist = cd.studentMyTable(sidx);
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int term = 0;
+			if(month >= 1 && month <= 7) {
+				term = 1;
+			}else {
+				term = 2;
+			}
+			
+			ArrayList<TableVo> tablelist = cd.studentMyTable(sidx,year,term);
 			request.setAttribute("tablelist", tablelist);
 			
 			String path = "/main/main_s.jsp";
@@ -47,7 +58,17 @@ public class MainController extends HttpServlet{
 			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
-			ArrayList<TableVo> tablelist = cd.professorMyTable(pidx);
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int term = 0;
+			if(month >= 1 && month <= 7) {
+				term = 1;
+			}else {
+				term = 2;
+			}
+			
+			ArrayList<TableVo> tablelist = cd.professorMyTable(pidx,year,term);
 			request.setAttribute("tablelist", tablelist);
 			
 			String path = "/main/main_p.jsp";

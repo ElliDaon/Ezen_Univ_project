@@ -20,20 +20,22 @@ public class CourseDao {
 		this.conn = dbconn.getConnection();
 	}
 	
-	public ArrayList<CourseVo> professorCourseList(int pidx){
+	public ArrayList<CourseVo> professorCourseList(int pidx, int year, int term){
 		ResultSet rs;
 		
 		ArrayList<CourseVo> courselist = new ArrayList<>();
-		String sql = "select A.c_name,A.c_major,A.c_grade,A.c_sep,A.c_score, D.ct_room, group_concat(distinct D.ct_week,D.pe_period) as times \r\n"
+		String sql = "select A.c_name,A.c_major,A.c_grade, P.p_name,A.c_sep,A.c_score, D.ct_room, group_concat(distinct D.ct_week,D.pe_period) as times\r\n"
 				+ "	from course A\r\n"
 				+ "	join coursetime D on A.cidx = D.cidx\r\n"
 				+ "	join professor P on P.pidx = A.pidx\r\n"
-				+ "	where p.pidx=?\r\n"
-				+ "	group by A.c_name,A.c_major,A.c_grade,A.c_sep,A.c_score, D.ct_room"
+				+ "	where P.pidx=? and D.ct_year=? and D.ct_semester=?\r\n"
+				+ "	group by A.c_name,D.ct_room,A.c_major,A.c_sep,A.c_grade,A.c_score,P.p_name;"
 ;
 				try{
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1,pidx);
+				pstmt.setInt(2, year);
+				pstmt.setInt(3, term);
 				rs = pstmt.executeQuery();
 				
 					while(rs.next()) {
@@ -55,21 +57,22 @@ public class CourseDao {
 		
 		return courselist;
 	}
-	public ArrayList<CourseVo> studentCourseList(int sidx){
+	public ArrayList<CourseVo> studentCourseList(int sidx, int year, int term){
 		ArrayList<CourseVo> list = new ArrayList<>();
 		ResultSet rs;
 		
-		String sql= "select A.c_name,A.c_major,A.c_grade, P.p_name,A.c_sep,A.c_score, D.ct_room, group_concat(distinct D.ct_week,D.pe_period) as times \r\n"
+		String sql= "select A.c_name,A.c_major,A.c_grade, P.p_name,A.c_sep,A.c_score, D.ct_room, group_concat(distinct D.ct_week,D.pe_period) as times\r\n"
 				+ "	from course A\r\n"
 				+ "	join coursetime D on A.cidx = D.cidx\r\n"
 				+ "	join professor P on P.pidx = A.pidx\r\n"
-				+ "	join courselist cl on cl.cidx = A.cidx where cl.sidx=?\r\n"
-				+ "	group by A.c_name,D.ct_room,A.c_major,A.c_sep,A.c_grade,A.c_score,P.p_name";
+				+ "	join courselist cl on cl.cidx = A.cidx where cl.sidx=? and D.ct_year=? and D.ct_semester=?\r\n"
+				+ "	group by A.c_name,D.ct_room,A.c_major,A.c_sep,A.c_grade,A.c_score,P.p_name;";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sidx);
-			
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, term);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -92,7 +95,7 @@ public class CourseDao {
 		return list;
 	}
 	
-	public ArrayList<TableVo> studentMyTable(int sidx){
+	public ArrayList<TableVo> studentMyTable(int sidx, int year, int term){
 		ArrayList<TableVo> list = new ArrayList<>();
 		ResultSet rs;
 		
@@ -111,13 +114,15 @@ public class CourseDao {
 				+ "JOIN coursetime ct ON ct.ctidx = cl.ctidx\r\n"
 				+ "JOIN course co ON ct.cidx = co.cidx\r\n"
 				+ "JOIN professor p ON p.pidx = co.pidx\r\n"
-				+ "WHERE cl.sidx = ?\r\n"
+				+ "WHERE cl.sidx = ? and ct.ct_year=? and ct.ct_semester=? \r\n"
 				+ "GROUP BY ct.pe_period) a\r\n"
 				+ "on pe.pe_period = a.pe_period;";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sidx);
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, term);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -136,7 +141,7 @@ public class CourseDao {
 		return list;
 	}
 	
-	public ArrayList<TableVo> professorMyTable(int pidx){
+	public ArrayList<TableVo> professorMyTable(int pidx, int year, int term){
 		ArrayList<TableVo> tablelist = new ArrayList<>();
 		ResultSet rs;
 		
@@ -155,13 +160,15 @@ public class CourseDao {
 				+ "JOIN coursetime ct ON ct.ctidx = cl.ctidx\r\n"
 				+ "JOIN course co ON ct.cidx = co.cidx\r\n"
 				+ "JOIN professor p ON p.pidx = co.pidx\r\n"
-				+ "WHERE p.pidx = ?\r\n"
+				+ "WHERE p.pidx = ? and ct.ct_year=? and ct.ct_semester=?\r\n"
 				+ "GROUP BY ct.pe_period) a\r\n"
 				+ "on pe.pe_period = a.pe_period;";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pidx);
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, term);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {

@@ -2,6 +2,7 @@ package app.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -38,10 +39,21 @@ public class MypageController extends HttpServlet{
 			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
-			ArrayList<CourseVo> list = cd.studentCourseList(sidx);
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int term = 0;
+			if(month >= 1 && month <= 7) {
+				term = 1;
+			}else {
+				term = 2;
+			}
 			
+			ArrayList<CourseVo> list = cd.studentCourseList(sidx,year,term);
 			
 			request.setAttribute("list", list);
+			request.setAttribute("year", year);
+			request.setAttribute("semester", term);
 			
 			String path = "/mypage/courseList_s.jsp";
 			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
@@ -142,10 +154,22 @@ public class MypageController extends HttpServlet{
 			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int term = 0;
+			if(month >= 1 && month <= 7) {
+				term = 1;
+			}else {
+				term = 2;
+			}
+			
 			ArrayList<TableVo> list = new ArrayList<>();
-			list = cd.studentMyTable(sidx);
+			list = cd.studentMyTable(sidx,year,term);
 			
 			request.setAttribute("list", list);
+			request.setAttribute("year", year);
+			request.setAttribute("semester", term);
 			
 			String path = "/mypage/mytable_s.jsp";
 			
@@ -248,11 +272,23 @@ public class MypageController extends HttpServlet{
 			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
-			ArrayList<CourseVo> courselist = cd.professorCourseList(pidx);
-			ArrayList<TableVo> tablelist = cd.professorMyTable(pidx);
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int term = 0;
+			if(month >= 1 && month <= 7) {
+				term = 1;
+			}else {
+				term = 2;
+			}
+			
+			ArrayList<CourseVo> courselist = cd.professorCourseList(pidx,year,term);
+			ArrayList<TableVo> tablelist = cd.professorMyTable(pidx,year,term);
 			
 			request.setAttribute("courselist", courselist);
 			request.setAttribute("tablelist", tablelist);
+			request.setAttribute("year", year);
+			request.setAttribute("semester", term);
 			
 			String path = "/mypage/courseList_p.jsp";
 			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
