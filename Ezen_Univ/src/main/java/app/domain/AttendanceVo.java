@@ -11,6 +11,13 @@ public class AttendanceVo extends CourseVo  {
 	private int cidx;
 	private int widx;
 	private int sidx;
+	private String atdate;
+	private String attime;
+	private String e_attendance;
+	private int attendanceCount;
+	private int lateCount;
+	private int leaveCount;
+	private int absentCount;
 	
 	public int getAidx() {
 		return aidx;
@@ -71,5 +78,47 @@ public class AttendanceVo extends CourseVo  {
 	}
 	public void setSidx(int sidx) {
 		this.sidx = sidx;
+	}
+	public String getAtdate() {
+		return atdate;
+	}
+	public void setAtdate(String atdate) {
+		this.atdate = atdate;
+	}
+	public String getAttime() {
+		return attime;
+	}
+	public void setAttime(String attime) {
+		this.attime = attime;
+	}
+	public String getE_attendance() {
+		return e_attendance;
+	}
+	public void setE_attendance(String e_attendance) {
+		this.e_attendance = e_attendance;
+	}
+	public int getAttendanceCount() {
+		return attendanceCount;
+	}
+	public void setAttendanceCount(int attendanceCount) {
+		this.attendanceCount = attendanceCount;
+	}
+	public int getLateCount() {
+		return lateCount;
+	}
+	public void setLateCount(int lateCount) {
+		this.lateCount = lateCount;
+	}
+	public int getLeaveCount() {
+		return leaveCount;
+	}
+	public void setLeaveCount(int leaveCount) {
+		this.leaveCount = leaveCount;
+	}
+	public int getAbsentCount() {
+		return absentCount;
+	}
+	public void setAbsentCount(int absentCount) {
+		this.absentCount = absentCount;
 	}
 }
