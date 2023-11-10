@@ -6,71 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/iframe.css">
-    <link rel="stylesheet" href="../css/attmanage.css">
+    <link rel="stylesheet" href="../css/openDate.css">
 <style>
-  span {
-        font-size: 40px;
-        font-weight: 700;
-    }
-
-    .openDate {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative; /* 부모 요소에 대한 상대적 위치 설정 */
-    }
-
-    h1 {
-        text-align: center;
-    }
-
-    ul{
-        list-style-type: none;
-        width: 80%;
-        border: 3px solid whitesmoke ;
-
-    }
-
-    ul li{
-        font-size: 1.1em;
-        margin-bottom: 10px;
-        text-align: center;
-
-    }
-
-    ul li:nth-child(even){
-        background-color: aliceblue;
-    }
-
-    .fixed {
-      
-        margin: 50px;
-        width: 700px;
-        height: 150px;
-        padding: 8px;
-    }
-
-    legend {
-        color: red;
-        font-weight: bold;
-    }
-
-    .container{
-            display: flex;
-    }
-    .sidebar{
-        width: 50%;
-    }
-    .myinfo{
-            width: 100%;
-    }
-    .menubar{
-     width: 100%;
-    }
-    .contents{
-     padding: 10px;
-    }
-        
 
 </style>
 </head>
@@ -79,8 +16,7 @@
         <iframe src = "../main/navigation_a.jsp" width = "100%" height="55" ></iframe>
     </div>
 
-
-<div class="container">
+	<div class="container">
     <div class="sidebar">
         <div class="myinfo">
             <iframe src = "../leftmenu/myinfo_a.jsp" width="100%" height="100"></iframe>

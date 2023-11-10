@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>강의등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
    <link rel="stylesheet" href="../css/courseRegister.css">
@@ -27,6 +29,44 @@
         }
         
     </style>
+    <script>
+    $(document).ready(function(){
+        // 현재 날짜를 가져와서 input에 설정
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        
+        var month = currentDate.getMonth() + 1;
+        var term = (month >= 3 && month <= 8) ? 1 : 2;
+        
+        $('#yearInput').val(year);
+        $('#termInput').val(term);
+        
+        courseRegisterList(year, term);
+    });
+
+    function courseRegisterList(year, term) {
+        //alert("통신 시도");
+        $.ajax({
+            type: 'POST',
+            url: "${pageContext.request.contextPath}/admin/courseRegisterList.do",
+            data: {
+                "yearInput": year,
+                "termInput": term
+            },
+            success: function(data) {
+
+            },
+            error: function(error) {
+                // 에러 발생 시 처리
+            }
+        });
+    }
+    
+    function courseList(data){
+    	
+    }
+
+    </script>
 </head>
 <body>
     <div class="header">
@@ -44,55 +84,50 @@
         <div class="contents">
              <h3>강의등록현황</h3>
              <div class="first_line">
-                년도 <input type="text" name="year" value="2023" disabled/> 학기 <input type="text" name="turm" value="1" disabled/>
+                년도 <input type="number" id="yearInput" name="yearInput" min="1900" max="2099" placeholder="YYYY" required disabled/>
+                학기 <input type="number" id="termInput" name="termInput" min="1" max="2" required disabled/>
              </div>
              <div class="list_table">
                 <table>
                     <thead>
                         <tr>
-                            <td style="width:10px">NO</td>
+                        	<td style="width:10px">NO</td>
+                            <td style="width:10px">cidx</td>
                             <td style="width:50px">과목명</td>
-                            <td style="width:30px">담당교수</td>
+                            <td style="width:30px">교수번호</td>
+                            <td style="width:30px">교수이름</td>
                             <td style="width:30px">전공</td>
                             <td style="width:30px">수강학년</td>
                             <td style="width:30px">이수구분</td>
                             <td style="width:30px">학점</td>
+                            <td style="width:30px">강의실</td>
                             <td style="width:30px">시간표</td>
                         </tr>
                     </thead>
                     <tbody>
+                    <c:forEach var="cv" items="${courseList}" varStatus="status">
                         <tr>
-                            <td>1</td>
-                            <td onClick="openCourseRegister()" style="cursor:pointer;">사물인터넷통신</td>
-                            <td>박광진</td>
-                            <td>정보통신공학</td>
-                            <td>1</td>
-                            <td>교양필수</td>
-                            <td>2</td>
-                            <td>공학관 404(화3,4/목1)</td>
+                            <td>${status.count}</td>
+                            <td>${cv.cidx}</td>
+                            <td>${cv.c_name}</td>
+                            <td>${cv.p_no}</td>
+                            <td>${cv.p_name}</td>
+                            <td>${cv.c_major}</td>
+                            <td>${cv.c_grade}</td>
+                            <td>${cv.c_sep}</td>
+                            <td>${cv.c_score}</td>
+                            <td>${cv.ct_room}</td>
+                            <td>${cv.c_times}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>시스템소프트웨어설계</td>
-                            <td>박대희</td>
-                            <td>정보통신공학</td>
-                            <td>1</td>
-                            <td>전공필수</td>
-                            <td>3</td>
-                            <td>공학관 404(월8/수7,8)</td>
-                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
              </div>
             <br>
             <div align="right">
-<<<<<<< HEAD
             	<input type="button" name="btn" value="강의 등록하기" onclick="check();" style="width:120px">
-=======
-               <input type="button" name="btn" value="강의 등록하기" onclick="check();" style="width:120px">
->>>>>>> branch 'main' of https://ElliDaon@github.com/ElliDaon/Ateam_project_mvc.git
             </div>
-<<<<<<< HEAD
+
 			<br>
 			<br>
 			<table class="register" style="width:100%">
@@ -215,7 +250,7 @@
 			<div align="center">
 				<input type="button" name="btn" value="등록" onclick="check();">
 			</div>
-=======
+
          <br>
          <br>
          <table class="register" style="width:100%">
@@ -338,7 +373,7 @@
          <div align="center">
             <input type="button" name="btn" value="등록" onclick="check();">
          </div>
->>>>>>> branch 'main' of https://ElliDaon@github.com/ElliDaon/Ateam_project_mvc.git
+
       </div>
     </div>
 </body>
