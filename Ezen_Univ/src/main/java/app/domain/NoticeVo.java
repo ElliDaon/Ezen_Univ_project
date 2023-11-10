@@ -1,6 +1,6 @@
 package app.domain;
 
-public class NoticeVo {
+public class NoticeVo extends CourseVo{
 	private int nidx;
 	private String n_skipdate;
 	private String n_category;
@@ -9,15 +9,16 @@ public class NoticeVo {
 	private int n_count;
 	private int pidx;
 	private int cidx;
+	public String getN_subject() {
+		return n_subject;
+	}
+	public void setN_subject(String n_subject) {
+		this.n_subject = n_subject;
+	}
 	private String n_delyn;
-	private String subject;
+	private String n_subject;
 	
-	public String getSubject() {
-		return subject;
-	}
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+
 	public int getNidx() {
 		return nidx;
 	}

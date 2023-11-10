@@ -129,8 +129,8 @@ function check(){
             <td>제목</td>
             <td>
             <select name="noticetype">
-                <option value="skip">휴강</option>
-                <option value="sup">보강</option>
+                <option value="휴강">휴강</option>
+                <option value="보강">보강</option>
             </select>
             </td>
             <td>

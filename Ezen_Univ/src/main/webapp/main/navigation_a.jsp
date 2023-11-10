@@ -18,7 +18,7 @@
                     </a>
                 </td>
                 <td>
-                    <a href="../admin/accept.jsp" target="_parent">가입승인</a>
+                    <a href="../admin/accept.do" target="_parent">가입승인</a>
                 </td>
                 <td>
                     <a href="../admin/courseRegister.jsp" target="_parent">강의등록</a>

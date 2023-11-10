@@ -17,6 +17,66 @@
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<script>
+$(document).ready(function(){
+	$("#c_name").on("click",function(){
+		
+	});
+});
+
+function countAction(cidx){
+	
+	$.ajax({
+		type : "get",	//cidx값 하나만 넘기니까 get방식으로 주소를 넘긴다 -> get방식은 하단의 URL 끝에 ?붙여서 cidx 붙여주기
+		url : "<%=request.getContextPath()%>/attendance/attendanceCount.do?cidx="+cidx,
+		dataType : "json",
+		cache : false,
+		success : function(data){
+			$('.details_first_line').empty();
+			str = '출석 <input type="text" name="attendance" value="'+data.attcnt+'" disabled/>'
+        	+'지각 <input type="text" name="late" value="'+data.latecnt+'" disabled/>'
+        	+'조퇴 <input type="text" name="leave_early" value="'+data.leavecnt+'" disabled/>' 
+        	+'결석 <input type="text" name="absent" value="'+data.absentcnt+'" disabled/>'
+			
+        	$('.details_first_line').append(str);
+		},
+		error : function(request, status, error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	return;
+}
+
+function listAction(cidx){
+	
+	$.ajax({
+		type : "get",	//cidx값 하나만 넘기니까 get방식으로 주소를 넘긴다 -> get방식은 하단의 URL 끝에 ?붙여서 cidx 붙여주기
+		url : "<%=request.getContextPath()%>/attendance/attendanceList.do?cidx="+cidx,
+		dataType : "json",
+		cache : false,
+		success : function(data){
+			alert("성공")
+			$('.attendanceList').empty();
+			str = '<td>'+data.widx+'</td>'
+            + '<td>'+data.atdate+'</td>'
+            + '<td>'+data.attime+'</td>'
+            + '<td>'+data.e_attendance+'</td>'
+			
+        	$('.attendanceList').append(str);
+		},
+		error : function(request, status, error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	return;
+}
+
+
+
+</script>
+
+
 </head>
 <body>
     <div class="header">
@@ -56,7 +116,7 @@
                         <tr>
                             <td>1</td>
                             <td>${av.c_sep}</td>
-                            <td>${av.c_name}</td>
+                            <td><input type="button" id="c_name" value="${av.c_name}" onclick="listAction(${av.cidx})"></td>
                             <td>${av.c_score}</td>
                             <td>${av.p_name}</td>
                             <td>${av.ct_room}</td>
@@ -69,60 +129,28 @@
                 </table>
             </div>
             <div class="contents_details">
-	            <div class="details_first_line">
-	            	출석 <input type="text" name="attendance" value="20" disabled/> 지각 <input type="text" name="late" value="5" disabled/>
-	            	 조퇴 <input type="text" name="leave_early" value="3" disabled/> 결석 <input type="text" name="absent" value="3" disabled/>
+	            <div class="details_first_line" id="details_first">
+	            	
 	            </div>
-	            <div class="mytable">
+	            <div class="mytable" id="attendanceList">
 	                <table>
 	                    <thead>
 	                        <tr>
 	                            <td style="width:30px">주차</td>
-	                            <td style="width:200px">수업일 및 시간</td>
+	                            <td style="width:100px">수업일자</td>
+	                            <td style="width:100px">수업시간</td>
 	                            <td style="width:100px">출결 현황</td>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
+	                    <c:forEach var="av" items="${alist}">
 	                        <tr>
-	                            <td>1</td>
-	                            <td>03월 02일 10:00~10:50</td>
-	                            <td>출석</td>
+	                            <td>${av.widx}</td>
+	                            <td>${av.atdate}</td>
+	                            <td>${av.attime}</td>
+	                            <td>${av.e_attendance}</td>
 	                        </tr>
-							<tr>
-	                            <td></td>
-	                            <td>03월 02일 11:00~11:50</td>
-	                            <td>출석</td>
-	                        </tr>
-	                        <tr>
-	                            <td>2</td>
-	                            <td>03월 09일 10:00~10:50</td>
-	                            <td>지각</td>
-	                        </tr>
-	                        	<tr>
-	                            <td></td>
-	                            <td>03월 09일 11:00~11:50</td>
-	                            <td>지각</td>
-	                        </tr>
-	                        <tr>
-	                            <td>3</td>
-	                            <td>03월 16일 10:00~10:50</td>
-	                            <td>결석</td>
-	                        </tr>
-							<tr>
-	                            <td></td>
-	                            <td>03월 16일 11:00~11:50</td>
-	                            <td>결석</td>
-	                        </tr>
-	                        <tr>
-	                            <td>4</td>
-	                            <td>03월 23일 10:00~10:50</td>
-	                            <td>출석</td>
-	                        </tr>
-	                        	<tr>
-	                            <td></td>
-	                            <td>03월 23일 11:00~11:50</td>
-	                            <td>출석</td>
-	                        </tr>
+	                      </c:forEach>
 	                    </tbody>
 	                </table>
 	            </div>
