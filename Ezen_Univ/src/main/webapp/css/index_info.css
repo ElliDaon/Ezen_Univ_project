@@ -80,31 +80,7 @@ header{
 	background: white;
 	color: #162938;
 }
-.first{
-	position: relative;
-	width: 800px;
-	height: 300px;
-	display: block;
-	text-align: center;
-	padding-top: 80px;
-	background: rgba(0, 0, 0, 0.5);
-	border: none;
-	backdrop-filter: blur(20px);
-	color: white;
-	transition: .5s;
-}
-.first h1{
-	font-family: 'Passion One', sans-serif;
-	font-weight: 400;
-	font-size: 60px;
-}
-.first p{
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: regular 400;
-}
-.first.active-popup{
-	transform: scale(0);
-}
+
 .wrapper{
 	position: absolute;
 	width: 430px;
@@ -113,7 +89,7 @@ header{
 	border: 2px solid rgba(255,255,255,.5);
 	border-radius: 20px;
 	backdrop-filter: blur(20px);
-	box-shadow: 0 0 30px rgba(255,255,255,.5);
+	box-shadow: 0 0 30px rgba(0,0,0,.5);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -300,4 +276,76 @@ header{
 }
 .choosejoin input[type=radio]:checked+label{
     color: blue;
+}
+.info{
+	z-index: 0;
+	position: relative;
+	top: 100px;
+	width: 800px;
+	height: 800px;
+	display: block;
+	text-align: left;
+	padding: 80px 40px;
+	background: white;
+	border: none;
+	border-radius: 15px;
+	color: black;
+	line-height: 30px;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+.info hr{
+	color: gray;
+}
+.info-title{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.info span{
+	text-align: center;
+	font-size: 40px;
+	font-weight: bold;
+	align-items: center;
+	margin-left: 10px;
+	padding-bottom: 5px;
+	
+}
+.info .appfnc{
+	padding: 10px;
+	color: #4F4F4F;
+}
+.info .info-btn{
+	width: 600px;
+	height: 50px;
+	margin: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+.info-btn button{
+	width: 160px;
+	background: white;
+	border-radius: 15px;
+	border: 2px solid #003297;
+	cursor: pointer;
+	transition: .2s;
+}
+.info-btn button:hover{
+	background: #003297;
+}
+.info-btn button label{
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: Medium 500;
+	font-size: 20px;
+	color: #003297;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: .2s;
+}
+.info-btn button label:hover{
+	color: white;
+}
+.info-btn button ion-icon{
+	font-size: 25px;
 }
