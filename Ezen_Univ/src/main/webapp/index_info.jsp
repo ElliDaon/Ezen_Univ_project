@@ -8,11 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@200;300&family=Passion+One:wght@400;700&family=Quicksand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <link rel="website icon" type="png" href="images/ezen.png">
-<link rel="stylesheet" href="css/index_style.css">
+<link rel="stylesheet" href="css/index_info.css">
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <script>
 
@@ -124,13 +125,39 @@ function CheckEmail(str){
 			<button class="btnLogin-popup">SIGN-IN</button>
 		</nav>
 	</header>
-	<div class="first">
-		<h1>Ezen University</h1><br>
-		<strong style="font-size: 20px;">[출결시스템]</strong><br><br>
-		<p>저희 이젠은 4차 산업혁명을 선도하는 전문교육기관이 되고자 노력하며,<br>
-		훈련생과 훈련생을 채용한 산업체 모두가 만족할 수 있는 기관이 되고자 
-		최선을 다할 것입니다.<br><br></p>
+	
+	<div class="info">
+		<div class="info-title">
+			<img src="./images/ezen.png">
+			<span>출결시스템</span><br>
+		</div><br>
+		<div class="appfnc">
+			<h2><ion-icon name="extension-puzzle-outline"></ion-icon> 출결시스템 이용안내</h2><br>
+			<ion-icon name="caret-forward"></ion-icon> ezen-univ 출결시스템은 간편하게 사용 가능한 출결관리를 위한 시스템입니다.<br>
+			<ion-icon name="caret-forward"></ion-icon> 복잡하지 않고 직관적인 UI로 사용하기 편리하게 설계되었습니다.<br>
+			<br><hr><br>
+			<h2><ion-icon name="extension-puzzle-outline"></ion-icon> 주요기능</h2><br>
+			<ion-icon name="caret-forward"></ion-icon> 출석체크<br>
+			<ion-icon name="caret-forward"></ion-icon> 개인별 출석 현황 조회<br>
+			<ion-icon name="caret-forward"></ion-icon> 시간표 조회<br>
+			<br><hr><br>
+			<h2><ion-icon name="extension-puzzle-outline"></ion-icon> 이용방법</h2><br>
+			<ion-icon name="caret-forward"></ion-icon> 출결시스템 가입 필수<br>
+			<ion-icon name="caret-forward"></ion-icon> 이용안내 메뉴얼<br>
+			<div class="info-btn">
+				<button>
+					<label>교수 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
+				</button>
+				<button>
+					<label>학생 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
+				</button>
+				<button>
+					<label>관리자 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
+				</button>
+			</div>
+		</div>
 	</div>
+	
 	<div class="wrapper">
 		<span class="icon-close"><ion-icon name="close"></ion-icon></span>
 		<div class="form-box login">
