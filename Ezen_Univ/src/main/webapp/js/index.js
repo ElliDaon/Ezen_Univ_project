@@ -23,3 +23,29 @@ closebtn.addEventListener('click', ()=> {
     first.classList.remove('active-popup');
 });
 
+$(document).ready(function(){
+  $(window).scroll(function(){
+    var scroll = $(window).scrollTop();
+    if (scroll > 1) {
+      $("header").css("background" , "#F3F3F3");
+      $(".logo a").css("color" , "black");
+      $(".navigation a").css("color" , "black");
+      $(".btnLogin-popup").css("border" , "2px solid black");
+      $(".btnLogin-popup").css("color" , "black");
+      
+    }
+    else{
+      $("header").css("background" , "transparent");
+      $(".logo a").css("color" , "white");
+      $(".navigation a").css("color" , "white");
+      $(".btnLogin-popup").css("border" , "2px solid white");
+      $(".btnLogin-popup").css("color" , "white");
+      $(".btnLogin-popup").hover(function(){
+    	  $(".btnLogin-popup").css("color" , "black");  
+      }, function(){
+  		$(".btnLogin-popup").css("color", "white");
+  		})
+    }
+  })
+})
+	
