@@ -329,7 +329,7 @@ public class AdminDao {
 				+ "from course a join coursetime b on a.cidx=b.cidx \r\n"
 				+ "join period c on b.pe_period=c.pe_period \r\n"
 				+ "join professor d on a.pidx=d.pidx \r\n"
-				+ "where b.ct_year=? and b.ct_semester=? and p_yn='N' \r\n"
+				+ "where b.ct_year=? and b.ct_semester=? and p_yn='Y' \r\n"
 				+ "group by a.cidx,a.c_name,a.c_major,a.c_grade,a.c_sep,a.c_score,b.ct_room";
 ;
 				try{
@@ -363,6 +363,86 @@ public class AdminDao {
 		return list;
 	}
 
+	public int courseDelete(int cidx) {
+	    PreparedStatement selectStmt = null;
+	    PreparedStatement deleteStmtByCtidx = null;
+	    PreparedStatement deleteStmtByCidx = null;
+	    ResultSet rs = null;
+	    int exec = 0;
 
-	
+	    try {
+	        // ctidx 값을 가져오기
+	        String selectCtidx = "select ctidx from coursetime a join course b on a.cidx=b.cidx where b.cidx=?";
+	        selectStmt = conn.prepareStatement(selectCtidx);
+	        selectStmt.setInt(1, cidx);
+	        rs = selectStmt.executeQuery();
+
+	        // ctidx 값을 가진 행 삭제쿼리
+	        String deleteCtidx = "delete from coursetime where ctidx=?";
+	        deleteStmtByCtidx = conn.prepareStatement(deleteCtidx);
+
+	        // cidx 값을 가진 행 삭제 쿼리
+	        String deleteCidx = "delete from course where cidx=?";
+	        deleteStmtByCidx = conn.prepareStatement(deleteCidx);
+
+	        while (rs.next()) {
+	            int ctidx = rs.getInt("ctidx");
+
+	            // ctidx 값을 가진 행들 삭제
+	            deleteStmtByCtidx.setInt(1, ctidx);
+	            exec += deleteStmtByCtidx.executeUpdate();
+
+	        }
+	        
+	        // cidx 값을 가진 행 삭제
+	        deleteStmtByCidx.setInt(1, cidx);
+	        exec += deleteStmtByCidx.executeUpdate();
+	        
+	    } catch (SQLException e) {
+            e.printStackTrace();
+            // 오류 처리
+        } finally{
+			try{
+	            if (selectStmt != null) selectStmt.close();
+	            if (deleteStmtByCtidx != null) deleteStmtByCtidx.close();
+	            if (deleteStmtByCidx != null) deleteStmtByCidx.close();
+	            conn.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+        return exec;
+    }
+
+	public ArrayList<MemberVo> registerView(String c_major) {
+		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
+		ResultSet rs = null;
+		
+		String sql = "select p_no,p_name from professor where p_major=?";
+		
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, c_major);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				MemberVo mv = new MemberVo();
+				mv.setP_no( rs.getInt("p_no") ); 
+				mv.setP_name( rs.getString("p_name") );
+				list.add(mv);
+
+			}
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            // rs, pstmt, conn close 로직
+	        } catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+		
+		return list;
+	}
+
 }

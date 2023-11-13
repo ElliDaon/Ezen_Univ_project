@@ -118,108 +118,124 @@
 			
 	        // 학생 일괄승인 버튼 클릭 이벤트
             $('#submitButton1').on('click', function(event) {
-                var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllOk.do';
-                $('#studentAccept').prop('action', newAction); 
-                
+                var confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
+                if (confirmation) {
+	                var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllOk.do';
+	                $('#studentAccept').prop('action', newAction); 
+                }
             });
             // 학생 일괄거부 버튼 클릭 이벤트
             $('#submitButton2').on('click', function(event) {
-                var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllNo.do';
-                $('#studentAccept').prop('action', newAction); 
-                
+                var confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
+                if (confirmation) {
+	                var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllNo.do';
+	                $('#studentAccept').prop('action', newAction); 
+                }
             });
 	        // 교수 일괄승인 버튼 클릭 이벤트
             $('#submitButton3').on('click', function(event) {
-                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do';
-                $('#professorAccept').prop('action', newAction); 
-                
+                var confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
+                if (confirmation) {
+	                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do';
+	                $('#professorAccept').prop('action', newAction); 
+                }
             });
             // 교수 일괄거부 버튼 클릭 이벤트
             $('#submitButton4').on('click', function(event) {
-                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllNo.do';
-                $('#professorAccept').prop('action', newAction); 
-                
+                var confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
+                if (confirmation) {
+	                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllNo.do';
+	                $('#professorAccept').prop('action', newAction); 
+                }
             });
 
         });
         
         
      function acceptStudentOk(sidx){
-    	// 학생 회원가입 승인
-     	$.ajax({
-    		type : "post",
-    		url : "${pageContext.request.contextPath}/admin/acceptStudentOk.do?sidx="+sidx,
-    		data:{"sidx":sidx},
-    		dataType : "json",
-    		cache : false,
-    		success : function(data){
-    			alert("통신성공");
-    			document.location.href = document.location.href;		
-    			
-    		},
-    		error : function(){
-    			alert("통신오류 실패");			
-    		}		
-    	});	 
-    	return;
-    }
+         var confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
+         if (confirmation) {
+	    	// 학생 회원가입 승인
+	     	$.ajax({
+	    		type : "post",
+	    		url : "${pageContext.request.contextPath}/admin/acceptStudentOk.do?sidx="+sidx,
+	    		data:{"sidx":sidx},
+	    		dataType : "json",
+	    		cache : false,
+	    		success : function(data){
+	    			alert("통신성공");
+	    			document.location.href = document.location.href;		
+	    			
+	    		},
+	    		error : function(){
+	    			alert("통신오류 실패");			
+	    		}		
+	    	});	 
+    	}
+     }
      function acceptProfessorOk(pidx){
-    	// 교수 회원가입 승인
-     	$.ajax({
-     		type : "post",
-     		url : "${pageContext.request.contextPath}/admin/acceptProfessorOk.do?pidx="+pidx,
-     		data:{"pidx":pidx},
-     		dataType : "json",
-     		cache : false,
-     		success : function(data){
-     			alert("통신성공");
-     			document.location.href = document.location.href;		
-     			
-     		},
-     		error : function(){
-     			alert("통신오류 실패");			
-     		}		
-     	});	
-     	return;
+         var confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
+         if (confirmation) {
+    		// 교수 회원가입 승인
+	     	$.ajax({
+	     		type : "post",
+	     		url : "${pageContext.request.contextPath}/admin/acceptProfessorOk.do?pidx="+pidx,
+	     		data:{"pidx":pidx},
+	     		dataType : "json",
+	     		cache : false,
+	     		success : function(data){
+	     			alert("통신성공");
+	     			document.location.href = document.location.href;		
+	     			
+	     		},
+	     		error : function(){
+	     			alert("통신오류 실패");			
+	     		}		
+	     	});	
+     	}
      }
      function acceptStudentNo(sidx){
-     	// 학생 회원가입 거부
-      	$.ajax({
-     		type : "post",
-     		url : "${pageContext.request.contextPath}/admin/acceptStudentNo.do?sidx="+sidx,
-     		data:{"sidx":sidx},
-     		dataType : "json",
-     		cache : false,
-     		success : function(data){
-     			alert("통신성공");
-     			document.location.href = document.location.href;		
-     			
-     		},
-     		error : function(){
-     			alert("통신오류 실패");			
-     		}		
-     	});	 
-     	return;
+         var confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
+         if (confirmation) {
+     		// 학생 회원가입 거부
+	      	$.ajax({
+	     		type : "post",
+	     		url : "${pageContext.request.contextPath}/admin/acceptStudentNo.do?sidx="+sidx,
+	     		data:{"sidx":sidx},
+	     		dataType : "json",
+	     		cache : false,
+	     		success : function(data){
+	     			//alert("통신성공");
+	     			document.location.href = document.location.href;		
+	     			
+	     		},
+	     		error : function(){
+	     			alert("통신오류 실패");			
+	     		}		
+	     	});	 
+     	}
      }
      function acceptProfessorNo(pidx){
-     	// 교수 회원가입 거부
-      	$.ajax({
-      		type : "post",
-      		url : "${pageContext.request.contextPath}/admin/acceptProfessorNo.do?pidx="+pidx,
-      		data:{"pidx":pidx},
-      		dataType : "json",
-      		cache : false,
-      		success : function(data){
-      			alert("통신성공");
-      			document.location.href = document.location.href;		
-      			
-      		},
-      		error : function(){
-      			alert("통신오류 실패");			
-      		}		
-      	});	
-      	return;
-      }
+         var confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
+         if (confirmation) {
+	     	// 교수 회원가입 거부
+	      	$.ajax({
+	      		type : "post",
+	      		url : "${pageContext.request.contextPath}/admin/acceptProfessorNo.do?pidx="+pidx,
+	      		data:{"pidx":pidx},
+	      		dataType : "json",
+	      		cache : false,
+	      		success : function(data){
+	      			alert("통신성공");
+	      			document.location.href = document.location.href;		
+	      			
+	      		},
+	      		error : function(){
+	      			alert("통신오류 실패");			
+	      		}		
+	      	});	
+      	}
+     }
      
     
     </script>
@@ -329,7 +345,7 @@
                                 <td>${mv.p_major}</td>
                                 <td style="padding-right:10px">
                                     <button type="button" id="btn" onclick='acceptProfessorOk(${mv.pidx})'>승인</button>
-                                    <button type="button" id="btn2" onclick='acceptProfessorNo(${mv.pidx})'>승인</button>
+                                    <button type="button" id="btn2" onclick='acceptProfessorNo(${mv.pidx})'>거부</button>
                                 </td>
                             </tr>
                             </c:forEach>

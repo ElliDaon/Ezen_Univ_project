@@ -37,10 +37,19 @@
 }
 .list_table table tbody tr{
     background: white;
+    
 }
 .list_table table tbody tr:nth-child(even){
     background: rgb(236, 236, 236);
 }
+#c_name {
+	background : none;
+	border : none;
+	font-weight : bold ;
+	font-size : 15px;
+	cursor: pointer;
+}
+
 .mytable{
     margin-top: 5px;
 }
@@ -55,10 +64,7 @@
     font-weight: bold;
     background: rgb(194, 194, 255);
 }
-.mytable table tbody tr{
-    height: 50px;
-    font-size: 12px;
-}
+
 .mytable table tbody tr,td{
     border: 1px solid gray;
 }
@@ -66,8 +72,8 @@
 	margin-top: 5px;
     padding: 10px;
     display: block;
-    background: rgb(194, 194, 255);
 }
 .details_first_line input{
-    width: 80px;
+    width: 50px;
+    text-align: center;
 }
