@@ -18,6 +18,7 @@ public class AttendanceVo extends CourseVo  {
 	private int lateCount;
 	private int leaveCount;
 	private int absentCount;
+	private int s_cnt;
 	
 	public int getAidx() {
 		return aidx;
@@ -120,5 +121,11 @@ public class AttendanceVo extends CourseVo  {
 	}
 	public void setAbsentCount(int absentCount) {
 		this.absentCount = absentCount;
+	}
+	public int getS_cnt() {
+		return s_cnt;
+	}
+	public void setS_cnt(int s_cnt) {
+		this.s_cnt = s_cnt;
 	}
 }

@@ -19,11 +19,14 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
-$(document).ready(function(){
-	$("#c_name").on("click",function(){
-		
-	});
-});
+
+function search_detail(cidx){
+
+	countAction(cidx);
+	listAction(cidx);
+	//alert(cidx);
+	return;
+}
 
 function countAction(cidx){
 	
@@ -33,13 +36,13 @@ function countAction(cidx){
 		dataType : "json",
 		cache : false,
 		success : function(data){
-			$('.details_first_line').empty();
-			str = '출석 <input type="text" name="attendance" value="'+data.attcnt+'" disabled/>'
-        	+'지각 <input type="text" name="late" value="'+data.latecnt+'" disabled/>'
-        	+'조퇴 <input type="text" name="leave_early" value="'+data.leavecnt+'" disabled/>' 
+			$('#details_first').empty();
+			str = '출석 <input type="text" name="attendance" value="'+data.attcnt+'" disabled/>&emsp;'
+        	+'지각 <input type="text" name="late" value="'+data.latecnt+'" disabled/>&emsp;'
+        	+'조퇴 <input type="text" name="leave_early" value="'+data.leavecnt+'" disabled/>&emsp;' 
         	+'결석 <input type="text" name="absent" value="'+data.absentcnt+'" disabled/>'
 			
-        	$('.details_first_line').append(str);
+        	$('#details_first').append(str);
 		},
 		error : function(request, status, error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -56,26 +59,38 @@ function listAction(cidx){
 		dataType : "json",
 		cache : false,
 		success : function(data){
-			alert("성공")
-			$('.attendanceList').empty();
-			str = '<td>'+data.widx+'</td>'
-            + '<td>'+data.atdate+'</td>'
-            + '<td>'+data.attime+'</td>'
-            + '<td>'+data.e_attendance+'</td>'
 			
-        	$('.attendanceList').append(str);
+			$('#attendanceList').empty();
+			
+			var str2="";
+			str2 = "<table><thead><tr><td>주차</td><td>수업일자</td><td>수업시간</td><td>출결현황</td></tr></thead>"
+			str2 += '<tbody>'
+				$.each(data, function(i) {
+				str2 += '<tr><td>'+data[i].widx+'</td>'
+						+'<td>'+data[i].atdate+'</td>'
+						+'<td>'+data[i].attime+'</td>'
+						+'<td>'+data[i].e_attendance+'</td></tr>';
+				});
+				str2 += '</tbody></table>';
+			
+			$('#attendanceList').append(str2);
 		},
 		error : function(request, status, error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	});
-	return;
 }
-
-
 
 </script>
 
+<style>
+.countNo tbody>tr {
+  counter-increment: aaa;
+}
+.countNo tbody>tr>td:first-child:before {
+  content: counter(aaa) " ";
+}
+</style>
 
 </head>
 <body>
@@ -94,10 +109,10 @@ function listAction(cidx){
 	    <div class="contents">
             <h3>출석현황조회</h3>
             <div class="first_line">
-                년도 <input type="text" name="year" value="2023" disabled/> 학기 <input type="text" name="turm" value="1" disabled/>
+                년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="term" value="${semester}" disabled/>
             </div>
             <div class="list_table">
-                <table>
+                <table class='countNo'>
                     <thead>
                         <tr>
                             <td style="width:10px">NO</td>
@@ -108,15 +123,15 @@ function listAction(cidx){
                             <td style="width:30px">강의실</td>
                             <td style="width:40px">시간표</td>
                             <td style="width:30px">결석률/미달여부</td>
-							<td style="width:30px">비고</td>
+                            <td style="width:30px">비고</td>
                         </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="av" items="${list}">
                         <tr>
-                            <td>1</td>
+                            <td></td>
                             <td>${av.c_sep}</td>
-                            <td><input type="button" id="c_name" value="${av.c_name}" onclick="listAction(${av.cidx})"></td>
+                            <td><button type="button" id="c_name" value="${av.cidx}" onclick="search_detail(${av.cidx})">${av.c_name}</button></td>
                             <td>${av.c_score}</td>
                             <td>${av.p_name}</td>
                             <td>${av.ct_room}</td>
@@ -124,22 +139,23 @@ function listAction(cidx){
                             <td></td>
                             <td></td>
                         </tr>
-                       </c:forEach>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
+            <br>
             <div class="contents_details">
 	            <div class="details_first_line" id="details_first">
 	            	
 	            </div>
 	            <div class="mytable" id="attendanceList">
-	                <table>
+	                <%-- <table>
 	                    <thead>
 	                        <tr>
 	                            <td style="width:30px">주차</td>
 	                            <td style="width:100px">수업일자</td>
 	                            <td style="width:100px">수업시간</td>
-	                            <td style="width:100px">출결 현황</td>
+	                            <td style="width:50px">출결현황</td>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
@@ -152,7 +168,7 @@ function listAction(cidx){
 	                        </tr>
 	                      </c:forEach>
 	                    </tbody>
-	                </table>
+	                </table> --%>
 	            </div>
             </div>
         </div>
