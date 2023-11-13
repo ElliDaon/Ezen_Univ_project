@@ -37,6 +37,7 @@
                 시간표
                 <ul>
                     <li><a href="../mypage/mytable_s.do" target="_parent">- 시간표 조회</a></li>
+                    <li><a href="../mypage/searchP_table_s.do" target="_parent">- 교수 시간표 조회</a></li>
                 </ul>
             </li>
         </ul>
