@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*" %>
+<%@ page import = "app.domain.*" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,14 +13,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
     <style>
         /* 추가한 스타일 */
-
-
         .attendlist{
             display: none;
         }
+        
+        .countNo tbody>tr {
+            counter-increment: aaa;
+         }
+        .countNo tbody>tr>td:first-child:before {
+            content: counter(aaa) " ";
+         }
     </style>
+    
 </head>
 <body>
     <div class="header">
@@ -34,72 +46,41 @@
         <div class="contents">
             <h3>출석현황조회</h3>
             <div class="first_line">
-                년도 <input type="text" name="year" value="2023" disabled/> 학기 <input type="text" name="turm" value="1" disabled/>
+                년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="term" value="${semester}" disabled/>
             </div>
             <div class="list_table">
-                <table>
+                <table class='countNo'>
                     <thead>
                         <tr>
                             <td style="width:10px">NO</td>
+                            <td style="width:30px">이수구분</td>
                             <td style="width:50px">과목명</td>
+                            <td style="width:30px">세부전공</td>
+                            <td style="width:10px">수강학년</td>
                             <td style="width:30px">강의실</td>
                             <td style="width:30px">시간표</td>
-                            <td style="width:30px">이수구분</td>
                             <td style="width:30px">수강인원</td>
                             <td style="width:10px">출석률</td>
                         </tr>
-                        
                     </thead>
                     <tbody>
-
+                    <c:forEach var="av" items="${list}">
                         <tr>
-                            <td>1</td>
-                            <td class="subject-cell"><a href="javascript:void(0);" class="subject-link">생활영어 1</a></td>
-                            <td>문화관505</td>
-                            <td>월3 월4</td>
-                            <td>교양필수</td>
-                            <td>20</td>
-                            <td>78%</td>
+                            <td></td>
+                            <td>${av.c_sep}</td>
+                            <td><button type="button" id="c_name" value="${av.cidx}" onclick="search_detail(${av.cidx})">${av.c_name}</button></td>
+                            <td>${av.c_major}</td>
+                            <td>${av.c_grade}</td>
+                            <td>${av.ct_room}</td>
+                            <td>${av.c_times}</td>
+                            <td>${av.s_cnt}</td>
+                            <td>%</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td class="subject-cell"><a href="javascript:void(0);" class="subject-link">대인관계능력</a></td>
-                            <td>문화관502</td>
-                            <td>화1 화2</td>
-                            <td>교양필수</td>
-                            <td>20</td>
-                            <td>80%</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>보건교육학</td>
-                            <td>문화관504</td>
-                            <td>월5 월6</td>
-                            <td>교양선택</td>
-                            <td>20</td>
-                            <td>85%</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>치아형태학</td>
-                            <td>보건관203</td>
-                            <td>목2 목3 목4</td>
-                            <td>전공필수</td>
-                            <td>24</td>
-                            <td>92%</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>치위생학개론</td>
-                            <td>보건관203</td>
-                            <td>화1 화2</td>
-                            <td>전공필수</td>
-                            <td>30</td>
-                            <td>96%</td>
-                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
+            <br>
             <div class="attendance-input hidden">
                 <input class="date" type="date" id="attendanceDate">
                 <select id="timeSlot">
@@ -116,7 +97,6 @@
                 <button id="showAttendanceList">출석 목록 보기</button>
             </div>
             <div id="selectedSubject"></div> <!-- 선택한 과목명을 표시할 요소 추가 -->
-
             
             
             <iframe class="attendlist" src="attendancetable.jsp" style="width: 100%; height: 45%;"></iframe>

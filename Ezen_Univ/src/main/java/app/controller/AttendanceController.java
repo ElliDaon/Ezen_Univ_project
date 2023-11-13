@@ -2,6 +2,7 @@ package app.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -29,14 +30,26 @@ public class AttendanceController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(location.equals("attendanceSituation_s.do")) {
-			System.out.println("컨트롤러");
+			//System.out.println("컨트롤러");
 			AttendanceDao ad = new AttendanceDao();
 			
 			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
-			ArrayList<AttendanceVo> list = ad.attendanceCourseList(sidx);
-			request.setAttribute("list", list);
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int semester = 0;
+			if(month >= 1 && month <= 7) {
+				semester = 1;
+			}else {
+				semester = 2;
+			}
+			
+			ArrayList<AttendanceVo> slist = ad.attendanceCourseList_s(sidx, year, semester);
+			request.setAttribute("list", slist);
+			request.setAttribute("year", year);
+			request.setAttribute("semester", semester);
 			
 			String path = "/attendance/attendanceSituation_s.jsp";
 			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
@@ -47,7 +60,7 @@ public class AttendanceController extends HttpServlet{
 			AttendanceDao ad = new AttendanceDao();
 			
 			HttpSession session = request.getSession();
-			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();		
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			int cidx = Integer.parseInt(request.getParameter("cidx"));
 			
 			AttendanceVo av = ad.attendanceCount(sidx, cidx);
@@ -75,16 +88,18 @@ public class AttendanceController extends HttpServlet{
 			AttendanceDao ad = new AttendanceDao();
 			
 			HttpSession session = request.getSession();
-			int sidx = Integer.parseInt(request.getParameter("sidx"));
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			int cidx = Integer.parseInt(request.getParameter("cidx"));
 			
 			ArrayList<AttendanceVo> alist = ad.attendanceList(sidx, cidx);
 			request.setAttribute("alist", alist);
+			
 			int listCnt = alist.size();
 			int widx = 0;
 			String atdate = "";
 			String attime = "";
 			String e_attendance = "";
+			String str2 ="";
 			
 			for(int i = 0; i < listCnt; i++) {
 			widx = alist.get(i).getWidx();
@@ -99,13 +114,42 @@ public class AttendanceController extends HttpServlet{
 				comma = ",";
 			}
 			
-			String str ="";
-			str = str + "{\"widx\":"+widx+",\"atdate\":"+atdate+",\"attime\":"+attime+",\"e_attendance\":"+e_attendance+"}";
+			str2 = str2 + "{\"widx\":"+widx+",\"atdate\":\""+atdate+"\",\"attime\":\""+attime+"\",\"e_attendance\":\""+e_attendance+"\"}"+comma;
 			
+			}
+			//for 구문 밖에서 대괄호로 감싸주기
+			str2= "["+str2+"]";
 			PrintWriter out = response.getWriter();
-			out.println(str);
-			System.out.println(str);
+			out.println(str2);
+			System.out.println(str2);
+			
+		}else if(location.equals("attendanceSituation_p.do")) {
+			System.out.println("컨트롤러");
+			AttendanceDao ad = new AttendanceDao();
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int semester = 0;
+			if(month >= 1 && month <= 7) {
+				semester = 1;
+			}else {
+				semester = 2;
+			}
+			
+			ArrayList<AttendanceVo> plist = ad.attendanceCourseList_p(pidx, year, semester);
+			request.setAttribute("list", plist);
+			request.setAttribute("year", year);
+			request.setAttribute("semester", semester);
+			
+			String path = "/attendance/attendanceSituation_p.jsp";
+			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			System.out.println(pidx);
 		}
 	}
-}
 }
