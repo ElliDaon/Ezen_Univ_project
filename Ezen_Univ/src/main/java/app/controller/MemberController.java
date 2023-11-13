@@ -28,17 +28,19 @@ public class MemberController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(location.equals("memberList.do")) {
-			
+		if(location.equals("memberIdCheck.do")) {
 			MemberDao md = new MemberDao();
-			ArrayList<MemberVo> list = md.memberSelectAll();
+			String memberId = request.getParameter("memberId");
+			int check1 = 0;
+			int check2 = 0;
+			int value = 0;
 			
-			request.setAttribute("list", list);
-			
-			String path = "/member/memberList.jsp";
-			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
-			RequestDispatcher rd = request.getRequestDispatcher(path);
-			rd.forward(request, response);
+			check1 = md.memberIdCheck1(memberId);
+			check2 = md.memberIdCheck2(memberId);
+			value = check1 + check2;
+			String str = "{\"value\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
 			
 		}else if(location.equals("studentJoinAction.do")) {
 			

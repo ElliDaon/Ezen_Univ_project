@@ -295,6 +295,99 @@ public class MypageController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 			
+		}else if(location.equals("searchP_table_s.do")){
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int term = 0;
+			if(month >= 1 && month <= 7) {
+				term = 1;
+			}else {
+				term = 2;
+			}
+			
+			request.setAttribute("year", year);
+			request.setAttribute("semester", term);
+			
+			
+			String path = "/mypage/searchP_table_s.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+		}else if(location.equals("searchProfessorList.do")){
+			
+			String p_name = request.getParameter("p_name");
+			
+			MemberDao md = new MemberDao();
+			ArrayList<MemberVo> list = md.professorListForTable(p_name);
+			int list_size = list.size();
+			int pidx = 0;
+			String name = "";
+			String major = "";
+			
+			String str = "";
+			
+			for(int i=0; i<list_size; i++) {
+				major = list.get(i).getP_major();
+				pidx = list.get(i).getPidx();
+				name = list.get(i).getP_name();
+				
+				String comma = "";
+				if (i == list_size - 1) {
+					comma = "";
+				} else {
+					comma = ",";
+				}
+				
+				str = str + "{\"major\" : \""+major+"\" , \"pidx\" : \""+pidx+"\", \"name\" : \""+name+"\"}"+comma;
+				
+			}
+			PrintWriter out = response.getWriter();
+			out.println("[" + str + "]");
+			
+		}else if(location.equals("searchProfessorTable.do")){
+			
+			String stpidx = request.getParameter("pidx");
+			String styear = request.getParameter("year");
+			String stturm = request.getParameter("turm");
+			
+			int pidx = Integer.parseInt(stpidx);
+			int year = Integer.parseInt(styear);
+			int turm = Integer.parseInt(stturm);
+			
+			CourseDao cd = new CourseDao();
+			ArrayList<TableVo> list = cd.professorMyTable(pidx, year, turm);
+			int list_size = list.size();
+			int period = 0;
+			String mon = "";
+			String two = "";
+			String wed = "";
+			String thu = "";
+			String fri = "";
+			
+			String str = "";
+			
+			for(int i=0; i<list_size; i++) {
+				period = list.get(i).getPe_period();
+				mon = list.get(i).getMon();
+				two = list.get(i).getTwo();
+				wed = list.get(i).getWed();
+				thu = list.get(i).getThu();
+				fri = list.get(i).getFri();
+				
+				String comma = "";
+				if (i == list_size - 1) {
+					comma = "";
+				} else {
+					comma = ",";
+				}
+				
+				str = str + "{\"period\" : \""+period+"\" , \"mon\" : \""+mon+"\", \"two\" : \""+two+"\","
+				+"\"wed\" : \""+wed+"\", \"thu\" : \""+thu+"\", \"fri\" : \""+fri+"\"}"+comma;
+				
+			}
+			PrintWriter out = response.getWriter();
+			out.println("[" + str + "]");
+			
 		}
 	}
 	

@@ -130,7 +130,7 @@ function CheckEmail(str){
 		<div class="info-title">
 			<img src="./images/ezen.png">
 			<span>출결시스템</span><br>
-		</div><br>
+		</div><br><br>
 		<div class="appfnc">
 			<h2><ion-icon name="extension-puzzle-outline"></ion-icon> 출결시스템 이용안내</h2><br>
 			<ion-icon name="caret-forward"></ion-icon> ezen-univ 출결시스템은 간편하게 사용 가능한 출결관리를 위한 시스템입니다.<br>
@@ -154,6 +154,10 @@ function CheckEmail(str){
 				<button>
 					<label>관리자 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
 				</button>
+			</div>
+			<br><hr><br>
+			<div class="index-img">
+				<img src="images/index-info.jpg" width="600px">
 			</div>
 		</div>
 	</div>

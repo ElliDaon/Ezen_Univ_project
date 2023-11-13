@@ -126,7 +126,7 @@ header{
 }
 .wrapper.active{
 	height: 810px;
-	top: 80px;
+	top: 150px;
 }
 .wrapper .form-box{
 	width: 80%;
@@ -215,6 +215,29 @@ header{
 	color: black;
 	line-height: 57px;
 }
+.input-box .check-id{
+	position: absolute;
+	top: 15px;
+	right: -35px; 
+	background: transparent;
+	border: none;
+	outline: none;
+	width: 20px;
+	height: 20px;
+}
+.check-id .check-id-icon{
+	color: red;	
+	font-size: 25px;
+	cursor: pointer;
+	transition: .5s;
+}
+.input-box .check-id button{
+	cursor: pointer;
+}
+.input-box .check-id button ion-icon{
+	font-size: 20px;
+	cursor: pointer;
+}
 .choose{
 	font-size: 17px;
 	text-align: center;
@@ -300,4 +323,42 @@ header{
 }
 .choosejoin input[type=radio]:checked+label{
     color: blue;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-text-fill-color: none;
+}
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+	-webkit-text-fill-color: black;
+    box-shadow: 0 0 0px 1000px transparent;
+    transition: background-color 5000s ease-in-out 0s;
+}
+.pass-info{
+	font-size: 13px;
+	margin-top: 5px;
+}
+.input-box .check-pwd-icon, .check-pwd-icon2{
+	position: absolute;
+	top: 15px;
+	right: -35px; 
+	background: transparent;
+	border: none;
+	outline: none;
+	width: 20px;
+	height: 20px;
+	visibility: hidden;
+	color: red;	
+	font-size: 25px;
+	cursor: pointer;
+	transition: .5s;
+}
+.pass-check-info{
+	font-size: 13px;
+	margin-top: 5px;
 }

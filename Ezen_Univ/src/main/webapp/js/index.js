@@ -48,4 +48,56 @@ $(document).ready(function(){
     }
   })
 })
+
+function pwcheck(){
+	var pw = $('#input-box-pwd [name="memberPwd"]').val();
+	var pw2 = $('#input-box-pwd2 [name="memberPwd2"]').val();
+	var num = pw.search(/[0-9]/g);
+	var eng = pw.search(/[a-z]/ig);
+    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+    
+    $('#input-box-pwd [name="memberPwd"]').on('focusout',function(){
+		$('#pass-info').css('visibility','hidden');
+	});
+    $('#input-box-pwd2 [name="memberPwd2"]').on('focusout',function(){
+		$('#pass-check-info').css('visibility','hidden');
+		$('#pass-info').css('visibility','hidden');
+	});
+    $('#input-box-name [name="memberName"]').on('focusin',function(){
+		$('#pass-check-info').css('visibility','hidden');
+	});
+		
 	
+    if(pw.length < 8 || pw.search(/\s/) != -1 || num < 0 || eng < 0 || spe < 0 ){
+		$('#pass-info').css('visibility','visible');
+	    if(pw2 != ""){
+			$('#pass-info').css('visibility','hidden');
+		}else{
+			$('#pass-info').css('visibility','visible');
+	    	$('#pass-info').text('※ 영문, 숫자, 특수기호 포함 8자 이상').css('color','red');
+		}
+		$('#pwd-check1').css('visibility','visible');
+		$('#pwd-check1').css('color','red');
+    }else{
+		$('#pass-info').css('visibility','hidden');
+		$('#pwd-check1').css('visibility','visible');
+		$('#pwd-check1').css('color','green');
+    }
+    
+
+	if(pw == pw2){
+		$('#pass-check-info').css('visibility','hidden');
+		$('#pwd-check2').css('visibility','visible');
+		$('#pwd-check2').css('color','green');
+		
+	}else{
+		if( $('#input-box-name [name="memberName"]').val()==''){
+			$('#pass-check-info').css('visibility','visible');
+		}else{
+			$('#pass-check-info').css('visibility','hidden');
+		}
+		$('#pass-check-info').text('비밀번호 불일치').css('color','red');
+		$('#pwd-check2').css('visibility','visible');
+		$('#pwd-check2').css('color','red');
+	}
+}

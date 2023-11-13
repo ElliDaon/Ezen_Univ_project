@@ -280,9 +280,9 @@ header{
 .info{
 	z-index: 0;
 	position: relative;
-	top: 100px;
+	top: 200px;
 	width: 800px;
-	height: 800px;
+	height: 1800px;
 	display: block;
 	text-align: left;
 	padding: 80px 40px;
@@ -292,6 +292,7 @@ header{
 	color: black;
 	line-height: 30px;
 	font-family: 'Noto Sans KR', sans-serif;
+	margin-bottom: 20px;
 }
 .info hr{
 	color: gray;
@@ -348,4 +349,8 @@ header{
 }
 .info-btn button ion-icon{
 	font-size: 25px;
+}
+.index-img {
+	display: flex;
+	justify-content: center;
 }

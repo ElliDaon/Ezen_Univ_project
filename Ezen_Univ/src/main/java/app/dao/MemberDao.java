@@ -124,9 +124,27 @@ public class MemberDao {
 		return alist;
 	}
 
-	public int memberIdCheck(String memberId){
+	public int memberIdCheck1(String memberId){
 		int value = 0; //결과값이 0인지 아닌지
-		String sql = "select count(*) as cnt from member0803 where memberid=?";
+		String sql = "select count(*) as cnt from student where s_id=?";
+		ResultSet rs = null;
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,memberId);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				value = rs.getInt("cnt");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return value;
+	}
+	
+	public int memberIdCheck2(String memberId){
+		int value = 0; //결과값이 0인지 아닌지
+		String sql = "select count(*) as cnt from professor where p_id=?";
 		ResultSet rs = null;
 		try{
 			pstmt = conn.prepareStatement(sql);
@@ -431,5 +449,30 @@ public class MemberDao {
 		
 		
 		return value;
+	}
+	
+	public ArrayList<MemberVo> professorListForTable(String p_name) {
+		ArrayList<MemberVo> list = new ArrayList<>();
+		ResultSet rs;
+		String sql = "select p_major, pidx, p_name from professor where p_name like concat('%',?,'%')";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p_name);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MemberVo mv = new MemberVo();
+				
+				mv.setP_major(rs.getString("p_major"));
+				mv.setPidx(rs.getInt("pidx"));
+				mv.setP_name(rs.getString("p_name"));
+				list.add(mv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }

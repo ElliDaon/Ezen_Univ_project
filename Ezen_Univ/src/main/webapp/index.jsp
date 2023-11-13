@@ -12,10 +12,39 @@
 <link rel="stylesheet" href="css/index_style.css">
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <script>
-
+$(document).ready(function(){
+	$("#idcheck").on("click",function(){
+		let memberIdCheck=document.joinfrm.memberId.value;
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/memberIdCheck.do",
+			data: {"memberId" : memberIdCheck},
+			dataType: "json",
+			success: function(data){
+				if(memberIdCheck==""){
+					alert("아이디를 입력해주세요!!");
+				}else if(data.value == 0){
+					alert("사용할 수 있는 아이디입니다.");
+					$('#check-id-icon').css('color','green');
+				}else{
+					alert(data.value);
+					alert("중복되는 아이디 입니다.");
+					$('#check-id-icon').css('color','red');
+					memberIdCheck = "";
+				}
+			},
+			error: function(){
+				alert("실패");
+			}
+		});
+	});
+});
+</script>
+<script>
 
 function login(){
     var fm = document.frm;
@@ -47,13 +76,25 @@ function login(){
 
 function join(){
 	var fm = document.joinfrm;
-
+	var checkId = $('#check-id-icon').css("color");
+	var checkPwd1 = $('#pwd-check1').css("color");
+	var checkPwd2 = $('#pwd-check2').css("color");
+	
 	if(fm.memberId.value ==""){
 		alert("아이디를 입력하세요");
 		fm.memberId.focus();
 		return;
+	}else if(checkId === "rgb(255, 0, 0)"){
+		alert("아이디 중복확인을 체크해주세요.");
+		fm.memberId.value="";
+		fm.memberId.focus();
+		return;
 	}else if(fm.memberPwd.value ==""){
 		alert("비밀번호를 입력하세요");
+		fm.memberPwd.focus();
+		return;
+	}else if(checkPwd1 === "rgb(255, 0, 0)"){
+		alert("비밀번호 형식을 확인해주세요");
 		fm.memberPwd.focus();
 		return;
 	}else if(fm.memberPwd.value !== fm.memberPwd2.value){
@@ -168,20 +209,27 @@ function CheckEmail(str){
 					<span class="icon"><ion-icon name="person"></ion-icon></span>
 					<input type="text" name="memberId" id="memberId" required>
 					<label>ID</label>
+					<button type="button" class="check-id" id="idcheck">
+						<span class="check-id-icon" id="check-id-icon"><ion-icon name="checkbox-outline"></ion-icon></span>
+					</button>
 				</div>
-				<div class="input-box">
+				<div class="input-box" id="input-box-pwd">
 					<span class="icon"><ion-icon name="key"></ion-icon></span>
-					<input type="password" name="memberPwd" id="memberPwd" required>
+					<input type="password" name="memberPwd" id="memberPwd" oninput="pwcheck()" required>
 					<label>password</label>
+					<div class="pass-info"><span id="pass-info"></span></div>
+					<div class="check-pwd-icon" id="pwd-check1"><ion-icon name="checkbox-outline"></ion-icon></div>
 				</div>
-				<div class="input-box">
+				<div class="input-box" id="input-box-pwd2">
 					<span class="icon"><ion-icon name="key"></ion-icon></span>
-					<input type="password" name="memberPwd2" id="memberPwd2" required>
+					<input type="password" name="memberPwd2" id="memberPwd2" oninput="pwcheck()" required>
 					<label>password 확인</label>
+					<div class="pass-check-info"><span id="pass-check-info"></span></div>
+					<div class="check-pwd-icon2" id="pwd-check2"><ion-icon name="checkbox-outline"></ion-icon></div>
 				</div>
-				<div class="input-box">
+				<div class="input-box" id="input-box-name">
 					<span class="icon"><ion-icon name="pricetag"></ion-icon></span>
-					<input type="text" name="memberName" id="memberName" required>
+					<input type="text" name="memberName" id="memberName" oninput="pwcheck()" required>
 					<label>이름<span>(홍길동)</span></label>
 				</div>
 				<div class="input-box">
