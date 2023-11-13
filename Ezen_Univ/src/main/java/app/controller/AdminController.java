@@ -173,24 +173,22 @@ public class AdminController extends HttpServlet {
 				response.sendRedirect(path);
 			}
 			
-		}else if(location.equals("courseRegister.do")) {	// 강의등록 현황
+		}else if(location.equals("courseRegister.do")) {	// 강의등록 페이지 이동
 			String path = "/admin/courseRegister.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 			
 		}else if(location.equals("courseRegisterList.do")) {	// 강의등록 현황
-			String year = request.getParameter("yearInput");
-			String term = request.getParameter("termInput");
+			String year = request.getParameter("year");
+			String term = request.getParameter("term");
 
-			
-			CourseTimeVo ctv = new CourseTimeVo();
 			int year_int = Integer.parseInt(year);
 			int term_int = Integer.parseInt(term);
 			
 			AdminDao add= new AdminDao();
 			ArrayList<CourseVo> list = add.courseRegisterList(year_int,term_int);
 			
-			int listCnt = list.size();
+			int listCnt = list.size();	
 			int cidx = 0;
 			String c_name ="";
 			int p_no = 0;
@@ -221,12 +219,53 @@ public class AdminController extends HttpServlet {
 				}else {
 					comma = ",";
 				}
-				str = str +"{\"cidx\":\""+cidx+"\",\"c_name\":\""+c_name+"\",\"p_no\":\""+p_no+"\",\"p_name\":\""+p_name+"\",\"c_major\":\""+c_major+"\"}"+comma;
+				str = str +"{\"cidx\":\""+cidx+"\",\"c_name\":\""+c_name+"\",\"p_no\":\""+p_no+"\",\"p_name\":\""+p_name+"\",\"c_major\":\""+c_major+"\",\r\n"
+						+ "\"c_grade\":\""+c_grade+"\",\"c_sep\":\""+c_sep+"\",\"c_score\":\""+c_score+"\",\"ct_room\":\""+ct_room+"\",\"c_times\":\""+c_times+"\"}"+comma;
 			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
 			
+		}else if(location.equals("courseDelete.do")) {		// 등록된 강의 삭제
+			String cidx = request.getParameter("cidx");
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.courseDelete(Integer.parseInt(cidx));
+			
+			String str ="{\"value\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+	
+		}else if(location.equals("registerView.do")) {		// 등록된 강의 삭제
+			String c_major = request.getParameter("c_major");
+			System.out.println("c_major?"+c_major);
+			
+			AdminDao add= new AdminDao();
+			ArrayList<MemberVo> list=add.registerView(c_major);
+			
+			System.out.println("list?"+list);
+			int listCnt = list.size();
+			int p_no = 0;
+			String p_name ="";
+			String str = "";
+			
+			for(int i=0; i< listCnt; i++){
+				p_no = list.get(i).getP_no();
+				p_name = list.get(i).getP_name();
+				String comma = "";
+				if(i == listCnt-1) { 
+					comma = "";
+					
+				}else {
+					comma = ",";
+				}
+				str = str +"{\"p_no\":\""+p_no+"\",\"p_name\":\""+p_name+"\"}"+comma;
+			}
+			System.out.println("str?"+str);
+			PrintWriter out = response.getWriter();
+			out.println("["+str+"]");
 
-			
 		}
+		
 		
 		
 	}
