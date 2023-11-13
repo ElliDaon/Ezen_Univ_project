@@ -31,7 +31,7 @@
                 강의정보
                 <ul>
                     <li><a href="../mypage/courseList_p.do" target="_parent">- 강의 현황</a></li>
-                    <li><a href="../mypage/searchP_table_p.do" target="_parent">- 강의 현황</a></li>
+                    <li><a href="../mypage/searchP_table_p.do" target="_parent">- 교수 시간표 조회</a></li>
                 </ul>
             </li>
         </ul>

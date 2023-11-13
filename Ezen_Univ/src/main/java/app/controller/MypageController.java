@@ -313,6 +313,24 @@ public class MypageController extends HttpServlet{
 			String path = "/mypage/searchP_table_s.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
+		}else if(location.equals("searchP_table_p.do")){
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int term = 0;
+			if(month >= 1 && month <= 7) {
+				term = 1;
+			}else {
+				term = 2;
+			}
+			
+			request.setAttribute("year", year);
+			request.setAttribute("semester", term);
+			
+			
+			String path = "/mypage/searchP_table_p.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
 		}else if(location.equals("searchProfessorList.do")){
 			
 			String p_name = request.getParameter("p_name");
