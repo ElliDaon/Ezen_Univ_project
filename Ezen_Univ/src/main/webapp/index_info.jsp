@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@200;300&family=Passion+One:wght@400;700&family=Quicksand&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
 <link rel="website icon" type="png" href="images/ezen.png">
 <link rel="stylesheet" href="css/index_info.css">
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -135,6 +136,35 @@ function CheckEmail(str){
 			<h2><ion-icon name="extension-puzzle-outline"></ion-icon> 출결시스템 이용안내</h2><br>
 			<ion-icon name="caret-forward"></ion-icon> ezen-univ 출결시스템은 간편하게 사용 가능한 출결관리를 위한 시스템입니다.<br>
 			<ion-icon name="caret-forward"></ion-icon> 복잡하지 않고 직관적인 UI로 사용하기 편리하게 설계되었습니다.<br>
+			<div class="login_info">
+				<div class="login_info_li">
+					<div class="info_li_title">
+						<ion-icon name="play-circle-outline"></ion-icon>
+						<h4>학생 로그인</h4>
+					</div>
+					- I D : ezentest<br>
+					- PWD : 1111
+				</div>
+				<div class="login_info_li">
+					<div class="info_li_title">
+						<ion-icon name="play-circle-outline"></ion-icon>
+						<h4>교수 로그인</h4>
+					</div>
+					- I D : test011<br>
+					- PWD : 0101
+				</div>
+				<div class="login_info_li">
+					<div class="info_li_title">
+						<ion-icon name="play-circle-outline"></ion-icon>
+						<h4>관리자 로그인</h4>
+					</div>
+					- I D : admin<br>
+					- PWD : 1111
+				</div>
+				<div class="admin_login">
+					<button class="admin_login_btn"><label>관리자 로그인</label></button>
+				</div>
+			</div>
 			<br><hr><br>
 			<h2><ion-icon name="extension-puzzle-outline"></ion-icon> 주요기능</h2><br>
 			<ion-icon name="caret-forward"></ion-icon> 출석체크<br>
@@ -156,8 +186,29 @@ function CheckEmail(str){
 				</button>
 			</div>
 			<br><hr><br>
-			<div class="index-img">
-				<img src="images/index-info.jpg" width="600px">
+			<div class="team">
+				<div class="team-img">
+					<h2>OUR TEAM</h2><br>
+					<img src="./images/3d_team.png" width=50%>
+				</div>
+				<div class="team-info">
+					<h3>[ Ezen_Developer ]</h3><br>
+					<div class="github"><ion-icon name="logo-github"></ion-icon>&nbsp GITHUB :&nbsp <a href="https://github.com/ElliDaon/Ezen_Univ_project.git" target="_blank">https://github.com/ElliDaon/Ezen_Univ_project.git</a></div>
+					<div class="personal-info">
+						<div class="personal-info-detail">
+							<h4>문다온</h4>
+						</div>
+						<div class="personal-info-detail">
+							<h4>김민정</h4>
+						</div>
+						<div class="personal-info-detail">
+							<h4>박건도</h4>
+						</div>
+						<div class="personal-info-detail">
+							<h4>윤대희</h4>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

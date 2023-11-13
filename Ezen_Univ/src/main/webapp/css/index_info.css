@@ -354,3 +354,90 @@ header{
 	display: flex;
 	justify-content: center;
 }
+.login_info{
+	display: flex;
+	justify-content: space-between;
+	width: 90%;
+	height: 100px;
+	margin-top: 20px;
+	margin-left: 30px;
+}
+
+.appfnc .info_li_title{
+	display: flex;
+	align-items: center;
+}
+.appfnc .info_li_title ion-icon{
+	color: blue;
+}
+.appfnc .info_li_title h4{
+	color: blue;
+	margin-left: 5px;
+	margin-bottom: 2px;
+}
+.admin_login{
+	margin-top: 30px;
+	margin-right: 30px;
+}
+.admin_login button{
+	width: 120px;
+	height: 50px;
+	background: transparent;
+	border: 2px solid #003297;
+	border-radius: 15px;
+	cursor: pointer;
+	transition: .5s;
+}
+.admin_login label{
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: Medium 500;
+	color: #003297;
+	font-size: 15px;
+	cursor: pointer;
+	transition: .5s;
+}
+.admin_login button:hover{
+	background: #EDEDED;
+	color: black;
+}
+.admin_login label:hover{
+	background: #EDEDED;
+	color: black;
+}
+label{
+	width: 100%;
+	height: 100%;
+}
+.team{
+	width: 100%;
+	height: 500px;
+	text-align: center;
+}
+.team h2{
+	font-family: 'Paytone One', sans-serif;
+	font-weight: Regular 400;
+	font-size: 50px;
+
+}
+.personal-info{
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 10px;
+}
+.personal-info-detail{
+	width: 25%;
+	text-align: center;
+}
+.team-info ion-icon{
+	font-size: 20px;
+}
+.github{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.github a{
+	text-decoration: none;
+}
