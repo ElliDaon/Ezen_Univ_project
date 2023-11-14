@@ -110,7 +110,7 @@
                 <a class="link" href="noticeList_p.do">목록</a>
             
                 <div>
-                <a class="link" href="noticemodify.jsp">수정</a>
+                <button type="button" onclick="location.href='<%=request.getContextPath()%>/notice/noticeModify.do?nidx=${nv.nidx}'">수정</button>
                 <button type="button" onclick="if (confirm('정말로 삭제하시겠습니까?')) window.location.href='<%=request.getContextPath()%>/notice/noticeDelete.do?nidx=${nv.nidx}'">삭제</button>
                 </div>
             </td>

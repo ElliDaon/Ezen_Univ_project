@@ -6,6 +6,17 @@ body{
     text-align: center;
 }
 
+
+a:hover {
+    color: red;
+   
+}
+
+a{
+	text-decoration: none; 
+    color: inherit; 
+}
+
 .container {
     display: inline;
     flex-direction: column;
@@ -13,6 +24,9 @@ body{
     margin-left: 100px;
     margin-top: 10px;
 }
+
+
+
 .header{
     background-color: bisque;
     height: 10%;
@@ -99,17 +113,12 @@ iframe{
     text-align: center;
     color: whitesmoke;
     text-decoration: none;
-    font-size: 1.1em;
-    
+    color: black;
 }
 
 .writediv:hover{
 background-color: white;
 border: 1px solid black;
-}
-
-.writediv a:hover{
-    color: black;
 }
 
 .contents{
