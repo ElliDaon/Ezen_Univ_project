@@ -12,6 +12,145 @@
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <link rel="stylesheet" href="../css/noticelist_p.css">
 
+<style>
+*{
+    margin: 0;
+    padding: 0;  
+}
+body{
+    text-align: center;
+}
+
+
+a:hover {
+    color: red;
+   
+}
+
+a{
+	text-decoration: none; 
+    color: inherit; 
+}
+
+.container {
+    display: inline;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 100px;
+    margin-top: 10px;
+}
+
+
+
+.header{
+    background-color: bisque;
+    height: 10%;
+}
+iframe{
+    border: 0;
+    margin: 0;
+    display: block;
+}
+.sidebar{
+    display: inline;
+    width: 10%;
+    height: 100%;
+    background-color: #DEDFEA;
+}
+.myinfo{
+    display: block;
+    width: 100%;
+}
+.menubar{
+    display: block;     
+    width: 100%;
+    height: 100%;
+}
+.wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+.pagination{
+    text-align: center;
+    margin-top: -50px;
+}
+.pagination a{
+    color: black;
+    text-decoration: none;
+}
+
+.pagination a:hover{
+    color:red;
+    text-decoration: underline;
+}
+
+.pagination span a:focus{
+    color: red;
+    font-weight: bold;
+}
+
+.noticelist tbody tr:hover{
+    background-color: aliceblue;
+}
+
+.noticelist tbody tr{
+
+    height: 50px;
+
+}
+.new {
+   color: orange;
+   font-weight: 2000;
+}
+
+.nidx, .viewcnt, .writeday{
+    color: gainsboro;
+}
+
+.btn{
+    background-color: black;
+    border-radius: 5px;
+    color: whitesmoke;
+}
+
+
+.writediv{
+    width: 80px;
+    height: 25px;
+    background-color: black;
+    border-radius: 5px;
+    margin-top: 10px;     
+    
+}
+
+.writediv a{
+    text-align: center;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.writediv:hover{
+background-color: white;
+border: 1px solid black;
+}
+
+.writediv a:hover{
+    color: black;
+}
+
+.contents{
+    color: black;
+    text-decoration: none;
+}
+
+.contents:hover{
+    text-decoration: underline;
+}
+
+
+</style>
+
 </head>
 <body>
 <div class="header">
@@ -28,9 +167,10 @@
     </div>
     
     <div class="container">
+    	
         <h1>휴보강 공지</h1>
- 
-        <table class="noticelist" border=1 style="width:800px;" >	
+        <table class="noticelist" border=1 style="width:800px;" >
+        	
             <thead>
                 <tr>
                     <th style="width: 100px;">글번호</th>
@@ -44,14 +184,20 @@
        		<c:forEach var="nv" items="${alist}">
 			<tr>
 			<td>
-
 			${nv.nidx}
 			</td>
 			<td class="subject">
-			<a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">
-			${nv.n_subject}
-			</a>
+            <a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">
+                <c:if test="${nv.n_dday eq 'true'}">
+               <span style="color: orange; font-weight: bold;">new</span>
+                </c:if>
+                ${nv.n_subject}
+            </a>
+		
+
 			</td>
+
+	
 			<td>
  			 ${nv.n_writeday.split(' ')[0]}
 			</td>

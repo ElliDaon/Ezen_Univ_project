@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import app.dbconn.DbConn;
@@ -116,6 +117,14 @@ public class NoticeDao {
 		return courselist;
 	}
 	public ArrayList<NoticeVo> getList(int pidx,SearchCriteria scri){
+		
+		LocalDate now = LocalDate.now();
+		String year = Integer.toString(now.getYear());
+		String month = Integer.toString(now.getMonthValue());
+		String day = Integer.toString(now.getDayOfMonth());
+		String nowdate = year+month+day;
+		int nowdate_i = Integer.parseInt(nowdate);
+		
 		ResultSet rs = null;
 		String str= "";
 		if (scri.getSubject()!=0) {
@@ -142,12 +151,25 @@ public class NoticeDao {
 			pstmt.setInt(3, scri.getPerPageNum());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
+				
 				NoticeVo nv = new NoticeVo();
 				nv.setNidx(rs.getInt("nidx"));
 				nv.setN_subject(rs.getString("subject"));
 				nv.setN_writeday(rs.getString("A.n_writeday"));
 				nv.setN_count(rs.getInt("A.n_count"));
 				
+				String wyear = nv.getN_writeday().substring(0,4);
+				String wmonth = nv.getN_writeday().substring(5,7);
+				String wday = nv.getN_writeday().substring(8,10);
+				String wdate = wyear+wmonth+wday;
+				int wdate_i = Integer.parseInt(wdate);
+				
+				if(nowdate_i-wdate_i<3) {
+					nv.setN_dday(true);
+				}else {
+					nv.setN_dday(false);
+				}
+				System.out.println(nv.isN_dday());
 				alist.add(nv);
 				
 			}
@@ -167,7 +189,7 @@ public class NoticeDao {
 		
 		return alist;
 	}
-	public int boardTotalCount(SearchCriteria scri){
+	public int noticeTotalCount(SearchCriteria scri){
 		int value=0;  // 결과값이 0인지 아닌지
 		
 		String str= "";
@@ -199,7 +221,7 @@ public class NoticeDao {
 		//System.out.println("DAO 안에 value"+value);
 		return value;
 	}	
-	public NoticeVo boardSelectOne(int nidx) {
+	public NoticeVo noticeSelectOne(int nidx) {
 		NoticeVo nv = null;
 		String sql="select * from notice A\r\n"
 				+ "join course B\r\n"
@@ -232,20 +254,12 @@ public class NoticeDao {
 			}			
 		} catch (SQLException e) {			
 			e.printStackTrace();
-		}finally{
-			try{
-				rs.close();
-				pstmt.close();
-				conn.close();
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}	
+		}
 		
 		return nv;
 	}
 	
-	public int NoticeCntUpdate(int nidx){
+	public int noticeCntUpdate(int nidx){
 		int exec = 0;		
 	
 		String sql ="update Notice set\r\n"
@@ -278,6 +292,39 @@ public class NoticeDao {
 		}catch(Exception e){			
 			e.printStackTrace();
 		}
+		return exec;
+		
+	}
+	public int noticeModify(NoticeVo nv){
+		int exec = 0;
+		
+		String sql = "update notice set\r\n"
+				+ "n_skipdate = ?, \r\n"
+				+ "n_category = ?,\r\n"
+				+ "n_contents = ?, \r\n"
+				+ "cidx = ? \r\n"
+				+ "where nidx = ? and pidx = ? ";
+		
+		try{
+
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, nv.getN_skipdate());
+		pstmt.setString(2, nv.getN_category());
+		pstmt.setString(3, nv.getN_contents());	
+		pstmt.setInt(4, nv.getCidx());
+		pstmt.setInt(5, nv.getNidx());
+		pstmt.setInt(6, nv.getPidx());
+		
+
+		exec = pstmt.executeUpdate();
+		
+
+		
+		}catch(Exception e){
+			
+			e.printStackTrace();
+		}
 		return exec;	
 	}
+	
 }

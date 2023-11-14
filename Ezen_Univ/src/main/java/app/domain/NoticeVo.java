@@ -9,6 +9,8 @@ public class NoticeVo extends CourseVo{
 	private int n_count;
 	private int pidx;
 	private int cidx;
+	private boolean n_dday;
+	
 	public String getN_subject() {
 		return n_subject;
 	}
@@ -72,6 +74,12 @@ public class NoticeVo extends CourseVo{
 	}
 	public void setN_delyn(String n_delyn) {
 		this.n_delyn = n_delyn;
+	}
+	public boolean isN_dday() {
+		return n_dday;
+	}
+	public void setN_dday(boolean n_dday) {
+		this.n_dday = n_dday;
 	}
 
 

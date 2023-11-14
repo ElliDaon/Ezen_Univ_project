@@ -9,6 +9,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/main.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
+	    <script>
+        // 페이지가 로드된 후 실행되는 JavaScript 코드
+        $(document).ready(function() {
+            // iFrame에서 가져올 페이지의 URL
+            var externalPageURL = "/Ezen_Univ/notice/noticeList_p.do";
+
+            // Ajax 요청을 통해 외부 페이지의 내용 가져오기
+            $.ajax({
+                url: externalPageURL,
+                type: 'GET',
+                success: function(response) {
+                    // 가져온 페이지에서 필요한 부분 선택
+                    var containerContent = $(response).find('.noticelist').html();
+
+                    // 현재 페이지의 특정 위치에 내용 추가
+                    $('.externalContent').html(containerContent);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching external content:', error);
+                }
+            });
+        });
+    </script>
+   
+    <style>
+    .notice{
+    	width : 660px;
+    	height : 200px;
+    	overflow : scroll; 
+    	margin : 50px;
+    	
+    }
+    
+    </style>
+    
 </head>
 <body>
     <div class="header">
@@ -22,29 +58,12 @@
         </div>
         <div class="contents">
             <div class="first-line">
+                	
                 <div class="notice">
-                    <h3>휴보강공지</h3><br>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>목록</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><a href="#">[휴강] [2023.10.25] 무선통신이론</a></td>
-                            </tr>
-                            <tr>
-                                <td>[휴강] [2023.10.26] 즐거운 수학</td>
-                            </tr>
-                            <tr>
-                                <td>[보강] [2023.10.27] 무선통신이론</td>
-                            </tr>
-                            <tr>
-                                <td>[휴강] [2023.10.28] 시스템정보이론</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                 
+                    <div class="externalContent"></div>
+					
                 </div>
                 <div class="banner" style="padding-top: 50px;">
                     <a href="https://www.cubeitac.com/" target="_blank"><img src="../images/banner.png" width="90%" height="150px"></a>
@@ -58,7 +77,7 @@
                             <td style="width:15%; font-weight: bold; font-size: 15px;">월</td>
                             <td style="width:15%; font-weight: bold; font-size: 15px;">화</td>
                             <td style="width:15%; font-weight: bold; font-size: 15px;">수</td>
-                            <td style="width:15%; font-weight: bold; font-size: 15px;" >목</td>
+                            <td style="width:15%; font-weight: bold; font-size: 15px;">목</td>
                             <td style="width:15%; font-weight: bold; font-size: 15px;">금</td>
                         </tr>
                     </thead>

@@ -36,7 +36,6 @@ function check(){
 
 </script>
 
-<title></title>
 <link rel="stylesheet" href="../css/iframe.css">
 <style>
 .subject {
@@ -134,11 +133,11 @@ function check(){
             </select>
             </td>
             <td>
-                <select name="coursetype">
-                	<c:forEach var="cv" items="${courselist}">
-                    <option value="${cv.cidx}">${cv.c_name}</option>
-                    </c:forEach>
-                </select>
+            <select name="coursetype">
+            	<c:forEach var="cv" items="${courselist}">
+                <option value="${cv.cidx}">${cv.c_name}</option>
+                </c:forEach>
+            </select>
             </td>
             <td>
                 <input type="date" name="when">
