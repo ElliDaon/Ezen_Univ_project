@@ -89,7 +89,7 @@ public class NoticeDao {
 		return -1;
  	}
 	
-	public ArrayList<CourseVo> courselist(int pidx){
+	public ArrayList<CourseVo> courselist_p(int pidx){
 		ArrayList<CourseVo> courselist = new ArrayList<>();
 		ResultSet rs = null;
 		
@@ -99,6 +99,38 @@ public class NoticeDao {
 			pstmt = conn.prepareStatement(SQL);
 			
 			pstmt.setInt(1, pidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CourseVo cv = new CourseVo();
+				cv.setCidx(rs.getInt("cidx")); 
+				cv.setC_name(rs.getString("c_name"));
+				courselist.add(cv);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return courselist;
+	}
+	
+	public ArrayList<CourseVo> courselist_s(int sidx){
+		ArrayList<CourseVo> courselist = new ArrayList<>();
+		ResultSet rs = null;
+		
+		
+		String SQL ="SELECT DISTINCT c.cidx,c_name \r\n"
+				+ "from course c\r\n"
+				+ "join courselist cl\r\n"
+				+ "on c.cidx = cl.cidx\r\n"
+				+ "where cl.sidx=?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setInt(1, sidx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -169,7 +201,7 @@ public class NoticeDao {
 				}else {
 					nv.setN_dday(false);
 				}
-				System.out.println(nv.isN_dday());
+				
 				alist.add(nv);
 				
 			}

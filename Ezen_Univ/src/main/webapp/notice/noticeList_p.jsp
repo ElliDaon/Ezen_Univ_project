@@ -10,9 +10,16 @@
 <title></title>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<link rel="stylesheet" href="../css/noticelist_p.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<!-- link rel="stylesheet" href= "../css/noticelist_p.css" -->
+
 
 <style>
+
+
 *{
     margin: 0;
     padding: 0;  
@@ -20,10 +27,38 @@
 body{
     text-align: center;
 }
+h1{
+    font-family: 'Black Han Sans', sans-serif;
+    font-weight: 100;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
 
+
+.pagination .act{
+        font-weight: bold;
+        color: #42444e;
+        border-radius: 5px;
+    	border: 2px solid #42444e;
+		padding: 5px 7px;
+    }
+
+
+.pagination a {
+        
+        display: block;
+        font-size: 15px;
+        text-decoration: none;
+        padding: 5px 7px;
+        color: #42444e;
+        display: inline-block;
+    }
+
+.pagination a:hover {background-color: #ddd;}
 
 a:hover {
-    color: red;
+    
+    text-decoration: underline;
    
 }
 
@@ -31,6 +66,8 @@ a{
 	text-decoration: none; 
     color: inherit; 
 }
+
+
 
 .container {
     display: inline;
@@ -71,24 +108,18 @@ iframe{
     width: 100%;
     justify-content: flex-start;
 }
-.pagination{
-    text-align: center;
-    margin-top: -50px;
-}
-.pagination a{
-    color: black;
-    text-decoration: none;
+.noticelist{
+  border-collapse: separate;
+  border-spacing: 0;
+  }
+
+.noticelist th{
+	padding: 6px 15px;
+	background: #42444e;
+ 	color: #fff;
+  	text-align: center;
 }
 
-.pagination a:hover{
-    color:red;
-    text-decoration: underline;
-}
-
-.pagination span a:focus{
-    color: red;
-    font-weight: bold;
-}
 
 .noticelist tbody tr:hover{
     background-color: aliceblue;
@@ -97,6 +128,7 @@ iframe{
 .noticelist tbody tr{
 
     height: 50px;
+    padding: 6px 15px;
 
 }
 .new {
@@ -109,18 +141,19 @@ iframe{
 }
 
 .btn{
-    background-color: black;
+    background-color: #42444e;
     border-radius: 5px;
     color: whitesmoke;
 }
 
 
 .writediv{
-    width: 80px;
+    width: 55px;
     height: 25px;
-    background-color: black;
+    background-color: #42444e;
     border-radius: 5px;
-    margin-top: 10px;     
+    margin-top: 20px;     
+    align-items: right;
     
 }
 
@@ -130,14 +163,6 @@ iframe{
     text-decoration: none;
 }
 
-.writediv:hover{
-background-color: white;
-border: 1px solid black;
-}
-
-.writediv a:hover{
-    color: black;
-}
 
 .contents{
     color: black;
@@ -148,6 +173,17 @@ border: 1px solid black;
     text-decoration: underline;
 }
 
+.sub{
+	
+	padding : 8px;
+	font-size : 14px;
+}
+
+.searchsubject{
+	font-size : 14px;
+	height : 30px;
+	border : 2px solid black;
+}
 
 </style>
 
@@ -173,7 +209,7 @@ border: 1px solid black;
         	
             <thead>
                 <tr>
-                    <th style="width: 100px;">글번호</th>
+                    <th style="width: 100px;">No</th>
                     <th>제목</th>
                     <th>작성일</th>
                     <th>조회수</th>
@@ -218,7 +254,9 @@ border: 1px solid black;
             <td>
                 <div class="writediv"> 
                     <a class="noticeWrite" href="noticeWrite.do">
-                        글쓰기
+                        <span class="material-symbols-outlined">
+							edit_note
+						</span>
                     </a>
                 </div>
             </td>
@@ -226,13 +264,15 @@ border: 1px solid black;
     </table>
     <br>
 
-<table border=0 style="width:600px;text-align:center;">
+<table class="pagination" border=0 style="width:700px;text-align:center;">
 <tr>
 <td style="width:100px;text-align:right;">
 <%// if (pm.isPrev()==true) { %>
 <c:if test="${pm.prev == true}">
 <a href="${pageContext.request.contextPath}/notice/noticeList_p.do?page=${pm.startPage-1}${parm}">
-◀
+<span class="material-symbols-outlined">
+arrow_back_ios_new
+</span>
 </a>
 </c:if>
 <%//} %>
@@ -241,19 +281,30 @@ border: 1px solid black;
 <% 
 //for(int i=pm.getStartPage();i<=pm.getEndPage();i++){
 %>
-<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
 
-<a href="${pageContext.request.contextPath}/notice/noticeList_p.do?page=${i}${parm}">${i}</a> &nbsp;
-<%		
-//} 
-%>
+<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+<c:choose>
+<c:when test="${i == pm.scri.page}">
+<a href="${pageContext.request.contextPath}/notice/noticeList_p.do?page=${i}${parm}"><div class="act">${i}</div></a> &nbsp;
+</c:when>
+<c:otherwise>
+<a href="${pageContext.request.contextPath}/notice/noticeList_p.do?page=${i}${parm}"><div class="de">${i}</div></a> &nbsp;
+</c:otherwise>
+</c:choose>
 </c:forEach>
+
+<%		
+//}
+
+%>
 </td>
 <td style="width:100px;text-align:left;">
 <% //if(pm.isNext() ==true && pm.getEndPage()>0){ %>
 <c:if test="${pm.next == true&&pm.endPage>0}">
 <a href="${pageContext.request.contextPath}/notice/noticeList_p.do?page=${pm.endPage+1}">
-▶
+<span class="material-symbols-outlined">
+arrow_forward_ios
+</span>
 </a>
 <%//} %>
 </c:if>
@@ -262,7 +313,7 @@ border: 1px solid black;
 </table>
 	
    
-    <br>
+<br>
     
 <form name="frm" 
 action="${pageContext.request.contextPath}/notice/noticeList_p.do"
@@ -270,15 +321,17 @@ method="post">
         <table border=0>
             <tr>
                 <td style="width:500px"></td>
-                <td>
-                    <select name="subject">
+                <td class="sub">
+                    <select class="searchsubject" name="subject">
                     <c:forEach var="cv" items="${courselist}">
                         <option value="${cv.cidx}">${cv.c_name}</option>
                         </c:forEach>
                     </select>
                 </td>
                 
-                <td><input type="submit" class="btn" value="검색"></td>
+                <td><button type="submit" class="btn"><span class="material-symbols-outlined">
+                screen_search_desktop
+                </button></span></td>
             </tr>
         </table>
 </form>
