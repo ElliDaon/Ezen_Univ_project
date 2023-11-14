@@ -19,6 +19,25 @@
 <script>
 
 
+function adminLogin(){
+	var fm = document.adminfrm;
+	
+	if(fm.adminId.value==""){
+		alert("아이디를 입력하세요");
+		fm.adminId.focus();
+		return;
+	}else if(fm.adminPwd.value==""){
+		alert("비밀번호를 입력하세요");
+		fm.adminPwd.focus();
+		return;
+	}
+	
+	fm.action ="<%=request.getContextPath()%>/admin/adminLogin.do"; 
+    fm.method = "post"; 
+    fm.submit();
+    return;
+}
+
 function login(){
     var fm = document.frm;
     
@@ -158,8 +177,8 @@ function CheckEmail(str){
 						<ion-icon name="play-circle-outline"></ion-icon>
 						<h4>관리자 로그인</h4>
 					</div>
-					- I D : admin<br>
-					- PWD : 1111
+					- I D : adminezen<br>
+					- PWD : ezen1111
 				</div>
 				<div class="admin_login">
 					<button class="admin_login_btn"><label>관리자 로그인</label></button>
@@ -174,6 +193,20 @@ function CheckEmail(str){
 			<h2><ion-icon name="extension-puzzle-outline"></ion-icon> 이용방법</h2><br>
 			<ion-icon name="caret-forward"></ion-icon> 출결시스템 가입 필수<br>
 			<ion-icon name="caret-forward"></ion-icon> 이용안내 메뉴얼<br>
+			
+			
+			<div class="admin_login_wrapper">
+				<form name="adminfrm">
+				<span class="admin-close"><ion-icon name="close-outline"></ion-icon></span>
+				<p class="adminlogin_top">Admin Login</p>
+				<br>
+				<input type="text" name="adminId" id="adminId" placeholder="adminezen"><br>
+				<input type="password" name="adminPwd" id="adminPwd" placeholder="ezen1111"><br>
+				<button name="adminLogin_btn" onclick="adminLogin()">LOGIN</button>
+				</form>
+			</div>
+			
+			
 			<div class="info-btn">
 				<button>
 					<label>교수 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>

@@ -4,6 +4,9 @@ const loginLink = document.querySelector('.login-link');
 const registerLink = document.querySelector('.register-link');
 const btnpopup = document.querySelector('.btnLogin-popup');
 const closebtn = document.querySelector('.icon-close');
+const adminbtn = document.querySelector('.admin_login_btn');
+const adminclbtn = document.querySelector('.admin-close');
+const adminWrapper = document.querySelector('.admin_login_wrapper');
 
 registerLink.addEventListener('click', ()=> {
     wrapper.classList.add('active');
@@ -22,6 +25,15 @@ closebtn.addEventListener('click', ()=> {
     wrapper.classList.remove('active-popup');
     first.classList.remove('active-popup');
 });
+
+adminbtn.addEventListener('click',()=> {
+	adminWrapper.classList.add('active-popup')
+})
+
+adminclbtn.addEventListener('click',()=> {
+	adminWrapper.classList.remove('active-popup')
+})
+
 
 $(document).ready(function(){
   $(window).scroll(function(){
@@ -101,3 +113,4 @@ function pwcheck(){
 		$('#pwd-check2').css('color','red');
 	}
 }
+
