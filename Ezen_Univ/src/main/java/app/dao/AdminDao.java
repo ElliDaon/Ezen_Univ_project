@@ -215,7 +215,7 @@ public class AdminDao {
 		
 	}
 
-	public int studentCheckedADeny(int[] selectedData) {
+	public int studentCheckedDeny(int[] selectedData) {
 		int exec=0;
 		String sql = "delete from student where sidx=?";
 		
@@ -285,7 +285,7 @@ public class AdminDao {
 		
 	}
 
-	public int professorCheckedADeny(int[] selectedData) {
+	public int professorCheckedDeny(int[] selectedData) {
 		int exec=0;
 		String sql = "delete from professor where pidx=?";
 		
@@ -320,7 +320,7 @@ public class AdminDao {
 		
 	}
 
-	public ArrayList<CourseVo> courseRegisterList(int year_int, int term_int) {
+	public ArrayList<CourseVo> courseListPrint(int year_int, int term_int) {
 		ArrayList<CourseVo> list = new ArrayList<CourseVo>();
 		ResultSet rs=null;
 		
@@ -414,7 +414,7 @@ public class AdminDao {
         return exec;
     }
 
-	public ArrayList<MemberVo> registerView(String c_major) {
+	public ArrayList<MemberVo> courseRegisterCheck(String c_major) {
 		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
 		ResultSet rs = null;
 		
@@ -445,4 +445,237 @@ public class AdminDao {
 		return list;
 	}
 
+	public int courseRegister(String c_name, String c_major, String c_sep, String p_no, String c_grade, String p_name,
+			String c_score, String c_totaltime, ArrayList<CourseTimeVo> ctv) {
+		PreparedStatement selectStmt =null;
+		PreparedStatement intsertStmtPidx = null;
+		PreparedStatement insertCourseTimeStmt = null;
+		ResultSet rs = null;
+		int exec = 0;
+
+	    try {
+	    	
+	    	// 트랜잭션 설정
+	    	conn.setAutoCommit(false);
+	    	
+	        // pidx 값을 가져오기
+	    	String selectPidx = "select pidx from professor where p_major=? and p_no=? and p_name =?";
+	        selectStmt = conn.prepareStatement(selectPidx);
+	        selectStmt.setString(1, c_major);
+	        selectStmt.setString(2, p_no);
+	        selectStmt.setString(3, p_name);
+	        rs = selectStmt.executeQuery();
+	        
+	        int pidx = 0;
+	        if (rs.next()) {
+	            pidx = rs.getInt("pidx");
+	        }
+
+	        // course 테이블에 데이터 삽입
+	        String insertCourse = "INSERT INTO course(pidx, c_name, c_grade, c_major, c_score, c_totaltime, c_sep) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        intsertStmtPidx = conn.prepareStatement(insertCourse);
+	        intsertStmtPidx.setInt(1, pidx);
+	        intsertStmtPidx.setString(2, c_name);
+	        intsertStmtPidx.setString(3, c_grade);
+	        intsertStmtPidx.setString(4, c_major);
+	        intsertStmtPidx.setString(5, c_score);
+	        intsertStmtPidx.setString(6, c_totaltime);
+	        intsertStmtPidx.setString(7, c_sep);
+
+	        exec = intsertStmtPidx.executeUpdate();
+	        
+	        // coursetime 테이블에 데이터 삽입
+	        for (CourseTimeVo courseTimeVo : ctv) {
+	        	String insertCourseTime = "insert into coursetime(cidx,ct_room,ct_week,pe_period,ct_semester,ct_year)\n"
+	        			+ "values((select max(cidx) from course),?,?,?,?,?)";
+	        	insertCourseTimeStmt = conn.prepareStatement(insertCourseTime);
+	            insertCourseTimeStmt.setString(1, courseTimeVo.getCt_room());
+	            insertCourseTimeStmt.setString(2, courseTimeVo.getCt_week());
+	            insertCourseTimeStmt.setInt(3, courseTimeVo.getPe_period());
+	            insertCourseTimeStmt.setInt(4, courseTimeVo.getCt_semester());
+	            insertCourseTimeStmt.setInt(5, courseTimeVo.getCt_year());
+	            
+	            int result = insertCourseTimeStmt.executeUpdate();
+	            
+	            // result를 확인하여 적절한 처리 수행
+	            if (result == 0) {
+	                throw new SQLException("Failed to insert into coursetime");
+	            }
+	        }
+	        
+	        // 트랜잭션 성공 시 커밋
+	        conn.commit();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+
+	        try {
+	            // 트랜잭션 롤백
+	            if (conn != null) {
+	                conn.rollback();
+	            }
+	        } catch (SQLException rollbackException) {
+	            rollbackException.printStackTrace();
+	        }
+
+	    } finally {
+	        try {
+	            // ResultSet, PreparedStatement, Connection close 로직
+	            if (rs != null) rs.close();
+	            if (selectStmt != null) selectStmt.close();
+	            if (intsertStmtPidx != null) intsertStmtPidx.close();
+	            if (insertCourseTimeStmt != null) insertCourseTimeStmt.close();
+	            if (conn != null) {
+	                // 원래의 autocommit 설정으로 변경
+	                conn.setAutoCommit(true);
+	                conn.close();
+	            }
+	        } catch (SQLException closeException) {
+	            closeException.printStackTrace();
+	        }
+	    }
+
+	    return exec;
+	}
+
+	public ArrayList<MemberVo> courseMatchStudentList(int cidx) {
+		ArrayList<MemberVo> sMacthList = new ArrayList<MemberVo>();
+		ResultSet rs = null;
+		
+		String sql = "select a.sidx,a.s_name,a.s_no,a.s_grade,a.s_major\n"
+				+ "from student a left join courselist b on a.sidx=b.sidx\n"
+				+ "left join course c on b.cidx=c.cidx\n"
+				+ "where b.sidx not in (select sidx from courselist where cidx =?) or b.cidx is null and a.s_yn='Y'\n"
+				+ "group by a.sidx,a.s_name,a.s_no,a.s_grade,a.s_major";
+		
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				MemberVo mv = new MemberVo();
+				
+				mv.setSidx( rs.getInt("a.sidx") ); 
+				mv.setS_name( rs.getString("a.s_name") );
+				mv.setS_no( rs.getInt("a.s_no"));
+				mv.setS_grade( rs.getInt("a.s_grade"));
+				mv.setS_major( rs.getString("a.s_major"));
+				
+				sMacthList.add(mv);
+			}
+		}catch(Exception e){
+			e.printStackTrace();		
+		}finally{
+			try{
+				//rs.close();
+				//pstmt.close();
+				//conn.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return sMacthList;
+	}
+
+	public int checkedEnroll(ArrayList<MemberVo> mv, int cidx) {
+		PreparedStatement selectStmt =null;
+		PreparedStatement insertStmtSidxCtidx = null;
+		ResultSet rs = null;
+		int exec = 0;
+		
+	    try {
+	        // ctidx 값을 가져오기
+	        String selectCtidx = "SELECT ctidx FROM coursetime a JOIN course b ON a.cidx = b.cidx WHERE b.cidx = ?";
+	        selectStmt = conn.prepareStatement(selectCtidx);
+	        selectStmt.setInt(1, cidx);
+	        rs = selectStmt.executeQuery();
+
+	        // ctidx 값을 저장할 리스트
+	        ArrayList<Integer> ctidxList = new ArrayList<>();
+	        while (rs.next()) {
+	            int ctidx = rs.getInt("ctidx");
+	            ctidxList.add(ctidx);
+	        }
+
+	        // sidxArray와 ctidxList를 순회하며 데이터 입력
+	        String insertcourseList = "INSERT INTO courselist(sidx, cidx, ctidx) VALUES (?, ?, ?)";
+	        insertStmtSidxCtidx = conn.prepareStatement(insertcourseList);
+
+	        for (MemberVo memberVo : mv) {
+	            int sidx = memberVo.getSidx();
+
+	            // ctidxList를 기준으로 sidx를 여러번 insert
+	            for (int ctidx : ctidxList) {
+	            	insertStmtSidxCtidx.setInt(1, sidx);
+	            	insertStmtSidxCtidx.setInt(2, cidx);
+	            	insertStmtSidxCtidx.setInt(3, ctidx);
+
+	                exec += insertStmtSidxCtidx.executeUpdate();
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // 필요에 따라 리소스를 닫아주는 로직 추가
+	        try {
+	            if (rs != null) rs.close();
+	            if (selectStmt != null) selectStmt.close();
+	            if (insertStmtSidxCtidx != null) insertStmtSidxCtidx.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return exec;
+	}
+
+	public int studentEnroll(int cidx, int sidx) {
+		PreparedStatement selectStmt =null;
+		PreparedStatement insertStmtCtidx = null;
+		ResultSet rs = null;
+		int exec = 0;
+	    try {
+	        // ctidx 값을 가져오기
+	        String selectCtidx = "SELECT ctidx FROM coursetime a JOIN course b ON a.cidx = b.cidx WHERE b.cidx = ?";
+	        selectStmt = conn.prepareStatement(selectCtidx);
+	        selectStmt.setInt(1, cidx);
+	        rs = selectStmt.executeQuery();
+
+	        // ctidx 값을 저장할 리스트
+	        ArrayList<Integer> ctidxList = new ArrayList<>();
+	        while (rs.next()) {
+	            int ctidx = rs.getInt("ctidx");
+	            ctidxList.add(ctidx);
+	        }
+
+	        // ctidxList를 순회하며 데이터 입력
+	        String insertcourseList = "INSERT INTO courselist(sidx, cidx, ctidx) VALUES (?, ?, ?)";
+	        insertStmtCtidx = conn.prepareStatement(insertcourseList);
+	        
+            for (int ctidx : ctidxList) {
+            	insertStmtCtidx.setInt(1, sidx);
+            	insertStmtCtidx.setInt(2, cidx);
+            	insertStmtCtidx.setInt(3, ctidx);
+
+                exec += insertStmtCtidx.executeUpdate();
+            }
+	            
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // 필요에 따라 리소스를 닫아주는 로직 추가
+	        try {
+	            if (rs != null) rs.close();
+	            if (selectStmt != null) selectStmt.close();
+	            if (insertStmtCtidx != null) insertStmtCtidx.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return exec;
+
+	}
 }

@@ -21,10 +21,10 @@
                     <a href="../admin/accept.do" target="_parent">가입승인</a>
                 </td>
                 <td>
-                    <a href="../admin/courseRegister.jsp" target="_parent">강의등록</a>
+                    <a href="../admin/courseRegister.do" target="_parent">강의등록</a>
                 </td>
                 <td>
-                    <a href="../admin/courseEnroll.jsp" target="_parent">수강등록</a>
+                    <a href="../admin/courseEnroll.do" target="_parent">수강등록</a>
                 </td>
                 <td>
                     <a href="../admin/openDate.jsp" target="_parent">개강날짜 등록</a>

@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>가입승인</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attmanage.css">
@@ -27,7 +27,7 @@
             width: 100%;
         }
         .contents{
-            padding: 10px;
+            padding: 20px;
         }
         .std-list #btn{
             background: rgb(207, 247, 207);
@@ -107,44 +107,44 @@
             
 			// 학생 전체 클릭 체크박스
             $("#studentSelectAll").on("change", function() {
-                var isChecked = $(this).prop("checked");
+                let isChecked = $(this).prop("checked");
                 $("[name='student']").prop("checked", isChecked);
             });
 			// 교수 전체 클릭 체크박스
             $("#professorSelectAll").on("change", function() {
-                var isChecked = $(this).prop("checked");
+                let isChecked = $(this).prop("checked");
                 $("[name='professor']").prop("checked", isChecked);
             });
 			
 	        // 학생 일괄승인 버튼 클릭 이벤트
             $('#submitButton1').on('click', function(event) {
-                var confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
+                let confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
-	                var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllOk.do';
+	                let newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllOk.do';
 	                $('#studentAccept').prop('action', newAction); 
                 }
             });
             // 학생 일괄거부 버튼 클릭 이벤트
             $('#submitButton2').on('click', function(event) {
-                var confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
+                let confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
-	                var newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllNo.do';
+	                let newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllNo.do';
 	                $('#studentAccept').prop('action', newAction); 
                 }
             });
 	        // 교수 일괄승인 버튼 클릭 이벤트
             $('#submitButton3').on('click', function(event) {
-                var confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
+                let confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
-	                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do';
+	                let newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do';
 	                $('#professorAccept').prop('action', newAction); 
                 }
             });
             // 교수 일괄거부 버튼 클릭 이벤트
             $('#submitButton4').on('click', function(event) {
-                var confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
+                let confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
-	                var newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllNo.do';
+	                let newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllNo.do';
 	                $('#professorAccept').prop('action', newAction); 
                 }
             });
@@ -153,7 +153,7 @@
         
         
      function acceptStudentOk(sidx){
-         var confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
          if (confirmation) {
 	    	// 학생 회원가입 승인
 	     	$.ajax({
@@ -163,7 +163,7 @@
 	    		dataType : "json",
 	    		cache : false,
 	    		success : function(data){
-	    			alert("통신성공");
+	    			//alert("통신성공");
 	    			document.location.href = document.location.href;		
 	    			
 	    		},
@@ -174,7 +174,7 @@
     	}
      }
      function acceptProfessorOk(pidx){
-         var confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
          if (confirmation) {
     		// 교수 회원가입 승인
 	     	$.ajax({
@@ -184,7 +184,7 @@
 	     		dataType : "json",
 	     		cache : false,
 	     		success : function(data){
-	     			alert("통신성공");
+	     			//alert("통신성공");
 	     			document.location.href = document.location.href;		
 	     			
 	     		},
@@ -195,7 +195,7 @@
      	}
      }
      function acceptStudentNo(sidx){
-         var confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
          if (confirmation) {
      		// 학생 회원가입 거부
 	      	$.ajax({
@@ -216,7 +216,7 @@
      	}
      }
      function acceptProfessorNo(pidx){
-         var confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
          if (confirmation) {
 	     	// 교수 회원가입 거부
 	      	$.ajax({
@@ -226,7 +226,7 @@
 	      		dataType : "json",
 	      		cache : false,
 	      		success : function(data){
-	      			alert("통신성공");
+	      			//alert("통신성공");
 	      			document.location.href = document.location.href;		
 	      			
 	      		},
@@ -299,8 +299,7 @@
                                 <td>${mv.s_major}</td>
                                 <td style="padding-right:10px">
                                     <button type="button" id="btn" onclick='acceptStudentOk(${mv.sidx})'>승인</button>
-                                    <button type="button" id="btn2" onclick='acceptStudentNo(${mv.sidx})'>거부</button>
-                                    
+                                    <button type="button" id="btn2" onclick='acceptStudentNo(${mv.sidx})'>거부</button>                
                                 </td>
                             </tr>
                             </c:forEach>
@@ -322,12 +321,12 @@
                                 <td style="width: 50px;">
                                     <input type="checkbox" name="professorSelectAll"  id="professorSelectAll"/>
                                 </td>
-                                <td style="width: 50px;">순번</td>
-                                <td style="width: 50px;">구분</td>
-                                <td style="width: 100px;">이름</td>
-                                <td style="width: 150px;">생년월일</td>
-                                <td style="width: 150px;">이메일</td>
-                                <td style="width: 200px;">전공</td>
+                                <td style="width: 50px">순번</td>
+                                <td style="width: 50px">구분</td>
+                                <td style="width: 100px">이름</td>
+                                <td style="width: 150px">생년월일</td>
+                                <td style="width: 150px">이메일</td>
+                                <td style="width: 200px">전공</td>
                                 <td colspan="2" width: 50px;>처리</td>
                             </tr>
                         </thead>
