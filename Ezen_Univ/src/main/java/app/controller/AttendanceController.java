@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import app.dao.AttendanceDao;
+import app.dao.MemberDao;
 import app.domain.AttendanceVo;
+import app.domain.MemberVo;
 
 @WebServlet("/AttendanceController")
 public class AttendanceController extends HttpServlet{
@@ -56,6 +58,11 @@ public class AttendanceController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 			
+			PrintWriter out = response.getWriter();
+			out.println(sidx);
+			System.out.println(sidx);
+			
+			
 		}else if(location.equals("attendanceCount.do")) {
 			AttendanceDao ad = new AttendanceDao();
 			
@@ -74,9 +81,9 @@ public class AttendanceController extends HttpServlet{
 			int absentcnt = 0;
 			
 			attcnt = av.getAttendanceCount();
-			latecnt = av.getLateCount();
-			leavecnt = av.getLeaveCount();
-			absentcnt = av.getAbsentCount();
+			latecnt = alv.getLateCount();
+			leavecnt = alev.getLeaveCount();
+			absentcnt = abv.getAbsentCount();
 			String str ="";
 			str = str + "{\"attcnt\":"+attcnt+",\"latecnt\":"+latecnt+",\"leavecnt\":"+leavecnt+",\"absentcnt\":"+absentcnt+"}";
 			
@@ -124,7 +131,6 @@ public class AttendanceController extends HttpServlet{
 			System.out.println(str2);
 			
 		}else if(location.equals("attendanceSituation_p.do")) {
-			System.out.println("컨트롤러");
 			AttendanceDao ad = new AttendanceDao();
 			
 			HttpSession session = request.getSession();
@@ -149,7 +155,96 @@ public class AttendanceController extends HttpServlet{
 			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
-			System.out.println(pidx);
+			
+		}else if(location.equals("searchList.do")) {
+			AttendanceDao ad = new AttendanceDao();
+			
+			String c_name = request.getParameter("c_name");
+			String a_date = request.getParameter("a_date");
+			String a_start = request.getParameter("a_start");
+			
+			ArrayList<AttendanceVo> searchlist = ad.searchList(c_name, a_date, a_start);
+			int list_size = searchlist.size();
+			String s_name = "";
+			String s_major = "";
+			int s_no = 0;
+			String e_attendance = "";
+			
+			String str = "";
+			
+			for(int i=0; i<list_size; i++) {
+				s_name = searchlist.get(i).getS_name();
+				s_major = searchlist.get(i).getS_major();
+				s_no = searchlist.get(i).getS_no();
+				e_attendance = searchlist.get(i).getE_attendance();
+				
+				String comma = "";
+				if (i == list_size - 1) {
+					comma = "";
+				} else {
+					comma = ",";
+				}
+				
+				str = str + "{\"s_name\" : \""+s_name+"\" , \"s_major\" : \""+s_major+"\", \"s_no\" : \""+s_no+"\", \"e_attendance\" : \""+e_attendance+"\"}"+comma;
+			}
+			
+			PrintWriter out = response.getWriter();
+			out.println("[" + str + "]");
+			
+		}else if(location.equals("attendancePreManagement.do")) {
+			AttendanceDao ad = new AttendanceDao();
+			
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int semester = 0;
+			if(month >= 1 && month <= 7) {
+				semester = 1;
+			}else {
+				semester = 2;
+			}
+			
+			ArrayList<AttendanceVo> courselist = ad.selectCourse(pidx, year, semester);
+			request.setAttribute("list", courselist);
+			request.setAttribute("year", year);
+			request.setAttribute("semester", semester);
+			
+			String path = "/attendance/attendancePreManagement.jsp";
+			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("tscount.do")){
+			AttendanceDao ad = new AttendanceDao();
+			
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
+			
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int semester = 0;
+			if(month >= 1 && month <= 7) {
+				semester = 1;
+			}else {
+				semester = 2;
+			}
+			
+			AttendanceVo av = ad.totalStudentCount(cidx, year, semester);
+			int s_cnt = 0;
+			
+			s_cnt = av.getS_cnt();
+			
+			String str = "";
+			
+			str = str + "{\"s_cnt\" : "+s_cnt+"}";
+				
+			
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			System.out.println(str);
 		}
-	}
+	}	
 }
