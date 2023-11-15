@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.ArrayList" %> 
+<%@ page import="app.domain.*" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +12,146 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <link rel="stylesheet" href="../css/noticelist_s.css">
+
+
+<style>
+*{
+    margin: 0;
+    padding: 0;  
+}
+body{
+    text-align: center;
+}
+
+
+a:hover {
+    color: red;
+   
+}
+
+a{
+	text-decoration: none; 
+    color: inherit; 
+}
+
+.container {
+    display: inline;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 100px;
+    margin-top: 10px;
+}
+
+
+
+.header{
+    background-color: bisque;
+    height: 10%;
+}
+iframe{
+    border: 0;
+    margin: 0;
+    display: block;
+}
+.sidebar{
+    display: inline;
+    width: 10%;
+    height: 100%;
+    background-color: #DEDFEA;
+}
+.myinfo{
+    display: block;
+    width: 100%;
+}
+.menubar{
+    display: block;     
+    width: 100%;
+    height: 100%;
+}
+.wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+.pagination{
+    text-align: center;
+    margin-top: -50px;
+}
+.pagination a{
+    color: black;
+    text-decoration: none;
+}
+
+.pagination a:hover{
+    color:red;
+    text-decoration: underline;
+}
+
+.pagination span a:focus{
+    color: red;
+    font-weight: bold;
+}
+
+.noticelist tbody tr:hover{
+    background-color: aliceblue;
+}
+
+.noticelist tbody tr{
+
+    height: 50px;
+
+}
+.new {
+   color: orange;
+   font-weight: 2000;
+}
+
+.nidx, .viewcnt, .writeday{
+    color: gainsboro;
+}
+
+.btn{
+    background-color: black;
+    border-radius: 5px;
+    color: whitesmoke;
+}
+
+
+.writediv{
+    width: 80px;
+    height: 25px;
+    background-color: black;
+    border-radius: 5px;
+    margin-top: 10px;     
+    
+}
+
+.writediv a{
+    text-align: center;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.writediv:hover{
+background-color: white;
+border: 1px solid black;
+}
+
+.writediv a:hover{
+    color: black;
+}
+
+.contents{
+    color: black;
+    text-decoration: none;
+}
+
+.contents:hover{
+    text-decoration: underline;
+}
+
+
+</style>
 
 </head>
 <body>
@@ -24,132 +167,126 @@
                 <iframe src = "../leftmenu/notice_s.jsp" width="100%" height="100%"></iframe>
             </div>
         </div>
-        
-        
-    <div class="container">
-    <h1>»ﬁ∫∏∞≠ ∞¯¡ˆ</h1>
-    <table class="noticelist" border=1 style="width:800px;" >	
-        <thead>
-            <tr>
-                <th style="width: 100px;">±€π¯»£</th>
-                <th>¡¶∏Ò</th>
-                <th>¿€º∫¿œ</th>
-                <th>¡∂»∏ºˆ</th>
-            </tr>
-        </thead>
-        <tbody style="border: 0;" >	
-            <tr>
-                <th class="nidx">10</th>
-                <th class="title"><span class="new">new</span><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-06][∞Ì±ﬁ«¡∑Œ±◊∑°π÷ ææÓ π◊ Ω«Ω¿]</a></th>
-                <th class="writeday">2023-11-04</th>
-                <th class="viewcnt">15</th>   
-            </tr>
-            <tr>
-                <th class="nidx">9</th>
-                <th class="title"><span class="new">new</span><a class="contents" href="noticeContents_s.jsp">[∫∏∞≠][2023-11-05][∞Ì±ﬁ«¡∑Œ±◊∑°π÷ ææÓ π◊ Ω«Ω¿]</a></th>
-                <th class="writeday">2023-11-04</th>
-                <th class="viewcnt">15</th>   
-            </tr>
-            <tr>
-                <th class="nidx">8</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-11][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-11-01</th>
-                <th class="viewcnt">13</th>   
-            </tr>
-            <tr>
-                <th class="nidx">7</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[∫∏∞≠][2023-11-01][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-11-01</th>
-                <th class="viewcnt">13</th>   
-            </tr>
-            <tr>
-                <th class="nidx">6</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-13][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-10-27</th>
-                <th class="viewcnt">12</th>   
-            </tr>
-            <tr>
-                <th class="nidx">5</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-08][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-10-27</th>
-                <th class="viewcnt">12</th>   
-            </tr>
-            <tr>
-                <th class="nidx">4</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-04][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-10-27</th>
-                <th class="viewcnt">12</th>   
-            </tr>
-            <tr>
-                <th class="nidx">3</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-04][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-10-27</th>
-                <th class="viewcnt">12</th>   
-            </tr>
-            <tr>
-                <th class="nidx">2</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-07][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-10-27</th>
-                <th class="viewcnt">12</th>   
-            </tr>
-            <tr>
-                <th class="nidx">1</th>
-                <th class="title"><a class="contents" href="noticeContents_s.jsp">[»ﬁ∞≠][2023-11-06][Ω√Ω∫≈€ º“«¡∆Æø˛æÓ º≥∞Ë]</a></th>
-                <th class="writeday">2023-10-27</th>
-                <th class="viewcnt">12</th>   
-            </tr>
-        </tbody>
-        </table>
-   
-
-
-    </tbody>
-    <br>
-
-    <div class="pagination">
-        <a href="#" class="first" title="√π∆‰¿Ã¡ˆ∑Œ ¿Ãµø">&lt;&lt;</a>
-            <a href="#" class="btnMove next" title="¿Ã¿¸ ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">&lt;</a>
     
-            <span>
-                <a href="#" id="page1" title="1 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">1</a>
-                <a href="#" id="page2" title="2 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">2</a>
-                <a href="#" id="page3" title="3 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">3</a>
-                <a href="#" id="page4" title="4 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">4</a>
-                <a href="#" id="page5" title="5 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">5</a>
-                <a href="#" id="page6" title="6 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">6</a>
-                <a href="#" id="page7" title="7 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">7</a>
-                <a href="#" id="page8" title="8 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">8</a>
-                <a href="#" id="page9" title="9 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">9</a>
-                <a href="#" id="page10" title="10 ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">10</a>
-            </span>
+    <div class="container">
+    	
+        <h1>Ìú¥Î≥¥Í∞ï Í≥µÏßÄ</h1>
+        <table class="noticelist" border=1 style="width:800px;" >
+        	
+            <thead>
+                <tr>
+                    <th style="width: 100px;">Í∏ÄÎ≤àÌò∏</th>
+                    <th>Ï†úÎ™©</th>
+                    <th>ÏûëÏÑ±Ïùº</th>
+                    <th>Ï°∞ÌöåÏàò</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+       		<c:forEach var="nv" items="${alist}">
+			<tr>
+			<td>
+			${nv.nidx}
+			</td>
+			<td class="subject">
+            <a href="${pageContext.request.contextPath}/notice/noticeContents_s.do?nidx=${nv.nidx}">
+                <c:if test="${nv.n_dday eq 'true'}">
+               <span style="color: orange; font-weight: bold;">new</span>
+                </c:if>
+                ${nv.n_subject}
+            </a>
+		
 
-       
-                <a href="#" class="btnMove next" title="¥Ÿ¿Ω ∆‰¿Ã¡ˆ∑Œ ¿Ãµø">&gt;</a>
-        <a href="#" class="btnMove last" title="≥°∆‰¿Ã¡ˆ∑Œ ¿Ãµø">&gt;&gt;</a>
+			</td>
 
-    </div>
+	
+			<td>
+ 			 ${nv.n_writeday.split(' ')[0]}
+			</td>
+			<td>
+			${nv.n_count}
+			</td>
+			
+			</tr>
+			</c:forEach>
 
+        	</tbody>
+    </table>
+
+<c:set var="parm" value="&subject=${pm.scri.subject}" />
+    <table>
+        <tr>
+            <td style="width:700px"></td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
     <br>
 
-        <form class="search-form" method="post">
-            <table border=0>
-            <tr>
-            <td style="width:500px"></td>
-            <td>
-            <select name="searchType">
-            <option value="subject">¡¶∏Ò</option>
-            <option value="writer">¿€º∫¿⁄</option>
-            </select>
-            </td>
-            <td><input type="text" class="keyword" placeholder="∞ÀªˆæÓ∏¶ ¿‘∑¬«ÿ¡÷ººø‰." size=20></td>
-            <td><input type="submit" class="btn" value="∞Àªˆ"></td>
-            </tr>
-            </table>
-        </form>
-            
-            
-</div>
+<table border=0 style="width:600px;text-align:center;">
+<tr>
+<td style="width:100px;text-align:right;">
+<%// if (pm.isPrev()==true) { %>
+<c:if test="${pm.prev == true}">
+<a href="${pageContext.request.contextPath}/notice/noticeList_s.do?page=${pm.startPage-1}${parm}">
+‚óÄ
+</a>
+</c:if>
+<%//} %>
+</td>
+<td> 
+<% 
+//for(int i=pm.getStartPage();i<=pm.getEndPage();i++){
+%>
+<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
 
+<a href="${pageContext.request.contextPath}/notice/noticeList_s.do?page=${i}${parm}">${i}</a> &nbsp;
+<%		
+//} 
+%>
+</c:forEach>
+</td>
+<td style="width:100px;text-align:left;">
+<% //if(pm.isNext() ==true && pm.getEndPage()>0){ %>
+<c:if test="${pm.next == true&&pm.endPage>0}">
+<a href="${pageContext.request.contextPath}/notice/noticeList_s.do?page=${pm.endPage+1}">
+‚ñ∂
+</a>
+<%//} %>
+</c:if>
+</td>
+</tr>
+</table>
+	
+   
+    <br>
+    
+<form name="frm" 
+action="${pageContext.request.contextPath}/notice/noticeList_s.do"
+method="post">
+        <table border=0>
+            <tr>
+                <td style="width:500px"></td>
+                <td>
+                    <select name="subject">
+                    <c:forEach var="cv" items="${courselist}">
+                        <option value="${cv.cidx}">${cv.c_name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+                
+                <td><input type="submit" class="btn" value="Í≤ÄÏÉâ"></td>
+            </tr>
+        </table>
+</form>
+  
+      
+   
+    </div>
+ 
+</div>
+    
 
 </body>
 </html>

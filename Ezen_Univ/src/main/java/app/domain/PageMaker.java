@@ -3,11 +3,12 @@ package app.domain;
 //하단페이지 네비게이션에 필요한 변수들의 집합 데이터클래스
 public class PageMaker {
 
-	//페이지목록번호 개수  1  2 3 4 5 6 7 8 9
+	//페이지목록번호 개수  1 2 3 4 5 6 7 8 9
 	private int displayPageNum =10;
 	private int startPage;  // 목록의 시작번호 변수
 	private int endPage;  //목록의 끝번호 변수
 	private int totalCount; // 총게시물수 담는변수
+	private int currentPage;
 	
 	private boolean prev; //이전버튼존재 유무변수
 	private boolean next; //다음버튼존재 유무변수
@@ -90,6 +91,14 @@ public class PageMaker {
 
 	public void setNext(boolean next) {
 		this.next = next;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
 	
