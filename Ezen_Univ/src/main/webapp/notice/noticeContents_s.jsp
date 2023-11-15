@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +67,10 @@
     margin: 5px;
 }
 
+.noticeinfo{
+	text-align : right;	
+}
+
 </style>
 </head>
 <body>
@@ -83,22 +87,29 @@
             </div>
         </div>
     <div class="contents">
-        <h1>ÈŞº¸°­ °øÁö»çÇ×</h1>
+        <h1>íœ´ë³´ê°• ê³µì§€ì‚¬í•­</h1>
         <table class="noticewrite">
         <tr class="subject">
-            <td>Á¦¸ñ</td>
-            <td>[ÈŞ°­][2023-11-06][°í±ŞÇÁ·Î±×·¡¹Ö ¾ğ¾î ¹× ½Ç½À]
+            <td>ì œëª©</td>
+            <td>[${nv.n_category}][${nv.n_skipdate}][${nv.c_name}]
             </td>        
+        </tr>
+        <tr class="noticeinfo">
+        	<td>
+        	ì¡°íšŒìˆ˜ : ${nv.n_count} &nbsp;&nbsp;  ì‘ì„±ì¼ì : ${nv.n_writeday}
+       		</td>
+       		
         </tr>
         <tr>
             <td class="text-box">
-                °øÁö»çÇ×³»¿ëÀÔ´Ï´Ù.<br>
-                ÈŞ°­ÀÌ¶ó°í
+                ${nv.n_contents}
             </td>
         </tr>
         <tr>
             <td class="list">
-                <a class="link" href="noticeList_s.jsp">¸ñ·Ï</a>
+                <a class="link" href="noticeList_p.do">ëª©ë¡</a>
+            
+
             </td>
         </tr> 
         </table>
