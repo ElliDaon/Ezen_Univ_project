@@ -258,7 +258,9 @@ public class NoticeDao {
 		String sql="select * from notice A\r\n"
 				+ "join course B\r\n"
 				+ "on A.cidx = B.cidx\r\n"
-				+ "where nidx=?";
+				+ "join professor C\r\n"
+				+ "on A.pidx = C.pidx\r\n"
+				+ "where A.nidx=?";
 		PreparedStatement pstmt= null;
 		ResultSet rs = null;
 		//향상된 구문클래스를 꺼낸다
@@ -280,6 +282,7 @@ public class NoticeDao {
 				nv.setPidx(rs.getInt("pidx"));
 				nv.setCidx(rs.getInt("cidx"));
 				nv.setC_name(rs.getString("B.c_name"));
+				nv.setP_name(rs.getString("C.p_name"));
 
 				
 				

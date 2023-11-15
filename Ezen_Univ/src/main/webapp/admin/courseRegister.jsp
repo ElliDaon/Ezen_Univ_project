@@ -11,32 +11,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
    <link rel="stylesheet" href="../css/courseRegister.css">
-    <style>
-        .container{
-            display: flex;
-        }
-        .sidebar{
-            width: 50%;
-        }
-        .myinfo{
-            width: 100%;
-        }
-        .menubar{
-            width: 100%;
-        }
-        .contents{
-            padding: 20px;
-        }
-        
-    </style>
+   <style type="text/css">
+   .container{
+    display: flex;
+	}
+	.sidebar{
+	    width: 50%;
+	}
+	.myinfo{
+	    width: 100%;
+	}
+	.menubar{
+	    width: 100%;
+	}
+	.contents{
+	    padding: 20px;
+	}
+   
+   </style>
     <script>
     $(document).ready(function(){
         // 현재 날짜를 가져와서 input에 설정
-        var currentDate = new Date();
-        var year = currentDate.getFullYear();
+        let currentDate = new Date();
+        let year = currentDate.getFullYear();
         
-        var month = currentDate.getMonth() + 1;
-        var term = (month >= 3 && month <= 8) ? 1 : 2;
+        let month = currentDate.getMonth() + 1;
+        let term = (month >= 3 && month <= 8) ? 1 : 2;
         
         $('#yearInput').val(year);
         $('#termInput').val(term);
@@ -44,38 +44,57 @@
         
         // 화면 컨트롤
         
-        $('#courseList1').hide();
-        $('#courseList2').hide();
+        $('#courseListInput').hide();
+        $('#courseTimeListInput').hide();
         
         $('#registerBtn').on('click', function() {
-            $('#courseList1').show();
+            $('#courseListInput').show();
         });
         
         $('#nextBtn').on('click', function() {
-            $('#courseList1').hide();
-            $('#courseList2').show();
+            $('#courseListInput').hide();
+            $('#courseTimeListInput').show();
         });
         
         $('#previousBtn').on('click', function() {
-            $('#courseList2').hide();
-            $('#courseList1').show();
+            $('#courseTimeListInput').hide();
+            $('#courseListInput').show();
         });
         
         //테이블 행추가
              
         $("#addRow").on("click", function() {
-            var courseroomValue = $("input[name='ct_room']").val();
-            var weekValue = $("input[list='courseweek-options']").val();
-            var periodValue = $("input[name='pe_period']:checked").val();
+            let courseroomValue = $("input[name='ct_room']").val();
+            let weekValue = $("input[list='courseweek-options']").val();
+            let periodValue = $("input[name='pe_period']:checked").val();
+            let semesterValue = $("input[list='semester-options']").val();
+            let yearValue = $("input[list='year-options']").val();
 
-            var cells = $("#myTable td");
-            var allCellsFilled = true;
+            
+            if(courseroomValue ===""){
+            	alert("강의실을 입력하세요");
+            	return;
+            }else if(weekValue ===""){
+            	alert("요일을 입력하세요");
+            	return;
+            }else if(semesterValue ===""){
+            	alert("학기를 입력하세요");
+            	return;
+            }else if(yearValue ===""){
+            	alert("년도를 입력하세요");
+            	return;
+            }
+            
+            let cells = $("#myTable td");
+            let allCellsFilled = true;
 
             cells.each(function() {
                 if ($(this).text() === "" || $(this).html() === "&nbsp;") {
                     $(this).text(courseroomValue);
                     $(this).next().text(weekValue);
                     $(this).next().next().text(periodValue);
+                    $(this).next().next().next().text(semesterValue);
+                    $(this).next().next().next().next().text(yearValue);
                     allCellsFilled = false;
                     return false; // loop 종료
                 }
@@ -83,34 +102,43 @@
 
             if (allCellsFilled) {
                 // 새로운 행 추가
-                var newRow = "<tr><td>" + courseroomValue + "</td><td>" + weekValue + "</td><td>" + periodValue + "</td><td><button class='deleteRow'>Delete</button></td></tr>";
+                let newRow = "<tr><td>" + courseroomValue + "</td>" +
+						"<td>" + weekValue + "</td>" +
+                		"<td>" + periodValue + "</td>" +
+                		"<td>" + semesterValue + "</td>" +
+                		"<td>" + yearValue + "</td>" +
+                		"<td><button class='deleteRow'>Delete</button></td></tr>";
                 $("#myTable").append(newRow);
             }
 
             // 입력값 초기화
             $("input[list='courseweek-options']").val("");
-            $("input[name='period']").prop('checked', false);
 
             // 버튼을 행의 마지막 셀에 추가
             $("#myTable tr").each(function() {
                 if ($(this).find("td").length > 0) {
-                    var lastCell = $(this).find("td").last();
+                    let lastCell = $(this).find("td").last();
                     if (lastCell.find(".deleteRow").length === 0) {
                         lastCell.append('<button class="deleteRow">Delete</button>');
                     }
                 }
             });
+            
+            
         });
+        
+        
 		// 행삭제 버튼
         $("#myTable").on("click", ".deleteRow", function() {
             $(this).closest("tr").remove();
+            
         });
    		
    		
 		// 강의등록 조회버튼 시 교수번호와 교수이름 가져오는 펑션
         $('#registerView').on('click', function() {
             //alert("확인");
-            var c_major = $('#c_major').val();
+            let c_major = $('#c_major').val();
 
             $.ajax({
                 type: "post",
@@ -121,8 +149,8 @@
                 dataType: "json",
                 cache: false,
                 success: function(data) {
-                    var professorNumberOption = $("#professorNumber-options");
-                    var professorNameOption = $("#courseprofessor-options");
+                    let professorNumberOption = $("#professorNumber-options");
+                    let professorNameOption = $("#courseprofessor-options");
 
                     // 기존 datalist 비우기
                     professorNumberOption.empty();
@@ -130,8 +158,8 @@
 
                     // JSON 데이터를 datalist에 추가
                     $.each(data, function(index, item) {
-                        var NumberOption = $("<option>").attr("value", item.p_no);
-                        var NameOption = $("<option>").attr("value", item.p_name);
+                        let NumberOption = $("<option>").attr("value", item.p_no);
+                        let NameOption = $("<option>").attr("value", item.p_name);
                         professorNumberOption.append(NumberOption);
                         professorNameOption.append(NameOption);
                     });
@@ -168,7 +196,7 @@
     
     //강의등록 삭제
     function courseDel(cidx) {
-        var confirmation = confirm("삭제하시겠습니까?"); // 확인 창 표시
+        let confirmation = confirm("삭제하시겠습니까?"); // 확인 창 표시
         if (confirmation) {
             $.ajax({
                 type: "get",
@@ -187,11 +215,21 @@
     
     //강의등록 리스트 테이블
     function courseList(data){
-    	var parsedData = JSON.parse("["+data+"]");
-    	var str="";		
+    	let parsedData = JSON.parse("["+data+"]");
+    	let str="";		
     	parsedData.forEach(function (item){
-    		var delBtn= "<button type='button' id='btn' onclick='courseDel("+item.cidx+");'>삭제</button>";
-    		str = str + "<tr><td>"+item.cidx+"</td><td>"+item.c_name+"</td><td>"+item.p_no+"</td><td>"+item.p_name+"</td><td>"+item.c_major+"</td><td>"+item.c_grade+"</td><td>"+item.c_sep+"</td><td>"+item.c_score+"</td><td>"+item.ct_room+"</td><td>"+item.c_times+"</td><td>"+delBtn+"</td></tr>"	
+    		let delBtn= "<button type='button' id='btn' onclick='courseDel("+item.cidx+");'>삭제</button>";
+    		str = str + "<tr><td>"+item.cidx+"</td>" +
+			"<td>"+item.c_name+"</td>" +
+    		"<td>"+item.p_no+"</td>" +
+    		"<td>"+item.p_name+"</td>" +
+    		"<td>"+item.c_major+"</td>" +
+    		"<td>"+item.c_grade+"</td>" +
+    		"<td>"+item.c_sep+"</td>" +
+    		"<td>"+item.c_score+"</td>" +
+    		"<td>"+item.ct_room+"</td>" +
+    		"<td>"+item.c_times+"</td>" +
+    		"<td>"+delBtn+"</td></tr>";
     			
     	});
     	
@@ -200,52 +238,60 @@
     	return;
     }
     
-
-    </script>
-    
-    
-    <script>
-    function check(){
-
-	var fm = document.frm; //문서객체안의 폼객체이름
-
-	if(fm.c_name.value ==""){
-		alert("과목명을 입력하세요");
-		return;
-	}else if (fm.c_major.value ==""){
-		alert("전공을 입력하세요");
-		return;		
-	}else if (fm.c_sep.value ==""){
-		alert("이수구분을 입력하세요");
-		return;		
-	}else if (fm.p_no.value ==""){
-		alert("교수번호을 입력하세요");
-		return;		
-	}else if (fm.c_grade.value ==""){
-		alert("수강학년을 입력하세요");
-		return;		
-	}else if (fm.p_name.value ==""){
-		alert("교수이름을 입력하세요");
-		return;		
-	}else if (fm.c_score.value ==""){
-		alert("학점을 입력하세요");
-		return;
-	}else if (fm.c_totaltime.value ==""){
-		alert("총강의시간을 입력하세요");
-		return;	
-	}else{
-		//취미체크 확인함수(취미는 값이 여러개라 memberHobby배열로 담는다)
-		var tf = checkYn(fm.memberHobby);
-		if(tf==false){
-			return;  //결과값이 거짓이면 진행막기
-		}
-	}
+    function check(){    	    	
+		let fm = document.frm; //문서객체안의 폼객체이름
 	
-<%-- 	fm.action ="<%=request.getContextPath()%>/member/memberJoinAction.do";  //처리하기위해 이동하는 주소
-	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
-	fm.submit(); //전송시킴 --%>
-	return;
-}
+		if(fm.c_name.value ==""){
+			alert("과목명을 입력하세요");
+			return;
+		}else if (fm.c_major.value ==""){
+			alert("전공을 입력하세요");
+			return;		
+		}else if (fm.c_sep.value ==""){
+			alert("이수구분을 입력하세요");
+			return;		
+		}else if (fm.p_no.value ==""){
+			alert("교수번호을 입력하세요");
+			return;		
+		}else if (fm.c_grade.value ==""){
+			alert("수강학년을 입력하세요");
+			return;		
+		}else if (fm.p_name.value ==""){
+			alert("교수이름을 입력하세요");
+			return;		
+		}else if (fm.c_score.value ==""){
+			alert("학점을 입력하세요");
+			return;
+		}else if (fm.c_totaltime.value ==""){
+			alert("총강의시간을 입력하세요");
+			return;
+		}
+		
+		let tableData = [];
+		
+	    $("#myTable tr:gt(0)").each(function () {
+	        let rowData = $(this).find("td");
+	        let courseDetails = {
+	            room: $(rowData[0]).text(),
+	            day: $(rowData[1]).text(),
+	            period: $(rowData[2]).text(),
+	            semester: $(rowData[3]).text(),
+	            year: $(rowData[4]).text()
+	        };
+	        tableData.push(courseDetails);
+	    });
+	    
+	    
+	    fm.action = "<%=request.getContextPath()%>/admin/courseRegisterAction.do";
+	    fm.method = "post";
+	    let tableInput = $("<input>")
+	        .attr("type", "hidden")
+	        .attr("name", "tableData")
+	        .val(JSON.stringify(tableData));
+	    $(fm).append(tableInput);
+
+	    fm.submit();
+    }
 	</script>
 </head>
 <body>
@@ -281,7 +327,7 @@
                             <td style="width:30px">학점</td>
                             <td style="width:50px">강의실</td>
                             <td style="width:50px">시간표</td>
-                            <td style="width:15px">삭제</td>
+                            <td style="width:15px">처리</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -294,9 +340,9 @@
             	<input type="button" name="btn" id="registerBtn" value="강의 등록하기" style="width:120px";>
             </div>
 		<form name="frm">
-			<div id =courseList1>
+			<div id =courseListInput>
 			<h3>강의등록</h3>
-			<table class="register" style="width:100%">
+			<table id="registerTable" class="register" style="width:100%">
 				<tr>
 					<td align="center" width="15%">과목명</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
@@ -388,31 +434,36 @@
 					<input type="button" name="btn" id="nextBtn" value="다음">
 				</div>
 			</div>
-			
-			<div id="courseList2">
+		</form>
+			<div id="courseTimeListInput">
 			<h3>강의등록</h3>
 			<table id="myTable" class="register" style="width:100%" >
 				<tr>
-					<th>강의실</th>
-					<th>요일</th>
-					<th>시간</th>
-					<th>삭제</th>
+					<th data-key="room">강의실</th>
+					<th data-key="day">요일</th>
+					<th data-key="period">교시</th>
+					<th data-key="semester">학기</th>
+					<th data-key="year">년도</th>
+					<th>처리</th>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td></td>
 					<td></td>
 					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</table>
-			<table class="register" style="width:100%">
+			<br>
+			<table id="registerTable2" class="register" style="width:100%">
 			<tr>	
-				<td align="center">강의실</td>
-				<td style="padding: 0px 0px 0px 15px; width:25%;">
+				<td align="center" style="width:5%">강의실</td>
+				<td style="padding: 0px 0px 0px 15px; width:12%;">
 					<input type="text" name="ct_room" value="" Placeholder="이곳에 직접 입력하세요">
 				</td>
-				<td align="center">요일</td>
-				<td style="padding: 0px 0px 0px 15px; width:20%;">
+				<td align="center" style="width:5%">요일</td>
+				<td style="padding: 0px 0px 0px 15px; width:12%;">
 					<input type="text" name="ct_week" list="courseweek-options" />
 					<datalist id="courseweek-options">
 						<option value="월" />
@@ -423,9 +474,9 @@
 						<option value="토" />
 					</datalist>
 				</td>
-				<td align="center">교시</td>
-				<td style="padding: 0px 0px 0px 30px; width:35%;">
-					<label for="1교시"><input type="radio" id="1period" name="pe_period" value=1> 1교시</label>&emsp;
+				<td align="center" style="width:5%">교시</td>
+				<td style="padding: 0px 0px 0px 30px; width:25%;">
+					<label for="1교시"><input type="radio" id="1period" name="pe_period" value=1 checked> 1교시</label>&emsp;
 					<label for="2교시"><input type="radio" id="2period" name="pe_period" value=2> 2교시</label>&emsp;
 					<label for="3교시"><input type="radio" id="3period" name="pe_period" value=3> 3교시</label>&emsp;
 					<br>
@@ -437,17 +488,39 @@
 					<label for="8교시"><input type="radio" id="8period" name="pe_period" value=8> 8교시</label>&emsp;
 					<label for="9교시"><input type="radio" id="9period" name="pe_period" value=9> 9교시</label>&emsp;
 				</td>
+				<td align="center" style="width:5%">학기</td>
+				<td style="padding: 0px 0px 0px 30px; width:12%;">
+					<input type="text" name="ct_semester" list="semester-options" />
+					<datalist id="semester-options">
+						<option value="1" />
+						<option value="2" />
+					</datalist>
+				</td>
+				<td align="center" style="width:5%">년도</td>
+				<td style="padding: 0px 0px 0px 30px; width:12%;">
+					<input type="text" name="ct_year" list="year-options" />
+					<datalist id="year-options">
+						<option value="2023" />
+						<option value="2024" />
+						<option value="2025" />
+						<option value="2026" />
+						<option value="2027" />
+						<option value="2028" />
+						<option value="2029" />
+						<option value="2030" />
+						<option value="2031" />
+					</datalist>
+				</td>
 			</tr>
 			</table>	
 				<div align="right">
-					<input type="button" name="btn" id="addRow" value="추가">
+					<input type="button" name="btn" id="addRow" value="추가" >
 				</div>
 			<div align="center">
 				<input type="button" name="btn" id="previousBtn" value="이전">
 				<input type="button" name="btn" value="등록" onclick="check();">
 			</div>
 			</div>
-		</form>
          </div>
 
       </div>

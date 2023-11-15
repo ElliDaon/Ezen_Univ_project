@@ -112,11 +112,6 @@ public class NoticeController {
 			ArrayList<CourseVo> courselist = nd.courselist_p(pidx);
 			
 			ArrayList<NoticeVo> alist  = nd.getList(pidx,scri);
-			int alist_size = alist.size();
-			
-			for(int i=0; i<alist_size; i++) {
-				
-			}
 			
 			
 			int cnt = nd.noticeTotalCount(scri);
@@ -187,7 +182,8 @@ public class NoticeController {
 			
 			NoticeDao nd = new NoticeDao();
 			int exec = nd.noticeCntUpdate(nidx_int);
-			NoticeVo nv = nd.noticeSelectOne(nidx_int);			
+			NoticeVo nv = nd.noticeSelectOne(nidx_int);	
+			
 			
 			request.setAttribute("nv", nv);
 			
@@ -219,14 +215,16 @@ public class NoticeController {
 			NoticeDao nd = new NoticeDao();
 			int value=0;
 			
-			
+			PrintWriter out = response.getWriter();
 			value = nd.noticeDelete(nidx_int);			
 			request.setAttribute("nv", value);
 			
 			//처리가 되면 1이 아니고 아니면 0나오는 변수값  value
 			if (value !=0) {
-				String path = request.getContextPath()+"/notice/noticeList_p.do";
-				response.sendRedirect(path);				
+				
+				
+				response.getWriter().println("<script>alert('글이 삭제되었습니다.'); window.location.href='" + request.getContextPath() + "/notice/noticeList_p.do';</script>");				
+				
 			}else {
 				String path = request.getContextPath()+"/notice/noticeDelete.do?nidx="+nidx;
 				response.sendRedirect(path);				

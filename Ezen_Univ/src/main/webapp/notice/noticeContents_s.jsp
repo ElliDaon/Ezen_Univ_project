@@ -6,7 +6,20 @@
 <meta charset="utf-8">
 <title></title>
 <link rel="stylesheet" href="../css/iframe.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
+
+h1{
+    font-family: 'Black Han Sans', sans-serif;
+    font-weight: 100;
+    font-size: 40px;
+    margin-bottom: 10px;
+    margin-top : 10px;
+}
+
 
 .deletebtn, .writebtn{
     background-color: black;
@@ -18,6 +31,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center; 
+    margin-top: 10px;
+    
 }
 .sidebar{
     width: 50%;
@@ -28,26 +43,19 @@
 .menubar{
     width: 100%;
 }
-.link{
-    background-color: black;
-    border-radius: 5px;
-    color: whitesmoke;
-    text-decoration: none;
-    padding: 3px;
-    font-size: 0.85em;  
-}
+
 .container{
     display: flex;
 } 
 .text-box{
     width: 100%;
-    border: 2px solid black;
+    border: 3px solid #42444e;
     height: 500px;
 }
 
 .noticewrite{
     border-collapse: collapse;
-    width: 80%;
+    width: 70%;
 }
 
 .contents {
@@ -58,8 +66,13 @@
 }
 .subject{
     display: flex;
-    border-bottom: 3px solid black;
-    border-top: 3px solid black;
+    background: #42444e;
+    color : white;
+    height: 36px ;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    padding : 5px;
 }
 
 .subject td{
@@ -69,6 +82,48 @@
 
 .noticeinfo{
 	text-align : right;	
+   
+    height: 40px;
+}
+
+.material-symbols-outlined{
+
+    background: #42444e;
+
+    width: 40px;
+    height: 38px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    font-size:35px;
+    padding-top : 3px;
+         
+}
+
+.modify{
+    background: #42444e;
+
+    width: 40px;
+    height: 38px;
+    font-size: 15;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold; 
+}
+.delete{
+    background: #42444e;
+
+    width: 40px;
+    height: 38px;
+    font-size: 15;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+     
 }
 
 </style>
@@ -107,7 +162,9 @@
         </tr>
         <tr>
             <td class="list">
-                <a class="link" href="noticeList_p.do">목록</a>
+                <a class="link" href="noticeList_s.do"><span class="material-symbols-outlined">
+                    list_alt
+                </span></a>
             
 
             </td>

@@ -1,36 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!-- %
+<%
  if (session.getAttribute("pidx") ==null){
-	 out.println("<script>alert('로그인하셔야 합니다.');location.href='"+request.getContextPath()+"/member/memberLogin.do'</script>");	 
+	 out.println("<script>alert('로그인하셔야 합니다.');</script>");	 
  }
-
-%-->    
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <script>
 function check(){
 
 	var fm = document.frm; //문서객체안의 폼객체이름
 	
+	
 	if(fm.when.value ==""){
 		alert("날짜를 선택하세요");
 		fm.when.focus();
+		
 		return;
+		
 	}else if (fm.contents.value ==""){
 		alert("내용을 입력하세요");
 		fm.contents.focus();
-		return;		
+		
+		return;
 	}
+	
+	confirm('정말 글을 등록하시겠습니까?');
 	
 	//처리하기위해 이동하는 주소
 	fm.action ="<%=request.getContextPath()%>/notice/noticeWriteAction.do";  
 	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
 	fm.submit(); //전송시킴
+	alert("글이 작성되었습니다.");
 	return;
 }
 
@@ -38,6 +48,14 @@ function check(){
 
 <link rel="stylesheet" href="../css/iframe.css">
 <style>
+h1{
+        font-family: 'Black Han Sans', sans-serif;
+        font-weight: 100;
+        font-size: 40px;
+        
+}
+
+
 .subject {
     display: flex;
     justify-content: space-between;
@@ -45,17 +63,36 @@ function check(){
     width: 100%;
 }
 .writebtn{
-    background-color: black;
-    border-radius: 5px;
-    color: whitesmoke;
-    text-decoration: none; 
+    background: #42444e;
+width: 70px;
+height: 38px;
+text-align: center;
+color: white;
+border-radius: 5px;
+font-size:17px;
+font-weight: bold;
+
 }
 .list1{
     display: flex;
     justify-content: space-between;
-    align-items: center;
- 
+   
 }
+
+.material-symbols-outlined{
+
+
+background: #42444e;
+width: 40px;
+height: 38px;
+text-align: center;
+color: white;
+border-radius: 5px;
+font-size:35px;
+padding-top : 3px;
+     
+}
+
 .sidebar{
     width: 50%;
 }
@@ -73,17 +110,19 @@ function check(){
     border-radius: 5px;
     color: whitesmoke;
     text-decoration: none;
+    
 }
     
 .text-area{
     width: 100%;
-    border: 2px solid black;
+    border: 3px solid  #42444e;;
     height: 500px;
+    margin-bottom: 10px;
 }
 
 .noticewrite{
     border-collapse: collapse;
-    width: 80%;
+  ;
 }
 
 .contents{
@@ -95,12 +134,22 @@ function check(){
 
 .subject{
     display: flex;
-    border-bottom: 3px solid black;
-    border-top: 3px solid black;
+   
+    border-top: 3px solid  #42444e;
 }
 
 .subject td{ 
     margin: 5px;
+}
+.btnlist{
+
+
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+   
 }
 
 </style>
@@ -125,7 +174,7 @@ function check(){
         <form name="frm">
         <table class="noticeWrite">
         <tr class="subject">
-            <td>제목</td>
+            <td><strong>제목</td>
             <td>
             <select name="noticetype">
                 <option value="휴강">휴강</option>
@@ -149,13 +198,20 @@ function check(){
             </td>
         </tr>
         <tr>
+           
             <td class="list1">
-                <a class="list" href="noticeList_p.jsp">목록</a>
-            
-                <input type="submit" class="writebtn" value="글쓰기" onclick="check();" ></input> 
+    			<a class="list" href="noticeList_p.do" onclick="return confirm('글은 저장되지 않습니다. 정말 나가시겠습니까?')">
+      				  <span class="material-symbols-outlined">list_alt</span>
+   				</a>
+                    <input type="button" class="writebtn" value="등록" onclick="check();" ></input> 
             </td>
-        </tr> 
+            
+
+        </tr>
+
         </table>
+
+
         </form>
        
         

@@ -19,6 +19,12 @@ public class AttendanceVo extends CourseVo  {
 	private int leaveCount;
 	private int absentCount;
 	private int s_cnt;
+	private String s_major;
+	private String s_name;
+	private int s_no;
+	private String c_name;
+	private String abpercent;
+	private String abyn;
 	
 	public int getAidx() {
 		return aidx;
@@ -128,4 +134,42 @@ public class AttendanceVo extends CourseVo  {
 	public void setS_cnt(int s_cnt) {
 		this.s_cnt = s_cnt;
 	}
+	public String getS_major() {
+		return s_major;
+	}
+	public void setS_major(String s_major) {
+		this.s_major = s_major;
+	}
+	public String getS_name() {
+		return s_name;
+	}
+	public void setS_name(String s_name) {
+		this.s_name = s_name;
+	}
+	public int getS_no() {
+		return s_no;
+	}
+	public void setS_no(int s_no) {
+		this.s_no = s_no;
+	}
+	public String getC_name() {
+		return c_name;
+	}
+	public void setC_name(String c_name) {
+		this.c_name = c_name;
+	}
+	public String getAbpercent() {
+		return abpercent;
+	}
+	public void setAbpercent(String abpercent) {
+		this.abpercent = abpercent;
+	}
+	public String getAbyn() {
+		return abyn;
+	}
+	public void setAbyn(String abyn) {
+		this.abyn = abyn;
+	}
+	
+	
 }
