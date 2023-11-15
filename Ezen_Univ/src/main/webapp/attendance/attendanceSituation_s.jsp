@@ -122,8 +122,8 @@ function listAction(cidx){
                             <td style="width:30px">교수</td>
                             <td style="width:30px">강의실</td>
                             <td style="width:40px">시간표</td>
-                            <td style="width:30px">결석률/미달여부</td>
-                            <td style="width:30px">비고</td>
+                            <td style="width:30px">결석률</td>
+                            <td style="width:30px">미달여부</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,8 +136,8 @@ function listAction(cidx){
                             <td>${av.p_name}</td>
                             <td>${av.ct_room}</td>
                             <td>${av.c_times}</td>
-                            <td></td>
-                            <td></td>
+                            <td>${av.abpercent}</td>
+                            <td>${av.abyn}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

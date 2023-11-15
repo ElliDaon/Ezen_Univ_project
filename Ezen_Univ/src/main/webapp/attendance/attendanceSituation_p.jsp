@@ -15,6 +15,69 @@
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
+    <script>
+    	function search_detail(c_name){
+			$('#selectedCourse').empty();
+			var str = c_name;
+			$(".selectedWrap>input[name='selectedC_name']").val(str);
+			
+			return;
+		}
+    	
+    	function searchList(){
+    		let c_name = $("#selectedCourse").val();
+    		let a_date = $("#attendanceDate").val();
+    		let a_start = $("#timeSlot").val();
+    		
+    		$.ajax({
+    			type : "post",
+    			url : "${pageContext.request.contextPath}/attendance/searchList.do",
+    			data : {
+    				"c_name" : c_name,
+    				"a_date" : a_date,
+    				"a_start" : a_start
+    				},
+    			dataType : "json",
+    			success : function(data){
+    				
+    				var str = "";
+    				str = "<thead><tr>"
+    				+ "<td style='width:10px'>NO</td>"
+    				+ "<td style='width:30px'>전공</td>"
+    				+ "<td style='width:20px'>이름</td>"
+    				+ "<td style='width:20px'>학번</td>"
+    				+ "<td style='width:20px'>출석상태</td>"
+    				+ "</tr></thead><tbody>";
+    				
+    				$(data).each(function(){
+    					str = str + "<tr><td></td><td>" + this.s_major + "</td><td>" 
+    					+ this.s_name + "</td><td>" + this.s_no+ "</td><td><span>"
+    					+ this.e_attendance + "</span></td></tr>";
+    				});
+    				
+    				str = str + "</tbody>";
+    				$("#list_table").html("<table class='listNo'>"+str+"</table>");
+    				
+		    		$("td span").each(function(){
+		    			var txt = $(this).text();
+		    			if (txt === '결석') {
+		    				$(this).css('color','red');
+		    			}else if (txt === '지각' || txt === '조퇴') {
+		    				$(this).css('color','orange');
+		    			}else {
+		    				$(this).css('color','black');
+		    			}
+		    		});
+		    		
+    				return;
+    			},
+    			error: function(request, status, error){
+    				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    			}
+    		});
+    	}
+    	
+    </script>
     <style>
         /* 추가한 스타일 */
         .attendlist{
@@ -27,6 +90,14 @@
         .countNo tbody>tr>td:first-child:before {
             content: counter(aaa) " ";
          }
+         
+         .listNo tbody>tr {
+            counter-increment: aaa;
+         }
+        .listNo tbody>tr>td:first-child:before {
+            content: counter(aaa) " ";
+         }
+         
     </style>
     
 </head>
@@ -68,7 +139,7 @@
                         <tr>
                             <td></td>
                             <td>${av.c_sep}</td>
-                            <td><button type="button" id="c_name" value="${av.cidx}" onclick="search_detail(${av.cidx})">${av.c_name}</button></td>
+                            <td><button type="button" id="c_name" value="${av.cidx}" onclick="search_detail('${av.c_name}')">${av.c_name}</button></td>
                             <td>${av.c_major}</td>
                             <td>${av.c_grade}</td>
                             <td>${av.ct_room}</td>
@@ -82,47 +153,27 @@
             </div>
             <br>
             <div class="attendance-input hidden">
-                <input class="date" type="date" id="attendanceDate">
-                <select id="timeSlot">
-                    <option value="1">1교시</option>
-                    <option value="2">2교시</option>
-                    <option value="3">3교시</option>
-                    <option value="4">4교시</option>
-                    <option value="5">5교시</option>
-                    <option value="6">6교시</option>
-                    <option value="7">7교시</option>
-                    <option value="8">8교시</option>
-                    <option value="9">9교시</option>
+                <div style="display:inline-block;" class="selectedWrap">
+                선택한 과목 : <input type="text" id="selectedCourse" value="" name="selectedC_name" disabled/>
+                </div>
+                <input class="date" type="date" id="attendanceDate" name="attendanceDate">
+                <select id="timeSlot" name="timeSlot">
+                    <option value="09:00">1교시</option>
+                    <option value="10:00">2교시</option>
+                    <option value="11:00">3교시</option>
+                    <option value="12:00">4교시</option>
+                    <option value="13:00">5교시</option>
+                    <option value="14:00">6교시</option>
+                    <option value="15:00">7교시</option>
+                    <option value="16:00">8교시</option>
+                    <option value="17:00">9교시</option>
                 </select>
-                <button id="showAttendanceList">출석 목록 보기</button>
+                <button type="button" id="showAttendanceList" onclick="searchList()">출석 목록 조회</button>
             </div>
-            <div id="selectedSubject"></div> <!-- 선택한 과목명을 표시할 요소 추가 -->
+            <br>
+            <div id="list_table" class="list_table">
             
-            
-            <iframe class="attendlist" src="attendancetable.jsp" style="width: 100%; height: 45%;"></iframe>
-        </div>
+            </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('.subject-link').click(function () {
-                $('.attendance-input').toggleClass('hidden');
-                const subjectName = $(this).text();
-                $('#selectedSubject').text(`선택한 과목: ${subjectName}`);
-            });
-    
-            $('#showAttendanceList').click(function () {
-                // 사용자가 선택한 날짜와 교시를 가져옴
-                const date = $('#attendanceDate').val();
-                const timeSlot = $('#timeSlot').val();
-    
-                // 내부 iframe의 src를 업데이트하여 선택한 정보를 전달
-                const iframe = document.querySelector('.attendlist');
-                iframe.src = `attendancetable.jsp?date=${date}&timeSlot=${timeSlot}`;
-    
-                // iframe를 표시
-                iframe.style.display = 'block';
-            });
-        });
-    </script>
 </body>
 </html>
