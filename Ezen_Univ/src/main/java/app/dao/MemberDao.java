@@ -475,4 +475,169 @@ public class MemberDao {
 		
 		return list;
 	}
+	public int searchStudentIdcnt(String memberName, String memberEmail) {
+		int value = 0;
+		String sql = "select count(*) as cnt from student where s_name=? and s_email=?";
+		ResultSet rs;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberName);
+			pstmt.setString(2, memberEmail);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				value = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
+	
+	public String searchStudentId(String memberName, String memberEmail) {
+		String memberId = "";
+		String sql = "select s_id from student where s_name=? and s_email=?";
+		ResultSet rs;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberName);
+			pstmt.setString(2, memberEmail);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				memberId = rs.getString("s_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return memberId;
+	}
+	public int searchProfessorIdcnt(String memberName, String memberEmail) {
+		int value = 0;
+		String sql = "select count(*) as cnt from professor where p_name=? and p_email=?";
+		ResultSet rs;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberName);
+			pstmt.setString(2, memberEmail);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				value = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
+	
+	public String searchProfessorId(String memberName, String memberEmail) {
+		String memberId = "";
+		String sql = "select p_id from professor where p_name=? and p_email=?";
+		ResultSet rs;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberName);
+			pstmt.setString(2, memberEmail);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				memberId = rs.getString("p_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return memberId;
+	}
+	
+	public int searchStudentPwd(String memberId, String memberName, String memberPhone) {
+		int value = 0;
+		ResultSet rs;
+		
+		String sql = "select count(*) as cnt from student where s_id=? and s_name=? and s_Phone=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberName);
+			pstmt.setString(3, memberPhone);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				value = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
+	public int changeStudentPwd(String memberId, String memberName, String memberPhone, String newPwd) {
+		int value = 0;
+		
+		String sql = "update student set s_pwd = ? where s_id=? and s_name=? and s_Phone=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, newPwd);
+			pstmt.setString(2, memberId);
+			pstmt.setString(3, memberName);
+			pstmt.setString(4, memberPhone);
+			value = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
+	
+	public int searchProfessorPwd(String memberId, String memberName, String memberPhone) {
+		int value = 0;
+		ResultSet rs;
+		
+		String sql = "select count(*) as cnt from professor where p_id=? and p_name=? and p_Phone=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberName);
+			pstmt.setString(3, memberPhone);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				value = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
+	
+	public int changeProfessorPwd(String memberId, String memberName, String memberPhone, String newPwd) {
+		int value = 0;
+		
+		String sql = "update professor set p_pwd = ? where p_id=? and p_name=? and p_Phone=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, newPwd);
+			pstmt.setString(2, memberId);
+			pstmt.setString(3, memberName);
+			pstmt.setString(4, memberPhone);
+			value = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
+	
+
 }

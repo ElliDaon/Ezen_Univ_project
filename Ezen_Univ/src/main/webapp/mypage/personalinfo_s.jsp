@@ -25,9 +25,24 @@
         .contents{
             padding: 10px;
         }
-        .contents .table{
+        h3{
+        	margin: 10px;
+        }
+        .contents table{
             margin: 10px;
-
+			width: 600px;
+			text-align: center;
+			border-collapse: collapse;
+			height: 50px;
+        }
+        .contents table tr,td{
+			border: 1px solid black;
+			padding-top: 5px;
+			padding-bottom: 5px;
+        }
+        .contents table th{
+        	background: rgb(194, 194, 255);
+        	
         }
     </style>
 </head>

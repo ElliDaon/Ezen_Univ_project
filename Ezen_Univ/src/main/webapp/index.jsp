@@ -31,7 +31,7 @@ $(document).ready(function(){
 					alert("사용할 수 있는 아이디입니다.");
 					$('#check-id-icon').css('color','green');
 				}else{
-					alert(data.value);
+
 					alert("중복되는 아이디 입니다.");
 					$('#check-id-icon').css('color','red');
 					memberIdCheck = "";
@@ -160,7 +160,7 @@ function CheckEmail(str){
 	<header>
 		<h2 class="logo"><a href="index.jsp">Ezen_Univ</a></h2>
 		<nav class="navigation">
-			<a href="https://www.cubeitac.com/">HOME</a>
+			<a href="index.jsp">HOME</a>
 			<a href="index_info.jsp">INFO</a>
 			<button class="btnLogin-popup">SIGN-IN</button>
 		</nav>
@@ -187,15 +187,15 @@ function CheckEmail(str){
 					<input type="password" name="memberPwd" id="memberPwd" required>
 					<label>password</label>
 				</div>
-				<div class="remember-forgot">
-					
-					<button onclick="window.open('member/searchInfo.jsp','window_name','width=600,height=700,location=no,status=no,scrollbars=yes');">ID | password 찾기</button>
-				</div>
 				<div class="choose">
 					<input type="radio" id="select_stu" name="select" value="student" checked><label for="select_stu">student</label> | 
 					<input type="radio" id="select_pro" name="select" value="professor"><label for="select_pro">professor</label>
 				</div>
-				<button type="submit" class="btn" onclick="login()">Login</button>
+				<button type="submit" id="loginbtn" class="btn" onclick="login()">Login</button>
+				<div class="remember-forgot">
+					
+					<button id="popup-btn" onclick="window.open('member/searchInfo.jsp','window_name','width=600,height=700,location=no,status=no,scrollbars=yes');">ID | password 찾기</button>
+				</div>
 				<div class="login-register">
 					<p><a href="#" class="register-link">SIGN-UP</a></p>
 				</div>

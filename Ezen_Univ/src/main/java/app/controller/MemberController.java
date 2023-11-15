@@ -187,6 +187,103 @@ public class MemberController extends HttpServlet {
 				//response.sendRedirect("./main/main_s.do");
 			}
 			
+		}else if(location.equals("searchStudentId.do")) {
+			String memberName = request.getParameter("memberName");
+			String memberEmail = request.getParameter("memberEmail");
+			
+			MemberDao md = new MemberDao();
+			int value = md.searchStudentIdcnt(memberName, memberEmail);
+			String memberId = "";
+			String str = "";
+			if(value==0) {
+				str = null;
+			}else {
+				memberId = md.searchStudentId(memberName, memberEmail);
+				str = "{\"memberId\" : \""+memberId+"\"}";
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			System.out.println(str);
+		}else if(location.equals("searchProfessorId.do")) {
+			String memberName = request.getParameter("memberName");
+			String memberEmail = request.getParameter("memberEmail");
+			
+			MemberDao md = new MemberDao();
+			int value = md.searchProfessorIdcnt(memberName, memberEmail);
+			String memberId = "";
+			String str = "";
+			if(value==0) {
+				str = null;
+			}else {
+				memberId = md.searchProfessorId(memberName, memberEmail);
+				str = "{\"memberId\" : \""+memberId+"\"}";
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
+		}else if(location.equals("searchStudentPwd.do")) {
+			String memberId = request.getParameter("memberId");
+			String memberName = request.getParameter("memberName");
+			String memberPhone = request.getParameter("memberPhone");
+			
+			MemberDao md = new MemberDao();
+			int value = md.searchStudentPwd(memberId, memberName, memberPhone);
+			String str = "";
+			if(value==0) {
+				str = null;
+			}else {
+				str = "{\"value\" : \""+value+"\"}";
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
+		}else if(location.equals("searchProfessorPwd.do")) {
+			String memberId = request.getParameter("memberId");
+			String memberName = request.getParameter("memberName");
+			String memberPhone = request.getParameter("memberPhone");
+			
+			MemberDao md = new MemberDao();
+			int value = md.searchProfessorPwd(memberId, memberName, memberPhone);
+			String str = "";
+			if(value==0) {
+				str = null;
+			}else {
+				str = "{\"value\" : \""+value+"\"}";
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
+
+		}else if(location.equals("changeStudentPwd.do")) {
+			String memberId = request.getParameter("memberId");
+			String memberName = request.getParameter("memberName");
+			String memberPhone = request.getParameter("memberPhone");
+			String newpwd = request.getParameter("newpwd");
+			
+			MemberDao md = new MemberDao();
+			int value = md.changeStudentPwd(memberId, memberName, memberPhone, newpwd);
+			String str = "";
+			if(value==0) {
+				str = null;
+			}else {
+				str = "{\"value\" : \""+value+"\"}";
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
+		}
+		else if(location.equals("changeProfessorPwd.do")) {
+			String memberId = request.getParameter("memberId");
+			String memberName = request.getParameter("memberName");
+			String memberPhone = request.getParameter("memberPhone");
+			String newpwd = request.getParameter("newpwd");
+			
+			MemberDao md = new MemberDao();
+			int value = md.changeProfessorPwd(memberId, memberName, memberPhone, newpwd);
+			String str = "";
+			if(value==0) {
+				str = null;
+			}else {
+				str = "{\"value\" : \""+value+"\"}";
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
 		}
 	}
 

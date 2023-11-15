@@ -216,9 +216,9 @@ header{
 	font-size: .9em;
 	color: black;
 	font-weight: 500;
-	margin: -15px 0 15px;
+	margin-top: 40px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 }
 .remember-forgot button{
 	background: transparent;
@@ -438,6 +438,20 @@ header{
 }
 .github a{
 	text-decoration: none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-text-fill-color: none;
+}
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+	-webkit-text-fill-color: black;
+    box-shadow: 0 0 0px 1000px transparent;
+    transition: background-color 5000s ease-in-out 0s;
 }
 button label{
 	width: 100%;

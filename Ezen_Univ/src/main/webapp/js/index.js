@@ -34,6 +34,13 @@ adminclbtn.addEventListener('click',()=> {
 	adminWrapper.classList.remove('active-popup')
 })
 
+$('#memberPwd').on('keypress', function(e){
+  if(e.keyCode == '13'){
+  	$('#loginbtn').click();
+  }
+});
+
+
 
 $(document).ready(function(){
   $(window).scroll(function(){

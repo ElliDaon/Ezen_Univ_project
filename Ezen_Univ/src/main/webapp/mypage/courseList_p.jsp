@@ -48,9 +48,9 @@
                     </thead>
                     <tbody>
                     
-                    	<c:forEach var="cv" items="${courselist}">
+                    	<c:forEach var="cv" items="${courselist}" varStatus="i">
                         <tr>
-                            <td>1</td>
+                            <td>${i.count}</td>
                             <td>${cv.c_name}</td>
                             <td>${cv.c_major}</td>
                             <td>${cv.c_grade}</td>

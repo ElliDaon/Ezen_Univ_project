@@ -1,3 +1,18 @@
+const sitemapbtn = document.querySelector('.sitemap-popup');
+const sitemap = document.querySelector('.sitemap');
+const sitemapcls = document.querySelector('.sitemapcls');
+
+sitemapbtn.addEventListener('click', ()=> {
+    sitemap.classList.add('active');
+});
+
+sitemapcls.addEventListener('click', ()=> {
+    sitemap.classList.remove('active');
+});
+
+
+
+
 window.onload = function(){
     let now = new Date();
     let dayOfWeek = now.getDay(); 
