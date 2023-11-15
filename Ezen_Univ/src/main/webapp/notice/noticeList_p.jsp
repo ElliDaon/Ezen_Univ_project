@@ -148,13 +148,15 @@ iframe{
 
 
 .writediv{
-    width: 55px;
-    height: 25px;
+    width: 80px;
+    height: 30px;
     background-color: #42444e;
     border-radius: 5px;
     margin-top: 20px;     
     align-items: right;
-    
+    text-align: center;
+    font-weight: bold;
+    padding-top: 7px;    
 }
 
 .writediv a{
@@ -183,6 +185,10 @@ iframe{
 	font-size : 14px;
 	height : 30px;
 	border : 2px solid black;
+}
+
+.material-symbols-outlined{
+    font-size: 30ox;
 }
 
 </style>
@@ -225,7 +231,7 @@ iframe{
 			<td class="subject">
             <a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">
                 <c:if test="${nv.n_dday eq 'true'}">
-               <span style="color: orange; font-weight: bold;">new</span>
+                <mark><span style="color: orange; font-weight: bold;">new</span></mark>
                 </c:if>
                 ${nv.n_subject}
             </a>
@@ -254,9 +260,7 @@ iframe{
             <td>
                 <div class="writediv"> 
                     <a class="noticeWrite" href="noticeWrite.do">
-                        <span class="material-symbols-outlined">
-							edit_note
-						</span>
+                        글쓰기
                     </a>
                 </div>
             </td>

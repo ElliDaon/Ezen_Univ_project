@@ -7,10 +7,19 @@
 NoticeVo nv = (NoticeVo)request.getAttribute("nv");
 %> 
 
+<%
+ //if (session.getAttribute("pidx") ==null){
+//	 out.println("<script>alert('로그인하셔야 합니다.');location.href='"+request.getContextPath()+"/member/memberLogin.do'</script>");	 
+ //}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
 function check(){
@@ -31,6 +40,8 @@ function check(){
 	fm.action ="<%=request.getContextPath()%>/notice/noticeModifyAction.do";  
 	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
 	fm.submit(); //전송시킴
+	
+	alert("글이 수정되었습니다.");
 	return;
 }
 
@@ -42,9 +53,12 @@ function check(){
 <style>
 
 
-
 h1{
-    text-align: center;
+    font-family: 'Black Han Sans', sans-serif;
+    font-weight: 100;
+    font-size: 40px;
+    margin-bottom: 10px;
+    margin-top : 10px;
 }
 
 .subject {
@@ -87,9 +101,11 @@ h1{
     
 .text-area{
     width: 100%;
-    border: 2px solid black;
+    border: 3px solid  #42444e;
     height: 500px;
+    margin-bottom: 10px;
 }
+
 
 .noticewrite{
     border-collapse: collapse;
@@ -105,14 +121,38 @@ h1{
 
 .subject{
     display: flex;
-    border-bottom: 3px solid black;
-    border-top: 3px solid black;
+   
+    border-top: 3px solid  #42444e;
 }
 
 .subject td{ 
     margin: 5px;
 }
 
+.material-symbols-outlined{
+
+
+background: #42444e;
+width: 40px;
+height: 38px;
+text-align: center;
+color: white;
+border-radius: 5px;
+font-size:35px;
+padding-top : 3px;
+     
+}
+.writebtn{
+    background: #42444e;
+width: 70px;
+height: 38px;
+text-align: center;
+color: white;
+border-radius: 5px;
+font-size:17px;
+font-weight: bold;
+
+}
 </style>
 
 </head>
@@ -135,7 +175,7 @@ h1{
             <input type="hidden" name="nidx" value="<%=nv.getNidx()%>">
         <table class="noticeWrite">
         <tr class="subject">
-            <td>제목</td>
+            <td><strong>제목</strong></td>
             <td>
 
             <select name="noticetype">
@@ -163,9 +203,10 @@ h1{
         </tr>
         <tr>
             <td class="list1">
-                <a class="list" href="noticeList_p.jsp">목록</a>
-            
-                <input type="submit" class="writebtn" value="글쓰기" onclick="check();" ></input> 
+    			<a class="list" href="noticeList_p.do" onclick="return confirm('글은 수정되지 않습니다. 정말 나가시겠습니까?')">
+      				  <span class="material-symbols-outlined">list_alt</span>
+   			</a>
+                    <input type="submit" class="writebtn" value="등록" onclick="check();" ></input> 
             </td>
         </tr> 
         </table>
