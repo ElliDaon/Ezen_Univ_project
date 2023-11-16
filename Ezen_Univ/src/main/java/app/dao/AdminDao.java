@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.ArrayList;
 
 import app.dbconn.DbConn;
@@ -92,48 +93,144 @@ public class AdminDao {
 		return plist;
 	}
 
-	public int studentAccept(int sidx) {
-		int exec = 0;
-		String sql = "update student set s_yn='Y' where sidx=?";
-		
-		try{
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, sidx);
-		exec = pstmt.executeUpdate();
-		
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return exec;
-	}
+    public int studentAccept(int sidx) {
+        PreparedStatement selectS_no = null;
+        PreparedStatement insertS_no = null;
+        ResultSet rs = null;
+        int exec = 0;
+        int currentYear = Year.now().getValue();
+
+        String selectCnt = "select count(*) as cnt from student where s_no=?";
+        String selectedS_no = "update student set s_yn='Y', s_no=? where sidx=?";
+        int s_no;
+
+        try {
+        	
+            // 트랜잭션 시작
+            conn.setAutoCommit(false);
+        	
+            do {
+                // 랜덤으로 s_no 생성
+                s_no = currentYear * 100000 + (int) (Math.random() * 89999);
+
+                // 중복 체크
+                selectS_no = conn.prepareStatement(selectCnt);
+                selectS_no.setInt(1, s_no);
+                rs = selectS_no.executeQuery();
+
+            } while (rs.next() && rs.getInt("cnt") > 0);
+
+            // 중복이 아닐 때 업데이트
+            insertS_no = conn.prepareStatement(selectedS_no);
+            insertS_no.setInt(1, s_no);
+            insertS_no.setInt(2, sidx);
+            exec = insertS_no.executeUpdate();
+
+            // 트랜잭션 커밋
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                // 트랜잭션 롤백
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+        } finally {
+            try {
+                // 리소스 정리 및 AutoCommit 설정 복원
+                if (rs != null) {
+                    rs.close();
+                }
+                if (selectS_no != null) {
+                    selectS_no.close();
+                }
+                if (insertS_no != null) {
+                    insertS_no.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
+        }
+
+        return exec;
+    }
 	
 	public int professorAccept(int pidx) {
-		int exec = 0;
-		String sql = "update professor set p_yn='Y' where pidx=?";
-		
-		try{
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, pidx);
-		exec = pstmt.executeUpdate();
-		
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return exec;
+        PreparedStatement selectP_no = null;
+        PreparedStatement insertP_no = null;
+        ResultSet rs = null;
+        int exec = 0;
+        int currentYear = Year.now().getValue();
+
+        String selectCnt = "select count(*) as cnt from professor where p_no=?";
+        String selectedP_no = "update professor set p_yn='Y', p_no=? where pidx=?";
+        int p_no;
+
+        try {
+        	
+            // 트랜잭션 시작
+            conn.setAutoCommit(false);
+            
+            do {
+                // 랜덤으로 s_no 생성
+                p_no = currentYear * 10000 + (int) (Math.random() * 89999);
+
+                // 중복 체크
+                selectP_no = conn.prepareStatement(selectCnt);
+                selectP_no.setInt(1, p_no);
+                rs = selectP_no.executeQuery();
+
+            } while (rs.next() && rs.getInt("cnt") > 0);
+
+            // 중복이 아닐 때 업데이트
+            insertP_no = conn.prepareStatement(selectedP_no);
+            insertP_no.setInt(1, p_no);
+            insertP_no.setInt(2, pidx);
+            exec = insertP_no.executeUpdate();
+
+            // 트랜잭션 커밋
+            conn.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                // 트랜잭션 롤백
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+        } finally {
+            try {
+                // 리소스 정리 및 AutoCommit 설정 복원
+                if (rs != null) {
+                    rs.close();
+                }
+                if (selectP_no != null) {
+                    selectP_no.close();
+                }
+                if (insertP_no != null) {
+                    insertP_no.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
+        }
+
+        return exec;
 	}
 	
 	public int studentDeny(int sidx) {
@@ -181,37 +278,75 @@ public class AdminDao {
 	}
 	
 	public int studentCheckedAccept(int[] selectedData) {
-		int exec=0;
-		String sql = "update student set s_yn='Y' where sidx=?";
+		PreparedStatement selectS_no = null;
+		PreparedStatement insertS_no = null;
+		ResultSet rs = null;
+        int exec = 0;
+        int currentYear = Year.now().getValue();
+
+        String selectCnt = "select count(*) as cnt from student where s_no=?";
+        String selectedS_no = "update student set s_yn='Y', s_no=? where sidx=?";
 		
 		try{
-			pstmt = conn.prepareStatement(sql);
-			for (int value : selectedData) {
-                pstmt.setInt(1, value);
-                int rowsAffected = pstmt.executeUpdate();
+			
+            // 트랜잭션 시작
+            conn.setAutoCommit(false);
+			
+            for (int value : selectedData) {
+                int s_no;
+
+                // 각 value에 대해 새로운 s_no 생성 및 중복 체크
+                do {
+                    s_no = currentYear * 100000 + (int) (Math.random() * 89999);
+
+                    // 중복 체크
+                    selectS_no = conn.prepareStatement(selectCnt);
+                    selectS_no.setInt(1, s_no);
+                    rs = selectS_no.executeQuery();
+                } while (rs.next() && rs.getInt("cnt") > 0);
+
+                // 중복이 아닐 때 업데이트
+                insertS_no = conn.prepareStatement(selectedS_no);
+                insertS_no.setInt(1, s_no);
+                insertS_no.setInt(2, value);
+                int rowsAffected = insertS_no.executeUpdate();
                 exec += rowsAffected;
             }
-		}catch (SQLException e) {
-            // 예외 처리
+            // 트랜잭션 커밋
+            conn.commit();
+
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            // 리소스 해제
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            try {
+                // 트랜잭션 롤백
+                if (conn != null) {
+                    conn.rollback();
                 }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        } finally {
+            try {
+                // 리소스 정리 및 AutoCommit 설정 복원
+                if (rs != null) {
+                    rs.close();
                 }
+                if (selectS_no != null) {
+                    selectS_no.close();
+                }
+                if (insertS_no != null) {
+                    insertS_no.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
             }
         }
-		return exec;
+
+        return exec;
 		
 	}
 
@@ -251,37 +386,75 @@ public class AdminDao {
 	}
 	
 	public int professorCheckedAccept(int[] selectedData) {
-		int exec=0;
-		String sql = "update professor set p_yn='Y' where pidx=?";
+		PreparedStatement selectP_no = null;
+		PreparedStatement insertP_no = null;
+		ResultSet rs = null;
+        int exec = 0;
+        int currentYear = Year.now().getValue();
+
+        String selectCnt = "select count(*) as cnt from professor where p_no=?";
+        String selectedS_no = "update professor set p_yn='Y', p_no=? where pidx=?";
 		
 		try{
-			pstmt = conn.prepareStatement(sql);
-			for (int value : selectedData) {
-                pstmt.setInt(1, value);
-                int rowsAffected = pstmt.executeUpdate();
+			
+            // 트랜잭션 시작
+            conn.setAutoCommit(false);
+			
+            for (int value : selectedData) {
+                int p_no;
+
+                // 각 value에 대해 새로운 p_no 생성 및 중복 체크
+                do {
+                    p_no = currentYear * 10000 + (int) (Math.random() * 89999);
+
+                    // 중복 체크
+                    selectP_no = conn.prepareStatement(selectCnt);
+                    selectP_no.setInt(1, p_no);
+                    rs = selectP_no.executeQuery();
+                } while (rs.next() && rs.getInt("cnt") > 0);
+
+                // 중복이 아닐 때 업데이트
+                insertP_no = conn.prepareStatement(selectedS_no);
+                insertP_no.setInt(1, p_no);
+                insertP_no.setInt(2, value);
+                int rowsAffected = insertP_no.executeUpdate();
                 exec += rowsAffected;
             }
-		}catch (SQLException e) {
-            // 예외 처리
+            // 트랜잭션 커밋
+            conn.commit();
+
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            // 리소스 해제
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            try {
+                // 트랜잭션 롤백
+                if (conn != null) {
+                    conn.rollback();
                 }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        } finally {
+            try {
+                // 리소스 정리 및 AutoCommit 설정 복원
+                if (rs != null) {
+                    rs.close();
                 }
+                if (selectP_no != null) {
+                    selectP_no.close();
+                }
+                if (insertP_no != null) {
+                    insertP_no.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
             }
         }
-		return exec;
+
+        return exec;
 		
 	}
 
@@ -444,6 +617,74 @@ public class AdminDao {
 		
 		return list;
 	}
+	
+	public int professorVerification(int p_no, String p_name) {
+		ResultSet rs = null;
+		String checkName = null;
+		int value = 0;
+		
+		String sql = "select p_name from professor where p_no =?";
+		
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			rs = pstmt.executeQuery();
+		
+			if (rs.next()){
+				checkName =	rs.getString("p_name");
+			}
+			
+			if(checkName.equals(p_name)) {
+				value=1;
+			}else value =0; 
+			
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return value;
+	}
+
+	public int courseTimeVerification(String ct_room, String ct_week, int pe_period, int ct_semester, int ct_year) {
+		ResultSet rs = null;
+		int value=0;
+		
+		String sql = "select count(*) as cnt from course a join coursetime b on a.cidx=b.cidx\n"
+				+ "where ct_room=? and ct_week=? and pe_period=? and ct_semester=? and ct_year=?";
+		
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ct_room);
+			pstmt.setString(2, ct_week);
+			pstmt.setInt(3, pe_period);
+			pstmt.setInt(4, ct_semester);
+			pstmt.setInt(5, ct_year);
+			rs = pstmt.executeQuery();
+		
+			if (rs.next()){
+				value =	rs.getInt("cnt");
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return value;
+	}
+		
 
 	public int courseRegister(String c_name, String c_major, String c_sep, String p_no, String c_grade, String p_name,
 			String c_score, String c_totaltime, ArrayList<CourseTimeVo> ctv) {
@@ -538,19 +779,22 @@ public class AdminDao {
 	    return exec;
 	}
 
-	public ArrayList<MemberVo> courseMatchStudentList(int cidx) {
+	public ArrayList<MemberVo> courseMatchStudentList(int cidx, String c_major, int c_grade) {
 		ArrayList<MemberVo> sMacthList = new ArrayList<MemberVo>();
 		ResultSet rs = null;
 		
 		String sql = "select a.sidx,a.s_name,a.s_no,a.s_grade,a.s_major\n"
 				+ "from student a left join courselist b on a.sidx=b.sidx\n"
 				+ "left join course c on b.cidx=c.cidx\n"
-				+ "where b.sidx not in (select sidx from courselist where cidx =?) or b.cidx is null and a.s_yn='Y'\n"
+				+ "where (b.sidx not in (select sidx from courselist where cidx =?) or b.cidx is null)\n"
+				+ "and s_yn='Y' and a.s_major=? and a.s_grade=?\n"
 				+ "group by a.sidx,a.s_name,a.s_no,a.s_grade,a.s_major";
 		
 		try{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cidx);
+			pstmt.setString(2, c_major);
+			pstmt.setInt(3, c_grade);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -678,4 +922,8 @@ public class AdminDao {
 	    return exec;
 
 	}
+
+
+
+
 }

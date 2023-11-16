@@ -153,7 +153,7 @@
         
         
      function acceptStudentOk(sidx){
-         let confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("해당 학생의 회원가입을 승인하겠습니까?"); // 확인 창 표시
          if (confirmation) {
 	    	// 학생 회원가입 승인
 	     	$.ajax({
@@ -174,7 +174,7 @@
     	}
      }
      function acceptProfessorOk(pidx){
-         let confirmation = confirm("회원가입을 승인하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("해당 교수의 회원가입을 승인하겠습니까?"); // 확인 창 표시
          if (confirmation) {
     		// 교수 회원가입 승인
 	     	$.ajax({
@@ -195,7 +195,7 @@
      	}
      }
      function acceptStudentNo(sidx){
-         let confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("해당 학생의 회원가입을 거부하겠습니까?"); // 확인 창 표시
          if (confirmation) {
      		// 학생 회원가입 거부
 	      	$.ajax({
@@ -216,7 +216,7 @@
      	}
      }
      function acceptProfessorNo(pidx){
-         let confirmation = confirm("회원가입을 거부하겠습니까?"); // 확인 창 표시
+         let confirmation = confirm("해당 교수의 회원가입을 거부하겠습니까?"); // 확인 창 표시
          if (confirmation) {
 	     	// 교수 회원가입 거부
 	      	$.ajax({
