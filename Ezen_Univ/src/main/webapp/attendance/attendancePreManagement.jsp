@@ -13,12 +13,66 @@
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+	.mytable{
+		height: 900px;
+		font-size: 20px;
+		overflow-y: scroll;
+	}
+	tbody tr:hover {
+	background: #F2F2F2;
+	}
+</style>
 <script>
 
-function totalStudentCount(){
-	 var opt = document.getElementById("selectcourse");
-     var cidx = opt.options[opt.selectedIndex].value;
+
+function chooseCourse(){
+	
+	var opt = document.getElementById("selectcourse");
+    var cidx = opt.options[opt.selectedIndex].value;
+
+    totalStudentCount(cidx);
+    professorManagement(cidx);
+    
+    return;
+}
+
+
+function professorManagement(cidx){
+
+ 	$.ajax({
+		type : "get",
+		url : "<%=request.getContextPath()%>/attendance/professorManagement.do?cidx=" + cidx,
+		dataType : "json",
+		success : function(data){
+			$('#mytable').empty();
+			var str = "<table><thead><tr><td style='width:50px'>주차</td><td style='width:400px'>수업일자</td>"
+                	+"<td style='width:400px'>수업시간</td><td style='width:50px'>출석</td><td style='width:50px'>조퇴</td>"
+                	+"<td style='width:50px'>지각</td><td style='width:50px'>결석</td><td style='width:150px'>처리</td>"
+            		+"</tr></thead><tbody>";
+			
+            $.each(data, function(i) {
+            	str += "<tr><td>"+data[i].w_week+"</td><td>"+data[i].wk+"("+data[i].ct_week+")</td><td>"
+            		+data[i].pe_period+"교시("+data[i].pe_start+" ~ "+data[i].pe_end+")</td>"
+                    +"<td>"+data[i].att+"</td><td>"+data[i].early+"</td><td>"+data[i].late+"</td>"
+                    +"<td>"+data[i].absent+"</td><td><button type='button' class='btn' onclick='attendancdManagement()'>출결처리</button></td></tr>";
+            });
+            str += "</tbody></table>";
+            $('#mytable').append(str);
+		},
+		error : function(request, status, error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		} 
+	});
+            
+	return; 
+	
+}
+
+
+
+function totalStudentCount(cidx){
+
      //alert(cidx);
 	$.ajax({
 		type : "get",
@@ -40,7 +94,60 @@ function totalStudentCount(){
 	return;
 }
 
+function attendancdManagement(){
 
+	var str = ""
+	var tdArr = new Array();
+	var checkBtn = $('.btn');
+	var cidx = $('#selectcourse').val();
+
+	var tr = checkBtn.parent().parent();
+	var td = tr.children();
+
+	
+	var no = td.eq(0).text();
+	var dates = td.eq(1).text();
+	var week = td.eq(1).text();
+	var period = td.eq(2).text();
+	var now = new Date();	
+	var year = now.getFullYear();
+	
+	dates = year+"-"+dates.substring(0,2)+"-"+dates.substring(3,5);
+	week = week.substring(7,8);
+	period = period.substring(0,1);
+	
+	// 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+	td.each(function(i){	
+		tdArr.push(td.eq(i).text());
+	});
+
+	
+	str += "cidx: "+cidx+"\n 주차: " +no+"\n 수업일자: "+dates+"\n 수업요일: "+week+"\n 수업교시: "+period;	
+	
+	//alert(str);
+	
+ 	$.ajax({
+		type : "get",
+		url : "<%=request.getContextPath()%>/attendance/attendanceManagement.do?",
+		data : {
+			"cidx" : cidx,
+			"no" : no,
+			"dates" : dates,
+			"week" : week,
+			"period" : period
+			},
+		dataType : "json",
+		success : function(data){
+			window.location.href = "<%=request.getContextPath()%>/attendance/professorAttendProcessing.do?cidx="+data.cidx+"&w_week="+data.w_week+"&dates="+data.dates+"&ct_week="+data.ct_week+"&period="+data.period;
+		},
+		error : function(request, status, error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		} 
+	});
+	return; 
+	
+
+}
 
 
 </script>
@@ -63,7 +170,7 @@ function totalStudentCount(){
             <div class="first_line">
                 <div> 
                     교과목명
-                    <select id="selectcourse" onchange="totalStudentCount()">
+                    <select id="selectcourse" onchange="chooseCourse()">
                       <option></option>
                       <c:forEach var="av" items="${list}">
                         <option value="${av.cidx}">${av.c_name}</option>
@@ -75,96 +182,10 @@ function totalStudentCount(){
                     </div>
                 </div>
             </div>
-	        <div class="mytable">
-	            <table>
-	                <thead>
-	                    <tr>
-	                        <td style="width:50px">주차</td>
-	                        <td style="width:400px">수업일자</td>
-	                        <td style="width:400px">수업시간</td>
-	                        <td style="width:50px">출석</td>
-                            <td style="width:50px">지각</td>
-                            <td style="width:50px">조퇴</td>
-                            <td style="width:50px">결석</td>
-                            <td style="width:150px">처리</td>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                    <tr>
-	                        <td>1</td>
-	                        <td>03월 02일</td>
-	                        <td>10:00~10:50</td>
-	                        <td>20</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><button type="button" value="" onclick="location.href='attendanceManagement.jsp'">출결처리</button></td>
-	                    </tr>
-						<tr>
-	                        <td></td>
-	                        <td>03월 02일 11:00~11:50</td>
-	                        <td>20</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><button type="button">출결처리</button></td>
-	                    </tr>
-						<tr>
-	                        <td>2</td>
-	                         <td>03월 09일 10:00~10:50</td>
-	                        <td>12</td>
-                            <td>1</td>
-                            <td>7</td>
-                            <td>1</td>
-                            <td><button type="button">출결처리</button></td>
-	                    </tr>
-						<tr>
-	                        <td></td>
-	                        <td>03월 09일 11:00~11:50</td>
-	                        <td>12</td>
-                            <td>1</td>
-                            <td>7</td>
-                            <td>1</td>
-                            <td><button type="button">출결처리</button></td>
-	                    </tr>
-						<tr>
-	                        <td>3</td>
-	                        <td>03월 16일 10:00~10:50</td>
-	                        <td>17</td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><button type="button">출결처리</button></td>
-	                    </tr>
-						<tr>
-	                        <td></td>
-	                        <td>03월 16일 11:00~11:50</td>
-	                        <td>17</td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><button type="button">출결처리</button></td>
-	                    </tr>
-						<tr>
-	                        <td>4</td>
-	                        <td>03월 23일 10:00~10:50</td>
-	                        <td>20</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><button type="button">출결처리</button></td>
-	                    </tr>
-						<tr>
-	                        <td></td>
-	                        <td>03월 23일 11:00~11:50</td>
-	                        <td>20</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><button type="button">출결처리</button></td>
-	                    </tr>
-	                </tbody>
-	            </table>
+	        <div class="mytable" id="mytable">
+	            
+	                    
+	                
 	        </div>
         </div>
 	</div>

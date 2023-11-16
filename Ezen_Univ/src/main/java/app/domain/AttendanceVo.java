@@ -25,6 +25,7 @@ public class AttendanceVo extends CourseVo  {
 	private String c_name;
 	private String abpercent;
 	private String abyn;
+	private int w_week;
 	
 	public int getAidx() {
 		return aidx;
@@ -169,6 +170,12 @@ public class AttendanceVo extends CourseVo  {
 	}
 	public void setAbyn(String abyn) {
 		this.abyn = abyn;
+	}
+	public int getW_week() {
+		return w_week;
+	}
+	public void setW_week(int w_week) {
+		this.w_week = w_week;
 	}
 	
 	

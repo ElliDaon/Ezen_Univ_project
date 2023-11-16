@@ -13,6 +13,7 @@ public class MemberVo {
 	private String s_major;
 	private String s_yn;
 	private int s_grade;
+	private int clidx;
 	
 	private int pidx;
 	private int p_no;
@@ -150,6 +151,12 @@ public class MemberVo {
 	}
 	public void setP_yn(String p_yn) {
 		this.p_yn = p_yn;
+	}
+	public int getClidx() {
+		return clidx;
+	}
+	public void setClidx(int clidx) {
+		this.clidx = clidx;
 	}
 
 	

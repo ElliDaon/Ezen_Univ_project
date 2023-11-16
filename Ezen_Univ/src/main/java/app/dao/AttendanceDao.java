@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import app.dbconn.DbConn;
 import app.domain.AttendanceVo;
+import app.domain.MemberVo;
 
 public class AttendanceDao {
 
@@ -375,5 +377,119 @@ public class AttendanceDao {
 			e.printStackTrace();
 		}
 		return tscount;
+	}
+	
+	public ArrayList<AttendanceVo> professorManagement(int cidx){
+		ArrayList<AttendanceVo> list = new ArrayList<AttendanceVo>();
+		ResultSet rs;
+		String sql = "call professorManagement(?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,cidx);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				AttendanceVo av = new AttendanceVo();
+				av.setCidx(rs.getInt("cidx"));
+				av.setW_week(rs.getInt("w_week"));
+				av.setCt_week(rs.getString("ct_week"));
+				av.setAtdate(rs.getString("wk"));
+				av.setPe_period(rs.getInt("pe_period"));
+				av.setPe_start(rs.getString("pe_start"));
+				av.setPe_end(rs.getString("pe_end"));
+				av.setAttendanceCount(rs.getInt("att"));
+				av.setLeaveCount(rs.getInt("early"));
+				av.setLateCount(rs.getInt("late"));
+				av.setAbsentCount(rs.getInt("absent"));
+				list.add(av);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public AttendanceVo searchDetail(int cidx, String ct_week, int pe_period, int w_week) {
+		LocalDate now = LocalDate.now();
+		int year = now.getYear();
+		int month = now.getMonthValue();
+		int semester = 0;
+		if(month >= 1 && month <= 7) {
+			semester = 1;
+		}else {
+			semester = 2;
+		}
+		
+		AttendanceVo av = new AttendanceVo();
+		ResultSet rs;
+		ResultSet rs2;
+		
+		String sql1="select ctidx, pe.pe_start, pe.pe_end, c.c_name\r\n"
+				+ "from coursetime ct \r\n"
+				+ "join period pe on ct.pe_period = pe.pe_period\r\n"
+				+ "join course c on ct.cidx=c.cidx\r\n"
+				+ "where ct.cidx=? and ct.ct_week=? and ct.pe_period=?";
+		
+		
+		String sql2="select widx\r\n"
+				+ "from weektb\r\n"
+				+ "where w_week=? and startyear=? and starttm=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1,cidx);
+			pstmt.setString(2, ct_week);
+			pstmt.setInt(3, pe_period);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				av.setCtidx(rs.getInt("ctidx"));
+				av.setPe_start(rs.getString("pe_start"));
+				av.setPe_end(rs.getString("pe_end"));
+				av.setC_name(rs.getString("c_name"));
+			}
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, w_week);
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, semester);
+			rs2 = pstmt.executeQuery();
+			
+			while(rs2.next()) {
+				av.setWidx(rs2.getInt("widx"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return av;
+	}
+	public ArrayList<MemberVo> professorAttendProcessing(int cidx, int ctidx){
+		ArrayList<MemberVo> list = new ArrayList<>();
+		ResultSet rs;
+		
+		String sql = "select c.clidx,s.s_name, s.s_no\r\n"
+				+ "from courselist c\r\n"
+				+ "join student s on c.sidx=s.sidx\r\n"
+				+ "where c.cidx=? and c.ctidx=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cidx);
+			pstmt.setInt(2, ctidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MemberVo mv = new MemberVo();
+				mv.setClidx(rs.getInt("c.clidx"));
+				mv.setS_name(rs.getString("s.s_name"));
+				mv.setS_no(rs.getInt("s.s_no"));
+				list.add(mv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

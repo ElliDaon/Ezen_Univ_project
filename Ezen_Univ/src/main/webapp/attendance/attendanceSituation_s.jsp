@@ -137,7 +137,14 @@ function listAction(cidx){
                             <td>${av.ct_room}</td>
                             <td>${av.c_times}</td>
                             <td>${av.abpercent}</td>
-                            <td>${av.abyn}</td>
+                            <c:choose>
+	                            <c:when test="${av.abyn eq 'Y'}">
+		                            <td style="font-weight:bold; color: red;">${av.abyn}</td>
+	                            </c:when>
+	                            <c:otherwise>
+	    	                        <td>${av.abyn}</td>
+	                            </c:otherwise>
+                            </c:choose>
                         </tr>
                     </c:forEach>
                     </tbody>

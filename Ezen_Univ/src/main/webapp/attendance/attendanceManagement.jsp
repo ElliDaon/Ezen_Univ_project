@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attmanage.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
     <div class="header">
@@ -25,14 +26,19 @@
         </div>
         <div class="contents">
             <h3>출석관리</h3>
-            <div class="select-sub">
-                <form> 
+                <form name="attendancefrm"> 
+            	<div class="select-sub">
                     교과목명
-                    <input type="text" value="교수강의과목" disabled>
-                </form>
-            </div>
-            <div class="student-list">
-                <form>
+                    <input type="text" value="${av.c_name}" disabled>
+                    <input type="hidden" name="ctidx" value="${av.ctidx}">
+                    <input type="hidden" name="a_date" value="${av.a_date}">
+                    <input type="hidden" name="pe_start" value="${av.pe_start}">
+                    <input type="hidden" name="pe_end" value="${av.pe_end}">
+                    <input type="hidden" name="cidx" value="${av.cidx}">
+                    <input type="hidden" name="widx" value="${av.widx}">
+
+           		</div>
+           		<div class="student-list">
                     <div class="btn">
                         <button type="button">저장</button>
                     </div>
@@ -52,75 +58,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                           		<c:forEach var="mv" items="${list}" varStatus="i">
                                 <tr style="height: 20px;">
                                     <td>
-                                        <input type="checkbox" name="student" value="sidx1">
+                                        <input type="checkbox" name="student" value="${mv.clidx}" >
                                     </td>
-                                    <td>1</td>
-                                    <td>김이젠1</td>
-                                    <td>202310101</td>
-                                    <td><input class="attenvalue" type="text" id="value1" value="" disabled></td>
+                                    <td>${i.count}</td>
+                                    <td>${mv.s_name}</td>
+                                    <td>${mv.s_no}</td>
+                                    <td><input class="attenvalue" type="text" id="value${i.count}" value="" disabled></td>
                                     <td></td>
                                     <td>
-                                        <input type="radio" name="attendvalue1" value="출석" onclick="getValue(event,1)">출석
-                                        <input type="radio" name="attendvalue1" value="지각" onclick="getValue(event,1)">지각
-                                        <input type="radio" name="attendvalue1" value="조퇴" onclick="getValue(event,1)">조퇴
-                                        <input type="radio" name="attendvalue1" value="결석" onclick="getValue(event,1)">결석
+                                        <input type="radio" name="attendvalue${i.count}" value="출석" onclick="getValue(event,${i.count})">출석
+                                        <input type="radio" name="attendvalue${i.count}" value="지각" onclick="getValue(event,${i.count})">지각
+                                        <input type="radio" name="attendvalue${i.count}" value="조퇴" onclick="getValue(event,${i.count})">조퇴
+                                        <input type="radio" name="attendvalue${i.count}" value="결석" onclick="getValue(event,${i.count})">결석
                                     </td>
                                 </tr>
-                                <tr style="height: 20px;">
-                                    <td>
-                                        <input type="checkbox" name="student" value="sidx2">
-                                    </td>
-                                    <td>2</td>
-                                    <td>김이젠2</td>
-                                    <td>202310102</td>
-                                    <td><input class="attenvalue" type="text" id="value2" value="" disabled></td>
-                                    <td></td>
-                                    <td>
-                                        <input type="radio" name="attendvalue2" value="출석" onclick="getValue(event,2)">출석
-                                        <input type="radio" name="attendvalue2" value="지각" onclick="getValue(event,2)">지각
-                                        <input type="radio" name="attendvalue2" value="조퇴" onclick="getValue(event,2)">조퇴
-                                        <input type="radio" name="attendvalue2" value="결석" onclick="getValue(event,2)">결석
-                                    </td>
-                                </tr>
-                                <tr style="height: 20px;">
-                                    <td>
-                                        <input type="checkbox" name="student" value="sidx3">
-                                    </td>
-                                    <td>3</td>
-                                    <td>김이젠3</td>
-                                    <td>202310103</td>
-                                    <td><input class="attenvalue" type="text" id="value3" value="" disabled></td>
-                                    <td></td>
-                                    <td>
-                                        <input type="radio" name="attendvalue3" value="출석" onclick="getValue(event,3)">출석
-                                        <input type="radio" name="attendvalue3" value="지각" onclick="getValue(event,3)">지각
-                                        <input type="radio" name="attendvalue3" value="조퇴" onclick="getValue(event,3)">조퇴
-                                        <input type="radio" name="attendvalue3" value="결석" onclick="getValue(event,3)">결석
-                                    </td>
-                                </tr>
-                                <tr style="height: 20px;">
-                                    <td>
-                                        <input type="checkbox" name="student" value="sidx4">
-                                    </td>
-                                    <td>4</td>
-                                    <td>김이젠4</td>
-                                    <td>202310104</td>
-                                    <td><input class="attenvalue" type="text" id="value4" value="" disabled></td>
-                                    <td></td>
-                                    <td>
-                                        <input type="radio" name="attendvalue3" value="출석" onclick="getValue(event,4)">출석
-                                        <input type="radio" name="attendvalue3" value="지각" onclick="getValue(event,4)">지각
-                                        <input type="radio" name="attendvalue3" value="조퇴" onclick="getValue(event,4)">조퇴
-                                        <input type="radio" name="attendvalue3" value="결석" onclick="getValue(event,4)">결석
-                                    </td>
-                                </tr>
+                           		</c:forEach>
                             </tbody>
                         </table>
                     </div>
-                </form>
-            </div>
+            	</div>
+        	</form>
         </div>
     </div>
     <script src="../js/attendanceManage.js"></script>

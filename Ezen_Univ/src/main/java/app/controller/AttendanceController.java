@@ -244,7 +244,93 @@ public class AttendanceController extends HttpServlet{
 			
 			PrintWriter out = response.getWriter();
 			out.println(str);
-			System.out.println(str);
+
+		}else if(location.equals("professorManagement.do")) {
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
+			AttendanceDao ad = new AttendanceDao();
+			ArrayList<AttendanceVo> list = ad.professorManagement(cidx);
+			int list_size = list.size();
+			int w_week = 0;
+			String ct_week = ""; 
+			String wk = "";
+			int pe_period = 0;
+			String pe_start = "";
+			String pe_end = "";
+			int att = 0;
+			int early = 0;
+			int late = 0;
+			int absent =  0;
+			String str = "";
+			for(int i=0; i<list_size; i++) {
+				w_week = list.get(i).getW_week();
+				ct_week = list.get(i).getCt_week();
+				wk = list.get(i).getAtdate();
+				pe_period = list.get(i).getPe_period();
+				pe_start = list.get(i).getPe_start();
+				pe_end = list.get(i).getPe_end();
+				att = list.get(i).getAttendanceCount();
+				early = list.get(i).getLeaveCount();
+				late = list.get(i).getLateCount();
+				absent = list.get(i).getAbsentCount();
+				
+				String comma = "";
+				if (i == list_size - 1) {
+					comma = "";
+				} else {
+					comma = ",";
+				}
+				
+				str = str + "{\"w_week\" : \""+w_week+"\", \"ct_week\" : \""+ct_week+"\", \"wk\" : \""+wk+"\", \"pe_period\" : \""+pe_period
+					+"\", \"pe_start\" : \""+pe_start+"\", \"pe_end\" : \""+pe_end+"\", \"att\" : \""+att
+					+"\", \"early\" : \""+early+"\", \"late\" : \""+late+"\", \"absent\" : \""+absent+"\"}"+comma;
+			}
+			PrintWriter out = response.getWriter();
+			out.println("[" + str + "]");
+			
+		}else if(location.equals("attendanceManagement.do")) {
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
+			int w_week = Integer.parseInt(request.getParameter("no"));
+			String dates = request.getParameter("dates");
+			String ct_week = request.getParameter("week");
+			int period = Integer.parseInt(request.getParameter("period"));
+			
+			
+			//System.out.println("cidx: "+cidx+"\n w_week: "+w_week+"\n dates: "+dates+"\n ct_week: "+ct_week+"\n period: "+period);
+			
+			String str = "{\"cidx\":\""+cidx+"\", \"w_week\": \""+w_week+"\", \"dates\":\""+dates+"\", \"ct_week\":\""+ct_week+"\", \"period\":\""+period+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+		}else if(location.equals("professorAttendProcessing.do")) {
+			
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
+			int w_week = Integer.parseInt(request.getParameter("w_week"));
+			String dates = request.getParameter("dates");
+			String ct_week = request.getParameter("ct_week");
+			int period = Integer.parseInt(request.getParameter("period"));
+			
+			//System.out.println("cidx?"+cidx+"w_week?"+w_week+"dates?"+dates+"ct_week?"+ct_week+"period?"+period);
+			
+			AttendanceVo av = new AttendanceVo();
+			
+			AttendanceDao ad = new AttendanceDao();
+			av = ad.searchDetail(cidx, ct_week, period, w_week);
+			av.setCidx(cidx);
+			av.setW_week(w_week);
+			av.setCt_week(ct_week);
+			av.setPe_period(period);
+			av.setA_date(dates);
+			
+			//System.out.println("ctidx: "+av.getCtidx()+"\n a_start: "+av.getPe_start()+"\n a_end: "+av.getPe_end()+"\n widx: "+av.getWidx()+"\n c_name: "+av.getC_name());
+			request.setAttribute("av", av);
+			
+			ArrayList<MemberVo> list = ad.professorAttendProcessing(cidx, av.getCtidx());
+			request.setAttribute("list", list);
+			
+			String path = "/attendance/attendanceManagement.jsp";
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
 		}
 	}	
 }
