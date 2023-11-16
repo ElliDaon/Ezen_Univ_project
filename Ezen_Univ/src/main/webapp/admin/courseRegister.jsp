@@ -51,9 +51,44 @@
             $('#courseListInput').show();
         });
         
+        
+        // 다음 버튼 눌렀을 시 교수번호와 교수이름 교차검증. 이후 다음 화면을 보여줌.
+        
         $('#nextBtn').on('click', function() {
-            $('#courseListInput').hide();
-            $('#courseTimeListInput').show();
+        	//alert("확인");
+        	let p_no = $("input[list='professorNumber-options']").val();
+        	let p_name = $("input[list='courseprofessor-options']").val();
+        	
+            if(p_no ===""){
+            	alert("교수번호를 입력하세요");
+            	return;
+            }else if(p_name ===""){
+            	alert("교수이름을 입력하세요");
+            	return;
+            }
+        	
+              $.ajax({
+                type: "post",
+                url: "${pageContext.request.contextPath}/admin/professorVerification.do",
+                dataType: "json",
+                data: {
+                    "p_no": p_no,
+                    "p_name": p_name
+                },
+                cache: false,
+                success: function (data) {
+                	if(data.value==1){
+                		$('#courseListInput').hide();
+                        $('#courseTimeListInput').show();
+                	}else{
+                		alert("해당 교수번호와 이름이 서로 맞지 않습니다.");
+                	}
+                },
+                error: function () {
+                    alert("통신오류 실패");
+                }
+            });  
+        	 
         });
         
         $('#previousBtn').on('click', function() {
@@ -85,46 +120,72 @@
             	return;
             }
             
-            let cells = $("#myTable td");
-            let allCellsFilled = true;
-
-            cells.each(function() {
-                if ($(this).text() === "" || $(this).html() === "&nbsp;") {
-                    $(this).text(courseroomValue);
-                    $(this).next().text(weekValue);
-                    $(this).next().next().text(periodValue);
-                    $(this).next().next().next().text(semesterValue);
-                    $(this).next().next().next().next().text(yearValue);
-                    allCellsFilled = false;
-                    return false; // loop 종료
-                }
-            });
-
-            if (allCellsFilled) {
-                // 새로운 행 추가
-                let newRow = "<tr><td>" + courseroomValue + "</td>" +
-						"<td>" + weekValue + "</td>" +
-                		"<td>" + periodValue + "</td>" +
-                		"<td>" + semesterValue + "</td>" +
-                		"<td>" + yearValue + "</td>" +
-                		"<td><button class='deleteRow'>Delete</button></td></tr>";
-                $("#myTable").append(newRow);
-            }
-
-            // 입력값 초기화
-            $("input[list='courseweek-options']").val("");
-
-            // 버튼을 행의 마지막 셀에 추가
-            $("#myTable tr").each(function() {
-                if ($(this).find("td").length > 0) {
-                    let lastCell = $(this).find("td").last();
-                    if (lastCell.find(".deleteRow").length === 0) {
-                        lastCell.append('<button class="deleteRow">Delete</button>');
-                    }
-                }
-            });
+            // 해당 강의실과 시간이 겹치지 않으면 테이블 행 추가
             
+            $.ajax({
+                type: "post",
+                url: "${pageContext.request.contextPath}/admin/courseTimeVerification.do",
+                dataType: "json",
+                data: {
+                	"courseroomValue": courseroomValue,
+                	"weekValue": weekValue,
+                    "periodValue": periodValue,
+                    "semesterValue": semesterValue,
+                    "yearValue": yearValue
+                },
+                cache: false,
+                success: function (data) {
+                	if(data.cnt==0){
+						
+                        let cells = $("#myTable td");
+                        let allCellsFilled = true;
+
+                        cells.each(function() {
+                            if ($(this).text() === "" || $(this).html() === "&nbsp;") {
+                                $(this).text(courseroomValue);
+                                $(this).next().text(weekValue);
+                                $(this).next().next().text(periodValue);
+                                $(this).next().next().next().text(semesterValue);
+                                $(this).next().next().next().next().text(yearValue);
+                                allCellsFilled = false;
+                                return false; // loop 종료
+                            }
+                        });
+
+                        if (allCellsFilled) {
+                            // 새로운 행 추가
+                            let newRow = "<tr><td>" + courseroomValue + "</td>" +
+            						"<td>" + weekValue + "</td>" +
+                            		"<td>" + periodValue + "</td>" +
+                            		"<td>" + semesterValue + "</td>" +
+                            		"<td>" + yearValue + "</td>" +
+                            		"<td><button class='deleteRow'>Delete</button></td></tr>";
+                            $("#myTable").append(newRow);
+                        }
+
+                        // 입력값 초기화
+                        $("input[list='courseweek-options']").val("");
+
+                        // 버튼을 행의 마지막 셀에 추가
+                        $("#myTable tr").each(function() {
+                            if ($(this).find("td").length > 0) {
+                                let lastCell = $(this).find("td").last();
+                                if (lastCell.find(".deleteRow").length === 0) {
+                                    lastCell.append('<button class="deleteRow">Delete</button>');
+                                }
+                            }
+                        });
+                		
+                	}else{
+                		alert("해당 장소와 시간에 등록된 정보가 있습니다.");
+                	}
+                },
+                error: function () {
+                    alert("통신오류 실패");
+                }
+            }); 
             
+                      
         });
         
         
@@ -269,27 +330,35 @@
 		
 		let tableData = [];
 		
-	    $("#myTable tr:gt(0)").each(function () {
-	        let rowData = $(this).find("td");
-	        let courseDetails = {
-	            room: $(rowData[0]).text(),
-	            day: $(rowData[1]).text(),
-	            period: $(rowData[2]).text(),
-	            semester: $(rowData[3]).text(),
-	            year: $(rowData[4]).text()
-	        };
-	        tableData.push(courseDetails);
-	    });
+		$("#myTable tr:gt(0)").each(function () {
+		    let rowData = $(this).find("td");
+		    
+		    // 빈 값 체크
+		    if ($(rowData).filter(':empty').length > 0) {
+		        alert("시간표를 입력하지 않았습니다.");
+		        // 반복을 끝내고 함수를 종료
+		        return false;
+		    }
+
+		    let courseDetails = {    
+		        room: $(rowData[0]).text(),
+		        day: $(rowData[1]).text(),
+		        period: $(rowData[2]).text(),
+		        semester: $(rowData[3]).text(),
+		        year: $(rowData[4]).text()
+		    };
+		    tableData.push(courseDetails);
+		});
 	    
-	    
+  
 	    fm.action = "<%=request.getContextPath()%>/admin/courseRegisterAction.do";
 	    fm.method = "post";
 	    let tableInput = $("<input>")
 	        .attr("type", "hidden")
 	        .attr("name", "tableData")
 	        .val(JSON.stringify(tableData));
+	     
 	    $(fm).append(tableInput);
-
 	    fm.submit();
     }
 	</script>
@@ -342,15 +411,16 @@
 		<form name="frm">
 			<div id =courseListInput>
 			<h3>강의등록</h3>
+			<br>
 			<table id="registerTable" class="register" style="width:100%">
 				<tr>
 					<td align="center" width="15%">과목명</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_name" value="" Placeholder="이곳에 직접 입력하세요">
+						<input type="text" name="c_name" value="" Placeholder="이곳에 직접 입력하세요" autocomplete="off"/>
 					</td>
 					<td align="center" width="15%">전공</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_major" id="c_major" list="major-options" />
+						<input type="text" name="c_major" id="c_major" list="major-options" autocomplete="off"/>
 						<datalist id="major-options">
 							<option value="건축공학과" />
 							<option value="고분자나노공학과" />
@@ -378,7 +448,7 @@
 				<tr>
 					<td align="center">이수구분</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_sep" list="seperation-options" />
+						<input type="text" name="c_sep" list="seperation-options" autocomplete="off"/>
 						<datalist id="seperation-options">
 							<option value="교양선택" />
 							<option value="교양필수" />
@@ -388,14 +458,14 @@
 					</td>
 		            <td align="center">교수번호</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="p_no" list="professorNumber-options" Placeholder="전공조회시 목록선택"/>
+						<input type="text" name="p_no" list="professorNumber-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
 						<datalist id="professorNumber-options">
 						</datalist>
 		            </td>
 				<tr>
 					<td align="center">수강학년</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_grade" list="grade-options" />
+						<input type="text" name="c_grade" list="grade-options" autocomplete="off"/>
 						<datalist id="grade-options">
 							<option value="1" />
 							<option value="2" />
@@ -405,7 +475,7 @@
 					</td>
 					<td align="center">담당교수</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="p_name" list="courseprofessor-options" Placeholder="전공조회시 목록선택"/>
+						<input type="text" name="p_name" list="courseprofessor-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
 						<datalist id="courseprofessor-options">
 						</datalist>
 		            </td>
@@ -413,7 +483,7 @@
 				<tr>
 					<td align="center">학점</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_score" list="score-options" />
+						<input type="text" name="c_score" list="score-options" autocomplete="off"/>
 						<datalist id="score-options">
 							<option value="1" />
 							<option value="2" />
@@ -422,7 +492,7 @@
 					</td>
 					<td align="center">총강의시간</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_totaltime" list="totalTime-options" />
+						<input type="text" name="c_totaltime" list="totalTime-options" autocomplete="off"/>
 						<datalist id="totalTime-options">
 							<option value="32" />
 							<option value="48" />
@@ -436,7 +506,8 @@
 			</div>
 		</form>
 			<div id="courseTimeListInput">
-			<h3>강의등록</h3>
+			<h3>강의등록-시간표</h3>
+			<br>
 			<table id="myTable" class="register" style="width:100%" >
 				<tr>
 					<th data-key="room">강의실</th>
@@ -460,11 +531,11 @@
 			<tr>	
 				<td align="center" style="width:5%">강의실</td>
 				<td style="padding: 0px 0px 0px 15px; width:12%;">
-					<input type="text" name="ct_room" value="" Placeholder="이곳에 직접 입력하세요">
+					<input type="text" name="ct_room" value="" Placeholder="이곳에 직접 입력하세요" autocomplete="off"/>
 				</td>
 				<td align="center" style="width:5%">요일</td>
 				<td style="padding: 0px 0px 0px 15px; width:12%;">
-					<input type="text" name="ct_week" list="courseweek-options" />
+					<input type="text" name="ct_week" list="courseweek-options" autocomplete="off"/>
 					<datalist id="courseweek-options">
 						<option value="월" />
 						<option value="화" />

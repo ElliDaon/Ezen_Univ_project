@@ -64,7 +64,6 @@ public class AdminController extends HttpServlet {
 		}else if(location.equals("acceptProfessorOk.do")) {	// 교수 1명에 대한 승인
 			
 			String pidx = request.getParameter("pidx");
-			
 			int value = 0;
 			AdminDao add= new AdminDao();
 			value =add.professorAccept(Integer.parseInt(pidx));
@@ -270,6 +269,35 @@ public class AdminController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println("["+str+"]");
 
+		}else if(location.equals("professorVerification.do")) {	// 강의등록 조회된 교수번호, 교수이름 교차검증
+			
+			String p_no = request.getParameter("p_no");
+			String p_name = request.getParameter("p_name");
+			
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.professorVerification(Integer.parseInt(p_no),p_name);
+			
+			String str ="{\"value\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
+		}else if(location.equals("courseTimeVerification.do")) {	// 시간표 등록시 교차검증
+			
+			String ct_room = request.getParameter("courseroomValue");
+			String ct_week = request.getParameter("weekValue");
+			String pe_period = request.getParameter("periodValue");
+			String ct_semester = request.getParameter("semesterValue");
+			String ct_year = request.getParameter("yearValue");
+			
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year));
+			
+			String str ="{\"cnt\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
 		}else if(location.equals("courseRegisterAction.do")) {		// 강의 등록
 			
 			String c_name = request.getParameter("c_name");
@@ -280,7 +308,9 @@ public class AdminController extends HttpServlet {
 			String p_name = request.getParameter("p_name");
 			String c_score = request.getParameter("c_score");
 			String c_totaltime = request.getParameter("c_totaltime");
-			String tableData = request.getParameter("tableData");	
+			String tableData = request.getParameter("tableData");
+			
+			//System.out.println("tableData?"+tableData);
 			
 			JSONParser parser = new JSONParser();
 			// tableData를 JSON 배열로 파싱
@@ -334,11 +364,13 @@ public class AdminController extends HttpServlet {
 			rd.forward(request, response);
 			
 		}else if(location.equals("courseMatchStudent.do")) {	// 수강등록 학생리스트
-			String cidx = request.getParameter("courseId");
+			String cidx = request.getParameter("cidx");
+			String c_major = request.getParameter("c_major");
+			String c_grade = request.getParameter("c_grade");
 			
 			int value = 0;
 			AdminDao add= new AdminDao();
-			ArrayList<MemberVo> list = add.courseMatchStudentList(Integer.parseInt(cidx));
+			ArrayList<MemberVo> list = add.courseMatchStudentList(Integer.parseInt(cidx),c_major,Integer.parseInt(c_grade));
 			//System.out.println("cidx?"+cidx);
 			int listCnt = list.size();	
 			int sidx = 0;
@@ -371,7 +403,7 @@ public class AdminController extends HttpServlet {
 		}else if(location.equals("checkedEnrollAction.do")) {
 			String selectedStudent = request.getParameter("selectedStudent");
 			String cidx = request.getParameter("cidx");
-					
+				
 		    JSONParser parser = new JSONParser();
 		    JSONArray jsonArray = null;
 		    
@@ -405,15 +437,14 @@ public class AdminController extends HttpServlet {
 			
 			
 		}else if(location.equals("EnrollAction.do")) {
-			String sidx = request.getParameter("sidx");
 			String cidx = request.getParameter("cidx");
-			//System.out.println("sidx?"+sidx);
-			//System.out.println("cidx?"+cidx);
+			String sidx = request.getParameter("sidx");
 			
 			int value =0;
 			AdminDao add = new AdminDao();
-			value=add.studentEnroll(Integer.parseInt(sidx),Integer.parseInt(cidx));
+			value=add.studentEnroll(Integer.parseInt(cidx),Integer.parseInt(sidx));
 			
+
 			String str ="{\"value\":\""+value+"\"}";
 			PrintWriter out = response.getWriter();
 			out.println(str);
