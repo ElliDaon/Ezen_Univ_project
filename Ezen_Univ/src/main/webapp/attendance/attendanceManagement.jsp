@@ -10,6 +10,53 @@
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attmanage.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <script>
+    $("#attbtn").on("click",function(){
+    	var fm = document.attendancefrm;
+    	var c_name = fm.c_name.value;
+    	var ctidx = fm.ctidx.value;
+    	var a_date = fm.a_date.value;
+    	var pe_start = fm.pe_start.value;
+    	var pe_end = fm.pe_end.value;
+    	var cidx = fm.cidx.value;
+    	var widx = fm.widx.value;
+    	
+    	var jsonArray 	= new Array();
+    	//jsonArray.push(list);
+    	$("[name='student']:checked").each(function () {
+    		var jsonObj = new Object();
+    		
+    		var tr = checkbox.parent().parent().eq(i);
+			var td = tr.children();
+			var attendvalue = td.eq(4).text();
+			
+			jsonObj.clidx = $(this).val();
+			jsonObj.attendvalue = attendvalue;
+			
+			jsonObj = JSON.stringify(jsonObj);
+			
+			jsonArray.push(JSON.parse(jsonObj));
+			
+        });
+		
+    	var list = {
+    		"c_name":c_name,
+    		"ctidx":ctidx,
+    		"a_date":a_date,
+    		"pe_start":pe_start,
+    		"pe_end":pe_end,
+    		"cidx":cidx,
+    		"widx":widx,
+    		"Array":jsonArray
+    	};
+    	alert("list:\n"+list);
+    	alert("c_name: "+c_name+"\n ctidx: "+ctidx+"\n a_date: "+a_date+"\n pe_start: "+pe_start+"\n pe_end: "+pe_end+"\n cidx: "+cidx + "\n widx: "+widx);
+    	alert(jsonObj);
+		alert(jsonArray.join("\n"));	
+    	
+    });
+    
+    </script>
 </head>
 <body>
     <div class="header">
@@ -29,7 +76,7 @@
                 <form name="attendancefrm"> 
             	<div class="select-sub">
                     교과목명
-                    <input type="text" value="${av.c_name}" disabled>
+                    <input type="text" name="c_name" value="${av.c_name}" disabled>
                     <input type="hidden" name="ctidx" value="${av.ctidx}">
                     <input type="hidden" name="a_date" value="${av.a_date}">
                     <input type="hidden" name="pe_start" value="${av.pe_start}">
@@ -40,7 +87,7 @@
            		</div>
            		<div class="student-list">
                     <div class="btn">
-                        <button type="button">저장</button>
+                        <button type="button" id="attbtn">저장</button>
                     </div>
                     <div class="std-list">
                         <table>
