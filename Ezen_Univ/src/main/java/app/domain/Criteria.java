@@ -11,6 +11,7 @@ public class Criteria {
 		this.perPageNum = 10;
 	}
 	
+	
 	public int getPage() {
 		return page;
 	}

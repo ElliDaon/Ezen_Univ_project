@@ -191,10 +191,16 @@
     .material-symbols-outlined{
         font-size: 30ox;
     }
-    
+    .seartbl td {
+        text-align: center;
+    }
     </style>
 </head>
 <body>
+
+<c:if test="${pm != null && pm.getTotalCount() == 0}">
+    <script>alert('공지가 아직 등록되지 않았습니다.');</script>
+</c:if>
     <div class="header">
         <iframe src = "../main/navigation_s.jsp" width = "100%" height="55" ></iframe>
     </div>
@@ -301,7 +307,7 @@
         <td style="width:100px;text-align:left;">
         <% //if(pm.isNext() ==true && pm.getEndPage()>0){ %>
         <c:if test="${pm.next == true&&pm.endPage>0}">
-        <a href="${pageContext.request.contextPath}/notice/noticeList_s.do?page=${pm.endPage+1}">
+        <a href="${pageContext.request.contextPath}/notice/noticeList_s.do?page=${pm.endPage+1}${parm}">
         <span class="material-symbols-outlined">
         arrow_forward_ios
         </span>
@@ -317,27 +323,45 @@
     
 <form name="frm" 
 action="${pageContext.request.contextPath}/notice/noticeList_s.do"
-method="post">
-<table border=0>
+method="post"
+onsubmit="saveSelectedValue()">
+<table class="searchtbl" border=0>
     <tr>
-        <td style="width:500px"></td>
-        <td class="sub">
-            <select class="searchsubject" name="subject">
-            <c:forEach var="cv" items="${courselist}">
-                <option value="${cv.cidx}">${cv.c_name}</option>
-                </c:forEach>
-            </select>
-        </td>
+  
+    <td style="width:450px; font-weight:bold">
+	<c:set var="subb" value="${sub}" />
+	<c:choose>
+    	<c:when test="${subb == 0}">
+         선택된 과목 : 전체 과목
+    	</c:when>
+    		<c:otherwise>
+        		<c:forEach var="cv" items="${courselist}">
+            	<c:if test="${cv.cidx == subb}">
+ 		 선택된 과목 : ${cv.c_name} 
+            	</c:if>
+        	</c:forEach>
+    		</c:otherwise>
+	</c:choose>
+	</td>
+	
+		<td class="sub">
+		    <select class="searchsubject" name="subject" id="subject">
+		        <option value="0">과목을 선택해주세요</option>
+		        <c:forEach var="cv" items="${courselist}">
+		           <option value="${cv.cidx}" <c:if test="${subb == cv.cidx}">selected</c:if>>${cv.c_name}</option>
+		       </c:forEach>
+		    </select>
+		</td>
+
         
         <td><button type="submit" class="btn"><span class="material-symbols-outlined">
         screen_search_desktop
         </button></span></td>
-    </tr>
+ </tr>
 </table>
 </form>
+
   
-      
-   
     </div>
  
 </div>
