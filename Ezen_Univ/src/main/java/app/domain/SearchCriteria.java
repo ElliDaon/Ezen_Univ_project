@@ -3,6 +3,7 @@ package app.domain;
 public class SearchCriteria extends Criteria {
 
 	private int subject;
+	
 
 	public int getSubject() {
 		return subject;

@@ -116,6 +116,36 @@ public class NoticeDao {
 		
 		return courselist;
 	}
+	public ArrayList<CourseVo> matchcourse(int cidx){
+		
+		ArrayList<CourseVo> match = new ArrayList<>();
+		ResultSet rs = null;
+	
+	
+		String SQL ="SELECT c_name \r\n"
+				+ "from course \r\n"
+				+ "where cidx=?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			
+			pstmt.setInt(1, cidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CourseVo cv = new CourseVo();
+				cv.setCidx(rs.getInt("cidx")); 
+				cv.setC_name(rs.getString("c_name"));
+				match.add(cv);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return match;
+	}
 	
 	public ArrayList<CourseVo> courselist_s(int sidx){
 		ArrayList<CourseVo> courselist = new ArrayList<>();
@@ -148,7 +178,7 @@ public class NoticeDao {
 		
 		return courselist;
 	}
-	public ArrayList<NoticeVo> getList(int pidx,SearchCriteria scri){
+	public ArrayList<NoticeVo> getList_p(int pidx,SearchCriteria scri){
 		
 		LocalDate now = LocalDate.now();
 		String year = Integer.toString(now.getYear());
@@ -221,7 +251,82 @@ public class NoticeDao {
 		
 		return alist;
 	}
-	public int noticeTotalCount(SearchCriteria scri){
+	public ArrayList<NoticeVo> getList_s(int sidx,SearchCriteria scri){
+		
+		LocalDate now = LocalDate.now();
+		String year = Integer.toString(now.getYear());
+		String month = Integer.toString(now.getMonthValue());
+		String day = Integer.toString(now.getDayOfMonth());
+		String nowdate = year+month+day;
+		int nowdate_i = Integer.parseInt(nowdate);
+		
+		ResultSet rs = null;
+		String str= "";
+		if (scri.getSubject()!=0) {
+			str = " and B.cidx="+scri.getSubject()+"\r\n";
+		}	
+		String SQL = "select DISTINCT nidx,CONCAT('[',B.n_category,']','[',B.n_skipdate,']','[',A.c_name,']')as subject,B.n_writeday,B.n_count\r\n"
+				+ "	from course A\r\n"
+				+ "	join notice B\r\n"
+				+ "	on A.cidx = B.cidx\r\n"
+				+ "	join courselist C\r\n"
+				+ "	on A.cidx = C.cidx\r\n"
+				+ "	where C.sidx=? and  B.n_delyn='N'"
+				+str
+				+ "order by nidx desc limit ?,?";
+				
+				ArrayList<NoticeVo> alist = new ArrayList<NoticeVo>();
+		
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			
+			pstmt.setInt(1, sidx);
+			pstmt.setInt(2, (scri.getPage()-1)*scri.getPerPageNum());
+			pstmt.setInt(3, scri.getPerPageNum());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+				NoticeVo nv = new NoticeVo();
+				nv.setNidx(rs.getInt("nidx"));
+				nv.setN_subject(rs.getString("subject"));
+				nv.setN_writeday(rs.getString("B.n_writeday"));
+				nv.setN_count(rs.getInt("B.n_count"));
+				
+				String wyear = nv.getN_writeday().substring(0,4);
+				String wmonth = nv.getN_writeday().substring(5,7);
+				String wday = nv.getN_writeday().substring(8,10);
+				String wdate = wyear+wmonth+wday;
+				int wdate_i = Integer.parseInt(wdate);
+				
+				if(nowdate_i-wdate_i<3) {
+					nv.setN_dday(true);
+				}else {
+					nv.setN_dday(false);
+				}
+				
+				alist.add(nv);
+				
+			}
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}finally{
+			try{
+				rs.close();
+				pstmt.close();
+				//conn.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		return alist;
+	}
+	public int noticeTotalCount_p(int pidx, SearchCriteria scri){
 		int value=0;  // 결과값이 0인지 아닌지
 		
 		String str= "";
@@ -229,10 +334,11 @@ public class NoticeDao {
 			str =" and cidx="+scri.getSubject();
 		}		
 		
-		String sql="select count(*) as cnt from notice where n_delyn='N' "+str;
+		String sql="select count(*) as cnt from notice where pidx=? and n_delyn='N' "+str;
 		ResultSet rs = null;
 		try{
 			pstmt = conn.prepareStatement(sql);			
+			pstmt.setInt(1, pidx);
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()){
@@ -252,7 +358,46 @@ public class NoticeDao {
 		}
 		//System.out.println("DAO 안에 value"+value);
 		return value;
-	}	
+	}
+	public int noticeTotalCount_s(int sidx, SearchCriteria scri){
+		int value=0;  // 결과값이 0인지 아닌지
+		
+		String str= "";
+		if (scri.getSubject()!=0) {
+			str =" and A.cidx="+scri.getSubject();
+		}		
+		
+		String sql="select count(DISTINCT nidx) as cnt \r\n"
+				+ "from course A \r\n"
+				+ "join notice B\r\n"
+				+ "on A.cidx = B.cidx\r\n"
+				+ "join courselist C\r\n"
+				+ "on A.cidx = C.cidx\r\n"
+				+ "where C.sidx=? and B.n_delyn='N'"+str;
+		ResultSet rs = null;
+		try{
+			pstmt = conn.prepareStatement(sql);			
+			pstmt.setInt(1, sidx);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()){
+				value =	rs.getInt("cnt");
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				rs.close();
+				pstmt.close();
+				conn.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		//System.out.println("DAO 안에 value"+value);
+		return value;
+	}
 	public NoticeVo noticeSelectOne(int nidx) {
 		NoticeVo nv = null;
 		String sql="select * from notice A\r\n"
