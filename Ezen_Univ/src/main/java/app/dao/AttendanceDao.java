@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import app.dbconn.DbConn;
 import app.domain.AttendanceVo;
+import app.domain.EachCheckVo;
 import app.domain.MemberVo;
 
 public class AttendanceDao {
@@ -92,8 +93,8 @@ public class AttendanceDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sidx);
-			pstmt.setInt(2, cidx);
+			pstmt.setInt(1, cidx);
+			pstmt.setInt(2, sidx);
 			
 			rs = pstmt.executeQuery();
 			
@@ -126,12 +127,13 @@ public class AttendanceDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sidx);
-			pstmt.setInt(2, cidx);
+			pstmt.setInt(1, cidx);
+			pstmt.setInt(2, sidx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				av.setAttendanceCount(rs.getInt("attendance"));
+				System.out.println(av.getAttendanceCount());
 			}
 			
 		} catch (SQLException e) {
@@ -153,8 +155,8 @@ public class AttendanceDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sidx);
-			pstmt.setInt(2, cidx);
+			pstmt.setInt(1, cidx);
+			pstmt.setInt(2, sidx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -171,7 +173,7 @@ public class AttendanceDao {
 
 		AttendanceVo alev = new AttendanceVo();
 		ResultSet rs;
-		String sql= "select count(*) as leave\r\n"
+		String sql= "select count(*) as cnt\r\n"
 				+ "from attendance A\r\n"
 				+ "	join course C on A.cidx = C.cidx\r\n"
 				+ "	join Eachcheck B on B.aidx = A.aidx\r\n"
@@ -180,12 +182,12 @@ public class AttendanceDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sidx);
-			pstmt.setInt(2, cidx);
+			pstmt.setInt(1, cidx);
+			pstmt.setInt(2, sidx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				alev.setLeaveCount(rs.getInt("leave"));
+				alev.setLeaveCount(rs.getInt("cnt"));
 			}
 			
 		} catch (SQLException e) {
@@ -207,8 +209,8 @@ public class AttendanceDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sidx);
-			pstmt.setInt(2, cidx);
+			pstmt.setInt(1, cidx);
+			pstmt.setInt(2, sidx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -465,19 +467,30 @@ public class AttendanceDao {
 		}
 		return av;
 	}
-	public ArrayList<MemberVo> professorAttendProcessing(int cidx, int ctidx){
+	public ArrayList<MemberVo> professorAttendProcessing(int cidx,String dates, int w_week, int period, int ctidx){
 		ArrayList<MemberVo> list = new ArrayList<>();
 		ResultSet rs;
 		
-		String sql = "select c.clidx,s.s_name, s.s_no\r\n"
+		String sql = "select c.clidx,s.s_name, s.s_no, ect.e_attendance\r\n"
 				+ "from courselist c\r\n"
 				+ "join student s on c.sidx=s.sidx\r\n"
+				+ "left join (select ec.e_attendance, ec.clidx\r\n"
+				+ "from eachcheck ec\r\n"
+				+ "join attendance a on ec.aidx = a.aidx\r\n"
+				+ "join weektb w on a.widx = w.widx\r\n"
+				+ "join coursetime ct on a.ctidx = ct.ctidx\r\n"
+				+ "where a.cidx=? and a.a_date = ? and w.w_week=? and ct.pe_period = ?\r\n"
+				+ "group by ec.e_attendance, ec.clidx) ect on c.clidx = ect.clidx\r\n"
 				+ "where c.cidx=? and c.ctidx=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cidx);
-			pstmt.setInt(2, ctidx);
+			pstmt.setString(2, dates);
+			pstmt.setInt(3, w_week);
+			pstmt.setInt(4, period);
+			pstmt.setInt(5, cidx);
+			pstmt.setInt(6, ctidx);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -485,11 +498,92 @@ public class AttendanceDao {
 				mv.setClidx(rs.getInt("c.clidx"));
 				mv.setS_name(rs.getString("s.s_name"));
 				mv.setS_no(rs.getInt("s.s_no"));
+				mv.setE_attendance(rs.getString("ect.e_attendance"));
 				list.add(mv);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	public int attendanceAction(ArrayList<EachCheckVo> list, AttendanceVo av) {
+		int value = 0;
+		ResultSet rs;
+		ResultSet cnt;
+		String checkcnt = "select count(*) cnt, a.aidx\r\n"
+				+ "from eachcheck ec\r\n"
+				+ "join attendance a on ec.aidx = a.aidx\r\n"
+				+ "join coursetime ct on a.ctidx=ct.ctidx\r\n"
+				+ "where a.cidx=? and a.a_date=? and ct.pe_period=? and ec.clidx=?\r\n"
+				+ "group by a.aidx";
+		
+		String insertAtt = "insert into attendance(ctidx, a_date, a_start, a_end, a_skipyn, clidx, cidx, widx)\r\n"
+						 + "values(?,?,?,?, 'N', ?, ?, ?)";
+		
+		String maxAidx = "select max(aidx) as maxval from attendance";
+		
+		String insertEach = "insert into eachcheck(clidx, aidx, e_attendance)values(?, ?,?)";
+		
+		String updateatt = "UPDATE eachcheck set e_attendance=? where aidx=?";
+		
+		try {
+			conn.setAutoCommit(false);
+			for(int i=0; i<list.size(); i++) {
+				pstmt = conn.prepareStatement(checkcnt);
+				pstmt.setInt(1, av.getCidx());
+				pstmt.setString(2, av.getA_date());
+				pstmt.setInt(3, av.getPe_period());
+				pstmt.setInt(4, list.get(i).getClidx());
+				cnt = pstmt.executeQuery();
+				int counting = 0;
+				int cntaidx = 0;
+				while(cnt.next()) {
+					counting = cnt.getInt("cnt");
+					cntaidx = cnt.getInt("a.aidx");
+				}
+				
+				if(counting == 0) {
+					//System.out.println(list.get(i).getE_attendance());
+					pstmt = conn.prepareStatement(insertAtt);
+					pstmt.setInt(1, av.getCtidx());
+					pstmt.setString(2, av.getA_date());
+					pstmt.setString(3, av.getA_start());
+					pstmt.setString(4, av.getA_end());
+					pstmt.setInt(5, list.get(i).getClidx());
+					pstmt.setInt(6, av.getCidx());
+					pstmt.setInt(7, av.getWidx());
+					pstmt.executeUpdate();
+					
+					pstmt = conn.prepareStatement(maxAidx);
+					rs = pstmt.executeQuery();
+					int aidx = 0;
+					while(rs.next()) {
+						aidx = rs.getInt("maxval");
+					}
+					
+					pstmt = conn.prepareStatement(insertEach);
+					pstmt.setInt(1, list.get(i).getClidx());
+					pstmt.setInt(2, aidx);
+					pstmt.setString(3, list.get(i).getE_attendance());
+					value = pstmt.executeUpdate();
+				}else {
+					pstmt = conn.prepareStatement(updateatt);
+					pstmt.setString(1, list.get(i).getE_attendance());
+					pstmt.setInt(2, cntaidx);
+					value = pstmt.executeUpdate();
+				}
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+		//System.out.println(list.toString()+av.getCtidx());
+		return value;
 	}
 }

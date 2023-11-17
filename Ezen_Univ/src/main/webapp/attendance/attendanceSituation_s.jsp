@@ -29,6 +29,7 @@ function search_detail(cidx){
 }
 
 function countAction(cidx){
+
 	
 	$.ajax({
 		type : "get",	//cidx값 하나만 넘기니까 get방식으로 주소를 넘긴다 -> get방식은 하단의 URL 끝에 ?붙여서 cidx 붙여주기

@@ -11,49 +11,70 @@
     <link rel="stylesheet" href="../css/attmanage.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script>
-    $("#attbtn").on("click",function(){
-    	var fm = document.attendancefrm;
-    	var c_name = fm.c_name.value;
-    	var ctidx = fm.ctidx.value;
-    	var a_date = fm.a_date.value;
-    	var pe_start = fm.pe_start.value;
-    	var pe_end = fm.pe_end.value;
-    	var cidx = fm.cidx.value;
-    	var widx = fm.widx.value;
-    	
-    	var jsonArray 	= new Array();
-    	//jsonArray.push(list);
-    	$("[name='student']:checked").each(function () {
-    		var jsonObj = new Object();
-    		
-    		var tr = checkbox.parent().parent().eq(i);
-			var td = tr.children();
-			var attendvalue = td.eq(4).text();
+    $(document).ready(function(){
+	    $("#attbtn").on("click",function(){
+	    	var fm = document.attendancefrm;
+	    	var ctidx = fm.ctidx.value;
+	    	var a_date = fm.a_date.value;
+	    	var pe_start = fm.pe_start.value;
+	    	var pe_end = fm.pe_end.value;
+	    	var cidx = fm.cidx.value;
+	    	var widx = fm.widx.value;
+	    	var period = fm.period.value;
+	    	
+	    	var checkbox = $("input[name='student']:checked");
+	    	
+	    	var jsonArray 	= new Array();
+	    	//jsonArray.push(list);
+	    	checkbox.each(function (i) {
+	    		var jsonObj = new Object();
+	    		
+	    		var tr = checkbox.parent().parent().eq(i);
+				var td = tr.children();
+				var attendvalue = td.eq(4).children().val();
+				
+				jsonObj.clidx = $(this).val();
+				jsonObj.attendvalue = attendvalue;
+				
+				jsonObj = JSON.stringify(jsonObj);
+				
+				jsonArray.push(JSON.parse(jsonObj));
+				
+	        });
 			
-			jsonObj.clidx = $(this).val();
-			jsonObj.attendvalue = attendvalue;
-			
-			jsonObj = JSON.stringify(jsonObj);
-			
-			jsonArray.push(JSON.parse(jsonObj));
-			
-        });
-		
-    	var list = {
-    		"c_name":c_name,
-    		"ctidx":ctidx,
-    		"a_date":a_date,
-    		"pe_start":pe_start,
-    		"pe_end":pe_end,
-    		"cidx":cidx,
-    		"widx":widx,
-    		"Array":jsonArray
-    	};
-    	alert("list:\n"+list);
-    	alert("c_name: "+c_name+"\n ctidx: "+ctidx+"\n a_date: "+a_date+"\n pe_start: "+pe_start+"\n pe_end: "+pe_end+"\n cidx: "+cidx + "\n widx: "+widx);
-    	alert(jsonObj);
-		alert(jsonArray.join("\n"));	
-    	
+	    	
+	    	let arrays = JSON.stringify(jsonArray);
+	    	//alert("list:\n"+JSON.stringify(list));
+	    	
+	    	$.ajax({
+	    		type : "get",
+	    		url : "<%=request.getContextPath()%>/attendance/attendanceAction.do",
+	    		data : {
+	    			ctidx:ctidx,
+	    			a_date:a_date,
+	    			pe_start:pe_start,
+	    			pe_end:pe_end,
+	    			cidx:cidx,
+	    			widx:widx,
+	    			period:period,
+	    			Array:arrays
+	    		},
+	    		dataType : "json",
+	    		success : function(data){
+	    			if(data.value == 0){
+						alert("입력오류");	    				
+	    			}else{
+		    			alert("성공");
+	    			}
+	    			
+	    		},
+	    		error : function(request, status, error){
+	    			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    		} 
+	    	});
+	    	return;
+	    	
+	    });
     });
     
     </script>
@@ -83,18 +104,19 @@
                     <input type="hidden" name="pe_end" value="${av.pe_end}">
                     <input type="hidden" name="cidx" value="${av.cidx}">
                     <input type="hidden" name="widx" value="${av.widx}">
+                    <input type="hidden" name="period" value="${av.pe_period}">
 
            		</div>
            		<div class="student-list">
                     <div class="btn">
-                        <button type="button" id="attbtn">저장</button>
+                        <button type="button" name="attbtn" id="attbtn">저장</button>
                     </div>
                     <div class="std-list">
                         <table>
                             <thead>
                                 <tr>
                                     <td style="width: 5px;">
-                                        <input type="checkbox" name="student" value="selectAll" onclick="selectAtt(this)">
+                                        <input type="checkbox" name="student" value="selectAll" onclick="selectAtt(this)" >
                                     </td>
                                     <td style="width: 5px;">순번</td>
                                     <td style="width: 20px;">이름</td>
@@ -113,13 +135,29 @@
                                     <td>${i.count}</td>
                                     <td>${mv.s_name}</td>
                                     <td>${mv.s_no}</td>
-                                    <td><input class="attenvalue" type="text" id="value${i.count}" value="" disabled></td>
+                                    <td><input class="attenvalue" type="text" id="value${i.count}" name="value${i.count}" value="${mv.e_attendance}" disabled></td>
                                     <td></td>
                                     <td>
                                         <input type="radio" name="attendvalue${i.count}" value="출석" onclick="getValue(event,${i.count})">출석
                                         <input type="radio" name="attendvalue${i.count}" value="지각" onclick="getValue(event,${i.count})">지각
                                         <input type="radio" name="attendvalue${i.count}" value="조퇴" onclick="getValue(event,${i.count})">조퇴
                                         <input type="radio" name="attendvalue${i.count}" value="결석" onclick="getValue(event,${i.count})">결석
+                                    	<script>
+	                                        $(document).ready(function () {
+	                                            var value = $("input[name='value${i.count}']").val();
+	                                            var radioName = "attendvalue${i.count}";
+	                                            
+	                                            if (value === '출석') {
+	                                                $("input[name='" + radioName + "'][value='출석']").prop('checked', true);
+	                                            } else if (value === '지각') {
+	                                                $("input[name='" + radioName + "'][value='지각']").prop('checked', true);
+	                                            }else if (value === '조퇴') {
+	                                                $("input[name='" + radioName + "'][value='조퇴']").prop('checked', true);
+	                                            }else if (value === '결석') {
+	                                                $("input[name='" + radioName + "'][value='결석']").prop('checked', true);
+	                                            }
+	                                        });
+                                    	</script>
                                     </td>
                                 </tr>
                            		</c:forEach>

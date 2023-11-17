@@ -25,130 +25,168 @@
 </style>
 <script>
 
+$(document).ready(function () {
+    // 페이지 로드 시 저장된 값을 가져와서 설정
+    var storedCidx = localStorage.getItem('selectedCidx');
+    if (storedCidx) {
+        $("#selectcourse").val(storedCidx);
+        chooseCourse();  // 페이지 로드 시 선택된 값에 대한 초기 AJAX 호출
+    }
 
-function chooseCourse(){
-	
-	var opt = document.getElementById("selectcourse");
-    var cidx = opt.options[opt.selectedIndex].value;
+    // select 요소에 대한 change 이벤트 핸들러 등록
+    $('#selectcourse').on('change', function () {
+        var selectedCidx = $(this).val();
+        chooseCourse(selectedCidx);
 
-    totalStudentCount(cidx);
-    professorManagement(cidx);
-    
+        // 선택된 값을 로컬 스토리지에 저장
+        localStorage.setItem('selectedCidx', selectedCidx);
+    });
+
+    // 뒤로 가기 이벤트에 대한 핸들러 등록
+    window.addEventListener('popstate', function (event) {
+        // 저장된 값이 있을 경우 해당 값으로 AJAX 호출
+        var storedCidx = localStorage.getItem('selectedCidx');
+        if (storedCidx) {
+            chooseCourse(storedCidx);
+        }
+    });
+    chooseCourse(storedCidx);
+});
+
+function chooseCourse(selectedCidx) {
+    $('#mytable').empty();
+
+    // 선택된 값이 있을 때만 AJAX 호출
+    if (selectedCidx) {
+        totalStudentCount(selectedCidx);
+        professorManagement(selectedCidx);
+    }
+
     return;
 }
-
-
-function professorManagement(cidx){
-
- 	$.ajax({
-		type : "get",
-		url : "<%=request.getContextPath()%>/attendance/professorManagement.do?cidx=" + cidx,
-		dataType : "json",
-		success : function(data){
-			$('#mytable').empty();
-			var str = "<table><thead><tr><td style='width:50px'>주차</td><td style='width:400px'>수업일자</td>"
-                	+"<td style='width:400px'>수업시간</td><td style='width:50px'>출석</td><td style='width:50px'>조퇴</td>"
-                	+"<td style='width:50px'>지각</td><td style='width:50px'>결석</td><td style='width:150px'>처리</td>"
-            		+"</tr></thead><tbody>";
-			
-            $.each(data, function(i) {
-            	str += "<tr><td>"+data[i].w_week+"</td><td>"+data[i].wk+"("+data[i].ct_week+")</td><td>"
-            		+data[i].pe_period+"교시("+data[i].pe_start+" ~ "+data[i].pe_end+")</td>"
-                    +"<td>"+data[i].att+"</td><td>"+data[i].early+"</td><td>"+data[i].late+"</td>"
-                    +"<td>"+data[i].absent+"</td><td><button type='button' class='btn' onclick='attendancdManagement()'>출결처리</button></td></tr>";
-            });
-            str += "</tbody></table>";
-            $('#mytable').append(str);
-		},
-		error : function(request, status, error){
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		} 
-	});
-            
-	return; 
 	
-}
+	function professorManagement(cidx){
+	
+	 	$.ajax({
+			type : "get",
+			url : "<%=request.getContextPath()%>/attendance/professorManagement.do?cidx=" + cidx,
+			dataType : "json",
+			success : function(data){
+				var totalcnt = parseInt($('#totalScount').val(), 10);
+				$('#mytable').empty();
+				var str = "<table><thead><tr><td style='width:50px'>주차</td><td style='width:400px'>수업일자</td>"
+	                	+"<td style='width:400px'>수업시간</td><td style='width:50px'>출석</td><td style='width:50px'>조퇴</td>"
+	                	+"<td style='width:50px'>지각</td><td style='width:50px'>결석</td><td style='width:150px'>처리</td>"
+	            		+"</tr></thead><tbody>";
+				
+	            $.each(data, function(i) {
+					var cnt = 0;
+					
+	            	str += "<tr><td>"+data[i].w_week+"</td><td>"+data[i].wk+"("+data[i].ct_week+")</td><td>"
+	            		+data[i].pe_period+"교시("+data[i].pe_start+" ~ "+data[i].pe_end+")</td>"
+	                    +"<td>"+data[i].att+"</td><td>"+data[i].early+"</td><td>"+data[i].late+"</td>"
+	                    +"<td>"+data[i].absent;
+	                    cnt += parseInt(data[i].att, 10) + parseInt(data[i].early, 10) + parseInt(data[i].late, 10) + parseInt(data[i].absent, 10);
 
-
-
-function totalStudentCount(cidx){
-
-     //alert(cidx);
-	$.ajax({
-		type : "get",
-		url : "<%=request.getContextPath()%>/attendance/tscount.do?cidx="+cidx,
-		data : {
-			"cidx" : cidx
+	                if(cnt<=totalcnt){
+	                	//alert(data[i].att+data[i].early+data[i].late+data[i].absent);
+	                	str +="</td><td><button type='button' class='btn' >출결처리</button></td></tr>";
+	                }else{
+	                	str += "</td><td></td></tr>"
+	                }
+	            });
+	            str += "</tbody></table>";
+	            $('#mytable').append(str);
 			},
-		dataType : "json",
-		success : function(data){
-			//alert("성공");
-			$('#totalScount').empty();
-			var str = data.s_cnt;
-			$(".selectedWrap>input[name='totalScount']").val(str);
-		},
-		error : function(request, status, error){
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		} 
-	});
-	return;
-}
-
-function attendancdManagement(){
-
-	var str = ""
-	var tdArr = new Array();
-	var checkBtn = $('.btn');
-	var cidx = $('#selectcourse').val();
-
-	var tr = checkBtn.parent().parent();
-	var td = tr.children();
-
+			error : function(request, status, error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			} 
+		});
+	            
+		return; 
+		
+	}
 	
-	var no = td.eq(0).text();
-	var dates = td.eq(1).text();
-	var week = td.eq(1).text();
-	var period = td.eq(2).text();
-	var now = new Date();	
-	var year = now.getFullYear();
 	
-	dates = year+"-"+dates.substring(0,2)+"-"+dates.substring(3,5);
-	week = week.substring(7,8);
-	period = period.substring(0,1);
 	
-	// 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
-	td.each(function(i){	
-		tdArr.push(td.eq(i).text());
-	});
-
+	function totalStudentCount(cidx){
 	
-	str += "cidx: "+cidx+"\n 주차: " +no+"\n 수업일자: "+dates+"\n 수업요일: "+week+"\n 수업교시: "+period;	
-	
-	//alert(str);
-	
- 	$.ajax({
-		type : "get",
-		url : "<%=request.getContextPath()%>/attendance/attendanceManagement.do?",
-		data : {
-			"cidx" : cidx,
-			"no" : no,
-			"dates" : dates,
-			"week" : week,
-			"period" : period
+	     //alert(cidx);
+		$.ajax({
+			type : "get",
+			url : "<%=request.getContextPath()%>/attendance/tscount.do?cidx="+cidx,
+			data : {
+				"cidx" : cidx
+				},
+			dataType : "json",
+			success : function(data){
+				//alert("성공");
+				$('#totalScount').empty();
+				var str = data.s_cnt;
+				$(".selectedWrap>input[name='totalScount']").val(str);
 			},
-		dataType : "json",
-		success : function(data){
-			window.location.href = "<%=request.getContextPath()%>/attendance/professorAttendProcessing.do?cidx="+data.cidx+"&w_week="+data.w_week+"&dates="+data.dates+"&ct_week="+data.ct_week+"&period="+data.period;
-		},
-		error : function(request, status, error){
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		} 
-	});
-	return; 
+			error : function(request, status, error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			} 
+		});
+		return;
+	}
+
 	
-
-}
-
+	$(document).on('click','.btn',function(){
+	
+		var str = ""
+		var tdArr = new Array();
+		var checkBtn = $(this);
+		var cidx = $('#selectcourse').val();
+	
+		var tr = checkBtn.parent().parent();
+		var td = tr.children();
+		
+		var no = td.eq(0).text();
+		var dates = td.eq(1).text();
+		var week = td.eq(1).text();
+		var period = td.eq(2).text();
+		var now = new Date();	
+		var year = now.getFullYear();
+		
+		dates = year+"-"+dates.substring(0,2)+"-"+dates.substring(3,5);
+		week = week.substring(7,8);
+		period = period.substring(0,1);
+		
+		// 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+		td.each(function(i){	
+			tdArr.push(td.eq(i).text());
+		});
+	
+		
+		str += "cidx: "+cidx+"\n 주차: " +no+"\n 수업일자: "+dates+"\n 수업요일: "+week+"\n 수업교시: "+period;	
+		
+		alert(str);
+		//return;
+		
+	 	$.ajax({
+			type : "get",
+			url : "<%=request.getContextPath()%>/attendance/attendanceManagement.do?",
+			data : {
+				"cidx" : cidx,
+				"no" : no,
+				"dates" : dates,
+				"week" : week,
+				"period" : period
+				},
+			dataType : "json",
+			success : function(data){
+				window.location.href = "<%=request.getContextPath()%>/attendance/professorAttendProcessing.do?cidx="+data.cidx+"&w_week="+data.w_week+"&dates="+data.dates+"&ct_week="+data.ct_week+"&period="+data.period;
+			},
+			error : function(request, status, error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			} 
+		});
+		return; 
+		
+	
+	});
 
 </script>
 </head>

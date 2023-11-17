@@ -14,6 +14,7 @@ public class MemberVo {
 	private String s_yn;
 	private int s_grade;
 	private int clidx;
+	private String e_attendance;
 	
 	private int pidx;
 	private int p_no;
@@ -157,6 +158,12 @@ public class MemberVo {
 	}
 	public void setClidx(int clidx) {
 		this.clidx = clidx;
+	}
+	public String getE_attendance() {
+		return e_attendance;
+	}
+	public void setE_attendance(String e_attendance) {
+		this.e_attendance = e_attendance;
 	}
 
 	

@@ -13,9 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import app.dao.AttendanceDao;
-import app.dao.MemberDao;
 import app.domain.AttendanceVo;
+import app.domain.EachCheckVo;
 import app.domain.MemberVo;
 
 @WebServlet("/AttendanceController")
@@ -60,7 +65,7 @@ public class AttendanceController extends HttpServlet{
 			
 			PrintWriter out = response.getWriter();
 			out.println(sidx);
-			System.out.println(sidx);
+			//System.out.println(sidx);
 			
 			
 		}else if(location.equals("attendanceCount.do")) {
@@ -128,7 +133,7 @@ public class AttendanceController extends HttpServlet{
 			str2= "["+str2+"]";
 			PrintWriter out = response.getWriter();
 			out.println(str2);
-			System.out.println(str2);
+			//System.out.println(str2);
 			
 		}else if(location.equals("attendanceSituation_p.do")) {
 			AttendanceDao ad = new AttendanceDao();
@@ -323,7 +328,7 @@ public class AttendanceController extends HttpServlet{
 			//System.out.println("ctidx: "+av.getCtidx()+"\n a_start: "+av.getPe_start()+"\n a_end: "+av.getPe_end()+"\n widx: "+av.getWidx()+"\n c_name: "+av.getC_name());
 			request.setAttribute("av", av);
 			
-			ArrayList<MemberVo> list = ad.professorAttendProcessing(cidx, av.getCtidx());
+			ArrayList<MemberVo> list = ad.professorAttendProcessing(cidx, dates, w_week, period,av.getCtidx());
 			request.setAttribute("list", list);
 			
 			String path = "/attendance/attendanceManagement.jsp";
@@ -331,6 +336,59 @@ public class AttendanceController extends HttpServlet{
 			
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
+		}else if(location.equals("attendanceAction.do")) {
+			int ctidx = Integer.parseInt(request.getParameter("ctidx"));
+			String a_date = request.getParameter("a_date");
+			String pe_start = request.getParameter("pe_start");
+			String pe_end = request.getParameter("pe_end");
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
+			int widx = Integer.parseInt(request.getParameter("widx"));
+			int period = Integer.parseInt(request.getParameter("period"));
+			
+			AttendanceVo av = new AttendanceVo();
+			av.setCtidx(ctidx);
+			av.setA_date(a_date);
+			av.setA_start(pe_start);
+			av.setA_end(pe_end);
+			av.setCidx(cidx);
+			av.setWidx(widx);
+			av.setPe_period(period);
+			
+			String attendValue = request.getParameter("Array");
+			//System.out.println("넘어온값"+ctidx+a_date+pe_start+pe_end+cidx+widx+"\n value"+attendValue);
+			
+			JSONParser parser = new JSONParser();
+		    JSONArray jsonArray = null;
+		    
+		    try {
+				jsonArray = (JSONArray) parser.parse(attendValue);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+		    ArrayList<EachCheckVo> list = new ArrayList<>();
+		    for(int i=1; i<jsonArray.size(); i++){
+				//배열 안에 있는것도 JSON형식 이기 때문에 JSON Object 로 추출            
+				JSONObject insertData = (JSONObject) jsonArray.get(i);
+				int clidx = Integer.parseInt((String) insertData.get("clidx"));
+				String attvalue = (String)insertData.get("attendvalue");
+				
+				EachCheckVo ecv = new EachCheckVo();
+				ecv.setClidx(clidx);
+				ecv.setE_attendance(attvalue);
+				list.add(ecv);
+				
+				//System.out.println(clidx+attvalue);
+				//System.out.println(insertData);
+			}
+		    
+		    AttendanceDao ad = new AttendanceDao();
+		    int value = ad.attendanceAction(list, av);
+		    
+			String str = "{\"value\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
 		}
 	}	
 }
