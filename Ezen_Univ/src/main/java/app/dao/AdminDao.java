@@ -1,6 +1,7 @@
 package app.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import app.dbconn.DbConn;
 import app.domain.CourseTimeVo;
 import app.domain.CourseVo;
 import app.domain.MemberVo;
+import app.domain.WeektbVo;
 
 public class AdminDao {
 	
@@ -26,7 +28,7 @@ public class AdminDao {
 		ArrayList<MemberVo> slist = new ArrayList<MemberVo>();
 		ResultSet rs = null;
 		
-		String sql = "select sidx, s_name,s_birth,s_email,s_major from student where s_yn='N' order by sidx desc";
+		String sql = "select sidx,s_name,s_birth,s_email,s_major from student where s_yn='N' order by sidx desc";
 		
 		try{
 			pstmt = conn.prepareStatement(sql);
@@ -544,6 +546,9 @@ public class AdminDao {
 	    int exec = 0;
 
 	    try {
+	    	
+	    	conn.setAutoCommit(false);
+	    	
 	        // ctidx 값을 가져오기
 	        String selectCtidx = "select ctidx from coursetime a join course b on a.cidx=b.cidx where b.cidx=?";
 	        selectStmt = conn.prepareStatement(selectCtidx);
@@ -571,18 +576,34 @@ public class AdminDao {
 	        deleteStmtByCidx.setInt(1, cidx);
 	        exec += deleteStmtByCidx.executeUpdate();
 	        
-	    } catch (SQLException e) {
+	        conn.commit();
+	        
+        } catch (SQLException e) {
             e.printStackTrace();
-            // 오류 처리
+            try {
+                // 트랜잭션 롤백
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
         } finally{
 			try{
 	            if (selectStmt != null) selectStmt.close();
 	            if (deleteStmtByCtidx != null) deleteStmtByCtidx.close();
 	            if (deleteStmtByCidx != null) deleteStmtByCidx.close();
-	            conn.close();
-			}catch(Exception e){
-				e.printStackTrace();
-			}
+	            if (conn != null) {
+	                if (!conn.getAutoCommit()) {
+	                    // 트랜잭션이 활성화된 경우에만 롤백 및 자동 커밋 설정
+	                    conn.rollback();
+	                    conn.setAutoCommit(true);
+	                }
+	                conn.close();
+	            }
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
 		}
         return exec;
     }
@@ -829,6 +850,9 @@ public class AdminDao {
 		int exec = 0;
 		
 	    try {
+	    	
+	    	conn.setAutoCommit(false);
+	    	
 	        // ctidx 값을 가져오기
 	        String selectCtidx = "SELECT ctidx FROM coursetime a JOIN course b ON a.cidx = b.cidx WHERE b.cidx = ?";
 	        selectStmt = conn.prepareStatement(selectCtidx);
@@ -858,18 +882,32 @@ public class AdminDao {
 	                exec += insertStmtSidxCtidx.executeUpdate();
 	            }
 	        }
+	        
+	        conn.commit();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                // 트랜잭션 롤백
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
 	    } finally {
 	        // 필요에 따라 리소스를 닫아주는 로직 추가
 	        try {
 	            if (rs != null) rs.close();
 	            if (selectStmt != null) selectStmt.close();
 	            if (insertStmtSidxCtidx != null) insertStmtSidxCtidx.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
 	    }
 
 	    return exec;
@@ -881,6 +919,9 @@ public class AdminDao {
 		ResultSet rs = null;
 		int exec = 0;
 	    try {
+	    	
+	    	conn.setAutoCommit(false);
+	    	
 	        // ctidx 값을 가져오기
 	        String selectCtidx = "SELECT ctidx FROM coursetime a JOIN course b ON a.cidx = b.cidx WHERE b.cidx = ?";
 	        selectStmt = conn.prepareStatement(selectCtidx);
@@ -905,25 +946,117 @@ public class AdminDao {
 
                 exec += insertStmtCtidx.executeUpdate();
             }
+            
+            conn.commit();
 	            
 	    } catch (Exception e) {
 	        e.printStackTrace();
+            try {
+                // 트랜잭션 롤백
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
 	    } finally {
 	        // 필요에 따라 리소스를 닫아주는 로직 추가
 	        try {
 	            if (rs != null) rs.close();
 	            if (selectStmt != null) selectStmt.close();
 	            if (insertStmtCtidx != null) insertStmtCtidx.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
 	    }
 
 	    return exec;
 
 	}
 
+	public ArrayList<WeektbVo> opendateList(int year_int, int term_int) {
+		ArrayList<WeektbVo> datelist = new ArrayList<WeektbVo>();
+		ResultSet rs=null;
+		
+		String sql = "select w_week,w_start,w_end from weektb where startyear = ? and starttm = ?";
+		
+		try{
+		 
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, year_int);
+			pstmt.setInt(2, term_int);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				WeektbVo wv = new WeektbVo();
+				
+				wv.setW_week(rs.getInt("w_week"));
+				wv.setW_start(rs.getDate("w_start"));
+				wv.setW_end(rs.getDate("w_end"));
+				datelist.add(wv);
+			}
+			
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+				
+		return datelist;
+	}
+	
+	public int openDateRegisterCheck(int year_int, int semester_int) {
+		ResultSet rs = null;
+		int exec = 0;
 
+		 String sql = "select count(*) cnt from weektb where startyear = ? and starttm = ?";
+		 
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, year_int);
+			pstmt.setInt(2, semester_int);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()){
+				exec =	rs.getInt("cnt");
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return exec;
+	}
+	
+	
+	public int openDateRegister(Date date, int year_int, int semester_int) {
+		int exec = 0;
 
+		String sql = "{CALL weekmake4(?,?,?)}";
+		 
+			try{
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setDate(1, date);
+				pstmt.setInt(2, year_int);
+				pstmt.setInt(3, semester_int);
+				exec = pstmt.executeUpdate();
+								
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			
+			return exec;
+		}
+
+	
 
 }
