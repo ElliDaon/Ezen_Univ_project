@@ -27,7 +27,7 @@
                     <a href="../admin/courseEnroll.do" target="_parent">수강등록</a>
                 </td>
                 <td>
-                    <a href="../admin/openDate.jsp" target="_parent">개강날짜 등록</a>
+                    <a href="../admin/openDate.do" target="_parent">개강날짜 등록</a>
                 </td>
                 <td width="500"></td>
             </tr>

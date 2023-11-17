@@ -3,7 +3,10 @@ package app.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -21,6 +24,7 @@ import app.dao.AdminDao;
 import app.domain.CourseTimeVo;
 import app.domain.CourseVo;
 import app.domain.MemberVo;
+import app.domain.WeektbVo;
 
 
 @WebServlet("/AdminController")
@@ -400,7 +404,7 @@ public class AdminController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println(str);
 			
-		}else if(location.equals("checkedEnrollAction.do")) {
+		}else if(location.equals("checkedEnrollAction.do")) { // 체크된 학생들 수강등록
 			String selectedStudent = request.getParameter("selectedStudent");
 			String cidx = request.getParameter("cidx");
 				
@@ -436,7 +440,7 @@ public class AdminController extends HttpServlet {
 			out.println(str);
 			
 			
-		}else if(location.equals("EnrollAction.do")) {
+		}else if(location.equals("EnrollAction.do")) {	// 학생 1명의 수강등록
 			String cidx = request.getParameter("cidx");
 			String sidx = request.getParameter("sidx");
 			
@@ -450,7 +454,116 @@ public class AdminController extends HttpServlet {
 			out.println(str);
 			
 			
-		}
+		}else if(location.equals("openDate.do")) {	// 개강날짜 페이지
+				
+			String path = "/admin/openDate.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+			
+		}else if(location.equals("openDateList.do")) {	// 현 학기에 등록된 개강날짜 리스트
+			
+			String year = request.getParameter("year");
+			String term = request.getParameter("term");
+			
+			int year_int = Integer.parseInt(year);
+			int term_int = Integer.parseInt(term);
+			
+			AdminDao add= new AdminDao();
+			ArrayList<WeektbVo> list = add.opendateList(year_int,term_int);
+			
+			int listCnt = list.size();	
+			int w_week = 0;
+			Date w_start =null;
+			Date w_end =null;
+			String str = "";
+			
+			for(int i=0; i< listCnt; i++){
+				w_week= list.get(i).getW_week();
+				w_start= list.get(i).getW_start();
+				w_end= list.get(i).getW_end();
+				
+				String comma = "";
+				
+				if(i == listCnt-1) { 
+					comma = "";
+					
+				}else {
+					comma = ",";
+				}
+				str = str +"{\"w_week\":\""+w_week+"\",\"w_start\":\""+w_start+"\",\"w_end\":\""+w_end+"\"}"+comma;
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
+
+		}else if(location.equals("openDateRegisterCheck.do")) {	// 개강날짜 중복체크
+			
+			String year = request.getParameter("dateInfoYear");
+			String semester = request.getParameter("dateInfoSemester");
+			
+			int year_int =Integer.parseInt(year);
+			int semester_int =Integer.parseInt(semester);
+			
+			int value = 0;
+			AdminDao add= new AdminDao();
+			value = add.openDateRegisterCheck(year_int,semester_int);
+
+			String str ="{\"cnt\":\""+value+"\"}";
+			PrintWriter out = response.getWriter();
+			out.println(str);
+			
+			
+		}else if(location.equals("openDateRegisterAction.do")) {	// 개강날짜 등록
+		  
+			String date = request.getParameter("dateInput");
+			String year = request.getParameter("dateInfoYear");
+			String semester = request.getParameter("dateInfoSemester");
+			 
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 날짜 형식에 맞게 설정
+
+	
+			int year_int =Integer.parseInt(year);
+			int semester_int =Integer.parseInt(semester);
+			    
+			int value = 0;
+			AdminDao add= new AdminDao();
+			//value = add.openDateRegister(date,year_int,semester_int);
+			
+			if (value !=0) { 
+				String path = request.getContextPath()+"/admin/openDate.do";
+				response.sendRedirect(path);
+			}else {			
+				String path = request.getContextPath()+"/admin/accept.do";
+				response.sendRedirect(path);
+			}
+
+		}else if(location.equals("openDateUpdateAction.do")) {	// 개강날짜 등록
+			  
+				String date = request.getParameter("dateInput");
+				String year = request.getParameter("dateInfoYear");
+				String semester = request.getParameter("dateInfoSemester");
+				  
+				int year_int =Integer.parseInt(year);
+				int semester_int =Integer.parseInt(semester);
+				
+				//System.out.println("date?"+date);
+				//System.out.println("year?"+year);
+				//System.out.println("semester?"+semester);
+				    
+				//int value = 0;
+				//AdminDao add= new AdminDao();
+				//value = add.openDateRegister(date,year_int,semester_int);
+				
+				//if (value !=0) { 
+				//	String path = request.getContextPath()+"/admin/openDate.do";
+				//	response.sendRedirect(path);
+				//}else {			
+				//	String path = request.getContextPath()+"/admin/accept.do";
+				//	response.sendRedirect(path);
+				//}
+
+			}
+			 
 	
 	}
 

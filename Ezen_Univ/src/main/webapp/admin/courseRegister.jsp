@@ -10,8 +10,8 @@
     <title>강의등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
-   <link rel="stylesheet" href="../css/courseRegister.css">
-   <style type="text/css">
+    <link rel="stylesheet" href="../css/courseRegister.css">
+    <style type="text/css">
    .container{
     display: flex;
 	}
@@ -28,7 +28,7 @@
 	    padding: 20px;
 	}
    
-   </style>
+    </style>
     <script>
     $(document).ready(function(){
         // 현재 날짜를 가져와서 input에 설정
@@ -36,7 +36,7 @@
         let year = currentDate.getFullYear();
         
         let month = currentDate.getMonth() + 1;
-        let term = (month >= 3 && month <= 8) ? 1 : 2;
+        let term = (month >= 2 && month <= 7) ? 1 : 2;
         
         $('#yearInput').val(year);
         $('#termInput').val(term);
@@ -422,24 +422,15 @@
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_major" id="c_major" list="major-options" autocomplete="off"/>
 						<datalist id="major-options">
-							<option value="건축공학과" />
-							<option value="고분자나노공학과" />
-							<option value="유기소재섬유공학과" />
+							<option value="건축학과" />
+							<option value="경제학과" />
+							<option value="경영학과" />
+							<option value="정보통신공학과" />
 							<option value="기계공학과" />
 							<option value="기계설계공학부" />
 							<option value="기계시스템공학부" />
 							<option value="도시공학과" />
 							<option value="바이오메디컬공학부" />
-							<option value="산업정보시스템공학과" />
-							<option value="소프트웨어공학과" />
-							<option value="신소재공학부" />
-							<option value="전기공학과" />
-							<option value="전자공학과" />
-							<option value="정보통신공학과" />
-							<option value="컴퓨터인공지능학부" />
-							<option value="토목환경자원에너지공학부" />
-							<option value="항공우주공학" />
-							<option value="화학공학과" />
 						</datalist>
 						&ensp;
 						<input type="button" name="btn" value="조회" id="registerView">
