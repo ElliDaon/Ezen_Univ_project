@@ -1,15 +1,149 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/openDate.css">
-<style>
+    <style>
 
-</style>
+        table {
+            width: 50%; /* 테이블의 가로폭을 조절할 수 있습니다. */
+            border-collapse: collapse;
+            display: flex;
+        	flex-direction: column;
+        	align-items: center;
+       	 	position: relative;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+    </style>
+    <script>
+	$(document).ready(function() {
+	    
+	    let currentDate = new Date();
+	    let year = currentDate.getFullYear();
+	    
+	    let month = currentDate.getMonth() + 1;
+	    let term = (month >= 2 && month <= 7) ? 1 : 2;
+
+	    openDateList(year, term);
+		
+
+		const dateInput = document.getElementById('dateInput');
+		const dateInfoYear = document.getElementById('dateInfoYear');
+		const dateInfoSemester = document.getElementById('dateInfoSemester');
+	    let fm = document.frm;
+	    fm.action = "<%=request.getContextPath()%>/admin/openDateRegisterAction.do";
+	    fm.method = "post";
+		
+	    dateInput.addEventListener('change', function() {
+	
+	        let confirmation = confirm("해당 날짜로 선택하시겠습니까?"); // 확인 창 표시
+	        if (confirmation) {
+	 
+		        const selectedDate = dateInput.value;
+		        const parsedDate = new Date(selectedDate);
+		        const yearValue = parsedDate.getFullYear();
+		        dateInfoYear.value = yearValue;
+		        
+		        const selectedMonth = parsedDate.getMonth()+1;
+		        const selectedDay = parsedDate.getDay();
+				
+		        if(selectedDay !==1){
+		        	alert('월요일을 선택해야 합니다. 다시 선택해주세요.');
+		        	return;	
+		        }
+		 
+		        if(selectedMonth >= 2 && selectedMonth <= 3){
+		        	dateInfoSemester.value = '1';
+		        }else if(selectedMonth >= 8 && selectedMonth <= 9){
+		        	dateInfoSemester.value = '2';
+		        }else {
+		            alert('개강 입력이 가능한 날짜는 1학기 2~3월, 2학기 8~9월에 등록 가능합니다.')
+		            
+		            return;
+		        }
+		        
+	             $.ajax({
+	                type: "post",
+	                url: "${pageContext.request.contextPath}/admin/openDateRegisterCheck.do",
+	                dataType: "json",
+	                data:{
+	                	"dateInfoYear": dateInfoYear.value,
+	                	"dateInfoSemester": dateInfoSemester.value
+	                },
+	                cache: false,
+	                success: function (data) {
+						if(data.cnt ==0){
+							
+							fm.submit();		
+						}else if(data.cnt >=0){
+	                		
+		                    let confirmation = confirm("해당 년도, 학기에 이미 입력되어있습니다. 그래도 등록하시겠습니까?"); // 확인 창 표시
+		                    if (confirmation) {
+		                    	fm.action = "<%=request.getContextPath()%>/admin/openDateUpdateAction.do";
+		                   		fm.submit();
+		                    };
+	                	};    
+	                },
+	                error: function () {
+	                    alert("통신오류 실패");
+	                }
+	            });
+	
+	        }
+	    });
+	});
+	
+     // 등록된 개강날짜 리스트 
+    function openDateList(year, term) {
+        //alert("통신 시도");
+        $.ajax({
+            type: 'POST',
+            url: "${pageContext.request.contextPath}/admin/openDateList.do",
+            data: {
+                "year": year,
+                "term": term
+            },
+            success: function(data) {
+            	openDateListTable(data);
+            	
+            },	
+            error: function(error) {
+            	 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    }
+     
+    function openDateListTable(data){
+    	let parsedData = JSON.parse("["+data+"]");
+    	let str = "<thead><tr><th>주차</th><th>시작 날짜</th><th>종료 날짜</th></tr></thead><tbody>";	
+    	parsedData.forEach(function (item){
+    		
+    		str += "<tr><td>"+item.w_week+"</td>" +
+			"<td>"+item.w_start+"</td>" +
+    		"<td>"+item.w_end+"</td></tr>";
+    	});
+    	str += "</tbody>";
+    	
+    	
+    	$("#openDateList").html(str);
+    	
+    	return;
+    }
+     
+</script>
+    
+    
 </head>
 <body>
     <div class="header">
@@ -17,112 +151,39 @@
     </div>
 
 	<div class="container">
-    <div class="sidebar">
-        <div class="myinfo">
-            <iframe src = "../leftmenu/myinfo_a.jsp" width="100%" height="100"></iframe>
-        </div>
-        <div class="menubar">
-             <iframe src = "../leftmenu/openDate_a.jsp" width="100%" height="100%"></iframe>
-        </div>
-    </div>
-    <div class="contents">
-        <div class="openDate"> 
-        <h1>개강날짜 등록</h1>
-        <br>
-        <input type="date" id="dateInput">
-            <br>
-            <div>
-            <p>
-                <span id="dateInfoYear"></span>
-                <span id="dateInfoSemester"></span>
-            </p>
-            </div>
-            <br>
-            
-        <ul><li id="weekInfo"></li></ul>
-            
+	    <div class="sidebar">
+	        <div class="myinfo">
+	            <iframe src = "../leftmenu/myinfo_a.jsp" width="100%" height="100"></iframe>
+	        </div>
+	        <div class="menubar">
+	             <iframe src = "../leftmenu/openDate_a.jsp" width="100%" height="100%"></iframe>
+	        </div>
+	    </div>
 
-        </div>
-        
-        
-    </div>
-    <fieldset class="fixed">
+	    <div class="contents">
+	    <form name="frm" >
+	        <div class="openDate"> 
+	        <h1>개강날짜 등록</h1>
+	        <br>
+	        <input type="date" id="dateInput" name="dateInput" />
+	        <input type="hidden" id="dateInfoYear" name="dateInfoYear" />
+            <input type="hidden" id="dateInfoSemester" name="dateInfoSemester" />
+	        </div>
+	        <div id="openDateList">
+	        	<table>
+	        		<!-- 등록된 날짜가 주차배열로 보여줌 -->
+	        	</table>
+	        </div>
+	    </form>
+	    </div>
+	    
+	    
+	    <fieldset class="fixed">
         <legend>공지</legend>
-        이젠 대학에서의 개강날짜 등록은 월요일만 가능합니다.
-    
-    </fieldset>
+        이젠 대학에서의 개강날짜 등록은 월요일과 1학기 기준 2~3월, 2학기 기준 8~9월만 가능합니다.
+    	</fieldset>
+	</div>
 
-</div>
-
-<script>
-    const dateInput = document.getElementById('dateInput');
-    const dateInfoYear = document.getElementById('dateInfoYear');
-    const dateInfoSemester = document.getElementById('dateInfoSemester');
-    const weekInfo = document.getElementById('weekInfo');
-
-    function updateInfo() {
-        const selectedDate = new Date(dateInput.value);
-        const year = selectedDate.getFullYear();
-        const month = selectedDate.getMonth() + 1;
-        let semester = "";
-
-        if (selectedDate.getDay() !== 1) {
-            alert('월요일을 선택해야 합니다. 다시 선택해주세요.');
-            return;
-        }
-
-
-        if (month >= 2 && month <= 3) {
-            semester = "년 1학기";
-        } else if (month >= 8 && month <= 9) {
-            semester = "년 2학기";
-        } else {
-            
-            alert('1학기는 2~3월, 2학기는 8~9월에 개강이 가능합니다.')
-            return;
-            
-        }
-
-        dateInfoYear.textContent = year;
-        dateInfoSemester.textContent = semester;
-
-        weekInfo.innerHTML = ""; // Clear previous entries
-
-        let weekStartDate = new Date(selectedDate);
-        let weekEndDate = new Date(selectedDate);
-
-        for (let i = 1; i <= 16; i++) {
-            while (weekStartDate.getDay() === 0 || weekStartDate.getDay() === 4) {
-                weekStartDate.setDate(weekStartDate.getDate() + 1);
-            }
-
-            weekEndDate = new Date(weekStartDate);
-            while (weekEndDate.getDay() === 0 || weekEndDate.getDay() === 4) {
-                weekEndDate.setDate(weekEndDate.getDate() + 1);
-            }
-            weekEndDate.setDate(weekEndDate.getDate() + 4);
-
-            const weekItem = document.createElement('li');
-            weekItem.textContent = ` ${i} 주차: ${weekStartDate.getMonth() + 1}월 ${weekStartDate.getDate()}일 ~ ${weekEndDate.getMonth() + 1}월 ${weekEndDate.getDate()}일`;
-            weekInfo.appendChild(weekItem);
-
-            weekStartDate.setDate(weekStartDate.getDate() + 7);
-        }
-        
-        // Store the selected date in localStorage
-        localStorage.setItem('selectedDate', dateInput.value);
-    }
-
-    // Initialize the date input with the stored value from localStorage
-    const storedDate = localStorage.getItem('selectedDate');
-    if (storedDate) {
-        dateInput.value = storedDate;
-        updateInfo();
-    }
-
-    dateInput.addEventListener('change', updateInfo);
-
-</script>
 </body>
 </html>
 

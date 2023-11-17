@@ -51,7 +51,7 @@
         let year = currentDate.getFullYear();
         
         let month = currentDate.getMonth() + 1;
-        let term = (month >= 3 && month <= 8) ? 1 : 2;
+        let term = (month >= 2 && month <= 7) ? 1 : 2;
         
         $('#yearInput').val(year);
         $('#termInput').val(term);
@@ -191,7 +191,7 @@
                 success: function(data) {
                 	//alert("통신 확인");
                 	$("#studentList h4").text(c_name);	//학생 리스트 h4에 불러온 과목명 입력
-                	courseMatchStudent(data, cidx);	//학생들 리스트 테이블과 함께 cidx값도 같이 넘기기
+                	courseMatchStudent(data, cidx);	//학생들 리스트 정보와 함께 cidx값도 같이 넘기기
                 	
                 	
                 },
@@ -226,7 +226,7 @@
     	
     	$("#batchBtn").val(cidx);
     	$("#studentList tbody").html(str);	// 학생리스트 tbody 부분에 입력
-    	$('#studentList').show();	// 학생 리스트가 불러오기 때문에 보여줘야함.
+    	$('#studentList').show();	// <div id="studentList"> 학생 테이블 표 활성화
     	
     	
     }

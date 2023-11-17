@@ -95,12 +95,18 @@ public class NoticeController {
 			if (subject ==null) subject="0";			
 			String page = request.getParameter("page");
 			if (page ==null) page ="1";
-						
+			
+			String sub = request.getParameter("subject");
+			request.setAttribute("sub", sub);
+			
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(Integer.parseInt(page));	
 
 			int cidx = Integer.parseInt(subject);
 			scri.setSubject(cidx);
+			
+			
+			
 			
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
@@ -111,10 +117,10 @@ public class NoticeController {
 			NoticeDao nd = new NoticeDao();
 			ArrayList<CourseVo> courselist = nd.courselist_p(pidx);
 			
-			ArrayList<NoticeVo> alist  = nd.getList(pidx,scri);
+			ArrayList<NoticeVo> alist  = nd.getList_p(pidx,scri);
 			
 			
-			int cnt = nd.noticeTotalCount(scri);
+			int cnt = nd.noticeTotalCount_p(pidx,scri);
 			pm.setTotalCount(cnt);
 			//System.out.println("cnt?"+cnt);
 			
@@ -129,14 +135,18 @@ public class NoticeController {
 			 rd.forward(request, response);	
 		
 		}else if (location.equals("noticeList_s.do")) {	
+			HttpSession session = request.getSession();
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();	
 			
-
+			String sub = request.getParameter("subject");
+			request.setAttribute("sub", sub);
 			
 			String subject = request.getParameter("subject");
 			if (subject ==null) subject="0";			
 			String page = request.getParameter("page");
 			if (page ==null) page ="1";
-						
+					
+			
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(Integer.parseInt(page));	
 
@@ -146,23 +156,15 @@ public class NoticeController {
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
 			
-			HttpSession session = request.getSession();
-			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();			
+				
 						
 			NoticeDao nd = new NoticeDao();
 			ArrayList<CourseVo> courselist = nd.courselist_s(sidx);
 			
-			ArrayList<NoticeVo> alist  = nd.getList(sidx,scri);
-			int alist_size = alist.size();
+			ArrayList<NoticeVo> alist  = nd.getList_s(sidx,scri);
 			
-			for(int i=0; i<alist_size; i++) {
-				
-			}
-			
-			
-			int cnt = nd.noticeTotalCount(scri);
+			int cnt = nd.noticeTotalCount_s(sidx,scri);
 			pm.setTotalCount(cnt);
-			//System.out.println("cnt?"+cnt);
 			
 						
 			request.setAttribute("pm", pm);

@@ -8,12 +8,36 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/nav_style.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@200;300&family=Passion+One:wght@400;700&family=Quicksand&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- 
-	    <script>
+	
+    <script>
+      $(document).ready(function(){
+            professorInfo();
+      });
+      
+      function professorInfo(){
+      	
+      	var str = "";
+      	
+      	var p_no =${sessionScope.p_no};
+      	var p_name = "${sessionScope.p_name}"
+      	var p_major = "${sessionScope.p_major}";
+      	
+      	str = "<strong>[교수]</strong><br>"
+      		 + p_name + "("+ p_no +")<br>"
+      		 + "[" + p_major + "]";
+      	
+      	$("#myinfo").html(str);
+      	return;
+      }
+    </script>
+    
+    <script>
         // 페이지가 로드된 후 실행되는 JavaScript 코드
         $(document).ready(function() {
             // iFrame에서 가져올 페이지의 URL
@@ -36,44 +60,57 @@
             });
         });
     </script>
-   
-    <style>
-    .notice{
-    	width : 660px;
-    	height : 200px;
-    	overflow : scroll; 
-    	margin : 50px;
-    	
-    }
-    
-    </style>
-    
 </head>
 <body>
-    <div class="header">
-        <iframe src = "../main/navigation_p.jsp" width = "100%" height="55" ></iframe>
-    </div>
-    <div class="container">
+	<div id="main-header">
+		<header class="mainHeader">
+			<section class="mainHeaderSection">
+				<div>
+					<a href="../main/main_p.do" class="logoLink" target="_parent"><img src="../images/ezen_univ.png" width="150"></a>
+					<div class="headerMenu">
+						<nav class="menuList">
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../mypage/personalinfo_p.do" target="_parent">마이페이지</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../attendance/attendanceSituation_p.do" target="_parent">출석관리</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../notice/noticeList_p.do" target="_parent">공지사항</a></div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</section>
+		</header>
+	</div>
+    <div class="main">
+      <div class="container">
         <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_p.jsp" width="100%" height="100%"></iframe>
+          <div class="top">
+            <div id="myinfo" class="myinfo" style="margin-top:30px">
+<!--          <iframe src = "../leftmenu/myinfo_p.jsp" width="100%" height="100%"></iframe> -->
             </div>
+            <div class="logStatus">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+            </div>
+          </div>
+          <div class="bottom">
+          </div>
         </div>
         <div class="contents">
             <div class="first-line">
-                	
                 <div class="notice">
-
-                 
                     <div class="externalContent"></div>
-					
                 </div>
-                <div class="banner" style="padding-top: 50px;">
-                    <a href="https://www.cubeitac.com/" target="_blank"><img src="../images/banner.png" width="90%" height="150px"></a>
+                <div class="banner">
+                    <a href="https://www.cubeitac.com/" target="_blank"><img src="../images/banner.png"></a>
                 </div>
             </div>
             <div class="p-table">
-                <table class="table" id="mytable" style="font-size:12px; padding: 5px;">
+              <div class="thisis">2023년도 2학기 시간표</div>
+              <div>
+                <table class="table" id="mytable">
                     <thead>
                         <tr>
                             <td style="width:5%; font-weight: bold; font-size: 15px;">교시</td>
@@ -97,6 +134,7 @@
                         </c:forEach>
                     </tbody>
                 </table>
+              </div>
             </div>
             <div class="sitemap">
             	<span class="sitemapcls"><ion-icon name="close-outline"></ion-icon></span>
@@ -128,6 +166,7 @@
             	</div>
             </div>
         </div>
+      </div>
     </div>
     <div class="sitemap_icon">
     	<span class="sitemap-popup"><ion-icon name="map-outline"></ion-icon></span>
