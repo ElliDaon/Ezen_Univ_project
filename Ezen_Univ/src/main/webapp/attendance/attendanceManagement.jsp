@@ -157,6 +157,34 @@
 	                                                $("input[name='" + radioName + "'][value='결석']").prop('checked', true);
 	                                            }
 	                                        });
+	                                        
+	                                        $('input[name="attendvalue${i.count}"]').change(function() {
+	                                            $('input[name="attendvalue${i.count}"]').each(function() {
+	                                                var value = $(this).val();             
+	                                                var checked = $(this).prop('checked'); 
+	                                                
+	                                                var $label = $(this).next();
+	                                         
+	                                                if(checked && value==='출석'){
+	                                                    $label.css('background-color', '#459B60');
+	                                                    $label.css('border', '1px solid #459B60');
+	                                                    $label.css('color', 'white');
+	                                                }
+	                                                else if(checked && (value==='지각' || value === '조퇴')){
+	                                                    $label.css('background-color', '#E3C22A');
+	                                                    $label.css('border', '1px solid #E3C22A');
+	                                                    $label.css('color', 'white');
+	                                                }else if(checked && value === '결석'){
+	                                        			$label.css('background-color', '#D95321');
+	                                                    $label.css('border', '1px solid #D95321');
+	                                                    $label.css('color', 'white');
+	                                        		}else{
+	                                        			$label.css('background-color','white');
+	                                        			$label.css('border','1px solid black');
+	                                        			$label.css('color','gray');
+	                                        		}
+	                                            });
+	                                        });
                                     	</script>
                                     </td>
                                 </tr>
