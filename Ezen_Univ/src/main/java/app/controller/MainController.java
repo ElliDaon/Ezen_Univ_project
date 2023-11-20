@@ -1,6 +1,7 @@
 package app.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import app.dao.CourseDao;
+import app.dao.NoticeDao;
+import app.domain.NoticeVo;
+import app.domain.SearchCriteria;
 import app.domain.TableVo;
 
 @WebServlet("/MainController")
@@ -28,10 +32,36 @@ public class MainController extends HttpServlet{
 	
 		if(location.equals("main_s.do")) {
 			
+			String subject = request.getParameter("subject");
+			if (subject ==null) subject="0";			
+			String page = request.getParameter("page");
+			if (page ==null) page ="1";
+			
+			String sub = request.getParameter("subject");
+			request.setAttribute("sub", sub);
+			
+			SearchCriteria scri = new SearchCriteria();
+			scri.setPage(Integer.parseInt(page));	
+			
+			int cidx = Integer.parseInt(subject);
+			scri.setSubject(cidx);
+			
+			NoticeDao nd = new NoticeDao();
 			CourseDao cd = new CourseDao();
 			
 			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			
+			ArrayList<NoticeVo> alist = nd.getList_p(sidx, scri);
+			ArrayList<NoticeVo> noticeList = new ArrayList<>();
+			
+			for(int i=0; i<5; i++) {
+				noticeList.add(i, alist.get(i));
+			}
+			
+			request.setAttribute("alist", noticeList);
+			PrintWriter out = response.getWriter();
+			
 			
 			LocalDate now = LocalDate.now();
 			int year = now.getYear();
@@ -52,11 +82,36 @@ public class MainController extends HttpServlet{
 			rd.forward(request, response);
 		}else if(location.equals("main_p.do")) {
 			
+			String subject = request.getParameter("subject");
+			if (subject ==null) subject="0";			
+			String page = request.getParameter("page");
+			if (page ==null) page ="1";
 			
+			String sub = request.getParameter("subject");
+			request.setAttribute("sub", sub);
+			
+			SearchCriteria scri = new SearchCriteria();
+			scri.setPage(Integer.parseInt(page));	
+			
+			int cidx = Integer.parseInt(subject);
+			scri.setSubject(cidx);
+			
+			NoticeDao nd = new NoticeDao();
 			CourseDao cd = new CourseDao();
 			
-			HttpSession session = request.getSession();
+			
+			HttpSession session = request.getSession(); 
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			ArrayList<NoticeVo> alist = nd.getList_p(pidx, scri);
+			ArrayList<NoticeVo> noticeList = new ArrayList<>();
+			
+			for(int i=0; i<5; i++) {
+				noticeList.add(i, alist.get(i));
+			}
+			
+			request.setAttribute("alist", noticeList);
+			PrintWriter out = response.getWriter();
 			
 			LocalDate now = LocalDate.now();
 			int year = now.getYear();

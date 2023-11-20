@@ -26,7 +26,7 @@
 							  <div aria-current="false" class="menuitemin"><a href="../admin/courseEnroll.do" target="_parent">수강등록</a></div>
 							</div>
 							<div role="menuitem" class="menuitem">
-							  <div aria-current="false" class="menuitemin"><a href="../admin/courseEnroll.do" target="_parent">개강일자등록</a></div>
+							  <div aria-current="false" class="menuitemin"><a href="../admin/openDate.do" target="_parent">개강일자등록</a></div>
 							</div>
 						</nav>
 					</div>

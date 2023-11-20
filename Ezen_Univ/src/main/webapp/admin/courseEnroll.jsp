@@ -8,24 +8,9 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
-    <link rel="stylesheet" type="text/css" href="../css/courseRegister.css">
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
    <style type="text/css">
-   
-   .container{
-    display: flex;
-	}
-	.sidebar{
-	    width: 50%;
-	}
-	.myinfo{
-	    width: 100%;
-	}
-	.menubar{
-	    width: 100%;
-	}
-	.contents{
-	    padding: 20px;
-	}
+
 		/* 마우스 호버 시에 스타일 변경 */
 	.course-name {
 	    cursor: pointer; /* 마우스가 요소 위로 올라갔을 때 포인터로 변경 */
@@ -230,9 +215,7 @@
     	
     	
     }
-    
-    
-    
+
     </script>
 </head>
 <body>
@@ -251,15 +234,15 @@
         <div class="contents">
             <h3>강의 리스트</h3>
             <div class="first_line">
-               년도 <input type="number" id="yearInput" name="yearInput" min="1900" max="2099" placeholder="YYYY" required disabled/>
-               학기 <input type="number" id="termInput" name="termInput" min="1" max="2" required disabled/>
+               년도 <input type="number" id="yearInput" name="yearInput" disabled/>
+               학기 <input type="number" id="termInput" name="termInput" disabled/>
             </div>
             <div id="courseList" class="list_table">
                <table>
                    <thead>
                        <tr>
                            <td style="width:30px">과목번호</td>
-                           <td style="width:80px">과목명</td>
+                           <td style="width:100px">과목명</td>
                            <td style="width:10px">교수번호</td>
                            <td style="width:30px">교수이름</td>
                            <td style="width:80px">전공</td>
@@ -279,17 +262,17 @@
             <br>
             <div id="studentList">
             <h4></h4>
-                <div class="name-button">
+                <div class="first_line">
                     <button type="button" id="batchBtn" style="cursor: pointer" value="">일괄 등록</button>
                 </div>
                 <div class="list_table">
 	                <table>
 	                    <thead>
 	                        <tr>
-	                            <td style="width: 50px;">
+	                            <td style="width: 30px;">
                                     <input type="checkbox" name="studentSelectAll" id="studentSelectAll" />
                                 </td>
-	                            <td style="width: 40px">순번</td>
+	                            <td style="width: 30px">순번</td>
 	                            <td style="width: 100px">이름</td>
 	                            <td style="width: 120px">학번</td>
 	                            <td style="width: 40px">학년</td>
