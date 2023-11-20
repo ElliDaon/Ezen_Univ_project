@@ -26,6 +26,7 @@ public class MemberController extends HttpServlet {
 		this.location = location;
 	}
 
+	@SuppressWarnings("null")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
@@ -236,42 +237,64 @@ public class MemberController extends HttpServlet {
 		}else if(location.equals("searchStudentPwd.do")) {
 			String memberId = request.getParameter("memberId");
 			String memberName = request.getParameter("memberName");
-			String memberPhone = request.getParameter("memberPhone");
+			String memberEmail = request.getParameter("memberEmail");
+			
+			HttpSession session = request.getSession();
 			
 			MemberDao md = new MemberDao();
-			int value = md.searchStudentPwd(memberId, memberName, memberPhone);
+			int value = md.searchStudentPwd(memberId, memberName, memberEmail);
 			String str = "";
 			if(value==0) {
 				str = null;
 			}else {
 				str = "{\"value\" : \""+value+"\"}";
+				NaverMailSend nm = new NaverMailSend();
+				try {
+					System.out.println("메일인증 컨트롤러");
+					nm.sendEmail(memberEmail, session);
+					System.out.println("저장된 세션값:"+session.getAttribute("authenCode"));
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			PrintWriter out = response.getWriter();
 			out.println(str);
 		}else if(location.equals("searchProfessorPwd.do")) {
 			String memberId = request.getParameter("memberId");
 			String memberName = request.getParameter("memberName");
-			String memberPhone = request.getParameter("memberPhone");
+			String memberEmail = request.getParameter("memberEmail");
+			HttpSession session = request.getSession();
 			
 			MemberDao md = new MemberDao();
-			int value = md.searchProfessorPwd(memberId, memberName, memberPhone);
+			int value = md.searchProfessorPwd(memberId, memberName, memberEmail);
 			String str = "";
 			if(value==0) {
 				str = null;
 			}else {
 				str = "{\"value\" : \""+value+"\"}";
+				NaverMailSend nm = new NaverMailSend();
+				try {
+					System.out.println("메일인증 컨트롤러");
+					nm.sendEmail(memberEmail, session);
+					System.out.println(nm.toString());
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+			System.out.println("저장된 세션값:"+session.getAttribute("authenCode"));
 			PrintWriter out = response.getWriter();
 			out.println(str);
 
 		}else if(location.equals("changeStudentPwd.do")) {
 			String memberId = request.getParameter("memberId");
 			String memberName = request.getParameter("memberName");
-			String memberPhone = request.getParameter("memberPhone");
+			String memberEmail = request.getParameter("memberEmail");
 			String newpwd = request.getParameter("newpwd");
 			
 			MemberDao md = new MemberDao();
-			int value = md.changeStudentPwd(memberId, memberName, memberPhone, newpwd);
+			int value = md.changeStudentPwd(memberId, memberName, memberEmail, newpwd);
 			String str = "";
 			if(value==0) {
 				str = null;
@@ -284,11 +307,11 @@ public class MemberController extends HttpServlet {
 		else if(location.equals("changeProfessorPwd.do")) {
 			String memberId = request.getParameter("memberId");	
 			String memberName = request.getParameter("memberName");
-			String memberPhone = request.getParameter("memberPhone");
+			String memberEmail = request.getParameter("memberEmail");
 			String newpwd = request.getParameter("newpwd");
 			
 			MemberDao md = new MemberDao();
-			int value = md.changeProfessorPwd(memberId, memberName, memberPhone, newpwd);
+			int value = md.changeProfessorPwd(memberId, memberName, memberEmail, newpwd);
 			String str = "";
 			if(value==0) {
 				str = null;
@@ -300,13 +323,26 @@ public class MemberController extends HttpServlet {
 		}else if(location.equals("send_emailAction.do")) {
 			String memberId = request.getParameter("m_id");
 			String memberemail = request.getParameter("m_email");
+			HttpSession forsession =request.getSession();
 			
 			NaverMailSend nm = new NaverMailSend();
 			try {
-				nm.sendEmail(memberemail);
+				nm.sendEmail(memberemail,forsession);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if(location.equals("securepassCheck.do")) {
+			String securepass = request.getParameter("securepass");
+			HttpSession session = request.getSession();
+			String savedPass = (String) session.getAttribute("authenCode");
+			String str = "";
+			if(securepass.equals(savedPass)) {
+				str = "{\"value\":\"1\"}";
+			}else {
+				str = "{\"value\":\"0\"}";
+			}
+			PrintWriter out = response.getWriter();
+			out.println(str);
 		}
 	}
 

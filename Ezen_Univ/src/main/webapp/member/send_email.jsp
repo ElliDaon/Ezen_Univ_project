@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../css/searchInfo.css">
 </head>
 <script>
 function sendmail(){
@@ -27,7 +28,7 @@ return;
       </div>
       <div class="col-md-12 form-group">
         <input type="email" class="form-control" id="m_email" name="m_email" placeholder="이메일을 입력하세요"
-               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+               onfocus="this.placeholder = ''" onblur="this.placeholder = 'UserEmail'">
       </div>
       <div class="col-md-12 form-group">
         <button type="button" value="임시 비밀번호 발급받기" class="primary-btn" onclick="sendmail()">전송하기</button>
@@ -35,5 +36,6 @@ return;
     </form>
   </div>
 </div>
+
 </body>
 </html>

@@ -3,6 +3,8 @@ package app.mail;
 import java.util.Properties;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -18,7 +20,7 @@ public final class NaverMailSend {
 	private final String user = "ekdhs2939@naver.com"; 	  // 발신자의 이메일 계정
 	private final String password = "5KNG2HY8ES97";     // 발신자의 SMTP 패스워드
 	
-	public String sendEmail(String to) throws Exception {
+	public String sendEmail(String to, HttpSession forsession) throws Exception {
 
 		String authenCode = null;
 		
@@ -42,7 +44,7 @@ public final class NaverMailSend {
                     // 인증번호 생성
                	    authenCode = makeAuthenticationCode();
                	    
-               	    
+               
 			
 		    Message message = new MimeMessage(session);
 		    
@@ -62,10 +64,17 @@ public final class NaverMailSend {
 		    Transport.send(message);
 
 		    System.out.println(" NaverMailSend : Email sent successfully.");
+		    
+
+
+	        // 세션에 authenCode 저장
+	        forsession.setAttribute("authenCode", authenCode);
+
+	        Message message1 = new MimeMessage(session);
 		} catch (MessagingException e) {
 		    e.printStackTrace();
 		}
-		
+
 		System.out.println(" NaverMailSend : sendEmail() 종료");
 		return authenCode;
 	}

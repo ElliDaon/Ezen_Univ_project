@@ -99,47 +99,7 @@
             
             <h3>C언어</h3>
             <div class="list_table" id="studentList">
-            <!-- <table>
-                    <thead>
-                        <tr>
-                            <td style="width:10px">NO</td>
-                            <td style="width:50px">이름</td>
-                            <td style="width:30px">학번</td>
-                            <td style="width:30px">결석일수</td>
-                            <td style="width:30px">결석률(%)</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>김이젠</td>
-                            <td>202301001</td>
-                            <td>4 / 10</td>
-                            <td>40%</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>김이젠2</td>
-                            <td>202301002</td>
-                            <td>5 / 10</td>
-                            <td>50%</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>김이젠3</td>
-                            <td>202301003</td>
-                            <td>6 / 10</td>
-                            <td>60%</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>김이젠4</td>
-                            <td>202301004</td>
-                            <td>3 / 10</td>
-                            <td>30%</td>
-                        </tr>
-                    </tbody>
-            </table> -->
+
             </div>
         </div>
 	</div>

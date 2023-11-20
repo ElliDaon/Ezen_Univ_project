@@ -80,7 +80,7 @@
     	var fm = document.searchPwdfrm;
         var memberId = fm.memberId.value;
         var memberName = fm.memberName.value;
-        var memberPhone = fm.memberPhone.value;
+        var memberEmail = fm.memberEmail.value;
         
         var value = document.querySelector('input[name="select_pwd"]:checked').value;
         if(value==='student'){
@@ -91,7 +91,7 @@
     			data: {
     				"memberId" : memberId,
     				"memberName" : memberName,
-    				"memberPhone" : memberPhone
+    				"memberEmail" : memberEmail
     			},
     			dataType: "json",
     			success: function(data){
@@ -124,7 +124,7 @@
     			data: {
     				"memberId" : memberId,
     				"memberName" : memberName,
-    				"memberPhone" : memberPhone
+    				"memberEmail" : memberEmail
     			},
     			dataType: "json",
     			success: function(data){
@@ -155,7 +155,7 @@
     	var fm = document.searchPwdfrm;
         var memberId = fm.memberId.value;
         var memberName = fm.memberName.value;
-        var memberPhone = fm.memberPhone.value;
+        var memberEmail = fm.memberEmail.value;
         
         var cngfrm = document.PwdCngfrm;
         var newpwd = cngfrm.newpwd.value;
@@ -178,7 +178,7 @@
     			data: {
     				"memberId" : memberId,
     				"memberName" : memberName,
-    				"memberPhone" : memberPhone,
+    				"memberEmail" : memberEmail,
     				"newpwd" : newpwd,
     			},
     			dataType: "json",
@@ -205,7 +205,7 @@
     			data: {
     				"memberId" : memberId,
     				"memberName" : memberName,
-    				"memberPhone" : memberPhone,
+    				"memberEmail" : memberEmail,
     				"newpwd" : newpwd,
     			},
     			dataType: "json",
@@ -225,6 +225,35 @@
         		
         	});
     	}
+    }
+    function authenCodeCheck(){
+    	var fm = document.authenCode;
+    	var securepass = fm.securepass.value;
+    	
+    	$.ajax({
+    		type: "post",
+    		url: "${pageContext.request.contextPath}/member/securepassCheck.do",
+			data: {
+				"securepass" : securepass
+			},
+			dataType: "json",
+			success: function(data){
+				
+				if(data.value=='1'){
+					alert('인증이 완료되었습니다.');
+					const changepw = document.querySelector('.changepw');
+					changepw.classList.add('active');
+					return;
+				}else{
+					alert('인증번호를 확인해주세요.');
+				}
+				
+			},
+			error: function(request, status, error) {
+		        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		      }
+    		
+    	});
     }
     </script>
 </head>
@@ -255,7 +284,7 @@
                 <form name="searchPwdfrm">
                 <div class="searchPwd">
                     <input type="text" id="memberId"><label>아이디</label><input type="text" id="memberName"><label>이름</label><br>
-                    <input type="text" id="memberPhone"><label>휴대폰번호( '-' 제외 )</label><br>
+                    <input type="email" id="memberEmail"><label>이메일</label><br>
                     <div class="choose-pwd">
 						<input type="radio" id="select_stu_pwd" name="select_pwd" value="student" checked><label for="select_stu_pwd">student</label> &nbsp | &nbsp 
 						<input type="radio" id="select_pro_pwd" name="select_pwd" value="professor"><label for="select_pro_pwd">professor</label>
@@ -263,8 +292,19 @@
 					</div>
                 </div>
                 </form>
-             <form name="PwdCngfrm">
+             <form name="authenCode" > 
              <div id="pwdinfo" class="pwdinfo">
+             	<p>해당 이메일로 인증번호를 발송하였습니다.</p><br>
+             	
+             	인증번호 <input type="text" id="securepass" name="securepass">
+             	<button type="button" onclick="authenCodeCheck()">인증</button><br>
+            </div>   
+            </form>
+            <div id="notfound" class="notfound">
+            	<p>회원정보를 찾을 수 없습니다.</p>
+            </div>
+             <form name="PwdCngfrm">
+             <div class="changepw">
              	<div class="pwdinfo-input" id="pwdinfo-input" name="pwdinfo-input">
              	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp비밀번호
              	<input type="password" name="newpwd" id="newpwd" oninput="pwcheck2()">
@@ -274,10 +314,7 @@
              	<span id="checkpw2">check</span>
              	</div><br>
              	<button type="button" class="changebtn" onclick="PwdChange()">변경</button>
-            </div>   
-            <div id="notfound" class="notfound">
-            	<p>회원정보를 찾을 수 없습니다.</p>
-            </div>
+             </div>
       		</form>
         </div>
     </div>

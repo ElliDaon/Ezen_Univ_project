@@ -132,6 +132,10 @@ body{
 .pwdinfo.active{
 	transform: scale(1);
 }
+.pwdinfo p{
+	color: red;
+	font-size: 13px;
+}
 .pwdinfo.active span{
 	font-size: 12px;
 
@@ -141,5 +145,13 @@ body{
 	transform: scale(0);
 }
 .notfound.active{
+	transform: scale(1);
+}
+
+.changepw{
+	margin-top: 30px;
+	transform: scale(0);
+}
+.changepw.active{
 	transform: scale(1);
 }

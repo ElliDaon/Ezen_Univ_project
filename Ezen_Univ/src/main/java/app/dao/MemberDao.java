@@ -554,16 +554,16 @@ public class MemberDao {
 		return memberId;
 	}
 	
-	public int searchStudentPwd(String memberId, String memberName, String memberPhone) {
+	public int searchStudentPwd(String memberId, String memberName, String memberEmail) {
 		int value = 0;
 		ResultSet rs;
 		
-		String sql = "select count(*) as cnt from student where s_id=? and s_name=? and s_Phone=?";
+		String sql = "select count(*) as cnt from student where s_id=? and s_name=? and s_Email=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			pstmt.setString(2, memberName);
-			pstmt.setString(3, memberPhone);
+			pstmt.setString(3, memberEmail);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -575,17 +575,17 @@ public class MemberDao {
 		
 		return value;
 	}
-	public int changeStudentPwd(String memberId, String memberName, String memberPhone, String newPwd) {
+	public int changeStudentPwd(String memberId, String memberName, String memberEmail, String newPwd) {
 		int value = 0;
 		
-		String sql = "update student set s_pwd = ? where s_id=? and s_name=? and s_Phone=?";
+		String sql = "update student set s_pwd = ? where s_id=? and s_name=? and s_Email=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, newPwd);
 			pstmt.setString(2, memberId);
 			pstmt.setString(3, memberName);
-			pstmt.setString(4, memberPhone);
+			pstmt.setString(4, memberEmail);
 			value = pstmt.executeUpdate();
 			
 			
@@ -596,16 +596,16 @@ public class MemberDao {
 		return value;
 	}
 	
-	public int searchProfessorPwd(String memberId, String memberName, String memberPhone) {
+	public int searchProfessorPwd(String memberId, String memberName, String memberEmail) {
 		int value = 0;
 		ResultSet rs;
 		
-		String sql = "select count(*) as cnt from professor where p_id=? and p_name=? and p_Phone=?";
+		String sql = "select count(*) as cnt from professor where p_id=? and p_name=? and p_Email=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			pstmt.setString(2, memberName);
-			pstmt.setString(3, memberPhone);
+			pstmt.setString(3, memberEmail);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -618,17 +618,17 @@ public class MemberDao {
 		return value;
 	}
 	
-	public int changeProfessorPwd(String memberId, String memberName, String memberPhone, String newPwd) {
+	public int changeProfessorPwd(String memberId, String memberName, String memberEmail, String newPwd) {
 		int value = 0;
 		
-		String sql = "update professor set p_pwd = ? where p_id=? and p_name=? and p_Phone=?";
+		String sql = "update professor set p_pwd = ? where p_id=? and p_name=? and p_Email=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, newPwd);
 			pstmt.setString(2, memberId);
 			pstmt.setString(3, memberName);
-			pstmt.setString(4, memberPhone);
+			pstmt.setString(4, memberEmail);
 			value = pstmt.executeUpdate();
 			
 			
