@@ -15,6 +15,8 @@ public class MemberVo {
 	private int s_grade;
 	private int clidx;
 	private String e_attendance;
+	private String abcount;
+	private String abper;
 	
 	private int pidx;
 	private int p_no;
@@ -164,6 +166,18 @@ public class MemberVo {
 	}
 	public void setE_attendance(String e_attendance) {
 		this.e_attendance = e_attendance;
+	}
+	public String getAbcount() {
+		return abcount;
+	}
+	public void setAbcount(String abcount) {
+		this.abcount = abcount;
+	}
+	public String getAbper() {
+		return abper;
+	}
+	public void setAbper(String abper) {
+		this.abper = abper;
 	}
 
 	

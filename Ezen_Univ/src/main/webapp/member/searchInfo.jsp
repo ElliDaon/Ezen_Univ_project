@@ -14,7 +14,7 @@
         var fm = document.searchIdfrm;
         var memberName = fm.memberName.value;
         var memberEmail = fm.memberEmail.value;
-        
+        $("#idinfo").empty();
         var value = document.querySelector('input[name="select"]:checked').value;
         if(value==='student'){
         
@@ -44,10 +44,7 @@
     		        alert(data);
     		        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
     		      }
-
-        		
         	});
-        	
         }else{
         	$.ajax({
         		type: "post",
@@ -58,7 +55,7 @@
     			},
     			dataType: "json",
     			success: function(data){
-    				const str = "";
+    				var str = "";
     				if(data!=null){
     					str += "<p class='idinfo'>회원님의 아이디는 <span>";
     					str += data.memberId;

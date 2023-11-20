@@ -157,26 +157,7 @@ function listAction(cidx){
 	            	
 	            </div>
 	            <div class="mytable" id="attendanceList">
-	                <%-- <table>
-	                    <thead>
-	                        <tr>
-	                            <td style="width:30px">주차</td>
-	                            <td style="width:100px">수업일자</td>
-	                            <td style="width:100px">수업시간</td>
-	                            <td style="width:50px">출결현황</td>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                    <c:forEach var="av" items="${alist}">
-	                        <tr>
-	                            <td>${av.widx}</td>
-	                            <td>${av.atdate}</td>
-	                            <td>${av.attime}</td>
-	                            <td>${av.e_attendance}</td>
-	                        </tr>
-	                      </c:forEach>
-	                    </tbody>
-	                </table> --%>
+
 	            </div>
             </div>
         </div>

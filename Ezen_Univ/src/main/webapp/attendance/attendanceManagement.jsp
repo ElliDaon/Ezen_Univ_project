@@ -112,11 +112,11 @@
                         <button type="button" name="attbtn" id="attbtn">저장</button>
                     </div>
                     <div class="std-list">
-                        <table>
+                        <table class="std-list-tbl">
                             <thead>
                                 <tr>
                                     <td style="width: 5px;">
-                                        <input type="checkbox" name="student" value="selectAll" onclick="selectAtt(this)" >
+                                        <input type="checkbox" name="student" value="selectAll" onclick="selectAtt(this)" checked>
                                     </td>
                                     <td style="width: 5px;">순번</td>
                                     <td style="width: 20px;">이름</td>
@@ -130,7 +130,7 @@
                            		<c:forEach var="mv" items="${list}" varStatus="i">
                                 <tr style="height: 20px;">
                                     <td>
-                                        <input type="checkbox" name="student" value="${mv.clidx}" >
+                                        <input type="checkbox" name="student" value="${mv.clidx}" checked>
                                     </td>
                                     <td>${i.count}</td>
                                     <td>${mv.s_name}</td>
@@ -138,10 +138,10 @@
                                     <td><input class="attenvalue" type="text" id="value${i.count}" name="value${i.count}" value="${mv.e_attendance}" disabled></td>
                                     <td></td>
                                     <td>
-                                        <input type="radio" name="attendvalue${i.count}" value="출석" onclick="getValue(event,${i.count})">출석
-                                        <input type="radio" name="attendvalue${i.count}" value="지각" onclick="getValue(event,${i.count})">지각
-                                        <input type="radio" name="attendvalue${i.count}" value="조퇴" onclick="getValue(event,${i.count})">조퇴
-                                        <input type="radio" name="attendvalue${i.count}" value="결석" onclick="getValue(event,${i.count})">결석
+                                        <input type="radio" id="att${i.count}" name="attendvalue${i.count}" value="출석" onclick="getValue(event,${i.count})"><label for="att${i.count}">출석</label>
+                                        <input type="radio" id="late${i.count}" name="attendvalue${i.count}" value="지각" onclick="getValue(event,${i.count})"><label for="late${i.count}">지각</label>
+                                        <input type="radio" id="early${i.count}" name="attendvalue${i.count}" value="조퇴" onclick="getValue(event,${i.count})"><label for="early${i.count}">조퇴</label>
+                                        <input type="radio" id="absent${i.count}" name="attendvalue${i.count}" value="결석" onclick="getValue(event,${i.count})"><label for="absent${i.count}">결석</label>
                                     	<script>
 	                                        $(document).ready(function () {
 	                                            var value = $("input[name='value${i.count}']").val();
@@ -156,34 +156,64 @@
 	                                            }else if (value === '결석') {
 	                                                $("input[name='" + radioName + "'][value='결석']").prop('checked', true);
 	                                            }
-	                                        });
+	                                            
+	                                           
+	                                            
+	                                       
 	                                        
-	                                        $('input[name="attendvalue${i.count}"]').change(function() {
-	                                            $('input[name="attendvalue${i.count}"]').each(function() {
-	                                                var value = $(this).val();             
-	                                                var checked = $(this).prop('checked'); 
-	                                                
-	                                                var $label = $(this).next();
-	                                         
-	                                                if(checked && value==='출석'){
-	                                                    $label.css('background-color', '#459B60');
-	                                                    $label.css('border', '1px solid #459B60');
-	                                                    $label.css('color', 'white');
-	                                                }
-	                                                else if(checked && (value==='지각' || value === '조퇴')){
-	                                                    $label.css('background-color', '#E3C22A');
-	                                                    $label.css('border', '1px solid #E3C22A');
-	                                                    $label.css('color', 'white');
-	                                                }else if(checked && value === '결석'){
-	                                        			$label.css('background-color', '#D95321');
-	                                                    $label.css('border', '1px solid #D95321');
-	                                                    $label.css('color', 'white');
-	                                        		}else{
-	                                        			$label.css('background-color','white');
-	                                        			$label.css('border','1px solid black');
-	                                        			$label.css('color','gray');
-	                                        		}
-	                                            });
+	                                     // 페이지 로드 시 체크된 상태를 감지하여 CSS 변경
+		                                        $('input[name="attendvalue${i.count}"]').each(function() {
+		                                            var value = $(this).val();
+		                                            var checked = $(this).prop('checked');
+		                                            
+		                                            var $label = $(this).next();
+		                                            
+		                                            if (checked && value === '출석') {
+		                                                $label.css('background-color', '#459B60');
+		                                                $label.css('border', '1px solid #459B60');
+		                                                $label.css('color', 'white');
+		                                            } else if (checked && (value === '지각' || value === '조퇴')) {
+		                                                $label.css('background-color', '#E3C22A');
+		                                                $label.css('border', '1px solid #E3C22A');
+		                                                $label.css('color', 'white');
+		                                            } else if (checked && value === '결석') {
+		                                                $label.css('background-color', '#D95321');
+		                                                $label.css('border', '1px solid #D95321');
+		                                                $label.css('color', 'white');
+		                                            } else {
+		                                                $label.css('background-color', 'white');
+		                                                $label.css('border', '1px solid black');
+		                                                $label.css('color', 'gray');
+		                                            }
+		                                        });
+	
+		                                        // 라디오 버튼의 체크 상태가 변경될 때의 이벤트 핸들러
+		                                        $('input[name="attendvalue${i.count}"]').change(function() {
+		                                            $('input[name="attendvalue${i.count}"]').each(function() {
+		                                                var value = $(this).val();             
+		                                                var checked = $(this).prop('checked'); 
+		                                                
+		                                                var $label = $(this).next();
+		                                                 
+		                                                if (checked && value === '출석') {
+		                                                    $label.css('background-color', '#459B60');
+		                                                    $label.css('border', '1px solid #459B60');
+		                                                    $label.css('color', 'white');
+		                                                } else if (checked && (value === '지각' || value === '조퇴')) {
+		                                                    $label.css('background-color', '#E3C22A');
+		                                                    $label.css('border', '1px solid #E3C22A');
+		                                                    $label.css('color', 'white');
+		                                                } else if (checked && value === '결석') {
+		                                                    $label.css('background-color', '#D95321');
+		                                                    $label.css('border', '1px solid #D95321');
+		                                                    $label.css('color', 'white');
+		                                                } else {
+		                                                    $label.css('background-color', 'white');
+		                                                    $label.css('border', '1px solid black');
+		                                                    $label.css('color', 'gray');
+		                                                }
+		                                            });
+		                                        });
 	                                        });
                                     	</script>
                                     </td>

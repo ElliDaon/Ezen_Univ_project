@@ -88,12 +88,11 @@ function chooseCourse(selectedCidx) {
 	                    +"<td>"+data[i].absent;
 	                    cnt += parseInt(data[i].att, 10) + parseInt(data[i].early, 10) + parseInt(data[i].late, 10) + parseInt(data[i].absent, 10);
 
-	                if(cnt<=totalcnt){
-	                	//alert(data[i].att+data[i].early+data[i].late+data[i].absent);
+	                
 	                	str +="</td><td><button type='button' class='btn' >출결처리</button></td></tr>";
-	                }else{
-	                	str += "</td><td></td></tr>"
-	                }
+	               
+	
+	               
 	            });
 	            str += "</tbody></table>";
 	            $('#mytable').append(str);

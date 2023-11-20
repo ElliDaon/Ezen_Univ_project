@@ -26,43 +26,28 @@ public class AttendanceDao {
 		
 		ArrayList<AttendanceVo> slist = new ArrayList<>();
 		ResultSet rs;
-		String sql= "select ra.c_sep, ra.cidx, ra.c_name, ra.c_score, ra.p_name, ra.ct_room, ra.times, rb.abpercent, rb.abyn from\r\n"
-				+ "(select A.c_sep, A.cidx, A.c_name, A.c_score, P.p_name, D.ct_room, group_concat(distinct D.ct_week, D.pe_period separator ' , ') as times\r\n"
-				+ "from course A join coursetime D on A.cidx = D.cidx\r\n"
-				+ "join professor P on P.pidx = A.pidx\r\n"
-				+ "join courselist cl on cl.cidx = A.cidx\r\n"
-				+ "where cl.sidx=? and D.ct_year=? and D.ct_semester=?\r\n"
-				+ "group by A.c_sep, A.cidx, A.c_name, A.c_score, P.p_name, D.ct_room\r\n"
-				+ "order by 3) ra\r\n"
-				+ "join (SELECT DISTINCT c.c_name,\r\n"
-				+ "CONCAT( round(((SELECT COUNT(*) FROM courselist cl JOIN eachcheck ec ON cl.clidx = ec.clidx\r\n"
-				+ "WHERE cl.cidx = c.cidx AND cl.sidx = ? AND ec.e_attendance = '결석') / c.c_totaltime * 100),1),'%') as abpercent,\r\n"
-				+ "CASE WHEN (SELECT COUNT(*) FROM courselist cl JOIN eachcheck ec ON cl.clidx = ec.clidx\r\n"
-				+ "WHERE cl.cidx = c.cidx AND cl.sidx = ? AND ec.e_attendance = '결석') / c.c_totaltime > 0.25 THEN 'Y' ELSE 'N' END as abyn\r\n"
-				+ "FROM course c JOIN courselist cl ON c.cidx = cl.cidx) rb on ra.c_name=rb.c_name";
+		String sql= "call attendanceshortfall(?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, sidx);
 			pstmt.setInt(2, year);
 			pstmt.setInt(3, semester);
-			pstmt.setInt(4, sidx);
-			pstmt.setInt(5, sidx);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				AttendanceVo av = new AttendanceVo();
 				
-				av.setC_sep(rs.getString("Ra.c_sep"));
-				av.setCidx(rs.getInt("Ra.cidx"));
-				av.setC_name(rs.getString("Ra.c_name"));
-				av.setC_score(rs.getInt("Ra.c_score"));
-				av.setP_name(rs.getString("Ra.p_name"));
-				av.setCt_room(rs.getString("Ra.ct_room"));
-				av.setC_times(rs.getString("Ra.times"));
-				av.setAbpercent(rs.getString("Rb.abpercent"));
-				av.setAbyn(rs.getString("Rb.abyn"));
+				av.setC_sep(rs.getString("c_sep"));
+				av.setCidx(rs.getInt("cidx"));
+				av.setC_name(rs.getString("c_name"));
+				av.setC_score(rs.getInt("c_score"));
+				av.setP_name(rs.getString("p_name"));
+				av.setCt_room(rs.getString("ct_room"));
+				av.setC_times(rs.getString("times"));
+				av.setAbpercent(rs.getString("persen"));
+				av.setAbyn(rs.getString("yn"));
 				slist.add(av);
 			}
 			
@@ -382,13 +367,25 @@ public class AttendanceDao {
 	}
 	
 	public ArrayList<AttendanceVo> professorManagement(int cidx){
+		LocalDate now = LocalDate.now();
+		int year = now.getYear();
+		int month = now.getMonthValue();
+		int semester = 0;
+		if(month >= 1 && month <= 7) {
+			semester = 1;
+		}else {
+			semester = 2;
+		}
+		
 		ArrayList<AttendanceVo> list = new ArrayList<AttendanceVo>();
 		ResultSet rs;
-		String sql = "call professorManagement(?)";
+		String sql = "call professorManagement(?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,cidx);
+			pstmt.setInt(2,year);
+			pstmt.setInt(3,semester);
 			
 			rs = pstmt.executeQuery();
 			
@@ -585,5 +582,52 @@ public class AttendanceDao {
 		
 		//System.out.println(list.toString()+av.getCtidx());
 		return value;
+	}
+	
+	public AttendanceVo toomuchAbsenceList(int cidx){
+		AttendanceVo av = new AttendanceVo();
+		ResultSet rs;
+		String sql = "call attendanceshortfall_rate(?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				av.setCidx(rs.getInt("cidx"));
+				av.setC_name(rs.getString("c_name"));
+				av.setAbperal(rs.getString("result"));
+				av.setAbpercent(rs.getString("rate"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return av;
+	}
+	public ArrayList<MemberVo> toomuchAbsenceListAction(int cidx){
+		ArrayList<MemberVo> list = new ArrayList<>();
+		ResultSet rs;
+		String sql = "call attendanceshortfall_p(?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MemberVo mv = new MemberVo();
+				mv.setS_name(rs.getString("s_name"));
+				mv.setS_no(rs.getInt("s_no"));
+				mv.setAbcount(rs.getString("count"));
+				mv.setAbper(rs.getString("per"));
+				list.add(mv);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }

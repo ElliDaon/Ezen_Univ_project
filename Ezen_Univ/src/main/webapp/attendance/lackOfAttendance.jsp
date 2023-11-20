@@ -9,25 +9,51 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
-
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	 <script>
 	 
-	 function displaySecondTable(){
-		    var html = "<table>";
-		    	html += "<tr>";
-		    		html += "<td>NO</td>";
-		    		html += "<td>이름</td>";
-		    		html += "<td>학번</td>";
-		    		html += "<td>결석일수</td>";
-		    		html += "<td>결석률(%)</td>";
-		    	html += "</tr>";
-		        html += "</table>";
+	 function displaySecondTable(cidx){
 
-		    document.getElementById("hiddenTable").innerHTML=html;
+		    
+		    $.ajax({
+	    		type : "get",
+	    		url : "<%=request.getContextPath()%>/attendance/toomuchAbsenceListAction.do",
+	    		data : {
+	    			"cidx": cidx
+	    		},
+	    		dataType : "json",
+	    		success : function(data){
+	    			var str = "";
+	    			str +=  "<table class='countNo'><thead><tr>"
+                          + "<td style='width:10px'>NO</td><td style='width:50px'>이름</td>"
+                          + "<td style='width:30px'>학번</td><td style='width:30px'>결석일수</td>"
+                          + "<td style='width:30px'>결석률</td></tr></thead><tbody>";
+                    
+                    $(data).each(function(){
+                  	  str = str + "<tr><td></td><td>"+this.s_name+"</td>"
+		                        + "<td>"+this.s_no+"</td><td>"+this.count+"</td><td>"+this.per+"</td></tr>";
+                    });
+	    			$("#studentList").html(str+"</tbody></table>"); 
+	    			return;
+	    		},
+	    		error : function(request, status, error){
+	    			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    		} 
+	    	});
+	    	return;
 		}
 	 
     </script>
-    
+    <style>
+
+        
+    .countNo tbody>tr {
+        counter-increment: aaa;
+     }
+    .countNo tbody>tr>td:first-child:before {
+        content: counter(aaa) " ";
+     }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -45,57 +71,35 @@
 	    <div class="contents">
             <h3>출석 미달자 조회</h3>
             <div class="first_line">
-                년도 <input type="text" name="year" value="2023" disabled/> 학기 <input type="text" name="turm" value="1" disabled/>
+                년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="turm" value="${semester}" disabled/>
             </div>
-            <div class="list_table">
+            <div class="list_table" style="margin-bottom:35px;">
                 <table>
                     <thead>
                         <tr>
                             <td style="width:10px">NO</td>
                             <td style="width:50px">강의명</td>
                             <td style="width:30px">미달자 수 / 학생수</td>
-                            <td style="width:30px">미달률(%)</td>
+                            <td style="width:30px">미달률</td>
                         </tr>
                     </thead>
                     <tbody>
+                    	<c:forEach var="av" items="${list}" varStatus="i">
                         <tr>
-                            <td>1</td>
-                            <td onClick="displaySecondTable()" style="cursor:pointer;">C언어</td>
-                            <td>4 / 40</td>
-                            <td>10%</td>
+                            <td>${i.count}</td>
+                            <td onClick="displaySecondTable(${av.cidx})" style="cursor:pointer;">${av.c_name}</td>
+                            <td>${av.abperal}</td>
+                            <td>${av.abpercent}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>데이터 프로그래밍</td>
-                            <td>1 / 50</td>
-                            <td>2%</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>JAVA</td>
-                            <td>0 / 40</td>
-                            <td>0%</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>빅데이터 활용</td>
-                            <td>2 / 40</td>
-                            <td>2.5%</td>
-                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
               <b style="color:red">※ 출석 미달자 : 결석률이 25%를 초과하는 자</b>
             </div>
-            <div style="height:7px;">&nbsp;</div>
-            <div style="height:7px;">&nbsp;</div>
-            <div style="height:7px;">&nbsp;</div>
-            <div style="height:7px;">&nbsp;</div>
-            <div style="height:7px;">&nbsp;</div>
             
-            
-            <div class="list_table">
-            <table id="hiddenTable">
             <h3>C언어</h3>
+            <div class="list_table" id="studentList">
+            <!-- <table>
                     <thead>
                         <tr>
                             <td style="width:10px">NO</td>
@@ -135,10 +139,8 @@
                             <td>30%</td>
                         </tr>
                     </tbody>
-            </table>
+            </table> -->
             </div>
-            
-            
         </div>
 	</div>
 

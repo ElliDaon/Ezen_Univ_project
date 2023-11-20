@@ -389,6 +389,70 @@ public class AttendanceController extends HttpServlet{
 			PrintWriter out = response.getWriter();
 			out.println(str);
 			
+		}else if(location.equals("lackOfAttendance.do")) {
+			HttpSession session = request.getSession();
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int semester = 0;
+			if(month >= 1 && month <= 7) {
+				semester = 1;
+			}else {
+				semester = 2;
+			}
+			
+			request.setAttribute("year", year);
+			request.setAttribute("semester", semester);
+			
+			AttendanceDao ad = new AttendanceDao();
+			ArrayList<AttendanceVo> cidxList = ad.selectCourse(pidx, year, semester);
+			ArrayList<AttendanceVo> CourseList = new ArrayList<>();
+			
+			int cidxCnt = cidxList.size();
+			
+			for(int i=0; i<cidxCnt; i++) {
+				int listCidx = cidxList.get(i).getCidx();
+				CourseList.add(i,ad.toomuchAbsenceList(listCidx));
+			}
+			
+			request.setAttribute("list", CourseList);
+			
+			String path = "/attendance/lackOfAttendance.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(path);
+			rd.forward(request, response);
+		}else if(location.equals("toomuchAbsenceListAction.do")) {
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
+			
+			AttendanceDao ad = new AttendanceDao();
+			ArrayList<MemberVo> list = ad.toomuchAbsenceListAction(cidx);
+			int listsize = list.size();
+			
+			String str = "";
+			
+			for(int i=0; i<listsize; i++) {
+				String s_name = list.get(i).getS_name();
+				int s_no = list.get(i).getS_no();
+				String count = list.get(i).getAbcount();
+				String per = list.get(i).getAbper();
+				
+				String comma = "";
+				if (i == listsize - 1) {
+					comma = "";
+				} else {
+					comma = ",";
+				}
+				
+				str = str + "{\"s_name\" : \""+s_name+"\", \"s_no\" : \""+s_no+"\", \"count\" : \""+count+"\", \"per\" : \""+per+"\"}"+comma;
+			}
+			
+			
+			//System.out.println(cidx);
+			
+			PrintWriter out = response.getWriter();
+			out.println("["+str+"]");
+			
 		}
 	}	
 }

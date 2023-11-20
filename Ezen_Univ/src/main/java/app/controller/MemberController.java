@@ -3,7 +3,6 @@ package app.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import app.dao.MemberDao;
 import app.domain.MemberVo;
+import app.mail.NaverMailSend;
 
 //HttpServlet를 상속받았기 때문에 클래스가 인터넷페이지가 된다.
 @WebServlet("/MemberController")
@@ -27,6 +27,19 @@ public class MemberController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+		/*요청 주소 파악*/
+		//String requestURI = request.getRequestURI();
+		//String contextPath = request.getContextPath();
+		//String command = requestURI.substring(contextPath.length());
+		//System.out.println("M.Front.C : 1. 요청 주소 계산 완료");
+		
+		/*각 요청 주소의 매핑 처리*/
+		//ActionForward forward = null;
+		//Action action = null;
+		
+		
 		
 		if(location.equals("memberIdCheck.do")) {
 			MemberDao md = new MemberDao();
@@ -269,7 +282,7 @@ public class MemberController extends HttpServlet {
 			out.println(str);
 		}
 		else if(location.equals("changeProfessorPwd.do")) {
-			String memberId = request.getParameter("memberId");
+			String memberId = request.getParameter("memberId");	
 			String memberName = request.getParameter("memberName");
 			String memberPhone = request.getParameter("memberPhone");
 			String newpwd = request.getParameter("newpwd");
@@ -284,6 +297,16 @@ public class MemberController extends HttpServlet {
 			}
 			PrintWriter out = response.getWriter();
 			out.println(str);
+		}else if(location.equals("send_emailAction.do")) {
+			String memberId = request.getParameter("m_id");
+			String memberemail = request.getParameter("m_email");
+			
+			NaverMailSend nm = new NaverMailSend();
+			try {
+				nm.sendEmail(memberemail);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
