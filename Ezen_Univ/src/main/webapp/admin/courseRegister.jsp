@@ -10,25 +10,8 @@
     <title>강의등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
-    <link rel="stylesheet" href="../css/courseRegister.css">
-    <style type="text/css">
-   .container{
-    display: flex;
-	}
-	.sidebar{
-	    width: 50%;
-	}
-	.myinfo{
-	    width: 100%;
-	}
-	.menubar{
-	    width: 100%;
-	}
-	.contents{
-	    padding: 20px;
-	}
-   
-    </style>
+    <link rel="stylesheet" href="../css/admin.css">
+
     <script>
     $(document).ready(function(){
         // 현재 날짜를 가져와서 input에 설정
@@ -279,7 +262,7 @@
     	let parsedData = JSON.parse("["+data+"]");
     	let str="";		
     	parsedData.forEach(function (item){
-    		let delBtn= "<button type='button' id='btn' onclick='courseDel("+item.cidx+");'>삭제</button>";
+    		let delBtn= "<button type='button' id='btn2' onclick='courseDel("+item.cidx+");'>삭제</button>";
     		str = str + "<tr><td>"+item.cidx+"</td>" +
 			"<td>"+item.c_name+"</td>" +
     		"<td>"+item.p_no+"</td>" +
@@ -379,16 +362,16 @@
         <div class="contents">
              <h3>강의등록현황</h3>
              <div class="first_line">
-                년도 <input type="number" id="yearInput" name="yearInput" min="1900" max="2099" placeholder="YYYY" required disabled/>
-                학기 <input type="number" id="termInput" name="termInput" min="1" max="2" required disabled/>
+                년도 <input type="number" id="yearInput" name="yearInput" disabled/>
+                학기 <input type="number" id="termInput" name="termInput" disabled/>
              </div>
              <div id="courseList" class="list_table">
                 <table>
                     <thead>
                         <tr>
                             <td style="width:30px">과목번호</td>
-                            <td style="width:80px">과목명</td>
-                            <td style="width:10px">교수번호</td>
+                            <td style="width:100px">과목명</td>
+                            <td style="width:20px">교수번호</td>
                             <td style="width:30px">교수이름</td>
                             <td style="width:80px">전공</td>
                             <td style="width:30px">수강학년</td>
@@ -499,7 +482,7 @@
 			<div id="courseTimeListInput">
 			<h3>강의등록-시간표</h3>
 			<br>
-			<table id="myTable" class="register" style="width:100%" >
+			<table id="studentTable" class="register" style="width:100%" >
 				<tr>
 					<th data-key="room">강의실</th>
 					<th data-key="day">요일</th>
