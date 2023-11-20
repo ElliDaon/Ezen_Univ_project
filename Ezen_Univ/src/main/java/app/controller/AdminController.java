@@ -2,12 +2,8 @@ package app.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,12 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import app.dao.AdminDao;
+import app.dao.MemberDao;
+import app.domain.AdminVo;
 import app.domain.CourseTimeVo;
 import app.domain.CourseVo;
 import app.domain.MemberVo;
@@ -39,7 +38,42 @@ public class AdminController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		if(location.equals("accept.do")) {	// 가입승인 리스트
+		if(location.equals("adminLogin.do")) {	//로그인
+			
+			String ad_id = request.getParameter("adminId");
+			String ad_pwd = request.getParameter("adminPwd");
+			
+			
+			AdminDao add = new AdminDao();
+			int adidx = 0;
+			adidx = add.adminLoginCheck(ad_id, ad_pwd);
+			if (adidx!=0){ 
+				
+				HttpSession session = request.getSession();
+				AdminVo av = new AdminVo();
+				
+				av = add.adminAdidxSearch(ad_id);
+				session.setAttribute("adidx", av.getAdidx());
+
+				response.sendRedirect(request.getContextPath()+"/admin/accept.do");
+				
+			}else{//아이디 비번 불일치
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script language='javascript' type='text/javascript'> alert('로그인 실패'); </script>");
+				out.println("<script>location.href='../index.jsp';</script>");
+				//response.sendRedirect("./main/main_s.do");
+			}
+			
+		}else if(location.equals("adminLogout.do")) {	//로그아웃
+			
+			HttpSession session = request.getSession();
+			session.removeAttribute("adidx");
+			session.invalidate();
+			response.sendRedirect(request.getContextPath()+"/");
+			
+		}else if(location.equals("accept.do")) {	// 가입승인 리스트
 			
 			AdminDao add= new AdminDao();
 			ArrayList<MemberVo> slist = add.studentAll();
@@ -372,7 +406,6 @@ public class AdminController extends HttpServlet {
 			String c_major = request.getParameter("c_major");
 			String c_grade = request.getParameter("c_grade");
 			
-			int value = 0;
 			AdminDao add= new AdminDao();
 			ArrayList<MemberVo> list = add.courseMatchStudentList(Integer.parseInt(cidx),c_major,Integer.parseInt(c_grade));
 			//System.out.println("cidx?"+cidx);
@@ -473,8 +506,8 @@ public class AdminController extends HttpServlet {
 			
 			int listCnt = list.size();	
 			int w_week = 0;
-			Date w_start =null;
-			Date w_end =null;
+			String w_start =null;
+			String w_end =null;
 			String str = "";
 			
 			for(int i=0; i< listCnt; i++){
@@ -513,58 +546,61 @@ public class AdminController extends HttpServlet {
 			out.println(str);
 			
 			
-		}else if(location.equals("openDateRegisterAction.do")) {	// 개강날짜 등록
+		}else if(location.equals("openDateRegisterAction.do")) {	// 등록되지 않은 개강날짜 등록
 		  
-			String date = request.getParameter("dateInput");
+			String startdate = request.getParameter("dateInput");
 			String year = request.getParameter("dateInfoYear");
 			String semester = request.getParameter("dateInfoSemester");
 			 
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 날짜 형식에 맞게 설정
-
-	
-			int year_int =Integer.parseInt(year);
-			int semester_int =Integer.parseInt(semester);
-			    
+			int startyear =Integer.parseInt(year);
+			int tm =Integer.parseInt(semester);
+			
+			//System.out.println("startdate?"+startdate);
+			//System.out.println("startyear?"+startyear);
+			//System.out.println("tm?"+tm);
+			  
 			int value = 0;
 			AdminDao add= new AdminDao();
-			//value = add.openDateRegister(date,year_int,semester_int);
+			value = add.openDateRegister(startdate,startyear,tm);
 			
-			if (value !=0) { 
-				String path = request.getContextPath()+"/admin/openDate.do";
-				response.sendRedirect(path);
-			}else {			
-				String path = request.getContextPath()+"/admin/accept.do";
-				response.sendRedirect(path);
-			}
+			PrintWriter out = response.getWriter();
+			//3. 처리가 끝났으면 새롭게 이동한다
+			if (value ==0) { //입력 안되었으면 입력페이지
+				out.println("<script>alert('입력하는 동안 오류가 났습니다.');location.href='"+request.getContextPath()+"/admin/accept.do'</script>");
+				
+			}else {	//입력되었으면 리스트 페이지로 이동		
+				out.println("<script>alert('개강날짜가 입력되었습니다.');location.href='"+request.getContextPath()+"/admin/openDate.do'</script>");
+			}	
 
-		}else if(location.equals("openDateUpdateAction.do")) {	// 개강날짜 등록
+		}else if(location.equals("openDateUpdateAction.do")) {	// 등록되어 있는 개강날짜 업데이트 등록
 			  
-				String date = request.getParameter("dateInput");
+				String startdate = request.getParameter("dateInput");
 				String year = request.getParameter("dateInfoYear");
 				String semester = request.getParameter("dateInfoSemester");
 				  
-				int year_int =Integer.parseInt(year);
-				int semester_int =Integer.parseInt(semester);
+				int syear =Integer.parseInt(year);
+				int stm =Integer.parseInt(semester);
 				
-				//System.out.println("date?"+date);
-				//System.out.println("year?"+year);
-				//System.out.println("semester?"+semester);
+				//System.out.println("startdate?"+startdate);
+				//System.out.println("syear?"+syear);
+				//System.out.println("stm?"+stm);
 				    
-				//int value = 0;
-				//AdminDao add= new AdminDao();
-				//value = add.openDateRegister(date,year_int,semester_int);
-				
-				//if (value !=0) { 
-				//	String path = request.getContextPath()+"/admin/openDate.do";
-				//	response.sendRedirect(path);
-				//}else {			
-				//	String path = request.getContextPath()+"/admin/accept.do";
-				//	response.sendRedirect(path);
-				//}
+				int value = 0;
+				AdminDao add= new AdminDao();
+				value = add.openDateUpdate(startdate,syear,stm);
 
-			}
+				PrintWriter out = response.getWriter();
+				//3. 처리가 끝났으면 새롭게 이동한다
+				if (value ==0) { //입력 안되었으면 입력페이지
+					out.println("<script>alert('입력하는 동안 오류가 났습니다.');location.href='"+request.getContextPath()+"/admin/accept.do'</script>");
+					
+				}else {	//입력되었으면 리스트 페이지로 이동		
+					out.println("<script>alert('개강날짜가 입력되었습니다.');location.href='"+request.getContextPath()+"/admin/openDate.do'</script>");
+				}	
+	
+		
+		}
 			 
 	
 	}
-
 }

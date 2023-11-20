@@ -1,7 +1,7 @@
 package app.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +9,7 @@ import java.time.Year;
 import java.util.ArrayList;
 
 import app.dbconn.DbConn;
+import app.domain.AdminVo;
 import app.domain.CourseTimeVo;
 import app.domain.CourseVo;
 import app.domain.MemberVo;
@@ -22,6 +23,52 @@ public class AdminDao {
 	public AdminDao() {
 		DbConn dbconn = new DbConn();
 		this.conn = dbconn.getConnection();
+	}
+	
+	
+	public int adminLoginCheck(String ad_id, String ad_pwd){
+		int value=0;
+		String sql = "select adidx from admin where ad_id=? and ad_pwd=?";
+		ResultSet rs = null;
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,ad_id);
+			pstmt.setString(2,ad_pwd);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				value = rs.getInt("adidx");
+				//value가 0이면 일치하지 않는다
+				//value가 1이면 일치한다
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return value;
+	}
+	
+	
+	public AdminVo adminAdidxSearch(String ad_id) {
+		AdminVo av = new AdminVo();
+		
+		String sql = "select adidx from student where ad_id=?";
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ad_id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				av.setAdidx(rs.getInt("adidx"));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+				
+		return av;
 	}
 	
 	public ArrayList<MemberVo> studentAll(){
@@ -995,8 +1042,8 @@ public class AdminDao {
 				WeektbVo wv = new WeektbVo();
 				
 				wv.setW_week(rs.getInt("w_week"));
-				wv.setW_start(rs.getDate("w_start"));
-				wv.setW_end(rs.getDate("w_end"));
+				wv.setW_start(rs.getString("w_start"));
+				wv.setW_end(rs.getString("w_end"));
 				datelist.add(wv);
 			}
 			
@@ -1038,24 +1085,44 @@ public class AdminDao {
 	}
 	
 	
-	public int openDateRegister(Date date, int year_int, int semester_int) {
+	public int openDateRegister(String startdate, int startyear, int tm) {
 		int exec = 0;
-
-		String sql = "{CALL weekmake4(?,?,?)}";
+		String sql = "CALL weekmake4(?,?,?)";
 		 
-			try{
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setDate(1, date);
-				pstmt.setInt(2, year_int);
-				pstmt.setInt(3, semester_int);
-				exec = pstmt.executeUpdate();
-								
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-			return exec;
+		try (CallableStatement cstmt = conn.prepareCall(sql)) {
+		    cstmt.setString(1, startdate);
+		    cstmt.setInt(2, startyear);
+		    cstmt.setInt(3, tm);
+		    exec = cstmt.executeUpdate();
+		} catch (SQLException e) {
+		    e.printStackTrace();
 		}
+			
+		return exec;
+	}
+
+	public int openDateUpdate(String startdate, int syear, int stm) {
+		int exec = 0;
+		String sql = "CALL Updateweekmake4(?,?,?)";
+		 
+		try (CallableStatement cstmt = conn.prepareCall(sql)) {
+		    cstmt.setString(1, startdate);
+		    cstmt.setInt(2, syear);
+		    cstmt.setInt(3, stm);
+		    exec = cstmt.executeUpdate();
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
+			
+		return exec;
+	}
+
+
+
+
+
+
+
 
 	
 

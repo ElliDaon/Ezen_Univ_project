@@ -1,0 +1,140 @@
+.container{
+    display: flex;
+}
+.sidebar{
+    width: 50%;
+}
+.myinfo{
+    width: 100%;
+}
+.menubar{
+    width: 100%;
+}
+.contents{
+    padding: 20px;
+}
+
+.first_line{
+    padding: 10px;
+    display: flex;
+    background: rgb(194, 194, 255);
+}
+.first_line input{
+    width: 80px;
+}
+
+.first_line input[type="radio"] {
+    width: 15px;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+
+.list_table{
+    margin-top: 5px;
+}
+.list_table table{
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+}
+.list_table table thead{
+    font-weight: bold;
+    background: rgb(194, 194, 255);
+}
+.list_table table tbody tr{
+    background: white;
+}
+.list_table table tbody tr:nth-child(even){
+    background: rgb(236, 236, 236);
+}
+
+
+
+
+.list_table #btn{
+    background: rgb(207, 247, 207);
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+}
+.list_table #btn2{
+    background: rgb(255, 187, 187);
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+}
+.list_table #btn3{
+    background: rgb(207, 247, 207);
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+}
+.list_table #btn4{
+    background: rgb(255, 187, 187);
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+}
+
+
+
+.studentTable{
+    margin-top: 5px;
+}
+.studentTable table{
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+}
+.studentTable table thead{
+    font-weight: bold;
+    background: rgb(194, 194, 255);
+}
+.studentTable table tbody tr{
+    height: 50px;
+    font-size: 12px;
+}
+.studentTable table tbody tr,td{
+    border: 1px solid gray;
+}
+
+
+.details_first_line{
+	margin-top: 5px;
+    padding: 10px;
+    display: block;
+    background: rgb(194, 194, 255);
+}
+.details_first_line input{
+    width: 80px;
+}
+
+.register { 
+    border-collapse: collapse;
+    border : 2px solid #e6eef5;
+}
+
+
+.register td {
+	border-collapse: collapse;
+	border : 2px solid #e6eef5;
+	}
+
+.register input[type=text]{ 
+    flex-grow: 1;
+    padding: 7px 5px;
+    border: #e6eef5 solid 2px;
+    background-color: white;
+    color: #263747;
+    width : 70%;
+    font-size: 15px;
+}
+

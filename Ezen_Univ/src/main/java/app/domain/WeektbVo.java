@@ -1,11 +1,11 @@
 package app.domain;
 
-import java.util.Date;
+
 
 public class WeektbVo {
 	private int w_week;
-	private Date w_start;
-	private Date w_end;
+	private String w_start;
+	private String w_end;
 	private String startyear;
 	private int starttm;
 	private int widx;
@@ -16,16 +16,16 @@ public class WeektbVo {
 	public void setW_week(int w_week) {
 		this.w_week = w_week;
 	}
-	public Date getW_start() {
+	public String getW_start() {
 		return w_start;
 	}
-	public void setW_start(Date w_start) {
+	public void setW_start(String w_start) {
 		this.w_start = w_start;
 	}
-	public Date getW_end() {
+	public String getW_end() {
 		return w_end;
 	}
-	public void setW_end(Date w_end) {
+	public void setW_end(String w_end) {
 		this.w_end = w_end;
 	}
 	public String getStartyear() {

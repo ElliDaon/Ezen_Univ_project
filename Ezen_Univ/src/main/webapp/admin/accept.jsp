@@ -12,37 +12,8 @@
     <title>가입승인</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
-    <link rel="stylesheet" href="../css/attmanage.css">
-    <style>
-        .container{
-            display: flex;
-        }
-        .sidebar{
-            width: 50%;
-        }
-        .myinfo{
-            width: 100%;
-        }
-        .menubar{
-            width: 100%;
-        }
-        .contents{
-            padding: 20px;
-        }
-        .std-list #btn{
-            background: rgb(207, 247, 207);
-            width: 50px;
-            height: 25px;
-        }
-        .std-list #btn2{
-            background: rgb(255, 187, 187);
-            width: 50px;
-            height: 25px;
-        }
-        .std-list table{
-            width: 80%;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/admin.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -62,10 +33,14 @@
             // "selectedMember" 값에 따라 처음 화면 목록 설정
             if (selectedMember === 'professorAll') {
                 $('#studentAllList').hide();
+                $('#studentCheckedBtn').hide();
                 $('#professorAllList').show();
+                $('#professorCheckedBtn').show();
             } else {
                 $('#professorAllList').hide();
+                $('#professorCheckedBtn').hide();
                 $('#studentAllList').show();
+                $('#studentCheckedBtn').show();
             }
 
             // 라디오 버튼 체크 상태 설정
@@ -95,11 +70,15 @@
                 // 목록보기 설정
                 if (selectedValue === 'studentAll') {
                     $('#professorAllList').hide();
+                    $('#professorCheckedBtn').hide();
                     $('#studentAllList').show();
+                    $('#studentCheckedBtn').show();
                     $('#professorAllList input[type="checkbox"]').prop('checked', false);
                 } else {
                     $('#studentAllList').hide();
+                    $('#studentCheckedBtn').hide();
                     $('#professorAllList').show();
+                    $('#professorCheckedBtn').show();
                     $('#studentAllList input[type="checkbox"]').prop('checked', false);
                 }
 
@@ -122,6 +101,7 @@
                 if (confirmation) {
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllOk.do';
 	                $('#studentAccept').prop('action', newAction); 
+	                $('#studentAccept').submit(); // 폼 제출
                 }
             });
             // 학생 일괄거부 버튼 클릭 이벤트
@@ -130,6 +110,7 @@
                 if (confirmation) {
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllNo.do';
 	                $('#studentAccept').prop('action', newAction); 
+	                $('#studentAccept').submit(); // 폼 제출
                 }
             });
 	        // 교수 일괄승인 버튼 클릭 이벤트
@@ -137,7 +118,8 @@
                 let confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do';
-	                $('#professorAccept').prop('action', newAction); 
+	                $('#professorAccept').prop('action', newAction);
+	                $('#professorAccept').submit(); // 폼 제출
                 }
             });
             // 교수 일괄거부 버튼 클릭 이벤트
@@ -145,99 +127,96 @@
                 let confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllNo.do';
-	                $('#professorAccept').prop('action', newAction); 
+	                $('#professorAccept').prop('action', newAction);
+	                $('#professorAccept').submit(); // 폼 제출
                 }
             });
 
         });
-        
-        
-     function acceptStudentOk(sidx){
-         let confirmation = confirm("해당 학생의 회원가입을 승인하겠습니까?"); // 확인 창 표시
-         if (confirmation) {
-	    	// 학생 회원가입 승인
-	     	$.ajax({
-	    		type : "post",
-	    		url : "${pageContext.request.contextPath}/admin/acceptStudentOk.do?sidx="+sidx,
-	    		data:{"sidx":sidx},
-	    		dataType : "json",
-	    		cache : false,
-	    		success : function(data){
-	    			//alert("통신성공");
-	    			document.location.href = document.location.href;		
-	    			
-	    		},
-	    		error : function(){
-	    			alert("통신오류 실패");			
-	    		}		
-	    	});	 
-    	}
-     }
-     function acceptProfessorOk(pidx){
-         let confirmation = confirm("해당 교수의 회원가입을 승인하겠습니까?"); // 확인 창 표시
-         if (confirmation) {
-    		// 교수 회원가입 승인
-	     	$.ajax({
-	     		type : "post",
-	     		url : "${pageContext.request.contextPath}/admin/acceptProfessorOk.do?pidx="+pidx,
-	     		data:{"pidx":pidx},
-	     		dataType : "json",
-	     		cache : false,
-	     		success : function(data){
-	     			//alert("통신성공");
-	     			document.location.href = document.location.href;		
-	     			
-	     		},
-	     		error : function(){
-	     			alert("통신오류 실패");			
-	     		}		
-	     	});	
-     	}
-     }
-     function acceptStudentNo(sidx){
-         let confirmation = confirm("해당 학생의 회원가입을 거부하겠습니까?"); // 확인 창 표시
-         if (confirmation) {
-     		// 학생 회원가입 거부
-	      	$.ajax({
-	     		type : "post",
-	     		url : "${pageContext.request.contextPath}/admin/acceptStudentNo.do?sidx="+sidx,
-	     		data:{"sidx":sidx},
-	     		dataType : "json",
-	     		cache : false,
-	     		success : function(data){
-	     			//alert("통신성공");
-	     			document.location.href = document.location.href;		
-	     			
-	     		},
-	     		error : function(){
-	     			alert("통신오류 실패");			
-	     		}		
-	     	});	 
-     	}
-     }
-     function acceptProfessorNo(pidx){
-         let confirmation = confirm("해당 교수의 회원가입을 거부하겠습니까?"); // 확인 창 표시
-         if (confirmation) {
-	     	// 교수 회원가입 거부
-	      	$.ajax({
-	      		type : "post",
-	      		url : "${pageContext.request.contextPath}/admin/acceptProfessorNo.do?pidx="+pidx,
-	      		data:{"pidx":pidx},
-	      		dataType : "json",
-	      		cache : false,
-	      		success : function(data){
-	      			//alert("통신성공");
-	      			document.location.href = document.location.href;		
-	      			
-	      		},
-	      		error : function(){
-	      			alert("통신오류 실패");			
-	      		}		
-	      	});	
-      	}
-     }
-     
-    
+	     function acceptStudentOk(sidx){
+	         let confirmation = confirm("해당 학생의 회원가입을 승인하겠습니까?"); // 확인 창 표시
+	         if (confirmation) {
+		    	// 학생 회원가입 승인
+		     	$.ajax({
+		    		type : "post",
+		    		url : "${pageContext.request.contextPath}/admin/acceptStudentOk.do?sidx="+sidx,
+		    		data:{"sidx":sidx},
+		    		dataType : "json",
+		    		cache : false,
+		    		success : function(data){
+		    			//alert("통신성공");
+		    			document.location.href = document.location.href;		
+		    			
+		    		},
+		    		error : function(){
+		    			alert("통신오류 실패");			
+		    		}		
+		    	});	 
+	    	}
+	     }
+	     function acceptProfessorOk(pidx){
+	         let confirmation = confirm("해당 교수의 회원가입을 승인하겠습니까?"); // 확인 창 표시
+	         if (confirmation) {
+	    		// 교수 회원가입 승인
+		     	$.ajax({
+		     		type : "post",
+		     		url : "${pageContext.request.contextPath}/admin/acceptProfessorOk.do?pidx="+pidx,
+		     		data:{"pidx":pidx},
+		     		dataType : "json",
+		     		cache : false,
+		     		success : function(data){
+		     			//alert("통신성공");
+		     			document.location.href = document.location.href;		
+		     			
+		     		},
+		     		error : function(){
+		     			alert("통신오류 실패");			
+		     		}		
+		     	});	
+	     	}
+	     }
+	     function acceptStudentNo(sidx){
+	         let confirmation = confirm("해당 학생의 회원가입을 거부하겠습니까?"); // 확인 창 표시
+	         if (confirmation) {
+	     		// 학생 회원가입 거부
+		      	$.ajax({
+		     		type : "post",
+		     		url : "${pageContext.request.contextPath}/admin/acceptStudentNo.do?sidx="+sidx,
+		     		data:{"sidx":sidx},
+		     		dataType : "json",
+		     		cache : false,
+		     		success : function(data){
+		     			//alert("통신성공");
+		     			document.location.href = document.location.href;		
+		     			
+		     		},
+		     		error : function(){
+		     			alert("통신오류 실패");			
+		     		}		
+		     	});	 
+	     	}
+	     }
+	     function acceptProfessorNo(pidx){
+	         let confirmation = confirm("해당 교수의 회원가입을 거부하겠습니까?"); // 확인 창 표시
+	         if (confirmation) {
+		     	// 교수 회원가입 거부
+		      	$.ajax({
+		      		type : "post",
+		      		url : "${pageContext.request.contextPath}/admin/acceptProfessorNo.do?pidx="+pidx,
+		      		data:{"pidx":pidx},
+		      		dataType : "json",
+		      		cache : false,
+		      		success : function(data){
+		      			//alert("통신성공");
+		      			document.location.href = document.location.href;		
+		      			
+		      		},
+		      		error : function(){
+		      			alert("통신오류 실패");			
+		      		}		
+		      	});	
+	      	}
+	     }  
     </script>
 </head>
 <body>
@@ -255,21 +234,27 @@
             </div>
         </div>
         <div class="contents">
-            <div class="accept-list">
+            <div>
             <h3>회원가입 승인</h3>
-                <div style="width:40%;float:left;">
-                      <input type="radio" name="MemberList" value="studentAll" id="studentRadio" >학생
-                      <input type="radio" name="MemberList" value="professorAll" id="professorRadio" >교수
-                      <input type="button" name="bbtn" value="선택보기" id="view">
+                <div class="first_line">
+                	  <div id= "checkedMember" style="padding-right: 5px;">
+	                      <input type="radio" name="MemberList" value="studentAll" id="studentRadio" >학생
+	                      <input type="radio" name="MemberList" value="professorAll" id="professorRadio" >교수
+	                      <input type="button" name="btn" value="선택보기" id="view">
+                      </div>
+                      <div id= "studentCheckedBtn">
+	                      <input type="submit" id="submitButton1" value="일괄승인">
+	                      <input type="submit" id="submitButton2" value="일괄거부">
+                      </div>
+                      <div id= "professorCheckedBtn">
+	                      <input type="submit" id="submitButton3" value="일괄승인">
+	                      <input type="submit" id="submitButton4" value="일괄거부">
+                      </div>
                 </div>
        
                 <!-- 학생리스트 -->
-                <form id ="studentAccept" action="" method="post">
-                <div id ="studentAllList" class="std-list">
-                	<div style="width:30%;float:right;">
-                        <input type="submit" id="submitButton1" value="일괄승인">
-                        <input type="submit" id="submitButton2" value="일괄거부">
-                	</div>
+                <form id ="studentAccept" method="post">
+                <div id ="studentAllList" class="list_table">
                     <table>
                         <thead>
                             <tr>
@@ -277,10 +262,10 @@
                                     <input type="checkbox" name="studentSelectAll" id="studentSelectAll"/>
                                 </td>
                                 <td style="width: 50px;">순번</td>
-                                <td style="width: 50px;">구분</td>
+                                <td style="width: 80px;">구분</td>
                                 <td style="width: 100px;">이름</td>
                                 <td style="width: 150px;">생년월일</td>
-                                <td style="width: 150px;">이메일</td>
+                                <td style="width: 300px;">이메일</td>
                                 <td style="width: 200px;">전공</td>
                                 <td colspan="2" width: 50px;>처리</td>
                             </tr>
@@ -309,12 +294,8 @@
                 </form>
                 
                 <!-- 교수리스트 -->
-                <form id="professorAccept" action="" method="post">
-                <div id ="professorAllList" class="std-list">
-                    <div style="width:30%;float:right;">
-                        <input type="submit" id="submitButton3" value="일괄승인">
-                        <input type="submit" id="submitButton4" value="일괄거부">
-                	</div>
+                <form id="professorAccept" method="post">
+                <div id ="professorAllList" class="list_table">
                     <table>
                         <thead>
                             <tr>
@@ -322,10 +303,10 @@
                                     <input type="checkbox" name="professorSelectAll"  id="professorSelectAll"/>
                                 </td>
                                 <td style="width: 50px">순번</td>
-                                <td style="width: 50px">구분</td>
+                                <td style="width: 80px">구분</td>
                                 <td style="width: 100px">이름</td>
                                 <td style="width: 150px">생년월일</td>
-                                <td style="width: 150px">이메일</td>
+                                <td style="width: 300px">이메일</td>
                                 <td style="width: 200px">전공</td>
                                 <td colspan="2" width: 50px;>처리</td>
                             </tr>
@@ -343,8 +324,8 @@
                                 <td>${mv.p_email}</td>
                                 <td>${mv.p_major}</td>
                                 <td style="padding-right:10px">
-                                    <button type="button" id="btn" onclick='acceptProfessorOk(${mv.pidx})'>승인</button>
-                                    <button type="button" id="btn2" onclick='acceptProfessorNo(${mv.pidx})'>거부</button>
+                                    <button type="button" id="btn3" onclick='acceptProfessorOk(${mv.pidx})'>승인</button>
+                                    <button type="button" id="btn4" onclick='acceptProfessorNo(${mv.pidx})'>거부</button>
                                 </td>
                             </tr>
                             </c:forEach>
