@@ -47,7 +47,7 @@
               [관리자모드]
             </div>
             <div class="logStatus">
-              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+              <a href="<%=request.getContextPath()%>/admin/adminLogout.do" target="_parent">logout</a>
             </div>
           </div>
           <div class="bottom">

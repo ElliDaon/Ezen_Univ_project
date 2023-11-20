@@ -55,7 +55,7 @@ public class AdminController extends HttpServlet {
 				av = add.adminAdidxSearch(ad_id);
 				session.setAttribute("adidx", av.getAdidx());
 
-				response.sendRedirect(request.getContextPath()+"/admin/accept.do");
+				response.sendRedirect(request.getContextPath()+"/main/main_a.do");
 				
 			}else{//아이디 비번 불일치
 				response.setCharacterEncoding("UTF-8");
@@ -67,11 +67,11 @@ public class AdminController extends HttpServlet {
 			}
 			
 		}else if(location.equals("adminLogout.do")) {	//로그아웃
-			
 			HttpSession session = request.getSession();
-			session.removeAttribute("adidx");
-			session.invalidate();
-			response.sendRedirect(request.getContextPath()+"/");
+			
+			session.invalidate(); //초기화
+			
+			response.sendRedirect(request.getContextPath()+"/index.jsp");
 			
 		}else if(location.equals("accept.do")) {	// 가입승인 리스트
 			
