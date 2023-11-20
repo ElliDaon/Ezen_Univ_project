@@ -52,7 +52,7 @@ public class AdminDao {
 	public AdminVo adminAdidxSearch(String ad_id) {
 		AdminVo av = new AdminVo();
 		
-		String sql = "select adidx from student where ad_id=?";
+		String sql = "select adidx from admin where ad_id=?";
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
