@@ -22,7 +22,7 @@
 <body>
     <div class="myinfo" style="margin-top:30px">
         [관리자모드]<br>
-        <a href="#">logout</a>
+        <a href="<%=request.getContextPath()%>/admin/adminLogout.do" target="_parent">logout</a>
     </div>
 </body>
 </html>

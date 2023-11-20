@@ -130,6 +130,9 @@ public class MainController extends HttpServlet{
 
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
+		}else if(location.equals("main_a.do")) {
+				
+			response.sendRedirect(request.getContextPath()+"/main/main_a.jsp");
 		}
 	}
 }
