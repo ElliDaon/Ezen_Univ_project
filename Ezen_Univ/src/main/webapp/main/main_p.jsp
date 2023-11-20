@@ -37,7 +37,7 @@
       }
     </script>
     
-    <script>
+<!--     <script>
         // 페이지가 로드된 후 실행되는 JavaScript 코드
         $(document).ready(function() {
             // iFrame에서 가져올 페이지의 URL
@@ -52,6 +52,7 @@
                     var containerContent = $(response).find('.noticelist').html();
 
                     // 현재 페이지의 특정 위치에 내용 추가
+                    $limit_num="4";
                     $('.externalContent').html(containerContent);
                 },
                 error: function(xhr, status, error) {
@@ -59,7 +60,7 @@
                 }
             });
         });
-    </script>
+    </script> -->
 </head>
 <body>
 	<div id="main-header">
@@ -70,13 +71,13 @@
 					<div class="headerMenu">
 						<nav class="menuList">
 							<div role="menuitem" class="menuitem">
-							  <div aria-current="false" class="menuitemin"><a href="../mypage/personalinfo_p.do" target="_parent">마이페이지</a></div>
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../mypage/personalinfo_p.do" target="_parent">마이페이지</a></div>
 							</div>
 							<div role="menuitem" class="menuitem">
-							  <div aria-current="false" class="menuitemin"><a href="../attendance/attendanceSituation_p.do" target="_parent">출석관리</a></div>
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../attendance/attendanceSituation_p.do" target="_parent">출석관리</a></div>
 							</div>
 							<div role="menuitem" class="menuitem">
-							  <div aria-current="false" class="menuitemin"><a href="../notice/noticeList_p.do" target="_parent">공지사항</a></div>
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../notice/noticeList_p.do" target="_parent">공지사항</a></div>
 							</div>
 						</nav>
 					</div>
@@ -88,10 +89,11 @@
       <div class="container">
         <div class="sidebar">
           <div class="top">
-            <div id="myinfo" class="myinfo" style="margin-top:30px">
+            <div id="myinfo" class="myinfo">
 <!--          <iframe src = "../leftmenu/myinfo_p.jsp" width="100%" height="100%"></iframe> -->
             </div>
-            <div class="logStatus">
+            <br>
+            <div class="logStatus" style="font-weight: bold">
               <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
           </div>
@@ -101,12 +103,20 @@
         <div class="contents">
             <div class="first-line">
                 <div class="notice">
-                    <div class="externalContent"></div>
+                    <div class="thisis">휴보강 공지사항</div>
+                    <div class="noticeList">
+                       <ul>
+                        <c:forEach var="nv" items="${alist}">
+                          <li class="currentNotice"><a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">${nv.n_subject}</a></li>
+                        </c:forEach>
+                      </ul>
+                    </div>
                 </div>
-                <div class="banner">
+                <div class="banner"  style="padding-top: 40px;">
                     <a href="https://www.cubeitac.com/" target="_blank"><img src="../images/banner.png"></a>
                 </div>
             </div>
+            <br>
             <div class="p-table">
               <div class="thisis">2023년도 2학기 시간표</div>
               <div>

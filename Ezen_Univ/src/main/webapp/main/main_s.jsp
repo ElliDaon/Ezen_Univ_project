@@ -44,13 +44,13 @@
 					<div class="headerMenu">
 						<nav class="menuList">
 							<div role="menuitem" class="menuitem">
-							  <div aria-current="false" class="menuitemin"><a href="../mypage/personalinfo_s.do" target="_parent">마이페이지</a></div>
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../mypage/personalinfo_s.do" target="_parent">마이페이지</a></div>
 							</div>
 							<div role="menuitem" class="menuitem">
-							  <div aria-current="false" class="menuitemin"><a href="../attendance/attendanceSituation_s.do" target="_parent">출석관리</a></div>
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../attendance/attendanceSituation_s.do" target="_parent">출석관리</a></div>
 							</div>
 							<div role="menuitem" class="menuitem">
-							  <div aria-current="false" class="menuitemin"><a href="../notice/noticeList_s.do" target="_parent">공지사항</a></div>
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../notice/noticeList_s.do" target="_parent">공지사항</a></div>
 							</div>
 						</nav>
 					</div>
@@ -62,10 +62,11 @@
       <div class="container">
         <div class="sidebar">
           <div class="top">
-            <div id="myinfo" class="myinfo" style="margin-top:30px">
+            <div id="myinfo" class="myinfo">
               <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
             </div>
-            <div class="logStatus">
+            <br>
+            <div class="logStatus" style="font-weight: bold">
               <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
           </div>
@@ -75,35 +76,24 @@
         <div class="contents">
             <div class="first-line">
                 <div class="notice">
-                    <h3>휴보강공지</h3><br>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>목록</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><a href="#">[휴강] [2023.10.25] 무선통신이론</a></td>
-                            </tr>
-                            <tr>
-                                <td>[휴강] [2023.10.26] 즐거운 수학</td>
-                            </tr>
-                            <tr>
-                                <td>[보강] [2023.10.27] 무선통신이론</td>
-                            </tr>
-                            <tr>
-                                <td>[휴강] [2023.10.28] 시스템정보이론</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="thisis">휴보강 공지사항</div>
+                    <div class="noticeList">
+                       <ul>
+                        <c:forEach var="nv" items="${alist}">
+                          <li class="currentNotice"><a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">${nv.n_subject}</a></li>
+                        </c:forEach>
+                      </ul>
+                    </div>
                 </div>
-                <div class="banner" style="padding-top: 50px;">
-                    <a href="https://www.cubeitac.com/" target="_blank"><img src="../images/banner.png" width="90%" height="150px"></a>
+                <div class="banner" style="padding-top: 40px;">
+                    <a href="https://www.cubeitac.com/" target="_blank"><img src="../images/banner.png"></a>
                 </div>
             </div>
+            <br>
             <div class="p-table">
-                <table class="table" id="mytable" style="font-size:12px; padding: 5px;">
+            <div class="thisis">2023년도 2학기 시간표</div>
+              <div>
+                <table class="table" id="mytable">
                     <thead>
                         <tr>
                             <td style="width:5%; font-weight: bold; font-size: 15px;">교시</td>
@@ -127,6 +117,7 @@
                         </c:forEach>
                     </tbody>
                 </table>
+            </div>
             </div>
             <div class="sitemap">
             	<span class="sitemapcls"><ion-icon name="close-outline"></ion-icon></span>
@@ -157,6 +148,7 @@
             	</div>
             </div>
         </div>
+      </div>
     </div>
     <div class="sitemap_icon">
     	<span class="sitemap-popup"><ion-icon name="map-outline"></ion-icon></span>
