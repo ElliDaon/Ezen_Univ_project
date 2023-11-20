@@ -241,8 +241,8 @@ public class NoticeDao {
 			e.printStackTrace();
 		}finally{
 			try{
-				rs.close();
-				pstmt.close();
+				//rs.close();
+				//pstmt.close();
 				//conn.close();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -506,5 +506,4 @@ public class NoticeDao {
 		}
 		return exec;	
 	}
-	
 }

@@ -12,6 +12,7 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <link rel="stylesheet" href="../css/noticelist_s.css">
+<link rel="stylesheet" href="../css/nav_style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,11 +58,9 @@
     
     .pagination a:hover {background-color: #ddd;}
     
-    a:hover {
-        
+/*     a:hover {
         text-decoration: underline;
-       
-    }
+    } */
     
     a{
         text-decoration: none; 
@@ -201,9 +200,28 @@
 <c:if test="${pm != null && pm.getTotalCount() == 0}">
     <script>alert('공지가 아직 등록되지 않았습니다.');</script>
 </c:if>
-    <div class="header">
-        <iframe src = "../main/navigation_s.jsp" width = "100%" height="55" ></iframe>
-    </div>
+	<div id="main-header">
+		<header class="mainHeader">
+			<section class="mainHeaderSection">
+				<div>
+					<a href="../main/main_s.do" class="logoLink" target="_parent"><img src="../images/ezen_univ.png" width="150"></a>
+					<div class="headerMenu">
+						<nav class="menuList">
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../mypage/personalinfo_s.do" target="_parent">마이페이지</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../attendance/attendanceSituation_s.do" target="_parent">출석관리</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../notice/noticeList_s.do" target="_parent">공지사항</a></div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</section>
+		</header>
+	</div>
     <div class="wrapper">
         <div class="sidebar">
             <div class="myinfo">
