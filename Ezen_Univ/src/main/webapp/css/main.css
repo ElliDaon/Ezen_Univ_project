@@ -104,9 +104,9 @@ table td{
 .sitemap{
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: regular 400;
-	background: #FCF8E3;
-	width: 300px;
-	height: 50%;
+	background: whitesmoke;
+	width: 81%;
+	height: 40%;
 	position: absolute;
 	top: 64px;
 	right: 0;
@@ -115,34 +115,52 @@ table td{
 	/* transform-origin: 100% 0; */
 	transition: .5s;
 	z-index: 10;
+	border-bottom : solid #0067b3;
 }
 .sitemap h2{
-	text-align: center;
+	padding-left: 200px;
+	padding-top: 10px;
 	font-size: 30px;
+}
+.sitemap h3 {
+    float: left;
+    width: 120px;
+    padding: 29px 10px;
+    font-size: 20px;
+    color: #0067b3;
+    border-top: 2px solid #0067b3;
 }
 .link-area{
 	width: 100%;
-	height: 400px;
+	/* height: 400px; */
 	background: transparent;
-	margin-top: 20px;
+	/* margin-top: 20px; */
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	text-align: center;
-	border: 2px solid gray;
-	border-radius: 5px;
-	padding-bottom: 20px;
+	/* justify-content: center; */
+	/* text-align: center; */
+	/* border: 2px solid gray;
+	border-radius: 5px; */
+	padding: 20px 150px;
 }
-.main-title{
+.article{
 	margin-top: 20px;
+	position: absolute;
+	top: 100px;
+	display: contents;
+	/* right:0; */
 }
-.main-title ul{
+.sitemap ul{
+	float : left;
 	list-style: none;
+	padding: 29px 0px 0px 0px;
+    border-top: 1px solid #ccc;
 }
-.main-title h3{
-	font-size: 20px;
-	
+.sitemap li {
+    padding: 5px 50px;
 }
+
+
 .sitemap_icon{
 	position: absolute;
 	top: 10px;
@@ -168,5 +186,14 @@ table td{
 }
 .sitemap a:hover{
 	text-decoration: none;
-	color: blue;
+	color: #0067b3;
+}
+.sitemap>ul>li>ul>li {
+    width: 152px;
+    padding: 18px 40px 58px 0;
+    font-size: 16px;
+    color: #1a1a1a;
+}
+.sitemap li {
+    float: left;
 }

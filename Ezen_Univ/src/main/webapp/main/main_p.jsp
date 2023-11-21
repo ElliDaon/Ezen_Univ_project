@@ -150,7 +150,8 @@
             	<span class="sitemapcls"><ion-icon name="close-outline"></ion-icon></span>
             	<h2>SITEMAP</h2>
             	<div class="link-area">
-	            	<div class="main-title">
+	            	  <ul class="article">
+	            	   <li class="depth_1">
 	            		<h3>마이페이지</h3>
 	            		<ul>
 	            			<li><a href="../mypage/personalinfo_p.do">개인정보</a></li>
@@ -158,21 +159,22 @@
 	            			<li><a href="../mypage/courseList_p.do">강의현황</a></li>
 	            			<li><a href="../mypage/searchP_table_p.do">교수 시간표 조회</a></li>
 	            		</ul>
-	            	</div>
-	            	<div class="main-title">
+	            	   </li>
+	            	   <li class="depth_1">
 	            		<h3>출석관리</h3>
 	            		<ul>
 	            			<li><a href="../attendance/attendanceSituation_p.do">출석현황 조회</a></li>
 	            			<li><a href="../attendance/attendanceManagement.do">출석 관리</a></li>
 	            			<li><a href="../attendance/lackOfAttendance.do">출석 미달 관리</a></li>
 	            		</ul>
-	            	</div>
-	            	<div class="main-title">
+	            	   </li>
+	            	   <li class="depth_1">
 	            		<h3>공지사항</h3>
 	            		<ul>
 	            			<li><a href="../notice/noticeList_p.do">휴보강 공지</a></li>
 	            		</ul>
-	            	</div>
+	            	   </li>
+	            	  </ul>
             	</div>
             </div>
         </div>
