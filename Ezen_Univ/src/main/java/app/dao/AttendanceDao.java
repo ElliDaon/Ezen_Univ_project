@@ -621,6 +621,9 @@ public class AttendanceDao {
 				mv.setS_no(rs.getInt("s_no"));
 				mv.setAbcount(rs.getString("count"));
 				mv.setAbper(rs.getString("per"));
+				mv.setAbper(rs.getString("per"));
+				mv.setC_name(rs.getString("c_name"));
+				
 				list.add(mv);
 			}
 			

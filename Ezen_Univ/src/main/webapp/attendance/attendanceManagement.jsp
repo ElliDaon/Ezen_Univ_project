@@ -65,6 +65,8 @@
 						alert("입력오류");	    				
 	    			}else{
 		    			alert("성공");
+		    			var loc = "<%=request.getContextPath()%>/attendance/attendancePreManagement.do";
+		    			location.href=loc;
 	    			}
 	    			
 	    		},
@@ -76,6 +78,8 @@
 	    	
 	    });
     });
+    
+
     
     </script>
 </head>
@@ -107,6 +111,13 @@
                     <input type="hidden" name="period" value="${av.pe_period}">
 
            		</div>
+           		
+           		<br>
+           		<br>
+           		<h3>
+           			<strong>${str2}(${av.pe_start}~${av.pe_end})</strong>
+           		</h3>
+           		
            		<div class="student-list">
                     <div class="btn">
                         <button type="button" name="attbtn" id="attbtn">저장</button>
