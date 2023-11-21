@@ -126,11 +126,6 @@ public class MemberController extends HttpServlet {
 				out.println("<script>history.back();</script>");
 			}
 			
-		}else if(location.equals("memberLogin.do")) {
-			String path = "/member/memberLogin.jsp";
-			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
-			RequestDispatcher rd = request.getRequestDispatcher(path);
-			rd.forward(request, response);
 		}else if(location.equals("memberLogout.do")) {
 			HttpSession session = request.getSession();
 
@@ -153,13 +148,19 @@ public class MemberController extends HttpServlet {
 				MemberVo mv = new MemberVo();
 				
 				mv = md.studentSidxSearch(s_id);
+				PrintWriter out = response.getWriter();
 				
-				session.setAttribute("sidx", mv.getSidx());
-				session.setAttribute("s_no", mv.getS_no());
-				session.setAttribute("s_name", mv.getS_name());
-				session.setAttribute("s_major", mv.getS_major());
-				
-				response.sendRedirect(request.getContextPath()+"/main/main_s.do");
+				if(mv.getS_no()==0) {
+					out.println("<script>alert('가입승인이 이루어지지 않았습니다.'); history.back();</script>");
+				}else {
+					
+					session.setAttribute("sidx", mv.getSidx());
+					session.setAttribute("s_no", mv.getS_no());
+					session.setAttribute("s_name", mv.getS_name());
+					session.setAttribute("s_major", mv.getS_major());
+					
+					response.sendRedirect(request.getContextPath()+"/main/main_s.do");
+				}
 				
 			}else{//아이디 비번 불일치
 				response.setCharacterEncoding("UTF-8");
@@ -185,12 +186,19 @@ public class MemberController extends HttpServlet {
 				MemberVo mv = new MemberVo();
 				
 				mv = md.professorPidxSearch(p_id);
-				session.setAttribute("pidx", mv.getPidx());
-				session.setAttribute("p_no", mv.getP_no());
-				session.setAttribute("p_name", mv.getP_name());
-				session.setAttribute("p_major", mv.getP_major());
+				PrintWriter out = response.getWriter();
 				
-				response.sendRedirect(request.getContextPath()+"/main/main_p.do");
+				if(mv.getP_no()==0) {
+					out.println("<script>alert('가입승인이 이루어지지 않았습니다.'); history.back();</script>");
+				}else {
+					
+					session.setAttribute("pidx", mv.getPidx());
+					session.setAttribute("p_no", mv.getP_no());
+					session.setAttribute("p_name", mv.getP_name());
+					session.setAttribute("p_major", mv.getP_major());
+					
+					response.sendRedirect(request.getContextPath()+"/main/main_p.do");
+				}
 				
 			}else{//아이디 비번 불일치
 				response.setCharacterEncoding("UTF-8");
@@ -217,7 +225,7 @@ public class MemberController extends HttpServlet {
 			}
 			PrintWriter out = response.getWriter();
 			out.println(str);
-			System.out.println(str);
+			//System.out.println(str);
 		}else if(location.equals("searchProfessorId.do")) {
 			String memberName = request.getParameter("memberName");
 			String memberEmail = request.getParameter("memberEmail");
@@ -283,7 +291,7 @@ public class MemberController extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			System.out.println("저장된 세션값:"+session.getAttribute("authenCode"));
+			//System.out.println("저장된 세션값:"+session.getAttribute("authenCode"));
 			PrintWriter out = response.getWriter();
 			out.println(str);
 

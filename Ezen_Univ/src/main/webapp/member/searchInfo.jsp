@@ -8,6 +8,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/searchInfo.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
     function searchid(){
@@ -260,7 +263,7 @@
 <body>
 
     <div class="wrapper">
-        <h2>회원정보찾기</h2><hr>
+        <h2>회원정보찾기</h2>
         <div class="searchId-box">
             <h3>| 아이디찾기 |</h3><br>
             <form name = "searchIdfrm">
@@ -278,7 +281,7 @@
            		
             </div>
         </div>
-        <hr>
+        
         <div class="searchId-box">
             <h3>| 비밀번호찾기 |</h3><br>
                 <form name="searchPwdfrm">

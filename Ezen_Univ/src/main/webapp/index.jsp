@@ -194,7 +194,7 @@ function CheckEmail(str){
 				<button type="submit" id="loginbtn" class="btn" onclick="login()">Login</button>
 				<div class="remember-forgot">
 					
-					<button id="popup-btn" onclick="window.open('member/searchInfo.jsp','window_name','width=600,height=700,location=no,status=no,scrollbars=yes');">ID | password 찾기</button>
+					<button id="popup-btn" onclick="window.open('member/searchInfo.jsp','window_name','width=600,height=800,location=no,status=no,scrollbars=yes');">ID | password 찾기</button>
 				</div>
 				<div class="login-register">
 					<p><a href="#" class="register-link">SIGN-UP</a></p>

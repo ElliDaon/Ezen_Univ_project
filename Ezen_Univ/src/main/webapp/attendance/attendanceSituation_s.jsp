@@ -71,11 +71,21 @@ function listAction(cidx){
 				str2 += '<tr><td>'+data[i].widx+'</td>'
 						+'<td>'+data[i].atdate+'</td>'
 						+'<td>'+data[i].attime+'</td>'
-						+'<td>'+data[i].e_attendance+'</td></tr>';
+						+'<td><span>'+data[i].e_attendance+'</span></td></tr>';
 				});
 				str2 += '</tbody></table>';
 			
 			$('#attendanceList').append(str2);
+			$("td span").each(function(){
+    			var txt = $(this).text();
+    			if (txt === '결석') {
+    				$(this).css('color','red');
+    			}else if (txt === '지각' || txt === '조퇴') {
+    				$(this).css('color','orange');
+    			}else {
+    				$(this).css('color','black');
+    			}
+    		});
 		},
 		error : function(request, status, error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
