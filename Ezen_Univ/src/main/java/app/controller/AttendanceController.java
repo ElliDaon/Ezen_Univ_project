@@ -325,6 +325,10 @@ public class AttendanceController extends HttpServlet{
 			av.setPe_period(period);
 			av.setA_date(dates);
 			
+			String str2 = w_week +"주차 "+ dates + " : " + period + "교시 ";
+			
+			request.setAttribute("str2", str2);
+			
 			//System.out.println("ctidx: "+av.getCtidx()+"\n a_start: "+av.getPe_start()+"\n a_end: "+av.getPe_end()+"\n widx: "+av.getWidx()+"\n c_name: "+av.getC_name());
 			request.setAttribute("av", av);
 			
@@ -356,6 +360,8 @@ public class AttendanceController extends HttpServlet{
 			
 			String attendValue = request.getParameter("Array");
 			//System.out.println("넘어온값"+ctidx+a_date+pe_start+pe_end+cidx+widx+"\n value"+attendValue);
+			
+			
 			
 			JSONParser parser = new JSONParser();
 		    JSONArray jsonArray = null;
@@ -436,6 +442,8 @@ public class AttendanceController extends HttpServlet{
 				int s_no = list.get(i).getS_no();
 				String count = list.get(i).getAbcount();
 				String per = list.get(i).getAbper();
+				String c_name = list.get(i).getC_name();
+			
 				
 				String comma = "";
 				if (i == listsize - 1) {
@@ -444,13 +452,14 @@ public class AttendanceController extends HttpServlet{
 					comma = ",";
 				}
 				
-				str = str + "{\"s_name\" : \""+s_name+"\", \"s_no\" : \""+s_no+"\", \"count\" : \""+count+"\", \"per\" : \""+per+"\"}"+comma;
+				str = str + "{\"c_name\" : \""+c_name+"\",\"s_name\" : \""+s_name+"\", \"s_no\" : \""+s_no+"\", \"count\" : \""+count+"\", \"per\" : \""+per+"\"}"+comma;
 			}
 			
 			
-			//System.out.println(cidx);
 			
 			PrintWriter out = response.getWriter();
+		
+			
 			out.println("["+str+"]");
 			
 		}

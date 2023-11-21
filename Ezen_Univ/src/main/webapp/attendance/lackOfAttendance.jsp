@@ -13,7 +13,8 @@
 	 <script>
 	 
 	 function displaySecondTable(cidx){
-
+				
+			 displayCourse(cidx);
 		    
 		    $.ajax({
 	    		type : "get",
@@ -42,7 +43,31 @@
 	    	});
 	    	return;
 		}
-	 
+	 function displayCourse(cidx){
+		$.ajax({
+ 		type : "get",
+		url : "<%=request.getContextPath()%>/attendance/toomuchAbsenceListAction.do",
+		data : {
+			"cidx": cidx
+		},
+		dataType : "json",
+		success : function(data){
+			var str = "";
+			str +=  "<h3>";
+          
+            $(data).each(function(){
+          	  str = str + this.c_name +"</h3>";
+            });
+			$("#courseName").html(str); 
+			return;
+		},
+		error : function(request, status, error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		} 
+	});
+	return;
+		 
+}
     </script>
     <style>
 
@@ -97,7 +122,7 @@
               <b style="color:red">※ 출석 미달자 : 결석률이 25%를 초과하는 자</b>
             </div>
             
-            <h3>C언어</h3>
+            <div id="courseName"></div>
             <div class="list_table" id="studentList">
             <!-- <table>
                     <thead>
