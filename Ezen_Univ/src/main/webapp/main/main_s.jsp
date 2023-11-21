@@ -123,28 +123,30 @@
             	<span class="sitemapcls"><ion-icon name="close-outline"></ion-icon></span>
             	<h2>SITEMAP</h2>
             	<div class="link-area">
-	            	<div class="main-title">
+	            	  <ul class="article">
+	            	   <li class="depth_1">
 	            		<h3>마이페이지</h3>
-	            		<ul>
+            			<ul>
 	            			<li><a href="../mypage/personalinfo_s.do">개인정보</a></li>
 	            			<li><a href="../mypage/modifyinfo_s.do">개인정보 수정</a></li>
 	            			<li><a href="../mypage/courseList_s.do">수강목록</a></li>
 	            			<li><a href="../mypage/mytable_s.do">시간표 조회</a></li>
 	            			<li><a href="../mypage/searchP_table_s.do">교수 시간표 조회</a></li>
 	            		</ul>
-	            	</div>
-	            	<div class="main-title">
+	            	   </li>
+	            	   <li class="depth_1">
 	            		<h3>출석관리</h3>
 	            		<ul>
 	            			<li><a href="../attendance/attendanceSituation_s.do">출석현황 조회</a></li>
 	            		</ul>
-	            	</div>
-	            	<div class="main-title">
+	            	   </li>
+	            	   <li class="depth_1">
 	            		<h3>공지사항</h3>
 	            		<ul>
 	            			<li><a href="../notice/noticeList_s.do">휴보강 공지</a></li>
 	            		</ul>
-	            	</div>
+	            	   </li>
+	            	  </ul>
             	</div>
             </div>
         </div>
