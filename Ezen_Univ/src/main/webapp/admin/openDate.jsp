@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개강일자등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!--     <link rel="stylesheet" href="../css/openDate.css">
-    <link rel="stylesheet" href="../css/iframe.css"> -->
+	<link rel="stylesheet" href="../css/openDate.css">
+
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -115,14 +115,14 @@
      
     function openDateListTable(data){
     	let parsedData = JSON.parse("["+data+"]");
-    	let str = "<thead><tr><th>주차</th><th>시작 날짜</th><th>종료 날짜</th></tr></thead><tbody>";	
+    	let str = "<table><thead><tr><th>주차</th><th>시작 날짜</th><th>종료 날짜</th></tr></thead><tbody>";	
     	parsedData.forEach(function (item){
     		
     		str += "<tr><td>"+item.w_week+"</td>" +
 			"<td>"+item.w_start+"</td>" +
     		"<td>"+item.w_end+"</td></tr>";
     	});
-    	str += "</tbody>";
+    	str += "</tbody></table>";
     	
     	
     	$("#openDateList").html(str);
@@ -188,17 +188,15 @@
 
 	    <div class="contents">
 	    <form name="frm" >
-	        <div class="openDate"> 
 	        <h1>개강일자 등록</h1>
-	        <br>
-	        <input type="date" id="dateInput" name="dateInput" />
-	        <input type="hidden" id="dateInfoYear" name="dateInfoYear" />
-            <input type="hidden" id="dateInfoSemester" name="dateInfoSemester" />
+	        <div class="first_line"> 
+	        	<br>
+		        <input type="date" id="dateInput" name="dateInput" />
+		        <input type="hidden" id="dateInfoYear" name="dateInfoYear" />
+	            <input type="hidden" id="dateInfoSemester" name="dateInfoSemester" />
 	        </div>
-	        <div id="openDateList">
-	        	<table>
+	        <div id="openDateList" class="list_table">
 	        		<!-- 등록된 날짜가 주차배열로 보여줌 -->
-	        	</table>
 	        </div>
 	    </form>
 	    </div>

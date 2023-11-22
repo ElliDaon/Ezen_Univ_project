@@ -127,7 +127,7 @@
     	parsedData.forEach(function (item){
     	
     		str += "<tr data-id='" + item.cidx + "'><td>" + item.cidx + "</td>" +
-    			"<td class='course-name'>" + item.c_name + "</td>" +
+    			"<td id='c_name' class='course-name'>" + item.c_name + "</td>" +
     			"<td>" + item.p_no + "</td>" +
     			"<td>" + item.p_name + "</td>" +
     			"<td class='major-name'>" + item.c_major + "</td>" +
@@ -160,6 +160,7 @@
                 	"c_grade": c_grade
                 },
                 success: function(data) {
+                	console.log(data);
                 	//alert("통신 확인");
                 	$("#studentList h4").text(c_name);	//학생 리스트 h4에 불러온 과목명 입력
                 	courseMatchStudent(data, cidx);	//학생들 리스트 정보와 함께 cidx값도 같이 넘기기
