@@ -11,13 +11,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="menuarea">
+    <!-- <div class="topmenu_name">마이페이지</div> -->
+    <div class="bottom">
         <ul>
-            <li>
-                <div class="topmenu_name">
-                    마이페이지
-                </div>
-            </li>
             <li class="personalinfo">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
                 개인정보
