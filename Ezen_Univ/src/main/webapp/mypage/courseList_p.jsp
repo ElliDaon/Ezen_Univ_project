@@ -8,6 +8,7 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
+    <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="../css/courseList.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <style>
@@ -15,9 +16,28 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <iframe src = "../main/navigation_p.jsp" width = "100%" height="55" ></iframe>
-    </div>
+	<div id="main-header">
+		<header class="mainHeader">
+			<section class="mainHeaderSection">
+				<div>
+					<a href="../main/main_p.do" class="logoLink" target="_parent"><img src="../images/ezen_univ.png" width="150"></a>
+					<div class="headerMenu">
+						<nav class="menuList">
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../mypage/personalinfo_p.do" target="_parent">마이페이지</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../attendance/attendanceSituation_p.do" target="_parent">출석관리</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../notice/noticeList_p.do" target="_parent">공지사항</a></div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</section>
+		</header>
+	</div>
     <div class="container">
         <div class="sidebar">
             <div class="myinfo">

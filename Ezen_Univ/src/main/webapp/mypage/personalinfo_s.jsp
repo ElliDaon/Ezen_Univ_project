@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/nav_style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <style>
         .container{
@@ -46,6 +47,27 @@
         	
         }
     </style>
+    <script>
+      $(document).ready(function(){
+            studentInfo();
+      });
+      
+      function studentInfo(){
+      	
+      	var str = "";
+      	
+      	var s_no =${sessionScope.s_no};
+      	var s_name = "${sessionScope.s_name}"
+      	var s_major = "${sessionScope.s_major}";
+      	
+      	str = "<strong>[학생]</strong><br>"
+      		 + s_name + "("+ s_no +")<br>"
+      		 + "[" + s_major + "]";
+      	
+      	$("#myinfo").html(str);
+      	return;
+      }
+    </script>
 </head>
 <body>
 	<div id="main-header">
@@ -70,14 +92,52 @@
 			</section>
 		</header>
 	</div>
-    <div class="container">
+    <div class="main">
+      <div class="container">
         <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="200"></iframe>
+          <div class="top">
+            <div id="myinfo" class="myinfo">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
             </div>
-            <div class="menubar">
-                <iframe src = "../leftmenu/mypage_menu_s.jsp" width="100%" height="500"></iframe>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
+          </div>
+          <br>
+          <div class="topmenu_name">마이페이지</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+              <ul>
+               <li><i class="fa fa-user-circle" aria-hidden="true"></i>
+               개인정보</li>
+              </ul>
+               <ul>
+                 <li><a href="../mypage/personalinfo_s.do" target="_parent">&ensp;&ensp;개인정보</a></li>
+                 <li><a href="../mypage/modifyinfo_s.do" target="_parent">&ensp;&ensp;개인정보 수정</a></li>
+               </ul>
+             </li>
+             <li>
+              <ul>
+               <li><a href="../mypage/courseList_s.do" target="_parent">
+               <i class="fa fa-book" aria-hidden="true"></i>
+               수강목록
+               </a></li>
+              </ul>
+             </li>
+             <li class="personalinfo">
+              <ul>
+               <li><i class="fa fa-book" aria-hidden="true"></i>
+               시간표</li>
+              </ul>
+               <ul>
+                 <li><a href="../mypage/mytable_s.do" target="_parent">&ensp;&ensp;시간표 조회</a></li>
+                 <li><a href="../mypage/searchP_table_s.do" target="_parent">&ensp;&ensp;교수 시간표 조회</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
         </div>
         <div class="contents">
             <h3>학생정보</h3>
@@ -107,6 +167,7 @@
 				</tr>
 			</table>
         </div>
+      </div>
     </div>
 </body>
 </html>

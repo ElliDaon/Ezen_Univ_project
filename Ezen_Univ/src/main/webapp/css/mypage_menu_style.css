@@ -1,6 +1,6 @@
-html{
+/* html{
     background: #DEDFEA;
-}
+} */
 body, div, li, ul{
     padding: 0;   
     margin: 0;
@@ -20,13 +20,13 @@ a:hover{
 .myinfo_li {
     list-style: none;
 }
-body li{
+/* body li{
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #ffffff;
-}
+} */
 .topmenu_name{
     height: 50px;
-    background: blue;
+    background: #0078ff;
     color: white;
     font-weight: bold;
     font-size: 20px;
