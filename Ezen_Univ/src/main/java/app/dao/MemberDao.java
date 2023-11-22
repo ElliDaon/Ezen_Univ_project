@@ -22,34 +22,6 @@ public class MemberDao {
 		this.conn = dbconn.getConnection();
 	}
 	
-	public int memberInsert( 
-			String memberId, String memberPwd, 
-			String memberName, String memberBirth,
-			String memberGender, String memberPhone, 
-			String memberEmail, String memberAddr, 
-			String memberHobby){
-		int exec = 0;
-
-		String sql = "insert into student(s_id, s_pwd, s_name, s_phone, s_email, s_birth, s_major, s_no)"+
-				" values(?,?,?,?,?,?,?,?,?)";
-				try{
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1,memberId);
-				pstmt.setString(2,memberPwd);
-				pstmt.setString(3,memberName);
-				pstmt.setString(4,memberBirth);
-				pstmt.setString(5,memberGender);
-				pstmt.setString(6,memberPhone);
-				pstmt.setString(7,memberEmail);
-				pstmt.setString(8,memberAddr);
-
-				exec = pstmt.executeUpdate();
-				} catch(Exception e){
-					e.printStackTrace();
-				}
-		
-		return exec;
-	}
 	public int studentInsert(String s_id, String s_pwd, String s_name, String s_phone, String s_email, int s_birth, String s_major) {
 		
 		int exec = 0;
@@ -98,31 +70,6 @@ public class MemberDao {
 		return exec;
 	}
 
-	public ArrayList<MemberVo> memberSelectAll(){
-		//무한배열클래스 객체생성해서 데이터 담을 준비를 한다.
-		ArrayList<MemberVo> alist = new ArrayList<MemberVo>();
-		ResultSet rs;
-		String sql="select midx, membername, memberid, date_format(writeday,\"%Y-%m-%d\") as writeday from member0803 where delyn='N' order by midx desc";
-		try{
-			//구문(쿼리)객체
-			pstmt = conn.prepareStatement(sql);
-			//DB에 있는 값을 담아오는 전용객체
-			rs = pstmt.executeQuery();
-			//rs.next() -> 다음값이 있는지 확인하는 메서드(있으면 true, 없으면 false)
-			while(rs.next()){
-				MemberVo mv = new MemberVo();
-				//rs에서 midx값 꺼내서 mv에 옮겨담는다.
-				/*
-				 * mv.setMidx( rs.getInt("midx") ); mv.setMemberId( rs.getString("memberid") );
-				 * mv.setMemberName( rs.getString("membername")); mv.setWriteday(
-				 * rs.getString("writeday")); alist.add(mv);
-				 */
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return alist;
-	}
 
 	public int memberIdCheck1(String memberId){
 		int value = 0; //결과값이 0인지 아닌지
@@ -161,27 +108,6 @@ public class MemberDao {
 	}
 
 
-	public int memberLoginCheck(String memberId, String memberPwd){
-		int value=0;
-		String sql = "select midx from member0803 where memberid=? and memberpwd=?";
-		ResultSet rs = null;
-		try{
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,memberId);
-			pstmt.setString(2,memberPwd);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
-				value = rs.getInt("midx");
-				//value가 0이면 일치하지 않는다
-				//value가 1이면 일치한다
-				
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return value;
-	}
 	public int studentLoginCheck(String s_id, String s_pwd){
 		int value=0;
 		String sql = "select sidx from student where s_id=? and s_pwd=?";
@@ -274,7 +200,7 @@ public class MemberDao {
 	public MemberVo studentInfo(int sidx) {
 		MemberVo mv = new MemberVo();
 		
-		String sql = "select s_id,s_no, s_name, s_grade, s_phone,s_birth, s_major, s_email from student where sidx=?;";
+		String sql = "select s_id,s_no, s_name, s_grade, s_phone,s_birth, s_major, s_email from student where sidx=?";
 		ResultSet rs = null;
 		
 		try {
@@ -323,7 +249,7 @@ public class MemberDao {
 	public MemberVo professorInfo(int pidx) {
 		MemberVo mv = new MemberVo();
 		
-		String sql = "select p_id, p_no, p_name, p_phone, p_birth, p_major, p_email from professor where pidx=?;";
+		String sql = "select p_id, p_no, p_name, p_phone, p_birth, p_major, p_email from professor where pidx=?";
 		ResultSet rs = null;
 		
 		try {

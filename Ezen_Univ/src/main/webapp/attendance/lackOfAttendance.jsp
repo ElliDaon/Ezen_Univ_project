@@ -54,10 +54,9 @@
 		dataType : "json",
 		success : function(data){
 			var str = "";
-			str +=  "<h3>";
           
             $(data).each(function(){
-          	  str = str + this.c_name +"</h3>";
+          	  str = "<h3>" + this.c_name +"</h3>";
             });
 			$("#courseName").html(str); 
 			return;
