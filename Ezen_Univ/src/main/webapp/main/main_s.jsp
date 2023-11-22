@@ -70,8 +70,6 @@
               <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
           </div>
-          <div class="bottom">
-          </div>
         </div>
         <div class="contents">
             <div class="first-line">
@@ -142,7 +140,7 @@
 	            	   </li>
 	            	   <li class="depth_1">
 	            		<h3>공지사항</h3>
-	            		<ul>
+	            		<ul class="noticeList">
 	            			<li><a href="../notice/noticeList_s.do">휴보강 공지</a></li>
 	            		</ul>
 	            	   </li>
