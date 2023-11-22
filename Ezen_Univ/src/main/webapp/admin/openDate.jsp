@@ -8,9 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개강일자등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
-    <link rel="stylesheet" href="../css/openDate.css">
+<!--     <link rel="stylesheet" href="../css/openDate.css">
+    <link rel="stylesheet" href="../css/iframe.css"> -->
     <link rel="stylesheet" href="../css/nav_style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
 	$(document).ready(function() {
@@ -128,8 +131,6 @@
     }
      
 </script>
-    
-    
 </head>
 <body>
 	<div id="main-header">
@@ -157,21 +158,38 @@
 			</section>
 		</header>
 	</div>
-
-	<div class="container">
-	    <div class="sidebar">
-	        <div class="myinfo">
-	            <iframe src = "../leftmenu/myinfo_a.jsp" width="100%" height="100"></iframe>
-	        </div>
-	        <div class="menubar">
-	             <iframe src = "../leftmenu/openDate_a.jsp" width="100%" height="100%"></iframe>
-	        </div>
-	    </div>
+    <div class="main">
+      <div class="container">
+        <div class="sidebar">
+          <div class="top">
+            <div id="myinfo" class="myinfo" style="margin-top:20px;">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
+              [관리자모드]
+            </div>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+            </div>
+          </div>
+          <br>
+          <div class="topmenu_name">개강등록</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../admin/openDate.do" target="_parent" style="color:#0078ff; font-weight: bold;">
+                 <i class="fa fa-calendar" aria-hidden="true"></i>
+                  개강일자등록</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
+        </div>
 
 	    <div class="contents">
 	    <form name="frm" >
 	        <div class="openDate"> 
-	        <h1>개강날짜 등록</h1>
+	        <h1>개강일자 등록</h1>
 	        <br>
 	        <input type="date" id="dateInput" name="dateInput" />
 	        <input type="hidden" id="dateInfoYear" name="dateInfoYear" />
@@ -191,6 +209,7 @@
         이젠 대학에서의 개강날짜 등록은 월요일과 1학기 기준 2~3월, 2학기 기준 8~9월만 가능합니다.
     	</fieldset>
 	</div>
+</div>
 
 </body>
 </html>

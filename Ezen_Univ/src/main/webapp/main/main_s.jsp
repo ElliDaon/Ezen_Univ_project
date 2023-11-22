@@ -115,7 +115,7 @@
                         </c:forEach>
                     </tbody>
                 </table>
-            </div>
+              </div>
             </div>
             <div class="sitemap">
             	<span class="sitemapcls"><ion-icon name="close-outline"></ion-icon></span>

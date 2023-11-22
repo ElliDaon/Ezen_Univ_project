@@ -42,15 +42,13 @@
       <div class="container">
         <div class="sidebar">
           <div class="top">
-            <div id="myinfo" class="myinfo" style="margin-top:30px">
+            <div id="myinfo" class="myinfo" style="margin-top:30px;">
 <!--          <iframe src = "../leftmenu/myinfo_p.jsp" width="100%" height="100%"></iframe> -->
               [관리자모드]
             </div>
             <div class="logStatus">
               <a href="<%=request.getContextPath()%>/admin/adminLogout.do" target="_parent">logout</a>
             </div>
-          </div>
-          <div class="bottom">
           </div>
         </div>
         <div class="contents">
