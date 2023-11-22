@@ -138,3 +138,10 @@ input[type="checkbox"] {
     font-size: 15px;
 }
 
+#c_name {
+
+	font-weight : bold ;
+	font-size : 15px;
+	cursor: pointer;
+}
+

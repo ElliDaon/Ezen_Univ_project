@@ -91,6 +91,7 @@
             let periodValue = $("input[name='pe_period']:checked").val();
             let semesterValue = $("input[list='semester-options']").val();
             let yearValue = $("input[list='year-options']").val();
+            let c_major = $('#c_major').val();
 
             
             if(courseroomValue ===""){
@@ -118,15 +119,17 @@
                 	"weekValue": weekValue,
                     "periodValue": periodValue,
                     "semesterValue": semesterValue,
-                    "yearValue": yearValue
+                    "yearValue": yearValue,
+                    "c_major": c_major
                 },
                 cache: false,
                 success: function (data) {
+                	console.log(data);
                 	if(data.cnt==0){
 						
-                        let cells = $("#myTable td");
+                        let cells = $("#timeTable td");
                         let allCellsFilled = true;
-
+						
                         cells.each(function() {
                             if ($(this).text() === "" || $(this).html() === "&nbsp;") {
                                 $(this).text(courseroomValue);
@@ -147,14 +150,14 @@
                             		"<td>" + semesterValue + "</td>" +
                             		"<td>" + yearValue + "</td>" +
                             		"<td><button class='deleteRow'>Delete</button></td></tr>";
-                            $("#myTable").append(newRow);
+                            $("#timeTable").append(newRow);
                         }
 
                         // 입력값 초기화
                         $("input[list='courseweek-options']").val("");
 
                         // 버튼을 행의 마지막 셀에 추가
-                        $("#myTable tr").each(function() {
+                        $("#timeTable tr").each(function() {
                             if ($(this).find("td").length > 0) {
                                 let lastCell = $(this).find("td").last();
                                 if (lastCell.find(".deleteRow").length === 0) {
@@ -177,7 +180,7 @@
         
         
 		// 행삭제 버튼
-        $("#myTable").on("click", ".deleteRow", function() {
+        $("#timeTable").on("click", ".deleteRow", function() {
             $(this).closest("tr").remove();
             
         });
@@ -317,7 +320,7 @@
 		
 		let tableData = [];
 		
-		$("#myTable tr:gt(0)").each(function () {
+		$("#timeTable tr:gt(0)").each(function () {
 		    let rowData = $(this).find("td");
 		    
 		    // 빈 값 체크
@@ -526,7 +529,7 @@
 			<div id="courseTimeListInput">
 			<h3>강의등록-시간표</h3>
 			<br>
-			<table id="studentTable" class="register" style="width:100%" >
+			<table id="timeTable" class="register" style="width:100%" >
 				<tr>
 					<th data-key="room">강의실</th>
 					<th data-key="day">요일</th>

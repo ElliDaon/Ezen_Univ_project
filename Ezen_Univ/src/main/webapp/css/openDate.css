@@ -1,42 +1,8 @@
-span {
-      font-size: 40px;
-      font-weight: 700;
-}
-
-.openDate {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative; /* 부모 요소에 대한 상대적 위치 설정 */
-}
-
-h1 {
-    text-align: center;
-}
-
-ul{
-    list-style-type: none;
-    width: 80%;
-    border: 3px solid whitesmoke ;
-
-}
-
-ul li{
-    font-size: 1.0em;
-    margin-bottom: 10px;
-    text-align: center;
-
-}
-
-ul li:nth-child(even){
-    background-color: aliceblue;
-}
-
 .fixed {
   
     margin: 50px;
-    width: 700px;
-    height: 150px;
+    width: 15px;
+    height: 170px;
     padding: 8px;
 }
 
@@ -46,35 +12,42 @@ legend {
 }
 
 .container{
-	display: flex;
-}
-.sidebar{
-	width: 50%;
-}
-.myinfo{
-     width: 100%;
-}
-.menubar{
-	 width: 100%;
-}
-.contents {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100vh; /* 화면 높이의 100%로 설정하거나 다른 높이 값을 지정하세요. */
-}
-   
-table {
-	width: 50%; /* 테이블의 가로폭을 조절할 수 있습니다. */
-	border-collapse: collapse;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	position: relative;
+    display: flex;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center; /* 텍스트 가운데 정렬 */
+.myinfo{
+    width: 100%;
+}
+.menubar{
+    width: 100%;
+}
+.contents{
+    padding: 20px;
+}
+
+.first_line{
+    padding: 10px;
+    display: flex;
+    background: rgb(194, 194, 255);
+}
+
+.list_table{
+    margin-top: 5px;
+}
+.list_table table{
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+}
+.list_table table thead{
+    font-weight: bold;
+    background: rgb(194, 194, 255);
+}
+.list_table table tbody tr{
+    background: white;
+}
+.list_table table tbody tr:nth-child(even){
+    background: rgb(236, 236, 236);
 }

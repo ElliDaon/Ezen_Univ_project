@@ -720,12 +720,13 @@ public class AdminDao {
 		return value;
 	}
 
-	public int courseTimeVerification(String ct_room, String ct_week, int pe_period, int ct_semester, int ct_year) {
+	public int courseTimeVerification(String ct_room, String ct_week, int pe_period, int ct_semester, int ct_year, String c_major) {
 		ResultSet rs = null;
 		int value=0;
 		
 		String sql = "select count(*) as cnt from course a join coursetime b on a.cidx=b.cidx\n"
-				+ "where ct_room=? and ct_week=? and pe_period=? and ct_semester=? and ct_year=?";
+				+ "where (ct_room=? and ct_week=? and pe_period=? and ct_semester=? and ct_year=?) or\n"
+				+ "c_major=? and ct_week=? and pe_period=? and ct_semester=? and ct_year=?";
 		
 		try{
 			pstmt = conn.prepareStatement(sql);
@@ -734,6 +735,12 @@ public class AdminDao {
 			pstmt.setInt(3, pe_period);
 			pstmt.setInt(4, ct_semester);
 			pstmt.setInt(5, ct_year);
+			pstmt.setString(6, c_major);
+			pstmt.setString(7, ct_week);
+			pstmt.setInt(8, pe_period);
+			pstmt.setInt(9, ct_semester);
+			pstmt.setInt(10, ct_year);
+			
 			rs = pstmt.executeQuery();
 		
 			if (rs.next()){
