@@ -7,44 +7,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
+    <!-- <link rel="stylesheet" href="../css/iframe.css"> -->
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <style>
-        .container{
+/*         .container{
             display: flex;
-        }
-        .sidebar{
+        } */
+/*         .sidebar{
             width: 50%;
-        }
-        .myinfo{
+        } */
+/*         .myinfo{
             width: 100%;
-        }
-        .menubar{
+        } */
+/*         .menubar{
             width: 100%;
-        }
-        .contents{
+        } */
+/*         .contents{
             padding: 10px;
-        }
+        } */
         h3{
-        	margin: 10px;
+            font-size: 1.47em;
+            font-weight: 500;
+            color: #0067b3;
         }
         .contents table{
-            margin: 10px;
+            margin-top: 10px;
 			width: 600px;
-			text-align: center;
+			/* height: 50px;
+			text-align: center; */
 			border-collapse: collapse;
-			height: 50px;
-        }
-        .contents table tr,td{
-			border: 1px solid black;
-			padding-top: 5px;
-			padding-bottom: 5px;
         }
         .contents table th{
-        	background: rgb(194, 194, 255);
-        	
+           background: #f2f2f2;
+           font-weight: bold;
+           color: #555;
+        }
+        .contents table tr, td{
+           padding: 1em 0;
+           border: 1px solid #ccc;
+           text-align: center;
         }
     </style>
     <script>

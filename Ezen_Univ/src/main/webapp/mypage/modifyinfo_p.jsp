@@ -130,7 +130,7 @@
           </div>
         </div>
         <div class="contents">
-            <table class="table" width="600px" name="frm">
+            <table class="table" name="frm" style="width:600px;">
 				<tr>
 				 <td>
 				  <table width="100%">
@@ -171,7 +171,7 @@
 						   <td><input type="email" id="professorEmail" name="professorEmail" placeholder="id@ezen_univ.com" value="${mv.p_email}" /></td>
 					   </tr>
 					</table>
-					<table class="table3" width="100%">
+					<table class="table3" style="width:100%;">
 					   <tr align="center">
 						   <td>
 						   <input type="button" name="btn" value="수정" onclick="check();">
@@ -187,10 +187,10 @@
 			   <table name="frm">
 				<tr>
 				 <td>
-				  <table class="table4" width="100%">
+				  <table class="table4" style="width:100%;">
 				   <tr>
 					<td class="pwd" onClick="location.href='../mypage/modifypassword_p.do'" style="cursor:pointer;">
-					<b><i class="fa fa-key" aria-hidden="true"></i> 비밀번호 변경하기</b>
+					<b><i class="fa fa-keyboard-o" aria-hidden="true"></i> 비밀번호 변경하기</b>
 					</td>
 				   </tr>
 				  </table>
