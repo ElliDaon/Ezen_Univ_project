@@ -426,17 +426,19 @@ public class AdminController extends HttpServlet {
 			
 		}else if(location.equals("courseTimeVerification.do")) {	// 시간표 등록시 교차검증
 			
-			
-			
 			String ct_room = request.getParameter("courseroomValue");
 			String ct_week = request.getParameter("weekValue");
 			String pe_period = request.getParameter("periodValue");
 			String ct_semester = request.getParameter("semesterValue");
 			String ct_year = request.getParameter("yearValue");
+			String c_major = request.getParameter("c_major");
+			
 			
 			int value = 0;
 			AdminDao add= new AdminDao();
-			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year));
+			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major);
+			
+			//System.out.println("value?"+value);
 			
 			String str ="{\"cnt\":\""+value+"\"}";
 			PrintWriter out = response.getWriter();
@@ -539,9 +541,14 @@ public class AdminController extends HttpServlet {
 			String c_major = request.getParameter("c_major");
 			String c_grade = request.getParameter("c_grade");
 			
+			//System.out.println("cidx?"+cidx);
+			//System.out.println("c_major?"+c_major);
+			//System.out.println("c_grade?"+c_grade);
+			
 			AdminDao add= new AdminDao();
 			ArrayList<MemberVo> list = add.courseMatchStudentList(Integer.parseInt(cidx),c_major,Integer.parseInt(c_grade));
-			//System.out.println("cidx?"+cidx);
+			
+			//System.out.println("list?"+list);
 			int listCnt = list.size();	
 			int sidx = 0;
 			String s_name ="";
