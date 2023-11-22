@@ -126,7 +126,39 @@
                 success: function (data) {
                 	console.log(data);
                 	if(data.cnt==0){
-						
+                		
+                        // 중복된 값이 없는 경우
+
+                        let isDuplicate = false;
+
+                        // 기존 테이블의 각 행을 검사하여 중복 확인
+                        $("#timeTable tbody tr").each(function() {
+                            let existingCourseroom = $(this).find("td:eq(0)").text();
+                            let existingWeek = $(this).find("td:eq(1)").text();
+                            let existingPeriod = $(this).find("td:eq(2)").text();
+                            let existingSemester = $(this).find("td:eq(3)").text();
+                            let existingYear = $(this).find("td:eq(4)").text();
+
+                            if (
+                                existingCourseroom === courseroomValue &&
+                                existingWeek === weekValue &&
+                                existingPeriod === periodValue &&
+                                existingSemester === semesterValue &&
+                                existingYear === yearValue
+                            ) {
+                                isDuplicate = true;
+                                return false; // each 함수 종료
+                            }
+                        });
+
+                        // 중복된 값이 있다면 알림을 표시하고 함수 종료
+                        if (isDuplicate) {
+                            alert("이미 존재하는 값입니다.");
+                            return;
+                        }
+
+                        // 중복된 값이 없으면 테이블 행 추가 로직 계속 수행
+                        
                         let cells = $("#timeTable tbody td");
                         let allCellsFilled = true;
 						
