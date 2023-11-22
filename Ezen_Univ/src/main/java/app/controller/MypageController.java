@@ -34,9 +34,15 @@ public class MypageController extends HttpServlet{
 		
 		
 		if(location.equals("courseList_s.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			CourseDao cd = new CourseDao();
 			
-			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
 			LocalDate now = LocalDate.now();
@@ -61,10 +67,15 @@ public class MypageController extends HttpServlet{
 			rd.forward(request, response);
 			
 		}else if(location.equals("personalinfo_s.do")) {
-
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			MemberDao md = new MemberDao();
 			
-			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
 			MemberVo mv = md.studentInfo(sidx);
@@ -77,9 +88,15 @@ public class MypageController extends HttpServlet{
 			rd.forward(request, response);
 			
 		}else if(location.equals("modifyinfo_s.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			MemberDao md = new MemberDao();
 			
-			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
 			MemberVo mv = md.studentInfo(sidx);
@@ -112,8 +129,13 @@ public class MypageController extends HttpServlet{
 			}
 			
 		}else if(location.equals("modifypassword_s.do")) {
-			
 			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
 			String s_id = "";
@@ -149,9 +171,16 @@ public class MypageController extends HttpServlet{
 			}
 			
 		}else if(location.equals("mytable_s.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			CourseDao cd = new CourseDao();
 			
-			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
 			LocalDate now = LocalDate.now();
@@ -177,9 +206,16 @@ public class MypageController extends HttpServlet{
 			rd.forward(request, response);
 			
 		}else if(location.equals("personalinfo_p.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			MemberDao md = new MemberDao();
 			
-			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			MemberVo mv = md.professorInfo(pidx);
@@ -196,9 +232,16 @@ public class MypageController extends HttpServlet{
 			rd.forward(request, response);
 			
 		}else if(location.equals("modifyinfo_p.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			MemberDao md = new MemberDao();
 			
-			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			MemberVo mv = md.professorInfo(pidx);
@@ -231,8 +274,13 @@ public class MypageController extends HttpServlet{
 			}
 			
 		}else if(location.equals("modifypassword_p.do")) {
-			
 			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			String p_id = "";
@@ -267,9 +315,16 @@ public class MypageController extends HttpServlet{
 			out.println("<script>location.href='modifypassword_p.do';</script>");
 			
 		}else if(location.equals("courseList_p.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			CourseDao cd = new CourseDao();
 			
-			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			LocalDate now = LocalDate.now();
@@ -296,6 +351,14 @@ public class MypageController extends HttpServlet{
 			rd.forward(request, response);
 			
 		}else if(location.equals("searchP_table_s.do")){
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			LocalDate now = LocalDate.now();
 			int year = now.getYear();
 			int month = now.getMonthValue();
@@ -314,6 +377,14 @@ public class MypageController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 		}else if(location.equals("searchP_table_p.do")){
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			LocalDate now = LocalDate.now();
 			int year = now.getYear();
 			int month = now.getMonthValue();

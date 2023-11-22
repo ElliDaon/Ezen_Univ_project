@@ -75,6 +75,14 @@ public class AdminController extends HttpServlet {
 			
 		}else if(location.equals("accept.do")) {	// 가입승인 리스트
 			
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			AdminDao add= new AdminDao();
 			ArrayList<MemberVo> slist = add.studentAll();
 			ArrayList<MemberVo> plist = add.professorAll();
@@ -87,6 +95,13 @@ public class AdminController extends HttpServlet {
 			rd.forward(request, response);
 			
 		}else if(location.equals("acceptStudentOk.do")) {	// 학생 1명에 대한 승인
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String sidx = request.getParameter("sidx");
 			//System.out.println("sidx?"+sidx);
@@ -96,10 +111,16 @@ public class AdminController extends HttpServlet {
 			
 			//System.out.println("value?"+value);
 			String str ="{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("acceptProfessorOk.do")) {	// 교수 1명에 대한 승인
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String pidx = request.getParameter("pidx");
 			int value = 0;
@@ -108,10 +129,16 @@ public class AdminController extends HttpServlet {
 			
 			
 			String str ="{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("acceptStudentNo.do")) {	// 학생 1명에 대한 거부
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String sidx = request.getParameter("sidx");
 			int value = 0;
@@ -120,10 +147,16 @@ public class AdminController extends HttpServlet {
 			
 			//System.out.println("value?"+value);
 			String str ="{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("acceptProfessorNo.do")) {	// 교수 1명에 대한 거부
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String pidx = request.getParameter("pidx");
 			
@@ -133,10 +166,17 @@ public class AdminController extends HttpServlet {
 			
 			
 			String str ="{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("acceptStudentAllOk.do")) {	// 체크된 학생들에 대한 승인
+			
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String[] selectedOptions = request.getParameterValues("student");
 			int[] intSelectedOptions = new int[selectedOptions.length];
@@ -157,6 +197,13 @@ public class AdminController extends HttpServlet {
 			}
 			
 		}else if(location.equals("acceptStudentAllNo.do")) {	// 체크된 학생들에 대한 거부
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String[] selectedOptions = request.getParameterValues("student");
 			int[] intSelectedOptions = new int[selectedOptions.length];
@@ -178,6 +225,14 @@ public class AdminController extends HttpServlet {
 			
 		}else if(location.equals("acceptProfessorAllOk.do")) {	// 체크된 교수들에 대한 승인
 			
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String[] selectedOptions = request.getParameterValues("professor");
 			int[] intSelectedOptions = new int[selectedOptions.length];
 
@@ -198,6 +253,14 @@ public class AdminController extends HttpServlet {
 			
 		}else if(location.equals("acceptProfessorAllNo.do")) {	// 체크된 교수들에 대한 거부
 			
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String[] selectedOptions = request.getParameterValues("professor");
 			int[] intSelectedOptions = new int[selectedOptions.length];
 
@@ -217,11 +280,27 @@ public class AdminController extends HttpServlet {
 			}
 			
 		}else if(location.equals("courseRegister.do")) {	// 강의등록 페이지 이동
+			
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			String path = "/admin/courseRegister.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 			
 		}else if(location.equals("courseRegisterList.do")) {	// 강의등록 현황
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String year = request.getParameter("year");
 			String term = request.getParameter("term");
 
@@ -265,7 +344,6 @@ public class AdminController extends HttpServlet {
 				str = str +"{\"cidx\":\""+cidx+"\",\"c_name\":\""+c_name+"\",\"p_no\":\""+p_no+"\",\"p_name\":\""+p_name+"\",\"c_major\":\""+c_major+"\",\r\n"
 						+ "\"c_grade\":\""+c_grade+"\",\"c_sep\":\""+c_sep+"\",\"c_score\":\""+c_score+"\",\"ct_room\":\""+ct_room+"\",\"c_times\":\""+c_times+"\"}"+comma;
 			}
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("courseDelete.do")) {		// 등록된 강의 삭제
@@ -279,6 +357,14 @@ public class AdminController extends HttpServlet {
 			out.println(str);
 	
 		}else if(location.equals("registerView.do")) {		// 강의등록 조회시 교수번호,교수이름
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String c_major = request.getParameter("c_major");
 			//System.out.println("c_major?"+c_major);
 			
@@ -304,10 +390,17 @@ public class AdminController extends HttpServlet {
 				str = str +"{\"p_no\":\""+p_no+"\",\"p_name\":\""+p_name+"\"}"+comma;
 			}
 			//System.out.println("str?"+str);
-			PrintWriter out = response.getWriter();
 			out.println("["+str+"]");
 
 		}else if(location.equals("professorVerification.do")) {	// 강의등록 조회된 교수번호, 교수이름 교차검증
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			
 			String p_no = request.getParameter("p_no");
 			String p_name = request.getParameter("p_name");
@@ -317,10 +410,11 @@ public class AdminController extends HttpServlet {
 			value =add.professorVerification(Integer.parseInt(p_no),p_name);
 			
 			String str ="{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("courseTimeVerification.do")) {	// 시간표 등록시 교차검증
+			
+			
 			
 			String ct_room = request.getParameter("courseroomValue");
 			String ct_week = request.getParameter("weekValue");
@@ -337,6 +431,14 @@ public class AdminController extends HttpServlet {
 			out.println(str);
 			
 		}else if(location.equals("courseRegisterAction.do")) {		// 강의 등록
+			
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String c_name = request.getParameter("c_name");
 			String c_major = request.getParameter("c_major");
@@ -397,11 +499,27 @@ public class AdminController extends HttpServlet {
 			}
 	
 		}else if(location.equals("courseEnroll.do")) {	// 수강등록 페이지 이동
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String path = "/admin/courseEnroll.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 			
 		}else if(location.equals("courseMatchStudent.do")) {	// 수강등록 학생리스트
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String cidx = request.getParameter("cidx");
 			String c_major = request.getParameter("c_major");
 			String c_grade = request.getParameter("c_grade");
@@ -434,10 +552,17 @@ public class AdminController extends HttpServlet {
 						+ "\"s_major\":\""+s_major+"\"}"+comma;
 			}
 			//System.out.println(str);
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("checkedEnrollAction.do")) { // 체크된 학생들 수강등록
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String selectedStudent = request.getParameter("selectedStudent");
 			String cidx = request.getParameter("cidx");
 				
@@ -469,11 +594,18 @@ public class AdminController extends HttpServlet {
 	        value = add.checkedEnroll(mv,Integer.parseInt(cidx));
 	        
 			String str ="{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 			
 		}else if(location.equals("EnrollAction.do")) {	// 학생 1명의 수강등록
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String cidx = request.getParameter("cidx");
 			String sidx = request.getParameter("sidx");
 			
@@ -483,18 +615,29 @@ public class AdminController extends HttpServlet {
 			
 
 			String str ="{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 			
 		}else if(location.equals("openDate.do")) {	// 개강날짜 페이지
-				
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}	
 			String path = "/admin/openDate.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 			
 		}else if(location.equals("openDateList.do")) {	// 현 학기에 등록된 개강날짜 리스트
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
 			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			String year = request.getParameter("year");
 			String term = request.getParameter("term");
 			
@@ -525,7 +668,6 @@ public class AdminController extends HttpServlet {
 				}
 				str = str +"{\"w_week\":\""+w_week+"\",\"w_start\":\""+w_start+"\",\"w_end\":\""+w_end+"\"}"+comma;
 			}
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 

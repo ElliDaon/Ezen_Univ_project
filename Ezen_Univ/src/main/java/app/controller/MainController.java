@@ -32,6 +32,21 @@ public class MainController extends HttpServlet{
 	
 		if(location.equals("main_s.do")) {
 			
+			HttpSession session = request.getSession();
+			
+			PrintWriter out = response.getWriter();
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
+			if(session.getAttribute("sidx")!=null&&session.getAttribute("pidx")!=null) {
+				session.invalidate();
+				String path = request.getContextPath();
+				out.println("<script>alert('다시 로그인해주세요'); location.href='"+path+"/index.jsp';</script>");
+			}
+			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+
 			String subject = request.getParameter("subject");
 			if (subject ==null) subject="0";			
 			String page = request.getParameter("page");
@@ -49,8 +64,6 @@ public class MainController extends HttpServlet{
 			NoticeDao nd = new NoticeDao();
 			CourseDao cd = new CourseDao();
 			
-			HttpSession session = request.getSession();
-			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			
 			ArrayList<NoticeVo> alist = nd.getList_p(sidx, scri);
 			ArrayList<NoticeVo> noticeList = new ArrayList<>();
@@ -67,7 +80,6 @@ public class MainController extends HttpServlet{
 				}
 			}
 			request.setAttribute("alist", noticeList);
-			PrintWriter out = response.getWriter();
 			
 			
 			LocalDate now = LocalDate.now();
@@ -89,6 +101,17 @@ public class MainController extends HttpServlet{
 			rd.forward(request, response);
 		}else if(location.equals("main_p.do")) {
 			
+			HttpSession session = request.getSession(); 
+			PrintWriter out = response.getWriter();
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			if(session.getAttribute("sidx")!=null&&session.getAttribute("pidx")!=null) {
+				session.invalidate();
+				String path = request.getContextPath();
+				out.println("<script>alert('다시 로그인해주세요'); location.href='"+path+"/index.jsp';</script>");
+			}
 			String subject = request.getParameter("subject");
 			if (subject ==null) subject="0";			
 			String page = request.getParameter("page");
@@ -107,7 +130,6 @@ public class MainController extends HttpServlet{
 			CourseDao cd = new CourseDao();
 			
 			
-			HttpSession session = request.getSession(); 
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			ArrayList<NoticeVo> alist = nd.getList_p(pidx, scri);
@@ -126,7 +148,6 @@ public class MainController extends HttpServlet{
 			}
 			
 			request.setAttribute("alist", noticeList);
-			PrintWriter out = response.getWriter();
 			
 			LocalDate now = LocalDate.now();
 			int year = now.getYear();

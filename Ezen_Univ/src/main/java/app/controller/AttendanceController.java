@@ -37,11 +37,19 @@ public class AttendanceController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(location.equals("attendanceSituation_s.do")) {
-			//System.out.println("컨트롤러");
-			AttendanceDao ad = new AttendanceDao();
+			
+			
 			
 			HttpSession session = request.getSession();
+			
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
+			AttendanceDao ad = new AttendanceDao();
 			
 			LocalDate now = LocalDate.now();
 			int year = now.getYear();
@@ -63,15 +71,21 @@ public class AttendanceController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 			
-			PrintWriter out = response.getWriter();
 			out.println(sidx);
 			//System.out.println(sidx);
 			
 			
 		}else if(location.equals("attendanceCount.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			AttendanceDao ad = new AttendanceDao();
 			
-			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			int cidx = Integer.parseInt(request.getParameter("cidx"));
 			
@@ -92,14 +106,20 @@ public class AttendanceController extends HttpServlet{
 			String str ="";
 			str = str + "{\"attcnt\":"+attcnt+",\"latecnt\":"+latecnt+",\"leavecnt\":"+leavecnt+",\"absentcnt\":"+absentcnt+"}";
 			
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			System.out.println(str);
 			
 		}else if(location.equals("attendanceList.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			AttendanceDao ad = new AttendanceDao();
 			
-			HttpSession session = request.getSession();
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();
 			int cidx = Integer.parseInt(request.getParameter("cidx"));
 			
@@ -131,14 +151,20 @@ public class AttendanceController extends HttpServlet{
 			}
 			//for 구문 밖에서 대괄호로 감싸주기
 			str2= "["+str2+"]";
-			PrintWriter out = response.getWriter();
 			out.println(str2);
 			//System.out.println(str2);
 			
 		}else if(location.equals("attendanceSituation_p.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			AttendanceDao ad = new AttendanceDao();
 			
-			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			LocalDate now = LocalDate.now();
@@ -162,6 +188,8 @@ public class AttendanceController extends HttpServlet{
 			rd.forward(request, response);
 			
 		}else if(location.equals("searchList.do")) {
+			
+			
 			AttendanceDao ad = new AttendanceDao();
 			
 			String c_name = request.getParameter("c_name");
@@ -197,9 +225,16 @@ public class AttendanceController extends HttpServlet{
 			out.println("[" + str + "]");
 			
 		}else if(location.equals("attendancePreManagement.do")) {
-			AttendanceDao ad = new AttendanceDao();
 			
 			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			AttendanceDao ad = new AttendanceDao();
+			
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			LocalDate now = LocalDate.now();
@@ -306,7 +341,13 @@ public class AttendanceController extends HttpServlet{
 			PrintWriter out = response.getWriter();
 			out.println(str);
 		}else if(location.equals("professorAttendProcessing.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
 			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			int cidx = Integer.parseInt(request.getParameter("cidx"));
 			int w_week = Integer.parseInt(request.getParameter("w_week"));
 			String dates = request.getParameter("dates");
@@ -341,6 +382,14 @@ public class AttendanceController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
 		}else if(location.equals("attendanceAction.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			int ctidx = Integer.parseInt(request.getParameter("ctidx"));
 			String a_date = request.getParameter("a_date");
 			String pe_start = request.getParameter("pe_start");
@@ -392,11 +441,16 @@ public class AttendanceController extends HttpServlet{
 		    int value = ad.attendanceAction(list, av);
 		    
 			String str = "{\"value\":\""+value+"\"}";
-			PrintWriter out = response.getWriter();
 			out.println(str);
 			
 		}else if(location.equals("lackOfAttendance.do")) {
 			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			LocalDate now = LocalDate.now();

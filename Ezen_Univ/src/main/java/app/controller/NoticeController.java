@@ -89,7 +89,13 @@ public class NoticeController {
 
 		}else if (location.equals("noticeList_p.do")) {	
 			
-
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String subject = request.getParameter("subject");
 			if (subject ==null) subject="0";			
@@ -111,7 +117,6 @@ public class NoticeController {
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
 			
-			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();			
 						
 			NoticeDao nd = new NoticeDao();
@@ -136,6 +141,12 @@ public class NoticeController {
 		
 		}else if (location.equals("noticeList_s.do")) {	
 			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			int sidx = ((Integer)(session.getAttribute("sidx"))).intValue();	
 			
 			String sub = request.getParameter("subject");
@@ -179,6 +190,14 @@ public class NoticeController {
 		}
 		
 		else if(location.equals("noticeContents.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			
 			String nidx = request.getParameter("nidx");
 			int nidx_int = Integer.parseInt(nidx);
 			
@@ -195,6 +214,13 @@ public class NoticeController {
 			 rd.forward(request, response);
 			 
 		}else if(location.equals("noticeContents_s.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("sidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			String nidx = request.getParameter("nidx");
 			int nidx_int = Integer.parseInt(nidx);
 			
@@ -234,10 +260,16 @@ public class NoticeController {
 			
 			
 		}else if(location.equals("noticeModify.do")) {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("pidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
 			
 			String nidx = request.getParameter("nidx");
 			int nidx_int = Integer.parseInt(nidx);
-		    HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
 			NoticeDao nd = new NoticeDao();
