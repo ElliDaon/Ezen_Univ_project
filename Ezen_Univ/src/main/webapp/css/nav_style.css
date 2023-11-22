@@ -96,7 +96,7 @@ a:hover {
     justify-content: center;
     padding: 0 1.25rem;
     margin: 0 auto;
-    background-color: #f9fafb;
+    /* background-color: #f9fafb; */
 }
 
 .sidebar {

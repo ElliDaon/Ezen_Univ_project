@@ -174,7 +174,7 @@
 				 <td>
 				  <table width="100%">
 				   <tr align="center">
-					<td style="font-size:20px"><b><i class="fa fa-key" aria-hidden="true"></i> 비밀번호 변경</b></td>
+					<td style="font-size:20px"><b><i class="fa fa-keyboard-o" aria-hidden="true"></i> 비밀번호 변경</b></td>
 				   </tr>
 				  </table>
 				  
