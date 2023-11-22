@@ -115,7 +115,7 @@
      
     function openDateListTable(data){
     	let parsedData = JSON.parse("["+data+"]");
-    	let str = "<table><thead><tr><th>주차</th><th>시작 날짜</th><th>종료 날짜</th></tr></thead><tbody>";	
+    	let str = "<table><thead><tr><td>주차</td><td>시작 날짜</td><td>종료 날짜</td></tr></thead><tbody>";	
     	parsedData.forEach(function (item){
     		
     		str += "<tr><td>"+item.w_week+"</td>" +
