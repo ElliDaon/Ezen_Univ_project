@@ -55,10 +55,11 @@ public class MainController extends HttpServlet{
 			ArrayList<NoticeVo> alist = nd.getList_p(sidx, scri);
 			ArrayList<NoticeVo> noticeList = new ArrayList<>();
 			
-			for(int i=0; i<5; i++) {
-				noticeList.add(i, alist.get(i));
+			if(alist.size()!=0) {
+				for(int i=0; i<5; i++) {
+					noticeList.add(i, alist.get(i));
+				}
 			}
-			
 			request.setAttribute("alist", noticeList);
 			PrintWriter out = response.getWriter();
 			
