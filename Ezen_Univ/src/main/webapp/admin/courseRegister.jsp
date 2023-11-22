@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/nav_style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
     $(document).ready(function(){
@@ -373,14 +376,32 @@
 			</section>
 		</header>
 	</div>
-    <div class="container">
+   <div class="main">
+      <div class="container">
         <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_a.jsp" width="100%" height="100"></iframe>
+          <div class="top">
+            <div id="myinfo" class="myinfo" style="margin-top:20px;">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
+              [관리자모드]
             </div>
-            <div class="menubar">
-                <iframe src = "../leftmenu/courseRegister_a.jsp" width="100%" height="700"></iframe>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
+          </div>
+          <br>
+          <div class="topmenu_name">강의등록</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../admin/courseRegister.do" target="_parent" style="color:#0078ff; font-weight: bold;">
+                 <i class="fa fa-server" aria-hidden="true"></i>
+                  개설강의등록</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
         </div>
         <div class="contents">
              <h3>강의등록현황</h3>
@@ -412,7 +433,7 @@
              </div>
             <br>
             <div align="right">
-            	<input type="button" name="btn" id="registerBtn" value="강의 등록하기" style="width:120px";>
+            	<input type="button" name="btn" id="registerBtn" value="강의 등록하기" style="width:120px;">
             </div>
 		<form name="frm">
 			<div id =courseListInput>
@@ -590,7 +611,7 @@
 			</div>
 			</div>
          </div>
-
-      </div>
+       </div>
+     </div>
 </body>
 </html>

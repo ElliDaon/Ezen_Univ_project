@@ -9,28 +9,12 @@
     <title>수강등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="../css/iframe.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/nav_style.css">
-    <link rel="stylesheet" type="text/css" href="../css/admin.css">
-   <style type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-		/* 마우스 호버 시에 스타일 변경 */
-	.course-name {
-	    cursor: pointer; /* 마우스가 요소 위로 올라갔을 때 포인터로 변경 */
-	    color: blue; /* 기본 텍스트 색상 */
-	    text-decoration: none; /* 기본 텍스트에 밑줄 없음 */
-	}
-	
-	.course-name:hover {
-	    text-decoration: underline; /* 마우스 호버 시에 밑줄 추가 */
-	}
-	
-	/* 클릭 시에 스타일 변경 (선택 사항) */
-	.course-name:active {
-	    color: red; /* 클릭 시 텍스트 색상 변경 */
-	}
-   
-   </style>
-    
     <script>
     $(document).ready(function(){
         // 현재 날짜를 가져와서 년도, 학기 input에 입력
@@ -246,15 +230,33 @@
 			</section>
 		</header>
 	</div>
-    <div class="container">
-      	<div class="sidebar">
-		    <div class="myinfo">
-		    	<iframe src = "../leftmenu/myinfo_a.jsp" width="100%" height="100"></iframe>
-		    </div>
-		    <div class="menubar">
-		    	<iframe src = "../leftmenu/courseEnroll_a.jsp" width="100%" height="100%"></iframe>
-		    </div>
-       	</div>
+   <div class="main">
+      <div class="container">
+        <div class="sidebar">
+          <div class="top">
+            <div id="myinfo" class="myinfo" style="margin-top:20px;">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
+              [관리자모드]
+            </div>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+            </div>
+          </div>
+          <br>
+          <div class="topmenu_name">수강등록</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../admin/courseEnroll.do" target="_parent" style="color:#0078ff; font-weight: bold;">
+                 <i class="fa fa fa-user-plus" aria-hidden="true"></i>
+                  학생수강등록</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
+        </div>
         <div class="contents">
             <h3>강의 리스트</h3>
             <div class="first_line">
@@ -311,6 +313,7 @@
                 </div> 
             </div>
         </div>
+      </div>
     </div>
 </body>
 </html>

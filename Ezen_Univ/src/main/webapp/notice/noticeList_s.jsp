@@ -1,199 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.ArrayList" %> 
 <%@ page import="app.domain.*" %>  
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title></title>
-<link href="./css/board.css" type="text/css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <link rel="stylesheet" href="../css/noticelist_s.css">
 <link rel="stylesheet" href="../css/nav_style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<style>
-
-
-    *{
-        margin: 0;
-        padding: 0;  
-    }
-    body{
-        text-align: center;
-    }
-    h1{
-        font-family: 'Black Han Sans', sans-serif;
-        font-weight: 100;
-        font-size: 40px;
-        margin-bottom: 20px;
-    }
-    
-    
-    .pagination .act{
-            font-weight: bold;
-            color: #42444e;
-            border-radius: 5px;
-            border: 2px solid #42444e;
-            padding: 5px 7px;
-        }
-    
-    
-    .pagination a {
-            
-            display: block;
-            font-size: 15px;
-            text-decoration: none;
-            padding: 5px 7px;
-            color: #42444e;
-            display: inline-block;
-        }
-    
-    .pagination a:hover {background-color: #ddd;}
-    
-/*     a:hover {
-        text-decoration: underline;
-    } */
-    
-    a{
-        text-decoration: none; 
-        color: inherit; 
-    }
-    
-    
-    
-    .container {
-        display: inline;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 100px;
-        margin-top: 10px;
-    }
-    
-    
-    
-    .header{
-        background-color: bisque;
-        height: 10%;
-    }
-    iframe{
-        border: 0;
-        margin: 0;
-        display: block;
-    }
-    .sidebar{
-        display: inline;
-        width: 10%;
-        height: 100%;
-        background-color: #DEDFEA;
-    }
-    .myinfo{
-        display: block;
-        width: 100%;
-    }
-    .menubar{
-        display: block;     
-        width: 100%;
-        height: 100%;
-    }
-    .wrapper{
-        display: flex;
-        width: 100%;
-        justify-content: flex-start;
-    }
-    .noticelist{
-      border-collapse: separate;
-      border-spacing: 0;
+    <script>
+      $(document).ready(function(){
+            studentInfo();
+      });
+      
+      function studentInfo(){
+      	
+      	var str = "";
+      	
+      	var s_no =${sessionScope.s_no};
+      	var s_name = "${sessionScope.s_name}"
+      	var s_major = "${sessionScope.s_major}";
+      	
+      	str = "<strong>[학생]</strong><br>"
+      		 + s_name + "("+ s_no +")<br>"
+      		 + "[" + s_major + "]";
+      	
+      	$("#myinfo").html(str);
+      	return;
       }
-    
-    .noticelist th{
-        padding: 6px 15px;
-        background: #42444e;
-         color: #fff;
-          text-align: center;
-    }
-    
-    
-    .noticelist tbody tr:hover{
-        background-color: aliceblue;
-    }
-    
-    .noticelist tbody tr{
-    
-        height: 50px;
-        padding: 6px 15px;
-    
-    }
-    .new {
-       color: orange;
-       font-weight: 2000;
-    }
-    
-    .nidx, .viewcnt, .writeday{
-        color: gainsboro;
-    }
-    
-    .btn{
-        background-color: #42444e;
-        border-radius: 5px;
-        color: whitesmoke;
-    }
-    
-    
-    .writediv{
-        width: 80px;
-        height: 30px;
-        background-color: #42444e;
-        border-radius: 5px;
-        margin-top: 20px;     
-        align-items: right;
-        text-align: center;
-        font-weight: bold;
-        padding-top: 7px;    
-    }
-    
-    .writediv a{
-        text-align: center;
-        color: whitesmoke;
-        text-decoration: none;
-    }
-    
-    
-    .contents{
-        color: black;
-        text-decoration: none;
-    }
-    
-    .contents:hover{
-        text-decoration: underline;
-    }
-    
-    .sub{
-        
-        padding : 8px;
-        font-size : 14px;
-    }
-    
-    .searchsubject{
-        font-size : 14px;
-        height : 30px;
-        border : 2px solid black;
-    }
-    
-    .material-symbols-outlined{
-        font-size: 30ox;
-    }
-    .seartbl td {
-        text-align: center;
-    }
-    </style>
+    </script>
+
 </head>
 <body>
 
@@ -222,18 +71,33 @@
 			</section>
 		</header>
 	</div>
-    <div class="wrapper">
+   <div class="main">
+      <div class="container">
         <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="200"></iframe>
+          <div class="top">
+            <div id="myinfo" class="myinfo">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
             </div>
-            <div class="menubar">
-                <iframe src = "../leftmenu/notice_s.jsp" width="100%" height="100%"></iframe>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
+          </div>
+          <br>
+          <div class="topmenu_name">공지사항</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../notice/noticeList_s.do" target="_parent" style="color:#0078ff; font-weight: bold;">
+                 <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                  휴보강 공지</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
         </div>
-    
-    <div class="container">
-    	
+        <div class="contents">
         <h1>휴보강 공지</h1>
         <table class="noticelist" border=1 style="width:800px;" >
         	
@@ -383,7 +247,7 @@ onsubmit="saveSelectedValue()">
     </div>
  
 </div>
-    
+</div>
 
 </body>
 </html>

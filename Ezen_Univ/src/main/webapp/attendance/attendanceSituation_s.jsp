@@ -230,6 +230,6 @@ function listAction(cidx){
             </div>
         </div>
 	</div>
-
+   </div>
 </body>
 </html>
