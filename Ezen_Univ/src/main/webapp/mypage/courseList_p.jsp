@@ -10,10 +10,30 @@
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="../css/courseList.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <style>
-        
-    </style>
+
+    <script>
+	$(document).ready(function(){
+	        professorInfo();
+	});
+	  
+	function professorInfo(){
+	  	
+	  	var str = "";
+	  	
+	  	var p_no =${sessionScope.p_no};
+	  	var p_name = "${sessionScope.p_name}"
+	  	var p_major = "${sessionScope.p_major}";
+	  	
+	  	str = "<strong>[교수]</strong><br>"
+	  		 + p_name + "("+ p_no +")<br>"
+	  		 + "[" + p_major + "]";
+	  	
+	  	$("#myinfo").html(str);
+	  	return;
+	}
+    </script>
 </head>
 <body>
 	<div id="main-header">
@@ -38,14 +58,44 @@
 			</section>
 		</header>
 	</div>
-    <div class="container">
+    <div class="main">
+      <div class="container">
         <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_p.jsp" width="100%" height="200"></iframe>
+          <div class="top">
+            <div id="myinfo" class="myinfo">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
             </div>
-            <div class="menubar">
-                <iframe src = "../leftmenu/mypage_menu_p.jsp" width="100%" height="500"></iframe>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
+          </div>
+          <br>
+          <div class="topmenu_name">마이페이지</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+              <ul>
+               <li><i class="fa fa-user-circle" aria-hidden="true"></i>
+               개인정보</li>
+              </ul>
+               <ul>
+                 <li><a href="../mypage/personalinfo_p.do" target="_parent">&ensp;&ensp;개인정보</a></li>
+                 <li><a href="../mypage/modifyinfo_p.do" target="_parent">&ensp;&ensp;개인정보 수정</a></li>
+               </ul>
+             </li>
+             <li class="personalinfo">
+              <ul>
+               <li><i class="fa fa-book" aria-hidden="true"></i>
+               강의정보</li>
+              </ul>
+               <ul>
+                 <li><a href="../mypage/courseList_p.do" target="_parent" style="color:#0078ff; font-weight: bold;">&ensp;&ensp;강의 현황</a></li>
+                 <li><a href="../mypage/searchP_table_p.do" target="_parent">&ensp;&ensp;교수 시간표 조회</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
         </div>
         <div class="contents">
             <h3>강의현황조회</h3>
@@ -111,6 +161,7 @@
                 </table>
             </div>
         </div>
+      </div>
     </div>
 </body>
 </html>

@@ -97,8 +97,6 @@
               <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
           </div>
-          <div class="bottom">
-          </div>
         </div>
         <div class="contents">
             <div class="first-line">

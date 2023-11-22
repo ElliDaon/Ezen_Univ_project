@@ -13,8 +13,10 @@
     <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/nav_style.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
         $(document).ready(function() {
         	// 새로고침되도 기존 라디오버튼 값 로컬스토리에 저장해서 불러오기
@@ -245,14 +247,32 @@
 			</section>
 		</header>
 	</div>
-    <div class="container">
+   <div class="main">
+      <div class="container">
         <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_a.jsp" width="100%" height="20%"></iframe>
+          <div class="top">
+            <div id="myinfo" class="myinfo" style="margin-top:20px;">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
+              [관리자모드]
             </div>
-            <div class="menubar">
-                <iframe src = "../leftmenu/accept_a.jsp" width="100%" height="100%"></iframe>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
+          </div>
+          <br>
+          <div class="topmenu_name">가입승인</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../admin/accept.do" target="_parent" style="color:#0078ff; font-weight: bold;">
+                 <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                  회원가입승인</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
         </div>
         <div class="contents">
             <div>
@@ -356,6 +376,7 @@
                 </form>
             </div>
         </div>
+      </div>
     </div>
 	
 </body>
