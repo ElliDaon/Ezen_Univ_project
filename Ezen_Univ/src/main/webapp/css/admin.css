@@ -130,7 +130,7 @@ input[type="checkbox"] {
 
 .register input[type=text]{ 
     flex-grow: 1;
-    padding: 7px 5px;
+    padding: 5px;
     border: #e6eef5 solid 2px;
     background-color: white;
     color: #263747;
@@ -145,3 +145,7 @@ input[type="checkbox"] {
 	cursor: pointer;
 }
 
+.name {
+	font-weight: bold;
+    background: rgb(194, 194, 255);
+}
