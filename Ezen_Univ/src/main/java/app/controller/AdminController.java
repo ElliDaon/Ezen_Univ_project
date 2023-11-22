@@ -77,10 +77,10 @@ public class AdminController extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			PrintWriter out = response.getWriter();
-			
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			AdminDao add= new AdminDao();
@@ -101,6 +101,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String sidx = request.getParameter("sidx");
@@ -120,6 +121,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String pidx = request.getParameter("pidx");
@@ -138,6 +140,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String sidx = request.getParameter("sidx");
@@ -156,6 +159,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String pidx = request.getParameter("pidx");
@@ -176,6 +180,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String[] selectedOptions = request.getParameterValues("student");
@@ -203,6 +208,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String[] selectedOptions = request.getParameterValues("student");
@@ -231,6 +237,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String[] selectedOptions = request.getParameterValues("professor");
@@ -259,6 +266,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String[] selectedOptions = request.getParameterValues("professor");
@@ -287,6 +295,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			String path = "/admin/courseRegister.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
@@ -299,6 +308,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String year = request.getParameter("year");
@@ -363,6 +373,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String c_major = request.getParameter("c_major");
@@ -399,6 +410,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			
@@ -438,6 +450,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String c_name = request.getParameter("c_name");
@@ -505,6 +518,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String path = "/admin/courseEnroll.jsp";
@@ -518,6 +532,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String cidx = request.getParameter("cidx");
@@ -561,6 +576,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String selectedStudent = request.getParameter("selectedStudent");
@@ -604,6 +620,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			
 			String cidx = request.getParameter("cidx");
@@ -625,6 +642,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}	
 			String path = "/admin/openDate.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
@@ -637,6 +655,7 @@ public class AdminController extends HttpServlet {
 			if(session.getAttribute("adidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
 			}
 			String year = request.getParameter("year");
 			String term = request.getParameter("term");

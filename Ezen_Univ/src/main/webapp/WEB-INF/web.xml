@@ -27,7 +27,9 @@
 		<url-pattern>*.html</url-pattern>
 		<url-pattern>*.jspx</url-pattern>
 	</servlet-mapping>
-
+<session-config>
+    <session-timeout>30</session-timeout>
+</session-config>
 
   <servlet>
   <servlet-name>con</servlet-name>
