@@ -78,7 +78,7 @@
                     <div class="noticeList">
                        <ul>
                         <c:forEach var="nv" items="${alist}">
-                          <li class="currentNotice"><a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">${nv.n_subject}</a></li>
+                          <li class="currentNotice"><a href="${pageContext.request.contextPath}/notice/noticeContents_s.do?nidx=${nv.nidx}">${nv.n_subject}</a></li>
                         </c:forEach>
                       </ul>
                     </div>

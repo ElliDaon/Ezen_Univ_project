@@ -114,7 +114,7 @@
                개인정보</li>
               </ul>
                <ul>
-                 <li><a href="../mypage/personalinfo_s.do" target="_parent">&ensp;&ensp;개인정보</a></li>
+                 <li><a href="../mypage/personalinfo_s.do" target="_parent" style="color:#0078ff; font-weight: bold;">&ensp;&ensp;개인정보</a></li>
                  <li><a href="../mypage/modifyinfo_s.do" target="_parent">&ensp;&ensp;개인정보 수정</a></li>
                </ul>
              </li>
