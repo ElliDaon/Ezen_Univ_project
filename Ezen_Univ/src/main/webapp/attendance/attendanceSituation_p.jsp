@@ -16,7 +16,35 @@
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+    <style>
+    	h3{
+            font-size: 1.47em;
+            font-weight: 500;
+            color: #0067b3;
+        }
+        .contents table{
+            margin-top: 10px;
+			width: 1300px;
+			/* height: 50px;
+			text-align: center; */
+			border-collapse: collapse;
+        }
+        .contents table thead{
+           background: #f2f2f2;
+           font-weight: bold;
+           color: #555;
+        }
+        .contents table tr, td{
+           padding: 1em 0;
+           border: 1px solid #ccc;
+           text-align: center;
+        }
+        .list_table.slist{
+        	width: 1330px;
+        	height: 600px;
+        	overflow-y: scroll;
+        }
+    </style>
     <script>
 	$(document).ready(function(){
 	        professorInfo();
@@ -243,15 +271,15 @@
                 <table class='countNo'>
                     <thead>
                         <tr>
-                            <td style="width:10px">NO</td>
-                            <td style="width:30px">이수구분</td>
-                            <td style="width:50px">과목명</td>
-                            <td style="width:30px">세부전공</td>
-                            <td style="width:10px">수강학년</td>
-                            <td style="width:30px">강의실</td>
-                            <td style="width:30px">시간표</td>
-                            <td style="width:30px">수강인원</td>
-                            <td style="width:10px">출석률</td>
+                            <td style="width:50px">NO</td>
+                            <td style="width:80px">이수구분</td>
+                            <td>과목명</td>
+                            <td style="width:150px">세부전공</td>
+                            <td style="width:80px">수강학년</td>
+                            <td style="width:150px">강의실</td>
+                            <td style="width:150px">시간표</td>
+                            <td style="width:80px">수강인원</td>
+                            <td style="width:80px">출석률</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -281,7 +309,7 @@
                 <button type="button" id="showAttendanceList" onclick="searchList()">출석 목록 조회</button>
             </div>
             <br>
-            <div id="list_table" class="list_table">
+            <div id="list_table" class="list_table slist">
             
             </div>
           </div>

@@ -12,6 +12,30 @@
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<style>
+		h3{
+            font-size: 1.47em;
+            font-weight: 500;
+            color: #0067b3;
+        }
+        .contents table{
+            margin-top: 10px;
+			width: 1300px;
+			/* height: 50px;
+			text-align: center; */
+			border-collapse: collapse;
+        }
+        .contents table thead{
+           background: #f2f2f2;
+           font-weight: bold;
+           color: #555;
+        }
+        .contents table tr, td{
+           padding: 1em 0;
+           border: 1px solid #ccc;
+           text-align: center;
+        }
+	</style>
 	 <script>
 
 	$(document).ready(function(){

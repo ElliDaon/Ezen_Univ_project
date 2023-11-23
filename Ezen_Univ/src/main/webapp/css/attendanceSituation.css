@@ -14,17 +14,23 @@
     padding: 20px;
 }
 .first_line{
-    padding: 10px;
+    margin-top: 10px;
+    width: 1300px;
+    padding: 12px;
     display: block;
-    background: rgb(194, 194, 255);
-    width: 80%;
+    background: #f2f2f2;
+    border-top: solid 2px #0067b3;
+    font-weight: bold;
+    color: #555;
 }
 .first_line input{
     width: 80px;
+    text-align: center;
+    background: white;
 }
 .list_table{
     margin-top: 5px;
-    width: 80%;
+    width: 1200px;
 }
 .list_table.lack{
 	width: 70%;
@@ -36,10 +42,7 @@
     border-top: 1px solid black;
     text-align: center;
 }
-.list_table table thead{
-    font-weight: bold;
-    background: rgb(194, 194, 255);
-}
+
 .list_table table tbody tr{
     background: white;
     
@@ -58,21 +61,7 @@
 .mytable{
     margin-top: 5px;
 }
-.mytable table{
-    width: 100%;
-    border-collapse: collapse;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    text-align: center;
-}
-.mytable table thead{
-    font-weight: bold;
-    background: rgb(194, 194, 255);
-}
 
-.mytable table tbody tr,td{
-    border: 1px solid gray;
-}
 .details_first_line{
 	margin-top: 5px;
     padding: 10px;

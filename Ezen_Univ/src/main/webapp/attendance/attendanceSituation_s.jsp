@@ -19,7 +19,28 @@
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+	<style>
+	h3{
+        font-size: 1.47em;
+        font-weight: 500;
+        color: #0067b3;
+    }
+    .contents table{
+        margin-top: 10px;
+		width: 1300px;
+		border-collapse: collapse;
+    }
+    .contents table thead{
+       background: #f2f2f2;
+       font-weight: bold;
+       color: #555;
+    }
+    .contents table tr, td{
+       padding: 1em 0;
+       border: 1px solid #ccc;
+       text-align: center;
+    }
+	</style>
 <script>
 $(document).ready(function(){
     studentInfo();
@@ -184,15 +205,15 @@ function listAction(cidx){
                 <table class='countNo'>
                     <thead>
                         <tr>
-                            <td style="width:10px">NO</td>
-                            <td style="width:30px">이수구분</td>
-                            <td style="width:50px">과목명</td>
-                            <td style="width:10px">학점</td>
-                            <td style="width:30px">교수</td>
-                            <td style="width:30px">강의실</td>
-                            <td style="width:40px">시간표</td>
-                            <td style="width:30px">결석률</td>
-                            <td style="width:30px">미달여부</td>
+                            <td style="width:50px">NO</td>
+                            <td style="width:80px">이수구분</td>
+                            <td>과목명</td>
+                            <td style="width:80px">학점</td>
+                            <td style="width:100px">교수</td>
+                            <td style="width:150px">강의실</td>
+                            <td style="width:200px">시간표</td>
+                            <td style="width:100px">결석률</td>
+                            <td style="width:80px">미달여부</td>
                         </tr>
                     </thead>
                     <tbody>

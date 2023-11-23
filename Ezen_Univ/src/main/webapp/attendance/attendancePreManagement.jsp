@@ -20,11 +20,31 @@
 		height: 900px;
 		font-size: 20px;
 		overflow-y: scroll;
-		width: 80%;
+		width: 1330px;
 	}
 	tbody tr:hover {
 	background: #F2F2F2;
 	}
+	h3{
+           font-size: 1.47em;
+           font-weight: 500;
+           color: #0067b3;
+       }
+       .contents table{
+        margin-top: 10px;
+		width: 1300px;
+		border-collapse: collapse;
+       }
+       .contents table thead{
+          background: #f2f2f2;
+          font-weight: bold;
+          color: #555;
+       }
+       .contents table tr, td{
+          padding: 15px 0;
+          border: 1px solid #ccc;
+          text-align: center;
+        }
 </style>
 <script>
 $(document).ready(function(){
