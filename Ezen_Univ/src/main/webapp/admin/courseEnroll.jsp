@@ -268,16 +268,16 @@
                <table>
                    <thead>
                        <tr>
-                           <td style="width:30px">과목번호</td>
-                           <td style="width:100px">과목명</td>
-                           <td style="width:10px">교수번호</td>
-                           <td style="width:30px">교수이름</td>
-                           <td style="width:80px">전공</td>
-                           <td style="width:30px">수강학년</td>
-                           <td style="width:30px">이수구분</td>
-                           <td style="width:30px">학점</td>
-                           <td style="width:50px">강의실</td>
-                           <td style="width:50px">시간표</td>
+                           <th style="width:30px">과목번호</th>
+                           <th style="width:100px">과목명</th>
+                           <th style="width:10px">교수번호</th>
+                           <th style="width:30px">교수이름</th>
+                           <th style="width:80px">전공</th>
+                           <th style="width:30px">수강학년</th>
+                           <th style="width:30px">이수구분</th>
+                           <th style="width:30px">학점</th>
+                           <th style="width:50px">강의실</th>
+                           <th style="width:50px">시간표</th>
                           
                        </tr>
                    </thead>	
@@ -296,15 +296,15 @@
 	                <table>
 	                    <thead>
 	                        <tr>
-	                            <td style="width: 30px;">
+	                            <th style="width: 30px;">
                                     <input type="checkbox" name="studentSelectAll" id="studentSelectAll" />
-                                </td>
-	                            <td style="width: 30px">순번</td>
-	                            <td style="width: 100px">이름</td>
-	                            <td style="width: 120px">학번</td>
-	                            <td style="width: 40px">학년</td>
-	                            <td style="width: 180px">학과</td>
-	                            <td style="width: 40px">처리</td>
+                                </th>
+	                            <th style="width: 30px">순번</th>
+	                            <th style="width: 100px">이름</th>
+	                            <th style="width: 120px">학번</th>
+	                            <th style="width: 40px">학년</th>
+	                            <th style="width: 180px">학과</th>
+	                            <th style="width: 40px">처리</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
