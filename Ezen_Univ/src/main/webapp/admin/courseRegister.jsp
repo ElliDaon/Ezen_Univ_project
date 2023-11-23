@@ -9,13 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>강의등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    
+    <style>
+    .contents table tr, td {
+    padding: 0.7em 0;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+    </style>
+    
     <script>
     $(document).ready(function(){
         // 현재 날짜를 가져와서 input에 설정
@@ -28,6 +35,24 @@
         $('#yearInput').val(year);
         $('#termInput').val(term);
         courseRegisterList(year, term);
+        
+        // 로컬 스토리지에서 "selectedMember" 값을 가져오기
+        const selectedMember = localStorage.getItem('selectedMember');
+
+        // 로컬 스토리지에서 "isStudentChecked" 값을 가져오기
+        const isStudentChecked = localStorage.getItem('isStudentChecked') === 'true';
+
+        // 로컬 스토리지에서 "isProfessorChecked" 값을 가져오기
+        const isProfessorChecked = localStorage.getItem('isProfessorChecked') === 'true';
+		
+        // 로그아웃 링크 클릭 시 로컬 스토리지 초기화
+        $('#logoutLink').click(function() {
+            localStorage.removeItem('selectedMember');
+            localStorage.removeItem('isStudentChecked');
+            localStorage.removeItem('isProfessorChecked');
+
+        });
+        
         
         // 화면 컨트롤
         
@@ -153,7 +178,7 @@
 
                         // 중복된 값이 있다면 알림을 표시하고 함수 종료
                         if (isDuplicate) {
-                            alert("이미 존재하는 값입니다.");
+                            alert("이미 강의등록-시간표에 입력되어 있습니다.");
                             return;
                         }
 
@@ -424,7 +449,7 @@
             </div>
             <br>
             <div class="logStatus" style="font-weight: bold">
-              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent" id="logoutLink">logout</a>
             </div>
           </div>
           <br>
@@ -447,7 +472,7 @@
                 년도 <input type="number" id="yearInput" name="yearInput" disabled/>
                 학기 <input type="number" id="termInput" name="termInput" disabled/>
              </div>
-             <div id="courseList" class="list_table">
+             <div id="courseList">
                 <table>
                     <thead>
                         <tr>
@@ -471,7 +496,7 @@
              </div>
             <br>
             <div style="width: 1300px;" align="right">
-            	<input type="button" name="btn" id="registerBtn" value="강의 등록하기" style="width:120px;">
+            	<button type="button" name="btn" id="registerBtn" style="width:120px;">강의 등록</button>
             </div>
 		<form name="frm">
 			<div id =courseListInput>
@@ -479,12 +504,12 @@
 			<br>
 			<table id="registerTable">
 				<tr>
-					<td>과목명</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+					<th>과목명</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_name" value="" Placeholder="이곳에 직접 입력하세요" autocomplete="off"/>
 					</td>
-					<td>전공</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+					<th>전공</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_major" id="c_major" list="major-options" Placeholder="목록을 선택, 조회하세요" autocomplete="off"/>
 						<datalist id="major-options">
 							<option value="건축학과" />
@@ -498,12 +523,12 @@
 							<option value="바이오메디컬공학부" />
 						</datalist>
 						&ensp;
-						<input type="button" name="btn" value="조회" id="registerView">
+						<button type="button" name="btn" id="registerView">조회</button>
 		            </td>
 				</tr>
 				<tr>
-					<td>이수구분</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+					<th>이수구분</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_sep" list="seperation-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="seperation-options">
 							<option value="교양선택" />
@@ -512,15 +537,15 @@
 							<option value="전공필수" />
 						</datalist>
 					</td>
-		            <td>교수번호</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+		            <th>교수번호</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="p_no" list="professorNumber-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
 						<datalist id="professorNumber-options">
 						</datalist>
 		            </td>
 				<tr>
-					<td>수강학년</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+					<th>수강학년</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_grade" list="grade-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="grade-options">
 							<option value="1" />
@@ -529,16 +554,16 @@
 							<option value="4" />
 					</datalist>
 					</td>
-					<td>담당교수</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+					<th>담당교수</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="p_name" list="courseprofessor-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
 						<datalist id="courseprofessor-options">
 						</datalist>
 		            </td>
 				</tr>
 				<tr>
-					<td>학점</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+					<th>학점</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_score" list="score-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="score-options">
 							<option value="1" />
@@ -546,8 +571,8 @@
 							<option value="3" />
 						</datalist>
 					</td>
-					<td>총강의시간</td>
-					<td style="padding: 0px 0px 0px 15px; width:35%;">
+					<th>총강의시간</th>
+					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_totaltime" list="totalTime-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="totalTime-options">
 							<option value="32" />
@@ -558,11 +583,11 @@
 			</table>
 			<br>
 				<div style="width: 1300px;" align="center">
-					<input type="button" name="btn" id="nextBtn" value="다음">
+					<button type="button" name="btn" id="nextBtn">다음</button>
 				</div>
 			</div>
 		</form>
-			<div id="courseTimeListInput" class="list_table">
+			<div id="courseTimeListInput">
 			<h3>강의등록-시간표</h3>
 			<br>
 			<table id="timeTable">
@@ -591,7 +616,7 @@
 			<table id="registerTable2">	
 			<tr>	
 				<th>강의실</th>
-				<td style="padding: 0px 0px 0px 0px; width:12%;">
+				<td style="padding: 0px 0px 0px 0px; width:15%;">
 					<input type="text" name="ct_room" value="" Placeholder="이곳에 직접 입력" autocomplete="off"/>
 				</td>
 				<th>요일</th>
@@ -647,11 +672,11 @@
 			</table>
 			<br>
 				<div style="width: 1300px;" align="right">
-					<input type="button" name="btn" id="addRow" value="추가" >
+					<button type="button" name="btn" id="addRow">추가</button>
 				</div>
 			<div style="width: 1300px;" align="center">
-				<input type="button" name="btn" id="previousBtn" value="이전">
-				<input type="button" name="btn" value="등록" onclick="check();">
+				<button type="button" name="btn" id="previousBtn">이전</button>
+				<button type="button" name="btn" onclick="check();">등록</button>
 			</div>
 			</div>
          </div>

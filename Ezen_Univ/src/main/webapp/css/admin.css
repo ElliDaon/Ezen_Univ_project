@@ -30,6 +30,9 @@ h3 {
     width: 15px;
     cursor: pointer;
 }
+.first_line input[type="submit"] {
+    cursor: pointer;
+}
 .contents table {
     margin-top: 10px;
     width: 1300px;
@@ -48,6 +51,7 @@ h3 {
     text-align: center;
 }
 
+
 .contents input[type=text]{ 
     flex-grow: 1;
     padding: 5px;
@@ -63,4 +67,32 @@ h3 {
 	font-weight : bold ;
 	font-size : 15px;
 	cursor: pointer;
+}
+
+.fixed {
+  
+    margin: 50px;
+    width: 180px;
+    height: 220px;
+    padding: 8px;
+}
+
+legend {
+    color: red;
+    font-weight: bold;
+}
+button {
+    background: white;
+    border: 2px solid;
+    border-bottom-color: black;
+    border-right-color: black;
+    border-top-color: rgb(91, 91, 91);
+	border-left-color: rgb(91, 91, 91);
+    color: #555;
+    font-weight: bolder;
+    padding: 0px 10px 0px 10px;
+    cursor : pointer;
+}
+button:hover{
+	background: #f2f2f2;
 }
