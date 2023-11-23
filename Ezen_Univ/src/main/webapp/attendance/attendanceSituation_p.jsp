@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>출석 현황 조회</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -24,10 +23,8 @@
         }
         .contents table{
             margin-top: 10px;
-			width: 1300px;
-			/* height: 50px;
-			text-align: center; */
-			border-collapse: collapse;
+            width: 1300px;
+            border-collapse: collapse;
         }
         .contents table thead{
            background: #f2f2f2;
@@ -35,15 +32,44 @@
            color: #555;
         }
         .contents table tr, td{
-           padding: 1em 0;
+           padding: 0.5em 0;
            border: 1px solid #ccc;
            text-align: center;
         }
         .list_table.slist{
-        	width: 1330px;
+        	width: 1300px;
         	height: 600px;
         	overflow-y: scroll;
         }
+		#showAttendanceList {
+			cursor: pointer;
+			border: none;
+			background: #0067B3;
+			color: white;
+			width: 120px;
+			padding: 3px;
+		}
+	</style>
+    <style>
+        /* 추가한 스타일 */
+        .attendlist{
+            display: none;
+        }
+        
+        .countNo tbody>tr {
+            counter-increment: aaa;
+         }
+        .countNo tbody>tr>td:first-child:before {
+            content: counter(aaa) " ";
+         }
+         
+         .listNo tbody>tr {
+            counter-increment: aaa;
+         }
+        .listNo tbody>tr>td:first-child:before {
+            content: counter(aaa) " ";
+         }
+         
     </style>
     <script>
 	$(document).ready(function(){
@@ -95,11 +121,11 @@
     				
     				var str = "";
     				str = "<thead><tr>"
-    				+ "<td style='width:10px'>NO</td>"
-    				+ "<td style='width:30px'>전공</td>"
-    				+ "<td style='width:20px'>이름</td>"
-    				+ "<td style='width:20px'>학번</td>"
-    				+ "<td style='width:20px'>출석상태</td>"
+    				+ "<td style='width:10%'>NO</td>"
+    				+ "<td style='width:30%'>전공</td>"
+    				+ "<td style='width:20%'>이름</td>"
+    				+ "<td style='width:20%'>학번</td>"
+    				+ "<td style='width:20%'>출석상태</td>"
     				+ "</tr></thead><tbody>";
     				
     				$(data).each(function(){
@@ -109,7 +135,7 @@
     				});
     				
     				str = str + "</tbody>";
-    				$("#list_table").html("<table class='listNo'>"+str+"</table>");
+    				$("#list_table").html("<table class='listNo' style='width:1000px;'>"+str+"</table>");
     				
 		    		$("td span").each(function(){
 		    			var txt = $(this).text();
@@ -176,28 +202,6 @@
     		});
     	}
     </script>
-    <style>
-        /* 추가한 스타일 */
-        .attendlist{
-            display: none;
-        }
-        
-        .countNo tbody>tr {
-            counter-increment: aaa;
-         }
-        .countNo tbody>tr>td:first-child:before {
-            content: counter(aaa) " ";
-         }
-         
-         .listNo tbody>tr {
-            counter-increment: aaa;
-         }
-        .listNo tbody>tr>td:first-child:before {
-            content: counter(aaa) " ";
-         }
-         
-    </style>
-    
 </head>
 <body>
 	<div id="main-header">
@@ -273,7 +277,7 @@
                         <tr>
                             <td style="width:50px">NO</td>
                             <td style="width:80px">이수구분</td>
-                            <td>과목명</td>
+                            <td>강의명</td>
                             <td style="width:150px">세부전공</td>
                             <td style="width:80px">수강학년</td>
                             <td style="width:150px">강의실</td>
@@ -300,21 +304,19 @@
                 </table>
             </div>
             <br>
-            <div class="attendance-input hidden">
+            <div class="first_line">
                 <div style="display:inline-block;" class="selectedWrap">
-                선택한 과목 : <input type="text" id="selectedCourse" value="" name="selectedC_name" disabled/>
+                강의명 : <input type="text" id="selectedCourse" value="" name="selectedC_name" style="width:250px;" disabled/>
                 </div>
-                <input class="date" type="date" id="attendanceDate" name="attendanceDate" onChange="periodList()">
+                <input class="date" type="date" id="attendanceDate" name="attendanceDate" onChange="periodList()" style="width:150px;">
                 <div id="selected_periodList" class="selected_periodList"></div>
-                <button type="button" id="showAttendanceList" onclick="searchList()">출석 목록 조회</button>
+                &emsp;<button type="button" id="showAttendanceList" onclick="searchList()">출석 목록 조회</button>
             </div>
-            <br>
-            <div id="list_table" class="list_table slist">
+            <div id="list_table" class="list_table_slist">
             
             </div>
           </div>
         </div>
       </div>
-    </div>
 </body>
 </html>
