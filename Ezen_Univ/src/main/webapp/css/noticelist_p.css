@@ -129,3 +129,10 @@ border: 1px solid black;
 .contents:hover{
     text-decoration: underline;
 }
+.act{
+	width: 10px;
+	font-weight: bold;
+}
+.de{
+	width: 10px;
+}

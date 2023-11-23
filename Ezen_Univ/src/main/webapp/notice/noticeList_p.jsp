@@ -159,7 +159,7 @@ function professorInfo(){
 <table class="pagination" border=0 style="width:700px;text-align:center;">
 <tr>
 <td style="width:100px;text-align:right;">
-<%// if (pm.isPrev()==true) { %>
+
 <c:if test="${pm.prev == true}">
 <a href="${pageContext.request.contextPath}/notice/noticeList_p.do?page=${pm.startPage-1}${parm}">
 <span class="material-symbols-outlined">
@@ -167,12 +167,10 @@ arrow_back_ios_new
 </span>
 </a>
 </c:if>
-<%//} %>
+
 </td>
 <td> 
-<% 
-//for(int i=pm.getStartPage();i<=pm.getEndPage();i++){
-%>
+
 
 <c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
 <c:choose>
@@ -185,20 +183,17 @@ arrow_back_ios_new
 </c:choose>
 </c:forEach>
 
-<%		
-//}
 
-%>
 </td>
 <td style="width:100px;text-align:left;">
-<% //if(pm.isNext() ==true && pm.getEndPage()>0){ %>
+
 <c:if test="${pm.next == true&&pm.endPage>0}">
 <a href="${pageContext.request.contextPath}/notice/noticeList_p.do?page=${pm.endPage+1}${parm}">
 <span class="material-symbols-outlined">
 arrow_forward_ios
 </span>
 </a>
-<%//} %>
+
 </c:if>
 </td>
 </tr>

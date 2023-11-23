@@ -25,6 +25,7 @@ public class AttendanceVo extends CourseVo  {
 	private int s_no;
 	private String c_name;
 	private String abpercent;
+	private String atpercent;
 	private String abyn;
 	private int w_week;
 	private String abperal;
@@ -184,6 +185,12 @@ public class AttendanceVo extends CourseVo  {
 	}
 	public void setAbperal(String abperal) {
 		this.abperal = abperal;
+	}
+	public String getAtpercent() {
+		return atpercent;
+	}
+	public void setAtpercent(String atpercent) {
+		this.atpercent = atpercent;
 	}
 	
 	

@@ -20,6 +20,7 @@
 		height: 900px;
 		font-size: 20px;
 		overflow-y: scroll;
+		width: 80%;
 	}
 	tbody tr:hover {
 	background: #F2F2F2;
@@ -95,7 +96,7 @@ function chooseCourse(selectedCidx) {
 			success : function(data){
 				var totalcnt = parseInt($('#totalScount').val(), 10);
 				$('#mytable').empty();
-				var str = "<table><thead><tr><td style='width:50px'>주차</td><td style='width:400px'>수업일자</td>"
+				var str = "<table><thead><tr><td style='width:50px'>주차</td><td style='width:250px'>수업일자</td>"
 	                	+"<td style='width:400px'>수업시간</td><td style='width:50px'>출석</td><td style='width:50px'>조퇴</td>"
 	                	+"<td style='width:50px'>지각</td><td style='width:50px'>결석</td><td style='width:150px'>처리</td>"
 	            		+"</tr></thead><tbody>";
@@ -109,8 +110,11 @@ function chooseCourse(selectedCidx) {
 	                    +"<td>"+data[i].absent;
 	                    cnt += parseInt(data[i].att, 10) + parseInt(data[i].early, 10) + parseInt(data[i].late, 10) + parseInt(data[i].absent, 10);
 
-	                
-	                	str +="</td><td><button type='button' class='btn' >출결처리</button></td></tr>";
+	                	if(cnt>=totalcnt){
+		                	str +="</td><td><button type='button' class='btn' style='border: 1px solid gray'>출결수정</button></td></tr>";
+	                	}else{
+		                	str +="</td><td><button type='button' class='btn' style='cursor:pointer; background-color:#A3DBFF; border: 1px solid #A3DBFF;'>출결처리</button></td></tr>";
+	                	}
 	               
 	
 	               

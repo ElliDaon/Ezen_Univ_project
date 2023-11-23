@@ -208,56 +208,36 @@ public class AttendanceDao {
 		return abv;
 	}
 	
-	public ArrayList<AttendanceVo> attendanceCourseList_p(int pidx, int year, int semester) {
+	public AttendanceVo attendanceCourseList_p(int pidx) {
 		
-		ArrayList<AttendanceVo> plist = new ArrayList<>();
+		AttendanceVo av = new AttendanceVo();
 		ResultSet rs;
-		String sql= "select a.c_sep, a.cidx, a.c_name, a.c_major, a.c_grade, b.ct_room, b.times, a.s_cnt\r\n"
-				+ "from\r\n"
-				+ "(select c.cidx, c.c_sep, c.c_name, c.c_major, c.c_grade, count(DISTINCT cl.sidx) as s_cnt\r\n"
-				+ "from professor p\r\n"
-				+ "join course c on p.pidx = c.pidx\r\n"
-				+ "join courselist cl on cl.cidx=c.cidx\r\n"
-				+ "join coursetime ct on ct.cidx=c.cidx\r\n"
-				+ "where p.pidx=?\r\n"
-				+ "and date_format(c.c_writeday,'%Y') like '2023'\r\n"
-				+ "and cast(date_format(c.c_writeday,'%m') as signed) >= 8\r\n"
-				+ "and ct.ct_year=? and ct.ct_semester=?\r\n"
-				+ "group by  c.cidx, c.c_sep, c.c_name) a\r\n"
-				+ "join\r\n"
-				+ "(select c.cidx, ct.ct_room, group_concat(concat(ct_week, pe_period) separator ' , ') as times\r\n"
-				+ "from coursetime ct\r\n"
-				+ "join course c on ct.cidx=c.cidx\r\n"
-				+ "group by c.cidx, ct.ct_room\r\n"
-				+ "order by c_name)b\r\n"
-				+ "on a.cidx=b.cidx";
+		String sql= "call attendanceSituation_p(?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pidx);
-			pstmt.setInt(2, year);
-			pstmt.setInt(3, semester);
+
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				AttendanceVo av = new AttendanceVo();
 				
-				av.setC_sep(rs.getString("A.c_sep"));
-				av.setCidx(rs.getInt("A.cidx"));
-				av.setC_name(rs.getString("A.c_name"));
-				av.setC_major(rs.getString("A.c_major"));
-				av.setC_grade(rs.getInt("A.c_grade"));
-				av.setCt_room(rs.getString("B.ct_room"));
-				av.setC_times(rs.getString("B.times"));
-				av.setS_cnt(rs.getInt("A.s_cnt"));
-				plist.add(av);
+				av.setC_sep(rs.getString("c_sep"));
+				av.setCidx(rs.getInt("cidx"));
+				av.setC_name(rs.getString("c_name"));
+				av.setC_major(rs.getString("c_major"));
+				av.setC_grade(rs.getInt("c_grade"));
+				av.setCt_room(rs.getString("ct_room"));
+				av.setC_times(rs.getString("times"));
+				av.setS_cnt(rs.getInt("s_cnt"));
+				av.setAtpercent(rs.getString("rate"));
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return plist;
+		return av;
 	}
 	
 	public ArrayList<AttendanceVo> searchList(String c_name, String a_date, String a_start) {
@@ -630,6 +610,34 @@ public class AttendanceDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return list;
+	}
+	
+	public ArrayList<Integer> periodList(String a_date, String c_name){
+		ArrayList<Integer> list = new ArrayList<>();
+		ResultSet rs;
+		String sql = "select ct.pe_period\r\n"
+				+ "from course c\r\n"
+				+ "join coursetime ct on c.cidx=ct.cidx\r\n"
+				+ "join attendance a on ct.cidx=a.cidx and ct.ctidx = a.ctidx\r\n"
+				+ "where a.a_date=? and c.c_name=?\r\n"
+				+ "group by ct.pe_period\r\n"
+				+ "order by 1";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, a_date);
+			pstmt.setString(2, c_name);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int period = rs.getInt("ct.pe_period");
+				list.add(period);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		
 		return list;
 	}

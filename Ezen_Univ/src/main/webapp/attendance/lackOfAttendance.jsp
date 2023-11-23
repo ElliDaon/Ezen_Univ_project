@@ -194,7 +194,7 @@
             </div>
             
             <div id="courseName"></div>
-            <div class="list_table" id="studentList">
+            <div class="list_table lack" id="studentList">
 
             </div>
         </div>

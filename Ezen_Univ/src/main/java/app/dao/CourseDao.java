@@ -24,12 +24,12 @@ public class CourseDao {
 		ResultSet rs;
 		
 		ArrayList<CourseVo> courselist = new ArrayList<>();
-		String sql = "select A.c_name,A.c_major,A.c_grade, P.p_name,A.c_sep,A.c_score, D.ct_room, group_concat(distinct D.ct_week,D.pe_period) as times\r\n"
+		String sql = "select A.cidx, A.c_name,A.c_major,A.c_grade, P.p_name,A.c_sep,A.c_score, D.ct_room, group_concat(distinct D.ct_week,D.pe_period) as times\r\n"
 				+ "	from course A\r\n"
 				+ "	join coursetime D on A.cidx = D.cidx\r\n"
 				+ "	join professor P on P.pidx = A.pidx\r\n"
 				+ "	where P.pidx=? and D.ct_year=? and D.ct_semester=?\r\n"
-				+ "	group by A.c_name,D.ct_room,A.c_major,A.c_sep,A.c_grade,A.c_score,P.p_name;"
+				+ "	group by A.cidx, A.c_name,D.ct_room,A.c_major,A.c_sep,A.c_grade,A.c_score,P.p_name;"
 ;
 				try{
 				pstmt = conn.prepareStatement(sql);
@@ -41,6 +41,7 @@ public class CourseDao {
 					while(rs.next()) {
 						CourseVo cv = new CourseVo();
 						
+						cv.setCidx(rs.getInt("cidx"));
 						cv.setC_name(rs.getString("A.c_name"));
 						cv.setC_major(rs.getString("A.c_major"));
 						cv.setC_grade(rs.getInt("A.c_grade"));

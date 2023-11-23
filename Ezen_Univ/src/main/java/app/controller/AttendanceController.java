@@ -19,7 +19,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import app.dao.AttendanceDao;
+import app.dao.CourseDao;
 import app.domain.AttendanceVo;
+import app.domain.CourseVo;
 import app.domain.EachCheckVo;
 import app.domain.MemberVo;
 
@@ -177,7 +179,20 @@ public class AttendanceController extends HttpServlet{
 				semester = 2;
 			}
 			
-			ArrayList<AttendanceVo> plist = ad.attendanceCourseList_p(pidx, year, semester);
+			
+			CourseDao cd = new CourseDao();
+			ArrayList<CourseVo> courselist = cd.professorCourseList(pidx,year,semester);
+
+			ArrayList<Integer> clist = new ArrayList<>();
+			for(int i=0; i<courselist.size(); i++) {
+				clist.add(courselist.get(i).getCidx());
+			}
+			
+			ArrayList<AttendanceVo> plist = new ArrayList<>();
+			for(int i=0; i<courselist.size(); i++) {
+				AttendanceVo av = ad.attendanceCourseList_p(clist.get(i));
+				plist.add(av);
+			}
 			request.setAttribute("list", plist);
 			request.setAttribute("year", year);
 			request.setAttribute("semester", semester);
@@ -516,6 +531,28 @@ public class AttendanceController extends HttpServlet{
 			
 			out.println("["+str+"]");
 			
+		}else if(location.equals("periodList.do")) {
+			String a_date = request.getParameter("a_date");
+			String c_name = request.getParameter("c_name");
+			
+			AttendanceDao ad = new AttendanceDao();
+			ArrayList<Integer> pelist = ad.periodList(a_date, c_name);
+			
+			String str = "";
+			for(int i=0; i<pelist.size(); i++) {
+				String comma = "";
+				if (i == pelist.size() - 1) {
+					comma = "";
+				} else {
+					comma = ",";
+				}
+				
+				int period = pelist.get(i);
+				str = str+"{\"period\":\""+period+"\"}"+comma;
+			}
+
+			PrintWriter out = response.getWriter();
+			out.println("["+str+"]");
 		}
 	}	
 }

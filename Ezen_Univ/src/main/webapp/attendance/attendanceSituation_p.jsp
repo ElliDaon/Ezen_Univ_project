@@ -27,7 +27,7 @@
 	  	var str = "";
 	  	
 	  	var p_no =${sessionScope.p_no};
-	  	var p_name = "${sessionScope.p_name}"
+	  	var p_name = "${sessionScope.p_name}";
 	  	var p_major = "${sessionScope.p_major}";
 	  	
 	  	str = "<strong>[교수]</strong><br>"
@@ -40,6 +40,9 @@
   
     	function search_detail(c_name){
 			$('#selectedCourse').empty();
+			$('#selected_periodList').empty();
+			$("#attendanceDate").val("");
+			
 			var str = c_name;
 			$(".selectedWrap>input[name='selectedC_name']").val(str);
 			
@@ -97,8 +100,53 @@
     				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     			}
     		});
-    	}
     	
+    	
+    	}
+    	function periodList(){
+    		let c_name = $("#selectedCourse").val();
+    		let a_date = $("#attendanceDate").val();
+    		
+    		$.ajax({
+    			type : "post",
+    			url : "${pageContext.request.contextPath}/attendance/periodList.do",
+    			data : {
+    				"a_date" : a_date,
+    				"c_name" : c_name
+    				},
+    			dataType : "json",
+    			success : function(data){
+    				var str = "<select id='timeSlot' name='timeSlot'>";
+    				$(data).each(function(){
+    					if(this.period == 1){
+    						str += "<option value='09:00'>1교시</option>";
+    					}else if(this.period ==2){
+    						str += "<option value='10:00'>2교시</option>";
+    					}else if(this.period ==3){
+    						str += "<option value='11:00'>3교시</option>";
+    					}else if(this.period ==4){
+    						str += "<option value='12:00'>4교시</option>";
+    					}else if(this.period ==5){
+    						str += "<option value='13:00'>5교시</option>";
+    					}else if(this.period ==6){
+    						str += "<option value='14:00'>6교시</option>";
+    					}else if(this.period ==7){
+    						str += "<option value='15:00'>7교시</option>";
+    					}else if(this.period ==8){
+    						str += "<option value='16:00'>8교시</option>";
+    					}else if(this.period ==9){
+    						str += "<option value='17:00'>9교시</option>";
+    					}
+    				});
+    				str +="</select>";
+    				$("#selected_periodList").html(str);
+    				return;
+    			},
+    			error: function(request, status, error){
+    				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    			}
+    		});
+    	}
     </script>
     <style>
         /* 추가한 스타일 */
@@ -217,7 +265,7 @@
                             <td>${av.ct_room}</td>
                             <td>${av.c_times}</td>
                             <td>${av.s_cnt}</td>
-                            <td>%</td>
+                            <td>${av.atpercent}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -228,18 +276,8 @@
                 <div style="display:inline-block;" class="selectedWrap">
                 선택한 과목 : <input type="text" id="selectedCourse" value="" name="selectedC_name" disabled/>
                 </div>
-                <input class="date" type="date" id="attendanceDate" name="attendanceDate">
-                <select id="timeSlot" name="timeSlot">
-                    <option value="09:00">1교시</option>
-                    <option value="10:00">2교시</option>
-                    <option value="11:00">3교시</option>
-                    <option value="12:00">4교시</option>
-                    <option value="13:00">5교시</option>
-                    <option value="14:00">6교시</option>
-                    <option value="15:00">7교시</option>
-                    <option value="16:00">8교시</option>
-                    <option value="17:00">9교시</option>
-                </select>
+                <input class="date" type="date" id="attendanceDate" name="attendanceDate" onChange="periodList()">
+                <div id="selected_periodList" class="selected_periodList"></div>
                 <button type="button" id="showAttendanceList" onclick="searchList()">출석 목록 조회</button>
             </div>
             <br>
