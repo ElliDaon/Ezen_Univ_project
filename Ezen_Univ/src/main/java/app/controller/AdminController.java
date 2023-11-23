@@ -55,7 +55,7 @@ public class AdminController extends HttpServlet {
 				av = add.adminAdidxSearch(ad_id);
 				session.setAttribute("adidx", av.getAdidx());
 
-				response.sendRedirect(request.getContextPath()+"/main/main_a.do");
+				response.sendRedirect(request.getContextPath()+"/admin/accept.do");
 				
 			}else{//아이디 비번 불일치
 				response.setCharacterEncoding("UTF-8");
