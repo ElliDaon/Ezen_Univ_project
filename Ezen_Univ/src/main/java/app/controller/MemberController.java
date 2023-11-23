@@ -130,8 +130,12 @@ public class MemberController extends HttpServlet {
 			HttpSession session = request.getSession();
 
 			session.invalidate(); //초기화
+			PrintWriter out = response.getWriter();
 			
-			response.sendRedirect(request.getContextPath()+"/index.jsp");
+			out.println("<script>alert('로그아웃이 완료되었습니다.'); localStorage.clear(); document.location.href='"+request.getContextPath() +"/index.jsp'</script>");
+			
+			
+			//response.sendRedirect(request.getContextPath()+"/index.jsp");
 			
 		}else if(location.equals("studentLoginAction.do")) {
 			
