@@ -451,17 +451,17 @@
                 <table>
                     <thead>
                         <tr>
-                            <td style="width:30px">과목번호</td>
-                            <td style="width:100px">과목명</td>
-                            <td style="width:20px">교수번호</td>
-                            <td style="width:30px">교수이름</td>
-                            <td style="width:80px">전공</td>
-                            <td style="width:30px">수강학년</td>
-                            <td style="width:30px">이수구분</td>
-                            <td style="width:30px">학점</td>
-                            <td style="width:50px">강의실</td>
-                            <td style="width:50px">시간표</td>
-                            <td style="width:15px">처리</td>
+                            <th style="width:30px">과목번호</th>
+                            <th style="width:100px">과목명</th>
+                            <th style="width:20px">교수번호</th>
+                            <th style="width:30px">교수이름</th>
+                            <th style="width:80px">전공</th>
+                            <th style="width:30px">수강학년</th>
+                            <th style="width:30px">이수구분</th>
+                            <th style="width:30px">학점</th>
+                            <th style="width:50px">강의실</th>
+                            <th style="width:50px">시간표</th>
+                            <th style="width:15px">처리</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -470,20 +470,20 @@
                 </table>
              </div>
             <br>
-            <div align="right">
+            <div style="width: 1300px;" align="right">
             	<input type="button" name="btn" id="registerBtn" value="강의 등록하기" style="width:120px;">
             </div>
 		<form name="frm">
 			<div id =courseListInput>
 			<h3>강의등록</h3>
 			<br>
-			<table id="registerTable" class="register" style="width:100%">
+			<table id="registerTable">
 				<tr>
-					<td class="name" align="center" width="15%">과목명</td>
+					<td>과목명</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_name" value="" Placeholder="이곳에 직접 입력하세요" autocomplete="off"/>
 					</td>
-					<td class="name" align="center" width="15%">전공</td>
+					<td>전공</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_major" id="c_major" list="major-options" Placeholder="목록을 선택, 조회하세요" autocomplete="off"/>
 						<datalist id="major-options">
@@ -502,7 +502,7 @@
 		            </td>
 				</tr>
 				<tr>
-					<td class="name" align="center">이수구분</td>
+					<td>이수구분</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_sep" list="seperation-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="seperation-options">
@@ -512,14 +512,14 @@
 							<option value="전공필수" />
 						</datalist>
 					</td>
-		            <td class="name" align="center">교수번호</td>
+		            <td>교수번호</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="p_no" list="professorNumber-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
 						<datalist id="professorNumber-options">
 						</datalist>
 		            </td>
 				<tr>
-					<td class="name" align="center">수강학년</td>
+					<td>수강학년</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_grade" list="grade-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="grade-options">
@@ -529,7 +529,7 @@
 							<option value="4" />
 					</datalist>
 					</td>
-					<td class="name" align="center">담당교수</td>
+					<td>담당교수</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="p_name" list="courseprofessor-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
 						<datalist id="courseprofessor-options">
@@ -537,7 +537,7 @@
 		            </td>
 				</tr>
 				<tr>
-					<td class="name" align="center">학점</td>
+					<td>학점</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_score" list="score-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="score-options">
@@ -546,7 +546,7 @@
 							<option value="3" />
 						</datalist>
 					</td>
-					<td class="name" align="center">총강의시간</td>
+					<td>총강의시간</td>
 					<td style="padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_totaltime" list="totalTime-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="totalTime-options">
@@ -557,7 +557,7 @@
 				</tr>
 			</table>
 			<br>
-				<div align="center">
+				<div style="width: 1300px;" align="center">
 					<input type="button" name="btn" id="nextBtn" value="다음">
 				</div>
 			</div>
@@ -565,15 +565,15 @@
 			<div id="courseTimeListInput" class="list_table">
 			<h3>강의등록-시간표</h3>
 			<br>
-			<table id="timeTable" style="width:100%" >
+			<table id="timeTable">
 				<thead>
 					<tr>
-						<td data-key="room">강의실</td>
-						<td data-key="day">요일</td>
-						<td data-key="period">교시</td>
-						<td data-key="semester">학기</td>
-						<td data-key="year">년도</td>
-						<td>처리</td>
+						<th data-key="room">강의실</th>
+						<th data-key="day">요일</th>
+						<th data-key="period">교시</th>
+						<th data-key="semester">학기</th>
+						<th data-key="year">년도</th>
+						<th>처리</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -588,13 +588,13 @@
 				</tbody>
 			</table>
 			<br>
-			<table id="registerTable2" class="register" style="width:100%">
+			<table id="registerTable2">	
 			<tr>	
-				<td class="name" align="center" style="width:5%">강의실</td>
+				<th>강의실</th>
 				<td style="padding: 0px 0px 0px 0px; width:12%;">
 					<input type="text" name="ct_room" value="" Placeholder="이곳에 직접 입력" autocomplete="off"/>
 				</td>
-				<td class="name" align="center" style="width:5%">요일</td>
+				<th>요일</th>
 				<td style="padding: 0px 0px 0px 0px; width:12%;">
 					<input type="text" name="ct_week" list="courseweek-options" Placeholder="목록선택" autocomplete="off"/>
 					<datalist id="courseweek-options">
@@ -606,7 +606,7 @@
 						<option value="토" />
 					</datalist>
 				</td>
-				<td class="name" align="center" style="width:5%">교시</td>
+				<th>교시</th>
 				<td style="padding: 0px 0px 0px 0px; width:20%;">
 					<label for="1교시"><input type="radio" id="1period" name="pe_period" value=1 checked> 1교시</label>&emsp;
 					<label for="2교시"><input type="radio" id="2period" name="pe_period" value=2> 2교시</label>&emsp;
@@ -620,7 +620,7 @@
 					<label for="8교시"><input type="radio" id="8period" name="pe_period" value=8> 8교시</label>&emsp;
 					<label for="9교시"><input type="radio" id="9period" name="pe_period" value=9> 9교시</label>&emsp;
 				</td>
-				<td class="name" align="center" style="width:5%">학기</td>
+				<th>학기</th>
 				<td style="padding: 0px 0px 0px 0px; width:12%;">
 					<input type="text" name="ct_semester" list="semester-options" Placeholder="목록선택"/>
 					<datalist id="semester-options">
@@ -628,7 +628,7 @@
 						<option value="2" />
 					</datalist>
 				</td>
-				<td class="name" align="center" style="width:5%">년도</td>
+				<th>년도</th>
 				<td style="padding: 0px 0px 0px 0px; width:12%;">
 					<input type="text" name="ct_year" list="year-options" Placeholder="목록선택"/>
 					<datalist id="year-options">
@@ -646,10 +646,10 @@
 			</tr>
 			</table>
 			<br>
-				<div align="right">
+				<div style="width: 1300px;" align="right">
 					<input type="button" name="btn" id="addRow" value="추가" >
 				</div>
-			<div align="center">
+			<div style="width: 1300px;" align="center">
 				<input type="button" name="btn" id="previousBtn" value="이전">
 				<input type="button" name="btn" value="등록" onclick="check();">
 			</div>

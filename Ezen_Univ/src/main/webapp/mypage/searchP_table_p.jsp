@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="../css/courseList.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,59 +14,14 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<style>
-		.search_professor{
-			background: rgb(194, 194, 255);
-			margin-top: 10px;
-			padding-left: 20px;
-			width: 600px;
-			height: 30px;
-			padding-top: 5px;
+		button {
+			cursor: pointer;
+			border: none;
+			background: #0067B3;
+			color: white;
+			width: 60px;
+			padding: 2px;
 		}
-		.search_professor input[type="text"]{
-			margin-left: 5px;
-			width: 100px;
-		}
-		.search_professor input[type="submit"]{
-			margin-left: 5px;
-			width: 50px;			
-		}
-		.professor_list{
-			width: 30%;
-			margin-top: 10px;
-		}
-		.professor_list table{
-			width: 100%;
-			border-collapse: collapse;
-   			border-bottom: 1px solid black;
-    		border-top: 1px solid black;
-    		text-align: center;
-		}
-		.professor_list table thead{
-			background: rgb(194, 194, 255);
-			font-weight: bold;
-		}
-		.ptable{
-   			margin-top: 20px;
-		}
-		.ptable table{
-		    width: 80%;
-		    border-collapse: collapse;
-		    border-bottom: 1px solid black;
-		    border-top: 1px solid black;
-		    text-align: center;
-		}
-		.ptable table thead{
-		    font-weight: bold;
-		    background: rgb(194, 194, 255);
-		}
-		.ptable table tbody tr{
-		    height: 50px;
-		    font-size: 12px;
-		}
-		.ptable table tbody tr,td{
-		    border: 1px solid gray;
-		}
-		
 	</style>
 	<script>
 	$(document).ready(function(){
@@ -104,17 +58,17 @@
 			success: function(data){
 				var fm = document.pnamefrm;
 				if(fm.p_name.value==""){
-					alert("이름을 입력해주세요!!");
+					alert("이름을 입력해주세요.");
 					return;
 				}
 				var str = "";
-				str = "<thead><tr><td>학과</td><td>이름</td></tr></thead><tbody>";
+				str = "<thead><tr><th style='width:50%;'>학과</th><th style='width:30%;'>이름</th><th style='width:20%;'>시간표 조회</th></tr></thead><tbody>";
 				$(data).each(function(){
-					str = str + "<tr><td>" + this.major + "</td><td>" + "<button name='professor_name' value='" + this.pidx 
-					+ "' onclick='searchTable("+ this.pidx +")'>" + this.name + "</button></td></tr>";
+					str = str + "<tr><td>" + this.major + "</td><td>" + this.name + "</td><td>" + "<button name='professor_name' value='" + this.pidx 
+					+ "' onclick='searchTable("+ this.pidx +")'><i class='fa fa-search' aria-hidden='true'></i></button></td></tr>";
 				});
 				str = str + "</tbody>";
-				$("#professor_list").html("<table>"+str+"</table>");
+				$("#professor_list").html("<table style='width:800px;'>"+str+"</table>");
 				return;
 			},
 			error: function(){
@@ -141,12 +95,12 @@
 				
 				var str = "";
 				str = "";
-				str += "<table><thead><tr><td style='width:5%'>교시</td>"
-                    +"<td style='width:15%'>월</td>"
-                    +"<td style='width:15%'>화</td>"
-                    +"<td style='width:15%'>수</td>"
-                    +"<td style='width:15%'>목</td>"
-                    +"<td style='width:15%'>금</td>"
+				str += "<table><thead><tr><th style='width:5%'>교시</th>"
+                    +"<th style='width:15%'>월</th>"
+                    +"<th style='width:15%'>화</th>"
+                    +"<th style='width:15%'>수</th>"
+                    +"<th style='width:15%'>목</th>"
+                    +"<th style='width:15%'>금</th>"
                 	+"</tr></thead>";
 				$(data).each(function(){
 					str = str + "<tr><td>" + this.period + "</td><td>" + this.mon +  "</td><td>" + this.two
@@ -225,11 +179,11 @@
           </div>
         </div>
         <div class="contents">
-            <h2>교수 시간표 조회</h2>
-            <div class="search_professor">
+            <h3>교수 시간표 조회</h3>
+            <div class="first_line">
             	<form name="pnamefrm">
             		년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="turm" value="${semester}" disabled/>
-            		교수이름<input type="text" id="p_name" name="p_name"> <button type="button" name="namebtn" onclick="searchP()">검색</button>
+            		교수이름 <input type="text" id="p_name" name="p_name" style="width:120px;">&emsp;<button type="button" name="namebtn" onclick="searchP()"><i class="fa fa-search" aria-hidden="true"></i></button>
             	</form>
             </div>
             <div class="professor_list" id="professor_list">
