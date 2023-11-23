@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="contents">
-            <h3>강의현황조회</h3>
+            <h3>수강현황조회</h3>
             <div class="first_line">
                 년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="turm" value="${semester}" disabled/>
             </div>
@@ -144,6 +144,7 @@
                 </table>
             </div>
         </div>
+      </div>
     </div>
 </body>
 </html>
