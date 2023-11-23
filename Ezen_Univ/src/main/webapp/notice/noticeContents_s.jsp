@@ -16,12 +16,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
-h1{
-    font-family: 'Black Han Sans', sans-serif;
-    font-weight: 100;
-    font-size: 40px;
-    margin-bottom: 10px;
-    margin-top : 10px;
+ h3 {
+    
+    font-size: 1.47em;
+    font-weight: 500;
+    color: #0067b3;
+   
 }
 
 
@@ -53,13 +53,15 @@ h1{
 } 
 .text-box{
     width: 100%;
-    border: 3px solid #42444e;
+    border: 2px solid #0067b3;
+    height: 36px ;
     height: 500px;
 }
 
 .noticewrite{
     border-collapse: collapse;
     width: 70%;
+    
 }
 
 .contents {
@@ -67,21 +69,38 @@ h1{
     flex-direction: column;
     align-items: center; 
     margin-left: -70px;
+    
 }
 .subject{
-    display: flex;
-    background: #42444e;
-    color : white;
+    display: inline-block;
+    background: #f2f2f2;
+    color: black;
+    border: 1px solid #ccc;
+    border-top: solid 2px #0067b3;
     height: 36px ;
     width: 100%;
     font-size: 18px;
     font-weight: bold;
     padding : 5px;
+    vertical-align: top;
+    
 }
+
+.list{
+    border: 0;
+}
+
+.noticeinfotd{
+    border: 0;
+}
+
 
 .subject td{
     text-align: center;
+    align-items: center;
+    border: 0;
     margin: 5px;
+    
 }
 
 .noticeinfo{
@@ -92,7 +111,7 @@ h1{
 
 .material-symbols-outlined{
 
-    background: #42444e;
+    background: #0078ff;
 
     width: 40px;
     height: 38px;
@@ -100,35 +119,13 @@ h1{
     color: white;
     border-radius: 5px;
     font-size:35px;
-    padding-top : 3px;
+    padding-top : 2px;
+    
          
 }
 
-.modify{
-    background: #42444e;
 
-    width: 40px;
-    height: 38px;
-    font-size: 15;
-    text-align: center;
-    vertical-align: middle;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold; 
-}
-.delete{
-    background: #42444e;
 
-    width: 40px;
-    height: 38px;
-    font-size: 15;
-    text-align: center;
-    vertical-align: middle;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-     
-}
 </style>
 
     <script>
@@ -204,15 +201,16 @@ h1{
           </div>
         </div>
     <div class="contents">
-        <h1>휴보강 공지사항</h1>
+        <h3>휴보강 공지사항</h3>
         <table class="noticewrite">
         <tr class="subject">
-            <td>제목</td>
-            <td>[${nv.n_category}][${nv.n_skipdate}][${nv.c_name}]
+            
+            <td>제목 &nbsp; :</td>
+            <td>&nbsp;&nbsp;&nbsp;[${nv.n_category}][${nv.n_skipdate}][${nv.c_name}]
             </td>        
         </tr>
         <tr class="noticeinfo">
-        	<td>
+        	<td class="noticeinfotd">
         	조회수 : ${nv.n_count} &nbsp;&nbsp;  작성일자 : ${nv.n_writeday}
        		</td>
        		

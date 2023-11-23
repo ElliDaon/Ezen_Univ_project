@@ -2,22 +2,51 @@
     margin: 0;
     padding: 0;  
 }
-/* body{
+/*     body{
     text-align: center;
+} */
+h3 {
+    font-size: 1.47em;
+    font-weight: 500;
+    color: #0067b3;
 }
- */
 
-/* a:hover {
-    color: red;
-   
+.pagination .act{
+        font-weight: bold;
+        color: #0078ff;
+        border-radius: 5px;
+        border: 2px solid #0078ff;
+        padding: 5px 7px;
+    }
+
+
+.pagination a {
+        
+        display: block;
+        font-size: 15px;
+        text-decoration: none;
+
+
+        
+        padding: 5px 7px;
+        color: #ccc;
+        display: inline-block;
+    }
+
+.pagination a:hover {background-color: #ddd;}
+
+/*     a:hover {
+    text-decoration: underline;
 } */
 
-a {
-	text-decoration: none; 
+a{
+    text-decoration: none; 
     color: inherit; 
 }
 
-/* .container {
+
+
+/*     .container {
     display: inline;
     flex-direction: column;
     align-items: center;
@@ -27,7 +56,7 @@ a {
 
 
 
-/* .header{
+/*     .header{
     background-color: bisque;
     height: 10%;
 }
@@ -56,24 +85,31 @@ iframe{
     width: 100%;
     justify-content: flex-start;
 }
-.pagination{
-    text-align: center;
-    margin-top: -50px;
-}
-.pagination a{
+.noticelist {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+.noticelist th{
+    padding: 6px 15px;
+    background: #f2f2f2;
     color: black;
-    text-decoration: none;
+    border: 1px solid #ccc;
+     border-top: solid 2px #0067b3;
+      text-align: center;
+}
+.noticelist td {
+    padding: 0.7em 0;
+    border: 1px solid #ccc;
+    text-align: center;
 }
 
-.pagination a:hover{
-    color:red;
-    text-decoration: underline;
+.noticelist tr {
+    padding: 0.7em 0;
+    border: 1px solid #ccc;
+    text-align: center;
 }
 
-.pagination span a:focus{
-    color: red;
-    font-weight: bold;
-}
 
 .noticelist tbody tr:hover{
     background-color: aliceblue;
@@ -82,6 +118,7 @@ iframe{
 .noticelist tbody tr{
 
     height: 50px;
+    padding: 6px 15px;
 
 }
 .new {
@@ -94,45 +131,54 @@ iframe{
 }
 
 .btn{
-    background-color: black;
-    border-radius: 5px;
+    background-color: #0067b3;
+
     color: whitesmoke;
 }
 
 
 .writediv{
     width: 80px;
-    height: 25px;
-    background-color: black;
-    border-radius: 5px;
-    margin-top: 10px;     
-    
+    height: 30px;
+    background-color: #0067b3;
+    margin-top: 20px;     
+    align-items: right;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 4px;    
 }
 
 .writediv a{
     text-align: center;
     color: whitesmoke;
     text-decoration: none;
-    color: black;
 }
 
-.writediv:hover{
-background-color: white;
-border: 1px solid black;
-}
 
 .contents{
     color: black;
     text-decoration: none;
 }
 
-.contents:hover{
-    text-decoration: underline;
+
+.sub{
+    
+    padding : 8px;
+    font-size : 14px;
+    
 }
-.act{
-	width: 10px;
-	font-weight: bold;
+
+.searchsubject{
+    font-size : 14px;
+    height : 30px;
+    border : 2px solid black
 }
-.de{
-	width: 10px;
+
+.material-symbols-outlined{
+    font-size: 30px;
 }
+.seartbl td {
+    text-align: center;
+    
+}
+

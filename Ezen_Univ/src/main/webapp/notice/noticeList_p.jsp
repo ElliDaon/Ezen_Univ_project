@@ -42,6 +42,21 @@ function professorInfo(){
 }
 </script>
 
+<style>
+  .pagination td {
+    border: 0px; 
+  }
+
+  .searchtbl td {
+    border: 0px; 
+  }
+
+  .writetbl td {
+    border: 0px; 
+  }
+  
+</style>
+
 </head>
 <c:if test="${pm != null && pm.getTotalCount() == 0}">
     <script>alert('공지가 아직 등록되지 않았습니다.');</script>
@@ -98,13 +113,13 @@ function professorInfo(){
           </div>
         </div>
         <div class="contents">
-        <h1>휴보강 공지</h1>
-        <table class="noticelist" border=1 style="width:800px;" >
+        <h3>휴보강 공지</h3>
+        <table class="noticelist" style="width:800px;" >
         	
             <thead>
-                <tr>
+              <tr style="font-weight: bold ;">
                     <th style="width: 100px;">No</th>
-                    <th>제목</th>
+                    <th style="width: 500px;">제목</th>
                     <th>작성일</th>
                     <th>조회수</th>
                 </tr>
@@ -116,7 +131,7 @@ function professorInfo(){
 			<td>
 			${nv.nidx}
 			</td>
-			<td class="subject">
+			<td style="text-align: left; padding-left: 20px" class="subject">
             <a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">
                 <c:if test="${nv.n_dday eq 'true'}">
                 <mark><span style="color: orange; font-weight: bold;">new</span></mark>
@@ -128,10 +143,10 @@ function professorInfo(){
 			</td>
 
 	
-			<td>
+			<td style=" text-align: center;">
  			 ${nv.n_writeday.split(' ')[0]}
 			</td>
-			<td>
+			<td style=" text-align: center;">
 			${nv.n_count}
 			</td>
 			
@@ -142,7 +157,7 @@ function professorInfo(){
     </table>
 
 <c:set var="parm" value="&subject=${pm.scri.subject}" />
-    <table>
+    <table class="writetbl">
         <tr>
             <td style="width:700px"></td>
             <td>
@@ -206,11 +221,12 @@ arrow_forward_ios
 action="${pageContext.request.contextPath}/notice/noticeList_p.do"
 method="post"
 onsubmit="saveSelectedValue()">
-<table class="searchtbl" border=0>
+<table class="searchtbl">
     <tr>
   
     <td style="width:450px; font-weight:bold">
-	<c:set var="subb" value="${sub}" />
+      <span style="color:#0067b3;">
+      <c:set var="subb" value="${sub}" />
 	<c:choose>
     	<c:when test="${subb == 0}">
          선택된 과목 : 전체 과목
@@ -223,6 +239,7 @@ onsubmit="saveSelectedValue()">
         	</c:forEach>
     		</c:otherwise>
 	</c:choose>
+  </span>
 	</td>
 	
 		<td class="sub">
@@ -235,9 +252,9 @@ onsubmit="saveSelectedValue()">
 		</td>
 
         
-        <td><button type="submit" class="btn"><span class="material-symbols-outlined">
-        screen_search_desktop
-        </button></span></td>
+    <td><button style="border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
+      screen_search_desktop
+      </button></span></td>
  </tr>
 </table>
 </form>
