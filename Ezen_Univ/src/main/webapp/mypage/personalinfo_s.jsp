@@ -142,8 +142,8 @@
           </div>
         </div>
         <div class="contents">
-            <h3>학생정보</h3>
-            <table border=1 style="width:600px; text-align:center;">
+            <h3><i class="fa fa-graduation-cap" aria-hidden="true"></i> 학생정보</h3>
+            <table>
 				<tr>
 				<tr>
 					<th>학번</th>

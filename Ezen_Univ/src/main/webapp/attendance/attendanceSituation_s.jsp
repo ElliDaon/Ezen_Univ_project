@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -36,7 +35,7 @@
        color: #555;
     }
     .contents table tr, td{
-       padding: 1em 0;
+       padding: 0.5em 0;
        border: 1px solid #ccc;
        text-align: center;
     }
@@ -207,7 +206,7 @@ function listAction(cidx){
                         <tr>
                             <td style="width:50px">NO</td>
                             <td style="width:80px">이수구분</td>
-                            <td>과목명</td>
+                            <td>강의명</td>
                             <td style="width:80px">학점</td>
                             <td style="width:100px">교수</td>
                             <td style="width:150px">강의실</td>

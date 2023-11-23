@@ -381,7 +381,7 @@ public class AttendanceController extends HttpServlet{
 			av.setPe_period(period);
 			av.setA_date(dates);
 			
-			String str2 = w_week +"주차 "+ dates + " : " + period + "교시 ";
+			String str2 = w_week +"주차&ensp;/&ensp;"+ dates + "&ensp;/&ensp;" + period + "교시 ";
 			
 			request.setAttribute("str2", str2);
 			
