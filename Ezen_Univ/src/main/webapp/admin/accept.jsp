@@ -298,16 +298,16 @@
                     <table>
                         <thead>
                             <tr>
-                                <td style="width: 50px;">
+                                <th style="width: 50px;">
                                     <input type="checkbox" name="studentSelectAll" id="studentSelectAll"/>
-                                </td>
-                                <td style="width: 50px;">순번</td>
-                                <td style="width: 80px;">구분</td>
-                                <td style="width: 100px;">이름</td>
-                                <td style="width: 150px;">생년월일</td>
-                                <td style="width: 300px;">이메일</td>
-                                <td style="width: 200px;">전공</td>
-                                <td colspan="2" width: 50px;>처리</td>
+                                </th>
+                                <th style="width: 50px;">순번</th>
+                                <th style="width: 80px;">구분</th>
+                                <th style="width: 100px;">이름</th>
+                                <th style="width: 150px;">생년월일</th>
+                                <th style="width: 300px;">이메일</th>
+                                <th style="width: 200px;">전공</th>
+                                <th colspan="2" width: 50px;>처리</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -339,16 +339,16 @@
                     <table>
                         <thead>
                             <tr>
-                                <td style="width: 50px;">
+                                <th style="width: 50px;">
                                     <input type="checkbox" name="professorSelectAll"  id="professorSelectAll"/>
-                                </td>
-                                <td style="width: 50px">순번</td>
-                                <td style="width: 80px">구분</td>
-                                <td style="width: 100px">이름</td>
-                                <td style="width: 150px">생년월일</td>
-                                <td style="width: 300px">이메일</td>
-                                <td style="width: 200px">전공</td>
-                                <td colspan="2" width: 50px;>처리</td>
+                                </th>
+                                <th style="width: 50px">순번</th>
+                                <th style="width: 80px">구분</th>
+                                <th style="width: 100px">이름</th>
+                                <th style="width: 150px">생년월일</th>
+                                <th style="width: 300px">이메일</th>
+                                <th style="width: 200px">전공</th>
+                                <th colspan="2" width: 50px;>처리</th>
                             </tr>
                         </thead>
                         <tbody>
