@@ -8,13 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>수강등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <style>
+    .contents table tr, td {
+    padding: 0.7em 0;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+    </style>
+    
     <script>
     $(document).ready(function(){
         // 현재 날짜를 가져와서 년도, 학기 input에 입력
@@ -27,7 +34,24 @@
         $('#yearInput').val(year);
         $('#termInput').val(term);
         courseRegisterList(year, term);
-    
+    	
+        // 로컬 스토리지에서 "selectedMember" 값을 가져오기
+        const selectedMember = localStorage.getItem('selectedMember');
+
+        // 로컬 스토리지에서 "isStudentChecked" 값을 가져오기
+        const isStudentChecked = localStorage.getItem('isStudentChecked') === 'true';
+
+        // 로컬 스토리지에서 "isProfessorChecked" 값을 가져오기
+        const isProfessorChecked = localStorage.getItem('isProfessorChecked') === 'true';
+		
+        // 로그아웃 링크 클릭 시 로컬 스토리지 초기화
+        $('#logoutLink').click(function() {
+            localStorage.removeItem('selectedMember');
+            localStorage.removeItem('isStudentChecked');
+            localStorage.removeItem('isProfessorChecked');
+
+        });
+        
         
         // 전체 체크
         $("#studentSelectAll").change(function () {
@@ -162,7 +186,7 @@
                 success: function(data) {
                 	console.log(data);
                 	//alert("통신 확인");
-                	$("#studentList h4").text(c_name);	//학생 리스트 h4에 불러온 과목명 입력
+                	$("#studentList h3").text(c_name);	//학생 리스트 h3에 불러온 과목명 입력
                 	courseMatchStudent(data, cidx);	//학생들 리스트 정보와 함께 cidx값도 같이 넘기기
                 	
                 	
@@ -241,7 +265,7 @@
             </div>
             <br>
             <div class="logStatus" style="font-weight: bold">
-              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent" id="logoutLink">logout</a>
             </div>
           </div>
           <br>
@@ -264,7 +288,7 @@
                년도 <input type="number" id="yearInput" name="yearInput" disabled/>
                학기 <input type="number" id="termInput" name="termInput" disabled/>
             </div>
-            <div id="courseList" class="list_table">
+            <div id="courseList">
                <table>
                    <thead>
                        <tr>
@@ -288,11 +312,11 @@
             </div>
             <br>
             <div id="studentList">
-            <h4></h4>
+            <h3></h3>
                 <div class="first_line">
                     <button type="button" id="batchBtn" style="cursor: pointer" value="">일괄 등록</button>
                 </div>
-                <div class="list_table">
+                <div>
 	                <table>
 	                    <thead>
 	                        <tr>
