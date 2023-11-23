@@ -106,7 +106,7 @@
                     <thead>
                         <tr>
                             <th style="width:10px">NO</th>
-                            <th style="width:50px">과목명</th>
+                            <th style="width:50px">강의명</th>
                             <th style="width:30px">세부전공</th>
                             <th style="width:10px">수강학년</th>
                             <th style="width:30px">이수구분</th>
