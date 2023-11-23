@@ -8,13 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개강일자등록</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<link rel="stylesheet" href="../css/openDate.css">
-
+	<link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    
+    <style>
+    .contents table tr, td {
+    padding: 0.7em 0;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+    </style>
+    
     <script>
 	$(document).ready(function() {
 	    
@@ -26,6 +33,22 @@
 
 	    openDateList(year, term);
 		
+        // 로컬 스토리지에서 "selectedMember" 값을 가져오기
+        const selectedMember = localStorage.getItem('selectedMember');
+
+        // 로컬 스토리지에서 "isStudentChecked" 값을 가져오기
+        const isStudentChecked = localStorage.getItem('isStudentChecked') === 'true';
+
+        // 로컬 스토리지에서 "isProfessorChecked" 값을 가져오기
+        const isProfessorChecked = localStorage.getItem('isProfessorChecked') === 'true';
+		
+        // 로그아웃 링크 클릭 시 로컬 스토리지 초기화
+        $('#logoutLink').click(function() {
+            localStorage.removeItem('selectedMember');
+            localStorage.removeItem('isStudentChecked');
+            localStorage.removeItem('isProfessorChecked');
+
+        });
 
 		const dateInput = document.getElementById('dateInput');
 		const dateInfoYear = document.getElementById('dateInfoYear');
@@ -115,7 +138,7 @@
      
     function openDateListTable(data){
     	let parsedData = JSON.parse("["+data+"]");
-    	let str = "<table><thead><tr><td>주차</td><td>시작 날짜</td><td>종료 날짜</td></tr></thead><tbody>";	
+    	let str = "<table><thead><tr><th>주차</th><th>시작 날짜</th><th>종료 날짜</th></tr></thead><tbody>";	
     	parsedData.forEach(function (item){
     		
     		str += "<tr><td>"+item.w_week+"</td>" +
@@ -168,7 +191,7 @@
             </div>
             <br>
             <div class="logStatus" style="font-weight: bold">
-              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent" id="logoutLink">logout</a>
             </div>
           </div>
           <br>
@@ -188,15 +211,17 @@
 
 	    <div class="contents">
 	    <form name="frm" >
-	        <h1>개강일자 등록</h1>
+	        <h3>개강일자 등록</h3>
 	        <div class="first_line"> 
 	        	<br>
 		        <input type="date" id="dateInput" name="dateInput" />
 		        <input type="hidden" id="dateInfoYear" name="dateInfoYear" />
 	            <input type="hidden" id="dateInfoSemester" name="dateInfoSemester" />
 	        </div>
-	        <div id="openDateList" class="list_table">
-	        		<!-- 등록된 날짜가 주차배열로 보여줌 -->
+	        <br>
+	        <h3>현재 학기에 등록된 날짜</h3>
+	        <div id="openDateList">
+	        <!-- 등록된 날짜가 주차배열로 보여줌 -->
 	        </div>
 	    </form>
 	    </div>
@@ -204,7 +229,7 @@
 	    
 	    <fieldset class="fixed">
         <legend>공지</legend>
-        이젠 대학에서의 개강날짜 등록은 월요일과 1학기 기준 2~3월, 2학기 기준 8~9월만 가능합니다.
+        이젠 대학에서의 개강날짜 입력은 월요일과 1학기 기준 2~3월, 2학기 기준 8~9월만 가능합니다.
     	</fieldset>
 	</div>
 </div>
