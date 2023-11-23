@@ -10,41 +10,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-	.mytable{
+/* 	.mytable{
 		height: 900px;
 		font-size: 20px;
 		overflow-y: scroll;
 		width: 1330px;
-	}
+	} */
 	tbody tr:hover {
 	background: #F2F2F2;
 	}
 	h3{
-           font-size: 1.47em;
-           font-weight: 500;
-           color: #0067b3;
-       }
-       .contents table{
-        margin-top: 10px;
+		font-size: 1.47em;
+		font-weight: 500;
+		color: #0067b3;
+	}
+	.contents table{
+		margin-top: 10px;
 		width: 1300px;
 		border-collapse: collapse;
-       }
-       .contents table thead{
-          background: #f2f2f2;
-          font-weight: bold;
-          color: #555;
-       }
-       .contents table tr, td{
-          padding: 15px 0;
-          border: 1px solid #ccc;
-          text-align: center;
-        }
+	}
+	.contents table thead{
+		background: #f2f2f2;
+		font-weight: bold;
+		color: #555;
+	}
+	.contents table tr, td{
+		padding: 0.5em 0;
+		border: 1px solid #ccc;
+		text-align: center;
+	}
 </style>
 <script>
 $(document).ready(function(){
@@ -118,7 +117,7 @@ function chooseCourse(selectedCidx) {
 				$('#mytable').empty();
 				var str = "<table><thead><tr><td style='width:50px'>주차</td><td style='width:250px'>수업일자</td>"
 	                	+"<td style='width:400px'>수업시간</td><td style='width:50px'>출석</td><td style='width:50px'>조퇴</td>"
-	                	+"<td style='width:50px'>지각</td><td style='width:50px'>결석</td><td style='width:150px'>처리</td>"
+	                	+"<td style='width:50px'>지각</td><td style='width:50px'>결석</td><td style='width:150px'>출결처리</td>"
 	            		+"</tr></thead><tbody>";
 				
 	            $.each(data, function(i) {
@@ -131,9 +130,9 @@ function chooseCourse(selectedCidx) {
 	                    cnt += parseInt(data[i].att, 10) + parseInt(data[i].early, 10) + parseInt(data[i].late, 10) + parseInt(data[i].absent, 10);
 
 	                	if(cnt>=totalcnt){
-		                	str +="</td><td><button type='button' class='btn' style='border: 1px solid gray'>출결수정</button></td></tr>";
+		                	str +="</td><td><button type='button' class='btn' style='background-color:#F2F2F2;'>출결수정</button></td></tr>";
 	                	}else{
-		                	str +="</td><td><button type='button' class='btn' style='cursor:pointer; background-color:#A3DBFF; border: 1px solid #A3DBFF;'>출결처리</button></td></tr>";
+		                	str +="</td><td><button type='button' class='btn' style='background-color:#0067B3; color:white; border:1px solid #0067B3;'>출결처리</button></td></tr>";
 	                	}
 	               
 	
@@ -301,7 +300,7 @@ function chooseCourse(selectedCidx) {
             <h3>출석관리</h3>
             <div class="first_line">
                 <div> 
-                    교과목명
+                    강의명
                     <select id="selectcourse" onchange="chooseCourse()">
                       <option></option>
                       <c:forEach var="av" items="${list}">

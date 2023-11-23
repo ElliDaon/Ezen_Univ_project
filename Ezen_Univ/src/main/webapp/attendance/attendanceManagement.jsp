@@ -7,10 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
+    <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="../css/attmanage.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script>
+    $(document).ready(function(){
+        professorInfo();
+    });
+
+    function professorInfo(){
+    	
+    	var str = "";
+    	
+    	var p_no =${sessionScope.p_no};
+    	var p_name = "${sessionScope.p_name}"
+    	var p_major = "${sessionScope.p_major}";
+    	
+    	str = "<strong>[교수]</strong><br>"
+    		 + p_name + "("+ p_no +")<br>"
+    		 + "[" + p_major + "]";
+    	
+    	$("#myinfo").html(str);
+    	return;
+    }
+    
     $(document).ready(function(){
 	    $("#attbtn").on("click",function(){
 	    	var fm = document.attendancefrm;
@@ -84,23 +105,73 @@
     </script>
 </head>
 <body>
-    <div class="header">
-        <iframe src = "../main/navigation_p.jsp" width = "100%" height="55" ></iframe>
-    </div>
-    <div class="container">
+	<div id="main-header">
+		<header class="mainHeader">
+			<section class="mainHeaderSection">
+				<div>
+					<a href="../main/main_p.do" class="logoLink" target="_parent"><img src="../images/ezen_univ.png" width="150"></a>
+					<div class="headerMenu">
+						<nav class="menuList">
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../mypage/personalinfo_p.do" target="_parent">마이페이지</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../attendance/attendanceSituation_p.do" target="_parent">출석관리</a></div>
+							</div>
+							<div role="menuitem" class="menuitem">
+							  <div aria-current="false" class="menuitemin"><a href="../notice/noticeList_p.do" target="_parent">공지사항</a></div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</section>
+		</header>
+	</div>
+	<div class="main">
+      <div class="container">
         <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_p.jsp" width="100%" height="200"></iframe>
+          <div class="top">
+            <div id="myinfo" class="myinfo">
+              <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
             </div>
-            <div class="menubar">
-                <iframe src = "../leftmenu/attendance_p.jsp" width="100%" height="466"></iframe>
+            <br>
+            <div class="logStatus" style="font-weight: bold">
+              <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
             </div>
+          </div>
+          <br>
+          <div class="topmenu_name">출석관리</div>
+          <div class="bottom">
+           <ul>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../attendance/attendanceSituation_p.do" target="_parent">
+                 <i class="fa fa-calendar" aria-hidden="true"></i>
+                  출석현황 조회</a></li>
+               </ul>
+             </li>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../attendance/attendancePreManagement.do" target="_parent" style="color:#0078ff; font-weight: bold;">
+                 <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                 출석 관리</a></li>
+               </ul>
+             </li>
+             <li class="personalinfo">
+               <ul>
+                 <li><a href="../attendance/lackOfAttendance.do" target="_parent">
+                 <i class="fa fa-calendar-times-o" aria-hidden="true" ></i>
+                 출석 미달 관리</a></li>
+               </ul>
+             </li>
+           </ul>
+          </div>
         </div>
         <div class="contents">
             <h3>출석관리</h3>
                 <form name="attendancefrm"> 
-            	<div class="select-sub">
-                    교과목명
+            	<div class="first_line">
+                    강의명
                     <input type="text" name="c_name" value="${av.c_name}" disabled>
                     <input type="hidden" name="ctidx" value="${av.ctidx}">
                     <input type="hidden" name="a_date" value="${av.a_date}">
@@ -109,32 +180,29 @@
                     <input type="hidden" name="cidx" value="${av.cidx}">
                     <input type="hidden" name="widx" value="${av.widx}">
                     <input type="hidden" name="period" value="${av.pe_period}">
-
            		</div>
-           		
            		<br>
-           		<br>
-           		<h3>
-           			<strong>${str2}(${av.pe_start}~${av.pe_end})</strong>
-           		</h3>
-           		
            		<div class="student-list">
-                    <div class="btn">
-                        <button type="button" name="attbtn" id="attbtn">저장</button>
-                    </div>
+           		<div style="display:flex;">
+           		<h3>
+           			<i class="fa fa-pencil-square" aria-hidden="true"></i>
+           			${str2}(${av.pe_start}~${av.pe_end})
+           		</h3>
+                	<button type="button" name="attbtn" id="attbtn" class="btn">저장</button>
+                </div>
                     <div class="std-list">
                         <table class="std-list-tbl">
                             <thead>
                                 <tr>
-                                    <td style="width: 5px;">
+                                    <th style="width: 5%;">
                                         <input type="checkbox" name="student" value="selectAll" onclick="selectAtt(this)" checked>
-                                    </td>
-                                    <td style="width: 5px;">순번</td>
-                                    <td style="width: 20px;">이름</td>
-                                    <td style="width: 25px;">학번</td>
-                                    <td style="width: 5px;">출결구분</td>
-                                    <td style="width: 40px;">비고</td>
-                                    <td style="width: 60px;">처리</td>
+                                    </th>
+                                    <th style="width: 5%;">NO</th>
+                                    <th style="width: 20%;">이름</th>
+                                    <th style="width: 20%;">학번</th>
+                                    <th style="width: 10%;">출결구분</th>
+                                    <th style="width: 30%;">처리</th>
+                                    <th style="width: 10%;">비고</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -147,7 +215,6 @@
                                     <td>${mv.s_name}</td>
                                     <td>${mv.s_no}</td>
                                     <td><input class="attenvalue" type="text" id="value${i.count}" name="value${i.count}" value="${mv.e_attendance}" disabled></td>
-                                    <td></td>
                                     <td>
                                         <input type="radio" id="att${i.count}" name="attendvalue${i.count}" value="출석" onclick="getValue(event,${i.count})"><label for="att${i.count}">출석</label>
                                         <input type="radio" id="late${i.count}" name="attendvalue${i.count}" value="지각" onclick="getValue(event,${i.count})"><label for="late${i.count}">지각</label>
@@ -193,8 +260,8 @@
 		                                                $label.css('color', 'white');
 		                                            } else {
 		                                                $label.css('background-color', 'white');
-		                                                $label.css('border', '1px solid black');
-		                                                $label.css('color', 'gray');
+		                                                $label.css('border', '1px solid 555555');
+		                                                $label.css('color', '#555555');
 		                                            }
 		                                        });
 	
@@ -220,14 +287,15 @@
 		                                                    $label.css('color', 'white');
 		                                                } else {
 		                                                    $label.css('background-color', 'white');
-		                                                    $label.css('border', '1px solid black');
-		                                                    $label.css('color', 'gray');
+		                                                    $label.css('border', '1px solid 555555');
+		                                                    $label.css('color', '#555555');
 		                                                }
 		                                            });
 		                                        });
 	                                        });
                                     	</script>
                                     </td>
+                                    <td></td>
                                 </tr>
                            		</c:forEach>
                             </tbody>
@@ -236,6 +304,7 @@
             	</div>
         	</form>
         </div>
+      </div>
     </div>
     <script src="../js/attendanceManage.js"></script>
 </body>

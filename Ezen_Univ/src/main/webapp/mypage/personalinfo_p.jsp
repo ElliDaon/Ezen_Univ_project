@@ -32,7 +32,7 @@
             color: #0067b3;
         }
         .contents table{
-            margin: 10px;
+            margin-top: 10px;
 			width: 600px;
 			/* height: 50px;
 			text-align: center; */
@@ -134,8 +134,7 @@
           </div>
         </div>
         <div class="contents">
-            <h3>교수정보</h3>
-            
+            <h3><i class="fa fa-university" aria-hidden="true"></i> 교수정보</h3>
             <table>
 				<tr>
 				<tr>

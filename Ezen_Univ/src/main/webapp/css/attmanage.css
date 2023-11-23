@@ -1,36 +1,57 @@
-.container{
-    display: flex;
+h3{
+    font-size: 1.47em;
+    font-weight: 500;
+    color: #0067b3;
 }
-.sidebar{
-    width: 50%;
+.contents table{
+    margin-top: 10px;
+    width: 1300px;
+    /* height: 50px;
+    text-align: center; */
+    border-collapse: collapse;
 }
-.myinfo{
-    width: 100%;
+.contents table thead{
+    background: #f2f2f2;
+    font-weight: bold;
+    color: #555;
 }
-.menubar{
-    width: 100%;
+.contents table th, td{
+    padding: 8px 0;
+    border: 1px solid #ccc;
+    text-align: center;
 }
-.contents{
-    padding: 20px;
+.first_line{
+    margin-top: 10px;
+    width: 1300px;
+    padding: 12px;
+    display: block;
+    background: #f2f2f2;
+    border-top: solid 2px #0067b3;
+    font-weight: bold;
+    color: #555;
 }
-.select-sub{
-    width: 100%;
-    background: rgb(194, 194, 255);
-    padding: 10px;
+.first_line input{
+    width: 250px;
+    text-align: center;
+    background: white;
 }
 .student-list{
     width: 100%;
 }
 .student-list .btn{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+    margin-left: 680px;
+    padding: 0px 8px;
+    background-color: #0067b3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
 }
 .student-list .btn button{
     width: 50px;
     height: 30px;
 }
-.std-list{
+/* .std-list{
     background: white;
     width: 100%;
 }
@@ -47,7 +68,7 @@
 .std-list table tbody tr{
     height: 15px;
     margin: 5px;
-}
+} */
 .std-list table button{
     cursor: pointer;
     border: 0.5px solid black;
@@ -56,9 +77,9 @@
 .std-list .attenvalue{
     width: 50px;
 }
-.std-list table tbody tr, td{
+/* .std-list table tbody tr, td{
     border: 1px solid gray;
-}
+} */
 .std-list table tbody tr:nth-child(even){
     background: rgb(236, 236, 236);
 }
@@ -70,21 +91,21 @@ input:disabled{
     display: none;
 }
 .std-list-tbl input[type=text]{
-	width: 50px;
-	height: 20px;
-	text-align: center;
-	font-size: 15px;
+    width: 70px;
+    height: 25px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
 }
 .std-list-tbl input[type=radio]+label{
     display: inline-block;
     cursor: pointer;
     height: 24px;
     width: 50px;
-    border: 1px solid black;
+    border: 1px solid #555555;
     text-align: center;
     border-radius: 5px;
     background-color: white;
-    color: gray;
     margin: 5px 0px 5px 5px;
 } 
 

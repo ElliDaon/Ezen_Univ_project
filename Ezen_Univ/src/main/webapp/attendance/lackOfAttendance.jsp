@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/nav_style.css">
     <link rel="stylesheet" href="../css/attendanceSituation.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,13 +29,13 @@
            font-weight: bold;
            color: #555;
         }
-        .contents table tr, td{
-           padding: 1em 0;
+        .contents table th, td{
+           padding: 8px 0;
            border: 1px solid #ccc;
            text-align: center;
         }
 	</style>
-	 <script>
+	<script>
 
 	$(document).ready(function(){
 	        professorInfo();
@@ -71,10 +70,10 @@
 	    		dataType : "json",
 	    		success : function(data){
 	    			var str = "";
-	    			str +=  "<table class='countNo'><thead><tr>"
-                          + "<td style='width:10px'>NO</td><td style='width:50px'>이름</td>"
-                          + "<td style='width:30px'>학번</td><td style='width:30px'>결석일수</td>"
-                          + "<td style='width:30px'>결석률</td></tr></thead><tbody>";
+	    			str +=  "<table class='countNo' style='width:1000px;'><thead><tr>"
+                          + "<th style='width:10%'>NO</th><th style='width:25%'>이름</th>"
+                          + "<th style='width:25%'>학번</th><th style='width:20%'>결석일수</th>"
+                          + "<th style='width:20%'>결석률</th></tr></thead><tbody>";
                     
                     $(data).each(function(){
                   	  str = str + "<tr><td></td><td>"+this.s_name+"</td>"
@@ -101,7 +100,7 @@
 			var str = "";
           
             $(data).each(function(){
-          	  str = "<h3>" + this.c_name +"</h3>";
+          	  str = "<h3><i class='fa fa-bookmark' aria-hidden='true'></i>&nbsp;" + this.c_name +"</h3>";
             });
 			$("#courseName").html(str); 
 			return;
@@ -194,27 +193,27 @@
                 년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="turm" value="${semester}" disabled/>
             </div>
             <div class="list_table" style="margin-bottom:35px;">
-                <table>
+                <table style="width:1000px;">
                     <thead>
                         <tr>
-                            <td style="width:10px">NO</td>
-                            <td style="width:50px">강의명</td>
-                            <td style="width:30px">미달자 수 / 학생수</td>
-                            <td style="width:30px">미달률</td>
+                            <th style="width:10%;">NO</th>
+                            <th style="width:40%;">강의명</th>
+                            <th style="width:25%;">미달자 수 / 학생수</th>
+                            <th style="width:25%;">미달률</th>
                         </tr>
                     </thead>
                     <tbody>
                     	<c:forEach var="av" items="${list}" varStatus="i">
                         <tr>
                             <td>${i.count}</td>
-                            <td onClick="displaySecondTable(${av.cidx})" style="cursor:pointer;">${av.c_name}</td>
+                            <td onClick="displaySecondTable(${av.cidx})" style="cursor:pointer; font-weight:bold;">${av.c_name}</td>
                             <td>${av.abperal}</td>
                             <td>${av.abpercent}</td>
                         </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-              <b style="color:red">※ 출석 미달자 : 결석률이 25%를 초과하는 자</b>
+                <b style="color:red;">※ 출석 미달자 : 결석률이 25%를 초과하는 자</b>
             </div>
             
             <div id="courseName"></div>
