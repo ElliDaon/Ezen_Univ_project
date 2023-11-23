@@ -53,22 +53,28 @@ function check(){
 <style>
 
 
-h1{
-    font-family: 'Black Han Sans', sans-serif;
-    font-weight: 100;
-    font-size: 40px;
-    margin-bottom: 10px;
-    margin-top : 10px;
+h3 {
+    
+    font-size: 1.47em;
+    font-weight: 500;
+    color: #0067b3;
+   
 }
+
 
 .subject {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    background: #f2f2f2;
+    color: black;
+    border: 1px solid #ccc;
+    border-top: solid 2px #0067b3;
+    display: flex;
 }
 .writebtn{
-    background-color: black;
+    background-color: #0078ff;
     border-radius: 5px;
     color: whitesmoke;
     text-decoration: none; 
@@ -93,7 +99,7 @@ h1{
     display: flex;
 } 
 .list{
-    background-color: black;
+  
     border-radius: 5px;
     color: whitesmoke;
     text-decoration: none;
@@ -101,7 +107,7 @@ h1{
     
 .text-area{
     width: 100%;
-    border: 3px solid  #42444e;
+    border: 2px solid #0067b3;
     height: 500px;
     margin-bottom: 10px;
 }
@@ -122,7 +128,7 @@ h1{
 .subject{
     display: flex;
    
-    border-top: 3px solid  #42444e;
+    border-top: 1px solid  #0067b3;
 }
 
 .subject td{ 
@@ -132,7 +138,7 @@ h1{
 .material-symbols-outlined{
 
 
-background: #42444e;
+background: #0078ff;
 width: 40px;
 height: 38px;
 text-align: center;
@@ -140,10 +146,11 @@ color: white;
 border-radius: 5px;
 font-size:35px;
 padding-top : 3px;
+
      
 }
 .writebtn{
-    background: #42444e;
+    background: #0078ff;
 width: 70px;
 height: 38px;
 text-align: center;
@@ -151,7 +158,7 @@ color: white;
 border-radius: 5px;
 font-size:17px;
 font-weight: bold;
-
+border: 0;
 }
 </style>
 
@@ -170,7 +177,7 @@ font-weight: bold;
             </div>
         </div> 
         <div class="contents">
-        <h1>공지 수정</h1>
+        <h3>공지 수정</h3>
         <form name="frm">
             <input type="hidden" name="nidx" value="<%=nv.getNidx()%>">
         <table class="noticeWrite">

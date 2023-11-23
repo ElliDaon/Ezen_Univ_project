@@ -43,6 +43,29 @@
       }
     </script>
 
+<style>
+  .pagination td {
+    border: 0px; 
+  }
+
+  .searchtbl td {
+    border: 0px; 
+  }
+      .noticelist td {
+        padding: 0.7em 0;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    .noticelist tr {
+        padding: 0.7em 0;
+        border: 1px solid #ccc;
+        text-align: center;
+        
+    }
+</style>
+
+
 </head>
 <body>
 
@@ -98,25 +121,26 @@
           </div>
         </div>
         <div class="contents">
-        <h1>휴보강 공지</h1>
-        <table class="noticelist" border=1 style="width:800px;" >
+        <h3>휴보강 공지</h3>
+        <table class="noticelist" style="width:800px;" >
         	
             <thead>
-                <tr>
-                    <th style="width: 100px;">글번호</th>
-                    <th>제목</th>
+                <tr style="font-weight: bold ;">
+                    <th style="width: 100px;">No</th>
+                    <th style="width: 500px;">제목</th>
                     <th>작성일</th>
                     <th>조회수</th>
                 </tr>
             </thead>
             
             <tbody>
+              <tr>
        		<c:forEach var="nv" items="${alist}">
-			<tr>
-			<td>
+              
+			<td style=" text-align: center;">
 			${nv.nidx}
 			</td>
-			<td class="subject">
+			<td style="text-align: left; padding-left: 20px" class="subject">
             <a href="${pageContext.request.contextPath}/notice/noticeContents_s.do?nidx=${nv.nidx}">
                 <c:if test="${nv.n_dday eq 'true'}">
                <span style="color: orange; font-weight: bold;">new</span>
@@ -128,10 +152,10 @@
 			</td>
 
 	
-			<td>
+			<td style=" text-align: center;">
  			 ${nv.n_writeday.split(' ')[0]}
 			</td>
-			<td>
+			<td style=" text-align: center;">
 			${nv.n_count}
 			</td>
 			
@@ -143,12 +167,7 @@
 
 <c:set var="parm" value="&subject=${pm.scri.subject}" />
     <table>
-        <tr>
-            <td style="width:700px"></td>
-            <td>
 
-            </td>
-        </tr>
     </table>
     <br>
 
@@ -211,6 +230,7 @@ onsubmit="saveSelectedValue()">
     <tr>
   
     <td style="width:450px; font-weight:bold">
+  <span style="color:#0067b3;">
 	<c:set var="subb" value="${sub}" />
 	<c:choose>
     	<c:when test="${subb == 0}">
@@ -224,6 +244,7 @@ onsubmit="saveSelectedValue()">
         	</c:forEach>
     		</c:otherwise>
 	</c:choose>
+  </span>
 	</td>
 	
 		<td class="sub">
@@ -236,7 +257,7 @@ onsubmit="saveSelectedValue()">
 		</td>
 
         
-        <td><button type="submit" class="btn"><span class="material-symbols-outlined">
+    <td><button style="background-color:#0078ff; border: 2px solid #0078ff;" type="submit" class="btn"><span class="material-symbols-outlined">
         screen_search_desktop
         </button></span></td>
  </tr>

@@ -162,7 +162,7 @@
 	            		<h3>출석관리</h3>
 	            		<ul>
 	            			<li><a href="../attendance/attendanceSituation_p.do">출석현황 조회</a></li>
-	            			<li><a href="../attendance/attendanceManagement.do">출석 관리</a></li>
+	            			<li><a href="../attendance/attendancePreManagement.do">출석 관리</a></li>
 	            			<li><a href="../attendance/lackOfAttendance.do">출석 미달 관리</a></li>
 	            		</ul>
 	            	   </li>

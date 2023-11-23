@@ -17,12 +17,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 
-h1{
-    font-family: 'Black Han Sans', sans-serif;
-    font-weight: 100;
-    font-size: 40px;
-    margin-bottom: 10px;
-    margin-top : 10px;
+h3 {
+    
+    font-size: 1.47em;
+    font-weight: 500;
+    color: #0067b3;
+   
 }
 
 
@@ -54,7 +54,8 @@ h1{
 } 
 .text-box{
     width: 100%;
-    border: 3px solid #42444e;
+    border: 2px solid #0067b3;
+    height: 36px ;
     height: 500px;
 }
 
@@ -70,18 +71,33 @@ h1{
     margin-left: -70px;
 }
 .subject{
-    display: flex;
-    background: #42444e;
-    color : white;
+    display: inline-block;
+    background: #f2f2f2;
+    color: black;
+    border: 1px solid #ccc;
+    border-top: solid 2px #0067b3;
     height: 36px ;
     width: 100%;
     font-size: 18px;
     font-weight: bold;
     padding : 5px;
+    vertical-align: top;
+}
+
+
+.list{
+    border: 0;
+}
+
+.noticeinfotd{
+    border: 0;
 }
 
 .subject td{
     text-align: center;
+    align-items: center;
+    border: 0;
+    margin: 5px;
     margin: 5px;
 }
 
@@ -93,20 +109,19 @@ h1{
 
 .material-symbols-outlined{
 
-    background: #42444e;
-
+    background: #0078ff;
     width: 40px;
     height: 38px;
     text-align: center;
     color: white;
     border-radius: 5px;
     font-size:35px;
-    padding-top : 3px;
+    padding-top : 2px;
          
 }
 
 .modify{
-    background: #42444e;
+    background: #0078ff;
 
     width: 40px;
     height: 38px;
@@ -116,9 +131,10 @@ h1{
     color: white;
     border-radius: 5px;
     font-weight: bold; 
+    border: 0;
 }
 .delete{
-    background: #42444e;
+    background: #0078ff;
 
     width: 40px;
     height: 38px;
@@ -128,6 +144,7 @@ h1{
     color: white;
     border-radius: 5px;
     font-weight: bold;
+    border: 0;
      
 }
 </style>
@@ -205,7 +222,7 @@ function professorInfo(){
           </div>
         </div>
         <div class="contents">
-        <h1>휴보강 공지사항</h1>
+        <h3>휴보강 공지사항</h3>
         <table class="noticewrite">
         <tr class="subject">
             <td>제목 &nbsp; :</td>
@@ -213,7 +230,7 @@ function professorInfo(){
             </td>        
         </tr>
         <tr class="noticeinfo">
-        	<td>
+        	<td class="noticeinfotd">
         	<strong>조회수</strong> : ${nv.n_count} &nbsp;&nbsp;  <strong>작성일자</strong> : ${nv.n_writeday} &nbsp;&nbsp; <strong>작성자</strong> : ${nv.p_name}
        		</td>
        		
