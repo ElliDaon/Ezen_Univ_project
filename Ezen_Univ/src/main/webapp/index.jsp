@@ -168,9 +168,7 @@ function CheckEmail(str){
 	<div class="first">
 		<h1>Ezen University</h1><br>
 		<strong style="font-size: 20px;">[출결시스템]</strong><br><br>
-		<p>저희 이젠은 4차 산업혁명을 선도하는 전문교육기관이 되고자 노력하며,<br>
-		훈련생과 훈련생을 채용한 산업체 모두가 만족할 수 있는 기관이 되고자 
-		최선을 다할 것입니다.<br><br></p>
+		<p>저희 프로젝트에 관한 자세한 설명은 오른쪽 상단의 INFO 카테고리에서 확인바랍니다.<br><br></p>
 	</div>
 	<div class="wrapper">
 		<span class="icon-close"><ion-icon name="close"></ion-icon></span>

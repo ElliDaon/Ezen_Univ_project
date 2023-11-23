@@ -135,6 +135,14 @@ function CheckEmail(str){
           return true; 
      } 
 } 
+
+function guideForStudent(){
+	var pdfPath = "<%=request.getContextPath()%>/guide/guide_student.jsp";
+	window.open(pdfPath, '_blank');
+	if (!pdfPath) {
+        alert('팝업 창이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
+    }
+}
 </script>
 <body>	
 	<header>
@@ -208,10 +216,10 @@ function CheckEmail(str){
 			
 			
 			<div class="info-btn">
-				<button>
+				<button onclick="">
 					<label>교수 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
 				</button>
-				<button>
+				<button onclick="guideForStudent()">
 					<label>학생 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
 				</button>
 				<button>
