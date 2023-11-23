@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%
+<!-- %
  if (session.getAttribute("pidx") ==null){
 	 out.println("<script>alert('로그인하셔야 합니다.');</script>");	 
+	 out.println("<script>location.href='"+request.getContextPath()+"/index.jsp'</script>");
  }
-%>
+% -->
 <!DOCTYPE html>
 <html>
 <head>

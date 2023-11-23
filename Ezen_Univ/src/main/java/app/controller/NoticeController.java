@@ -32,11 +32,16 @@ public class NoticeController {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(location.equals("noticeWrite.do")) {
-			
 			 
+			 PrintWriter out = response.getWriter();
 			 HttpSession session = request.getSession();
-			 int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			 
+			 if(session.getAttribute("pidx")==null) {
+					String path = request.getContextPath();
+					out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			}
+			 
+			 int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			 NoticeDao nd = new NoticeDao();
 			 
 			 ArrayList<CourseVo> courselist = nd.courselist_p(pidx);
@@ -237,27 +242,38 @@ public class NoticeController {
 			 
 		}
 		else if(location.equals("noticeDelete.do")) {
-			String nidx  = request.getParameter("nidx");
-			int nidx_int = Integer.parseInt(nidx);
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
 			
+			String nidx  = request.getParameter("nidx");
+			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
+			int nidx_int = Integer.parseInt(nidx);
 			NoticeDao nd = new NoticeDao();
 			int value=0;
 			
-			PrintWriter out = response.getWriter();
+			NoticeVo nv = nd.noticeSelectOne(nidx_int);
 			value = nd.noticeDelete(nidx_int);			
 			request.setAttribute("nv", value);
 			
-			//처리가 되면 1이 아니고 아니면 0나오는 변수값  value
-			if (value !=0) {
+			if(pidx != nv.getPidx()) {
 				
+				out.println("<script>alert('권한이 없습니다.');location.href='"+request.getContextPath()+"/main/main_p.jsp'</script>");	
+
 				
-				response.getWriter().println("<script>alert('글이 삭제되었습니다.'); window.location.href='" + request.getContextPath() + "/notice/noticeList_p.do';</script>");				
+			}
+				else {
 				
-			}else {
-				String path = request.getContextPath()+"/notice/noticeDelete.do?nidx="+nidx;
-				response.sendRedirect(path);				
-			}	
-			
+				//처리가 되면 1이 아니고 아니면 0나오는 변수값  value
+				
+				if (value !=0) {
+									
+					response.getWriter().println("<script>alert('글이 삭제되었습니다.'); window.location.href='" + request.getContextPath() + "/notice/noticeList_p.do';</script>");				
+					
+				}else {
+					String path = request.getContextPath()+"/notice/noticeDelete.do?nidx="+nidx;
+					response.sendRedirect(path);				
+				}	
+			}
 			
 		}else if(location.equals("noticeModify.do")) {
 			HttpSession session = request.getSession();
@@ -266,8 +282,10 @@ public class NoticeController {
 			if(session.getAttribute("pidx")==null) {
 				String path = request.getContextPath();
 				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				
 			}
 			
+						
 			String nidx = request.getParameter("nidx");
 			int nidx_int = Integer.parseInt(nidx);
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
@@ -278,10 +296,23 @@ public class NoticeController {
 			
 			request.setAttribute("nv", nv);	
 			request.setAttribute("courselist", courselist);
-						
+			System.out.println(pidx );
 			
-			String path ="/notice/noticeModify.jsp";
-			 //화면용도의 주소는 포워드로 토스해서 해당 찐주소로 보낸다
+			System.out.println(nv.getPidx());
+			
+			String path= "";
+			if(pidx != nv.getPidx()) {
+			
+				out.println("<script>alert('권한이 없습니다.');location.href='"+request.getContextPath()+"/main/main_p.jsp'</script>");	
+
+			}
+			else {
+				
+			    path ="/notice/noticeModify.jsp";
+			
+			}
+			
+			//화면용도의 주소는 포워드로 토스해서 해당 찐주소로 보낸다
 			 RequestDispatcher rd = request.getRequestDispatcher(path);
 						 			 
 			 rd.forward(request, response);
