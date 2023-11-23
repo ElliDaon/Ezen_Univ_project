@@ -5,19 +5,13 @@
 /*     body{
         text-align: center;
     } */
-    h1{
-        font-family: 'Black Han Sans', sans-serif;
-        font-weight: 100;
-        font-size: 40px;
-        margin-bottom: 20px;
-    }
-    
+
     
     .pagination .act{
             font-weight: bold;
-            color: #42444e;
+            color: #0078ff;
             border-radius: 5px;
-            border: 2px solid #42444e;
+            border: 2px solid #0078ff;
             padding: 5px 7px;
         }
     
@@ -27,8 +21,9 @@
             display: block;
             font-size: 15px;
             text-decoration: none;
+
             padding: 5px 7px;
-            color: #42444e;
+            color: #ccc;
             display: inline-block;
         }
     
@@ -84,18 +79,31 @@
         width: 100%;
         justify-content: flex-start;
     }
-    .noticelist{
-      border-collapse: separate;
-      border-spacing: 0;
+    .noticelist {
+        border-collapse: collapse;
+        border-spacing: 0;
       }
-    
     .noticelist th{
         padding: 6px 15px;
-        background: #42444e;
-         color: #fff;
+        background: #f2f2f2;
+        color: black;
+        border: 1px solid #ccc;
+         border-top: solid 2px #0067b3;
           text-align: center;
     }
-    
+    .noticelist td {
+        padding: 0.7em 0;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    .noticelist tr {
+        padding: 0.7em 0;
+        border: 1px solid #ccc;
+        text-align: center;
+        
+    }
+
     
     .noticelist tbody tr:hover{
         background-color: aliceblue;
@@ -117,8 +125,8 @@
     }
     
     .btn{
-        background-color: #42444e;
-        border-radius: 5px;
+        background-color: #0067b3;
+       
         color: whitesmoke;
     }
     
@@ -147,14 +155,12 @@
         text-decoration: none;
     }
     
-    .contents:hover{
-        text-decoration: underline;
-    }
-    
+
     .sub{
         
         padding : 8px;
         font-size : 14px;
+        
     }
     
     .searchsubject{
@@ -168,5 +174,11 @@
     }
     .seartbl td {
         text-align: center;
+        
     }
-
+    h3 {
+        font-size: 1.47em;
+        font-weight: 500;
+        color: #0067b3;
+    }
+    
