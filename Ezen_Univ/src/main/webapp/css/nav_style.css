@@ -15,7 +15,7 @@
     display: flex;
     /* justify-content: center; */
     border-bottom: 1px solid rgb(220, 225, 230);
-    padding: 0px 30px;
+    padding: 0px 70px;
 }
 
 .mainHeaderSection > div {
@@ -91,10 +91,9 @@ a:hover {
 
 .container {
     display: flex;
-    /* max-width: 75rem; */
     flex-direction: row;
     justify-content: center;
-    padding: 0 1.25rem;
+    padding: 0 5rem;
     margin: 0 auto;
     /* background-color: #f9fafb; */
 }

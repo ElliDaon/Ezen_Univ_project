@@ -125,8 +125,8 @@
            <ul>
              <li class="personalinfo">
               <ul>
-               <li><i class="fa fa-user-circle" aria-hidden="true"></i>
-               개인정보</li>
+               <li><a href="../mypage/personalinfo_s.do" target="_parent"><i class="fa fa-user-circle" aria-hidden="true"></i>
+               개인정보</a></li>
               </ul>
                <ul>
                  <li><a href="../mypage/personalinfo_s.do" target="_parent">&ensp;&ensp;개인정보</a></li>
@@ -143,8 +143,8 @@
              </li>
              <li class="personalinfo">
               <ul>
-               <li><i class="fa fa-book" aria-hidden="true"></i>
-               시간표</li>
+               <li><a href="../mypage/mytable_s.do" target="_parent"><i class="fa fa-book" aria-hidden="true"></i>
+               시간표</a></li>
               </ul>
                <ul>
                  <li><a href="../mypage/mytable_s.do" target="_parent">&ensp;&ensp;시간표 조회</a></li>

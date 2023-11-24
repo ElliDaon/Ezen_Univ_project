@@ -59,7 +59,7 @@
 		</header>
 	</div>
     <div class="main">
-      <div class="container">
+      <div class="container" style="height: 1150px;">
         <div class="sidebar">
           <div class="top">
             <div id="myinfo" class="myinfo">
@@ -147,12 +147,12 @@
 	            	  </ul>
             	</div>
             </div>
+            <div class="sitemap_icon">
+            <span class="sitemap-popup"><ion-icon name="map-outline"></ion-icon></span>
+            </div>
+            <script src="../js/main.js"></script>
         </div>
       </div>
     </div>
-    <div class="sitemap_icon">
-    	<span class="sitemap-popup"><ion-icon name="map-outline"></ion-icon></span>
-    </div>
-    <script src="../js/main.js"></script>
 </body>
 </html>
