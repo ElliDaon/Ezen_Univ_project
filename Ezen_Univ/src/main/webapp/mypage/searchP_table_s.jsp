@@ -22,6 +22,9 @@
 			width: 60px;
 			padding: 2px;
 		}
+		.p_table td {
+		    height: 65px;
+		}
 	</style>
 	<script>
     $(document).ready(function(){

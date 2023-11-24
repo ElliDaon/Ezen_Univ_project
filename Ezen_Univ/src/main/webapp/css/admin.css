@@ -51,8 +51,7 @@ h3 {
     text-align: center;
 }
 
-
-.contents input[type=text],select{ 
+.contents input[type=text]{ 
     flex-grow: 1;
     padding: 5px;
     border: #e6eef5 solid 2px;
@@ -70,16 +69,20 @@ h3 {
 }
 
 .fixed {
-  
-    margin: 50px;
-    width: 180px;
-    height: 220px;
-    padding: 8px;
-}
-
-legend {
-    color: red;
+    margin: 10px 0px 0 50px;
+    width: 250px;
+    height: 140px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    text-align: center;
     font-weight: bold;
+    color: #555555;
+    background: #FAFAFA;
+    }
+
+span {
+    font-weight: bold;
+    color : #0067B3;
 }
 button {
     background: white;
