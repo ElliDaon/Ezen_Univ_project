@@ -21,7 +21,31 @@ NoticeVo nv = (NoticeVo)request.getAttribute("nv");
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="../css/nav_style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <script>
+$(document).ready(function(){
+    professorInfo();
+});
+
+function professorInfo(){
+	
+	var str = "";
+	
+	var p_no =${sessionScope.p_no};
+	var p_name = "${sessionScope.p_name}"
+	var p_major = "${sessionScope.p_major}";
+	
+	str = "<strong>[교수]</strong><br>"
+		 + p_name + "("+ p_no +")<br>"
+		 + "[" + p_major + "]";
+	
+	$("#myinfo").html(str);
+	return;
+}
+
 function check(){
 	
 	var fm = document.frm; //문서객체안의 폼객체이름
@@ -58,13 +82,13 @@ h3 {
     font-size: 1.47em;
     font-weight: 500;
     color: #0067b3;
+    margin-bottom: 10px;
    
 }
 
 
 .subject {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
     background: #f2f2f2;
@@ -73,9 +97,12 @@ h3 {
     border-top: solid 2px #0067b3;
     display: flex;
 }
+.subject td{ 
+    margin: 10px;
+}
+
 .writebtn{
-    background-color: #0078ff;
-    border-radius: 5px;
+    background-color: #0067b3;
     color: whitesmoke;
     text-decoration: none; 
 }
@@ -107,23 +134,17 @@ h3 {
     
 .text-area{
     width: 100%;
-    border: 2px solid #0067b3;
+    border: 1px solid #ccc;
     height: 500px;
     margin-bottom: 10px;
 }
 
 
-.noticewrite{
+.noticeWrite{
     border-collapse: collapse;
-    width: 80%;
+    width: 50%;   
 }
 
-.contents{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: -70px;        
-}
 
 .subject{
     display: flex;
@@ -132,57 +153,112 @@ h3 {
 }
 
 .subject td{ 
-    margin: 5px;
+    margin: 10px;
 }
 
+td {
+    border: none;
+
+}
 .material-symbols-outlined{
 
 
-background: #0078ff;
+background:#0067b3;
 width: 40px;
 height: 38px;
 text-align: center;
 color: white;
-border-radius: 5px;
 font-size:35px;
 padding-top : 3px;
 
      
 }
 .writebtn{
-    background: #0078ff;
+background: #0067b3;
 width: 70px;
 height: 38px;
 text-align: center;
 color: white;
-border-radius: 5px;
 font-size:17px;
 font-weight: bold;
 border: 0;
 }
+
+.listbtn{
+   
+   background: #0067b3;
+
+   width: 70px;
+   height: 38px;
+   font-size: 15;
+   text-align: center;
+   vertical-align: middle;
+   color: white;
+   font-weight: bold; 
+   border: 0;
+
+}
 </style>
 
 </head>
-<body>
-    <div class="header">
-        <iframe src = "../main/navigation_p.jsp" width = "100%" height="55" ></iframe>
-    </div>
-    <div class="container">
-        <div class="sidebar">
-            <div class="myinfo">
-                <iframe src = "../leftmenu/myinfo_p.jsp" width="100%" height="200"></iframe>
+    <body>
+        <div id="main-header">
+            <header class="mainHeader">
+                <section class="mainHeaderSection">
+                    <div>
+                        <a href="../main/main_p.do" class="logoLink" target="_parent"><img src="../images/ezen_univ.png" width="150"></a>
+                        <div class="headerMenu">
+                            <nav class="menuList">
+                                <div role="menuitem" class="menuitem">
+                                  <div aria-current="false" class="menuitemin"><a href="../mypage/personalinfo_p.do" target="_parent">마이페이지</a></div>
+                                </div>
+                                <div role="menuitem" class="menuitem">
+                                  <div aria-current="false" class="menuitemin"><a href="../attendance/attendanceSituation_p.do" target="_parent">출석관리</a></div>
+                                </div>
+                                <div role="menuitem" class="menuitem">
+                                  <div aria-current="false" class="menuitemin" style="font-weight: bold"><a href="../notice/noticeList_p.do" target="_parent">공지사항</a></div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+            </header>
+        </div>
+        <div class="main">
+          <div class="container">
+            <div class="sidebar">
+              <div class="top">
+                <div id="myinfo" class="myinfo">
+                  <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
+                </div>
+                <br>
+                <div class="logStatus" style="font-weight: bold">
+                  <a href="<%=request.getContextPath()%>/member/memberLogout.do" target="_parent">logout</a>
+                </div>
+              </div>
+              <br>
+              <div class="topmenu_name">공지사항</div>
+              <div class="bottom">
+               <ul>
+                 <li class="personalinfo">
+                   <ul>
+                     <li><a href="../notice/noticeList_p.do" target="_parent" style="color:#0078ff; font-weight: bold;">
+                     <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                      휴보강 공지</a></li>
+                   </ul>
+                 </li>
+               </ul>
+              </div>
             </div>
-            <div class="menubar">
-                <iframe src = "../leftmenu/notice_p.jsp" width="100%" height="100%"></iframe>
-            </div>
-        </div> 
-        <div class="contents">
+        
+    <div class="contents">
         <h3>공지 수정</h3>
         <form name="frm">
             <input type="hidden" name="nidx" value="<%=nv.getNidx()%>">
         <table class="noticeWrite">
+
         <tr class="subject">
-            <td><strong>제목</strong></td>
+            <td><strong>제목</strong>&nbsp;&nbsp;&nbsp;</td>
             <td>
 
             <select name="noticetype">
@@ -203,6 +279,11 @@ border: 0;
             </td>
         </tr>
         <tr>
+        	<td>
+        	</td>
+        </tr>
+        <tr>
+        
             <td>
  
                 <textarea name="contents" class="text-area"><%=nv.getN_contents() %></textarea>
@@ -211,8 +292,8 @@ border: 0;
         <tr>
             <td class="list1">
     			<a class="list" href="noticeList_p.do" onclick="return confirm('글은 수정되지 않습니다. 정말 나가시겠습니까?')">
-      				  <span class="material-symbols-outlined">list_alt</span>
-   			</a>
+                    <button class="listbtn" type="button">목록</button>
+   			    </a>
                     <input type="submit" class="writebtn" value="등록" onclick="check();" ></input> 
             </td>
         </tr> 
@@ -221,6 +302,5 @@ border: 0;
        
         </div>
         
-    </div>
 </body>
 </html>

@@ -22,6 +22,7 @@ h3 {
     font-size: 1.47em;
     font-weight: 500;
     color: #0067b3;
+    margin-bottom: 10px;
    
 }
 
@@ -54,36 +55,34 @@ h3 {
 } 
 .text-box{
     width: 100%;
-    border: 2px solid #0067b3;
+    border: 1px solid #ccc;
     height: 36px ;
     height: 500px;
 }
 
 .noticewrite{
     border-collapse: collapse;
-    width: 70%;
+    width: 50%;
 }
 
 .contents {
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    margin-left: -70px;
+    
 }
-.subject{
-    display: inline-block;
+.subject {
+    display: flex;
+    align-items: center;
+    width: 100%;
     background: #f2f2f2;
     color: black;
+    font-weight: bold;
     border: 1px solid #ccc;
     border-top: solid 2px #0067b3;
-    height: 36px ;
-    width: 100%;
-    font-size: 18px;
-    font-weight: bold;
-    padding : 5px;
-    vertical-align: top;
+    display: flex;
+    
+   
 }
-
 
 .list{
     border: 0;
@@ -94,11 +93,13 @@ h3 {
 }
 
 .subject td{
+    
     text-align: center;
     align-items: center;
     border: 0;
-    margin: 5px;
-    margin: 5px;
+    margin: 10px;
+    margin-top: 12px;
+  
 }
 
 .noticeinfo{
@@ -109,19 +110,33 @@ h3 {
 
 .material-symbols-outlined{
 
-    background: #0078ff;
+    background: #0067b3;
     width: 40px;
     height: 38px;
     text-align: center;
     color: white;
-    border-radius: 5px;
     font-size:35px;
     padding-top : 2px;
          
 }
+.listbtn{
+   
+    background: #0067b3;
+
+    width: 70px;
+    height: 38px;
+    font-size: 15;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold; 
+    border: 0;
+
+}
+
 
 .modify{
-    background: #0078ff;
+    background: #0067b3;
 
     width: 40px;
     height: 38px;
@@ -129,12 +144,11 @@ h3 {
     text-align: center;
     vertical-align: middle;
     color: white;
-    border-radius: 5px;
     font-weight: bold; 
     border: 0;
 }
 .delete{
-    background: #0078ff;
+    background: #0067b3;
 
     width: 40px;
     height: 38px;
@@ -142,7 +156,6 @@ h3 {
     text-align: center;
     vertical-align: middle;
     color: white;
-    border-radius: 5px;
     font-weight: bold;
     border: 0;
      
@@ -242,9 +255,9 @@ function professorInfo(){
         </tr>
         <tr>
             <td class="list">
-                <a class="link" href="noticeList_p.do"><span class="material-symbols-outlined">
-                    list_alt
-                    </span></a>
+                <a class="link" href="noticeList_p.do">
+                    <button class="listbtn" type="button">목록</button>
+                </a>
             
                 <div>
                 <button type="button" class="modify" onclick="location.href='<%=request.getContextPath()%>/notice/noticeModify.do?nidx=${nv.nidx}'">수정</button>

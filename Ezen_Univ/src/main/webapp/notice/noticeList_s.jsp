@@ -257,7 +257,7 @@ onsubmit="saveSelectedValue()">
 		</td>
 
         
-    <td><button style="background-color:#0078ff; border: 2px solid #0078ff;" type="submit" class="btn"><span class="material-symbols-outlined">
+    <td><button style="background-color: color: #0067b3; border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
         screen_search_desktop
         </button></span></td>
  </tr>

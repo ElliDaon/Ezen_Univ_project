@@ -194,7 +194,7 @@ public class NoticeController {
 		
 		}
 		
-		else if(location.equals("noticeContents.do")) {
+		else if(location.equals("noticeContents_p.do")) {
 			HttpSession session = request.getSession();
 			PrintWriter out = response.getWriter();
 			
@@ -213,7 +213,7 @@ public class NoticeController {
 			
 			request.setAttribute("nv", nv);
 			
-			String path ="/notice/noticeContents.jsp";
+			String path ="/notice/noticeContents_p.jsp";
 			 //화면용도의 주소는 포워드로 토스해서 해당 찐주소로 보낸다
 			 RequestDispatcher rd = request.getRequestDispatcher(path);
 			 rd.forward(request, response);
@@ -349,7 +349,7 @@ public class NoticeController {
 				out.println("<script>alert('수정 불가');location.href='"+request.getContextPath()+"/notice/noticeModify.do?nidx="+nidx+"'</script>");	
 				
 			}else {	//입력되었으면 리스트 페이지로 이동		
-				String path = request.getContextPath()+"/notice/noticeContents.do?nidx="+nidx;
+				String path = request.getContextPath()+"/notice/noticeContents_p.do?nidx="+nidx;
 				response.sendRedirect(path);
 			}		
 		

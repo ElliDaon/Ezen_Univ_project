@@ -170,7 +170,8 @@
     }
     
     .material-symbols-outlined{
-        font-size: 30ox;
+        font-size: 30px;
+       
     }
     .seartbl td {
         text-align: center;
@@ -180,5 +181,6 @@
         font-size: 1.47em;
         font-weight: 500;
         color: #0067b3;
+        margin-bottom: 10px;
     }
     
