@@ -51,6 +51,8 @@ function professorInfo(){
     border: 0px; 
   }
 
+
+
   .writetbl td {
     border: 0px; 
   }
@@ -159,7 +161,7 @@ function professorInfo(){
 <c:set var="parm" value="&subject=${pm.scri.subject}" />
     <table class="writetbl">
         <tr>
-            <td style="width:700px"></td>
+            
             <td>
                 <div class="writediv"> 
                     <a class="noticeWrite" href="noticeWrite.do">
@@ -167,6 +169,26 @@ function professorInfo(){
                     </a>
                 </div>
             </td>
+            
+            <td style="padding-left: 457px;">
+              
+            </td>
+            
+              <td class="sub">
+              <select class="searchsubject" name="subject" id="subject">
+                  <option value="0">과목을 선택해주세요</option>
+                  <c:forEach var="cv" items="${courselist}">
+                     <option value="${cv.cidx}" <c:if test="${subb == cv.cidx}">selected</c:if>>${cv.c_name}</option>
+                 </c:forEach>
+              </select>
+            </td>
+      
+              
+          <td><button style="background-color: color: #0067b3; border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
+            search
+            </span></td>
+          
+
         </tr>
     </table>
     <br>
@@ -224,7 +246,7 @@ onsubmit="saveSelectedValue()">
 <table class="searchtbl">
     <tr>
   
-    <td style="width:450px; font-weight:bold">
+    <!--td style="width:450px; font-weight:bold">
       <span style="color:#0067b3;">
       <c:set var="subb" value="${sub}" />
 	<c:choose>
@@ -240,21 +262,9 @@ onsubmit="saveSelectedValue()">
     		</c:otherwise>
 	</c:choose>
   </span>
-	</td>
+	</td-->
 	
-		<td class="sub">
-		    <select class="searchsubject" name="subject" id="subject">
-		        <option value="0">과목을 선택해주세요</option>
-		        <c:forEach var="cv" items="${courselist}">
-		           <option value="${cv.cidx}" <c:if test="${subb == cv.cidx}">selected</c:if>>${cv.c_name}</option>
-		       </c:forEach>
-		    </select>
-		</td>
 
-        
-    <td><button style="border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
-      screen_search_desktop
-      </button></span></td>
  </tr>
 </table>
 </form>

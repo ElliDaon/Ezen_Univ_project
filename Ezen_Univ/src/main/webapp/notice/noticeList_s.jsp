@@ -43,6 +43,7 @@
       }
     </script>
 
+
 <style>
   .pagination td {
     border: 0px; 
@@ -50,8 +51,17 @@
 
   .searchtbl td {
     border: 0px; 
+    
+    
   }
-      .noticelist td {
+
+ 
+  .searchtbl{
+    margin-left: 540px;
+  }
+
+
+     .noticelist td {
         padding: 0.7em 0;
         border: 1px solid #ccc;
         text-align: center;
@@ -63,6 +73,14 @@
         text-align: center;
         
     }
+
+    .material-symbols-outlined{
+
+      font-size: 30px;
+      
+
+    }
+    
 </style>
 
 
@@ -164,6 +182,46 @@
 
         	</tbody>
     </table>
+    <form name="frm" 
+action="${pageContext.request.contextPath}/notice/noticeList_s.do"
+method="post"
+onsubmit="saveSelectedValue()">
+<table class="searchtbl" border=0>
+   <!--td style="width:450px; font-weight:bold">
+  <span style="color:#0067b3;">
+	<c:set var="subb" value="${sub}" />
+	<c:choose>
+    	<c:when test="${subb == 0}">
+         선택된 과목 : 전체 과목
+    	</c:when>
+    		<c:otherwise>
+        		<c:forEach var="cv" items="${courselist}">
+            	<c:if test="${cv.cidx == subb}">
+ 		 선택된 과목 : ${cv.c_name} 
+            	</c:if>
+        	</c:forEach>
+    		</c:otherwise>
+	</c:choose>
+  </span>
+	</td-->
+  
+  <tr>
+    <td class="sub">
+		    <select class="searchsubject" name="subject" id="subject">
+		        <option value="0">강의를 선택해주세요</option>
+		        <c:forEach var="cv" items="${courselist}">
+		           <option value="${cv.cidx}" <c:if test="${subb == cv.cidx}">selected</c:if>>${cv.c_name}</option>
+		       </c:forEach>
+		    </select>
+		</td>
+
+        
+    <td><button style="background-color: color: #0067b3; border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
+      search
+      </span></td>
+    </tr>
+</table>
+</form>
 
 <c:set var="parm" value="&subject=${pm.scri.subject}" />
     <table>
@@ -222,47 +280,7 @@
    
     <br>
     
-<form name="frm" 
-action="${pageContext.request.contextPath}/notice/noticeList_s.do"
-method="post"
-onsubmit="saveSelectedValue()">
-<table class="searchtbl" border=0>
-    <tr>
-  
-    <td style="width:450px; font-weight:bold">
-  <span style="color:#0067b3;">
-	<c:set var="subb" value="${sub}" />
-	<c:choose>
-    	<c:when test="${subb == 0}">
-         선택된 과목 : 전체 과목
-    	</c:when>
-    		<c:otherwise>
-        		<c:forEach var="cv" items="${courselist}">
-            	<c:if test="${cv.cidx == subb}">
- 		 선택된 과목 : ${cv.c_name} 
-            	</c:if>
-        	</c:forEach>
-    		</c:otherwise>
-	</c:choose>
-  </span>
-	</td>
-	
-		<td class="sub">
-		    <select class="searchsubject" name="subject" id="subject">
-		        <option value="0">과목을 선택해주세요</option>
-		        <c:forEach var="cv" items="${courselist}">
-		           <option value="${cv.cidx}" <c:if test="${subb == cv.cidx}">selected</c:if>>${cv.c_name}</option>
-		       </c:forEach>
-		    </select>
-		</td>
 
-        
-    <td><button style="background-color: color: #0067b3; border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
-        screen_search_desktop
-        </button></span></td>
- </tr>
-</table>
-</form>
 
   
     </div>
