@@ -135,7 +135,7 @@
 				 <td>
 				  <table width="100%">
 				   <tr align="center">
-					<td style="font-size:20px"><b><i class="fa fa-user-circle" aria-hidden="true"></i> 개인정보 수정</b></td>
+					<td style="font-size:20px"><h3><i class="fa fa-user-circle" aria-hidden="true"></i> 개인정보 수정</h3></td>
 				   </tr>
 				  </table>
 				  
@@ -143,31 +143,31 @@
 				   <form action="" method="" name="modify">
 					<table class="table2">
 					   <tr>
-						   <td width="35%" align="right">아이디</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">아이디</td>
 						   <td width="65%">${mv.p_id}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">이   름</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">이   름</td>
 						   <td width="65%">${mv.p_name}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">교수번호</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">교수번호</td>
 						   <td width="65%">${mv.p_no}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">생년월일</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">생년월일</td>
 						   <td width="65%">${mv.p_birth}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">학   과</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">학   과</td>
 						   <td width="65%">${mv.p_major}</td>
 					   </tr>
 					   <tr>
-						   <td align="right">연락처</td>
+						   <td align="right" style="font-weight:bold; color:#555555;">연락처</td>
 						   <td><input type="tel" id="professorPhone" name="professorPhone" placeholder="01000000000" value="${mv.p_phone}" /></td>
 					   </tr>
 					   <tr>
-						   <td align="right">이메일</td>
+						   <td align="right" style="font-weight:bold; color:#555555;">이메일</td>
 						   <td><input type="email" id="professorEmail" name="professorEmail" placeholder="id@ezen_univ.com" value="${mv.p_email}" /></td>
 					   </tr>
 					</table>

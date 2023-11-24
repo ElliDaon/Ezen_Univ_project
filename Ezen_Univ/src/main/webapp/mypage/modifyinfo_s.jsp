@@ -7,25 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../css/iframe.css">
     <link rel="stylesheet" href="../css/nav_style.css">
 	<link rel="stylesheet" href="../css/modifyinfo.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <style>
-        .container{
-            display: flex;
-        }
-        .sidebar{
-            width: 50%;
-        }
-        .myinfo{
-            width: 100%;
-        }
-        .menubar{
-            width: 100%;
-        }
-    </style>
+
     <script>
       $(document).ready(function(){
         studentInfo();
@@ -142,45 +128,44 @@
             <table class="table" name="frm" style="width:600px;">
 				<tr>
 				 <td>
-				  <table width="100%">
+				  <table style="width:100%;">
 				   <tr align="center">
-					<td style="font-size:20px"><b><i class="fa fa-user-circle" aria-hidden="true"></i> 개인정보 수정</b></td>
+					<td style="font-size:20px"><h3><i class="fa fa-user-circle" aria-hidden="true"></i> 개인정보 수정</h3></td>
 				   </tr>
 				  </table>
-				  
-				  <table width="100%">
+				  <table class="table2" style="width:100%;">
 				   <form action="" method="" name="modify">
-					<table class="table2">
+					<table>
 					   <tr>
-						   <td width="35%" align="right">아이디</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">아이디</td>
 						   <td width="65%">${mv.s_id}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">이   름</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">이   름</td>
 						   <td width="65%">${mv.s_name}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">학   번</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">학   번</td>
 						   <td width="65%">${mv.s_no}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">생년월일</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">생년월일</td>
 						   <td width="65%">${mv.s_birth}</td>
 					   </tr>
 					   <tr>
-						   <td width="35%" align="right">학   과</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">학   과</td>
 						   <td width="65%">${mv.s_major}</td>
 					   </tr>
 					   <tr>
-						   <td align="right">연락처</td>
+						   <td align="right" style="font-weight:bold; color:#555555;">연락처</td>
 						   <td><input type="tel" id="studentPhone" name="studentPhone" placeholder="01000000000" value="${mv.s_phone}" /></td>
 					   </tr>
 					   <tr>
-						   <td align="right">이메일</td>
+						   <td align="right" style="font-weight:bold; color:#555555;">이메일</td>
 						   <td><input type="email" id="studentEmail" name="studentEmail" placeholder="id@ezen_univ.com" value="${mv.s_email}" /></td>
 					   </tr>
 					</table>
-					<table class="table3" style="width:600px;">
+					<table class="table3" style="width:100%;">
 					   <tr align="center">
 						   <td>
 						   <input type="button" name="btn" value="확인" onclick="check();">
@@ -191,7 +176,7 @@
 				  </table>
 				 </td>
 				</tr>
-            </table>
+			   </table>
             <br>
             <table>
             	<tr>

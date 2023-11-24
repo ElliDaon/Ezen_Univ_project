@@ -11,7 +11,13 @@
     <link rel="stylesheet" href="../css/courseList.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+	
+	<style>	
+	.mytable table td {
+		    height: 75px;
+		}
+	</style>
+	
     <script>
 	$(document).ready(function(){
 	        professorInfo();

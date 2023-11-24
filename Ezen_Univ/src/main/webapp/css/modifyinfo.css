@@ -1,3 +1,8 @@
+h3 {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #0067b3;
+}
 .table {
 	display: flex;
     flex-direction: column;
@@ -35,7 +40,7 @@ input[type=email] {
 input[type=button] { 
     display: flex;
 	border: white solid 2px;
-    background-color: #0078ff;
+    background-color: #0067B3;
     color: #fff;
     height : 30px;
     font-weight : bold ;
@@ -45,14 +50,14 @@ input[type=button] {
     justify-content: center;
 }
 .pwd {
-    color : #0078ff;
+    color : #0067B3;
     padding: 2px 7px;
     font-weight: bold;
 }
 
 .pwd:hover {
 	border: white solid 2px;
-    background-color: #0078ff;
+    background-color: #0067B3;
     color: #fff; 
 }
 

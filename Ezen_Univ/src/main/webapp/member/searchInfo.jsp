@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/searchInfo.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +39,7 @@
     					$("#idinfo").html(str);
     					return;
     				}else{
-    					str += "<p class='idinfo'><span>조회되는 아이디가 없습니다.</span></p>";	
+    					str += "<p class='idinfo'>조회되는 <span>아이디</span>가 없습니다.</p>";	
     					$("#idinfo").html(str);
     					return;
     				}
@@ -66,7 +67,7 @@
     					$("#idinfo").html(str);
     					return;
     				}else{
-    					str += "<p class='idinfo'><span>조회되는 아이디가 없습니다.</span></p>";	
+    					str += "<p class='idinfo'>조회되는 <span>아이디</span>가 없습니다.</p>";	
     					$("#idinfo").html(str);
     					return;
     				}
@@ -263,17 +264,17 @@
 <body>
 
     <div class="wrapper">
-        <h2>회원정보찾기</h2>
+        <h2>회원정보 찾기</h2>
         <div class="searchId-box">
-            <h3>| 아이디찾기 |</h3><br>
+            <h3>| 아이디 찾기 |</h3><br>
             <form name = "searchIdfrm">
-                <div class="searchId">
-                    <input type="text" id="memberName"><label>이름</label>
-                    <input type="email" id="memberEmail"><label>이메일</label><br>
+                <div class="searchId" style="padding-left:10px;">
+                    <label>이름</label><input type="text" id="memberName" style="width:120px;">
+                    <label>이메일</label><input type="email" id="memberEmail"><br>
                     <div class="choose">
-						<input type="radio" id="select_stu" name="select" value="student" checked><label for="select_stu">student</label> &nbsp | &nbsp 
+						<input type="radio" id="select_stu" name="select" value="student" checked><label for="select_stu">student</label> &nbsp; | &nbsp;
 						<input type="radio" id="select_pro" name="select" value="professor"><label for="select_pro">professor</label>
-	                     &nbsp &nbsp<button type="button" class="btn" onclick="searchid()">찾기</button>
+	                     &nbsp;&nbsp;<button type="button" class="btn" onclick="searchid()"><i class="fa fa-search" aria-hidden="true"></i></button>
 					</div>
                 </div>
             </form>
@@ -282,19 +283,22 @@
             </div>
         </div>
         
-        <div class="searchId-box">
-            <h3>| 비밀번호찾기 |</h3><br>
+        <div class="searchId-box" style="height:60%;">
+            <h3>| 비밀번호 찾기 |</h3><br>
                 <form name="searchPwdfrm">
-                <div class="searchPwd">
-                    <input type="text" id="memberId"><label>아이디</label><input type="text" id="memberName"><label>이름</label><br>
-                    <input type="email" id="memberEmail"><label>이메일</label><br>
-                    <div class="choose-pwd">
-						<input type="radio" id="select_stu_pwd" name="select_pwd" value="student" checked><label for="select_stu_pwd">student</label> &nbsp | &nbsp 
+                <div class="searchPwd" style="padding-left:10px;">
+                    <label>이름</label><input type="text" id="memberName" style="width:120px;"><label>이메일</label><input type="email" id="memberEmail"><br>
+                    <label>아이디</label><input type="text" id="memberId"><br>
+                    <div class="choose">
+						<input type="radio" id="select_stu_pwd" name="select_pwd" value="student" checked><label for="select_stu_pwd">student</label> &nbsp; | &nbsp; 
 						<input type="radio" id="select_pro_pwd" name="select_pwd" value="professor"><label for="select_pro_pwd">professor</label>
-	                    &nbsp &nbsp<button type="button" class="btn" onclick="searchpwd()">찾기</button>
+	                    &nbsp;&nbsp;<button type="button" class="btn" onclick="searchpwd()"><i class="fa fa-search" aria-hidden="true"></i></button>
 					</div>
                 </div>
                 </form>
+            <div id="notfound" class="notfound" style="margin:30px">
+            	<p>회원정보를 찾을 수 없습니다.</p>
+            </div>
              <form name="authenCode" > 
              <div id="pwdinfo" class="pwdinfo">
              	<p>해당 이메일로 인증번호를 발송하였습니다.</p><br>
@@ -303,13 +307,10 @@
              	<button type="button" onclick="authenCodeCheck()">인증</button><br>
             </div>   
             </form>
-            <div id="notfound" class="notfound">
-            	<p>회원정보를 찾을 수 없습니다.</p>
-            </div>
              <form name="PwdCngfrm">
              <div class="changepw">
              	<div class="pwdinfo-input" id="pwdinfo-input" name="pwdinfo-input">
-             	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp비밀번호
+             	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호
              	<input type="password" name="newpwd" id="newpwd" oninput="pwcheck2()">
              	<span id="checkpw">※ 영문, 숫자, 특수기호 포함 8자 이상</span><br>
              	비밀번호 확인

@@ -59,7 +59,7 @@
 		
 	    dateInput.addEventListener('change', function() {
 	
-	        let confirmation = confirm("해당 날짜로 선택하시겠습니까?"); // 확인 창 표시
+	        let confirmation = confirm("해당 일자로 선택하시겠습니까?"); // 확인 창 표시
 	        if (confirmation) {
 	 
 		        const selectedDate = dateInput.value;
@@ -80,7 +80,7 @@
 		        }else if(selectedMonth >= 8 && selectedMonth <= 9){
 		        	dateInfoSemester.value = '2';
 		        }else {
-		            alert('개강 입력이 가능한 날짜는 1학기 2~3월, 2학기 8~9월에 등록 가능합니다.')
+		            alert('개강 입력이 가능한 일자는 1학기 2~3월, 2학기 8~9월에 등록 가능합니다.')
 		            
 		            return;
 		        }
@@ -138,7 +138,7 @@
      
     function openDateListTable(data){
     	let parsedData = JSON.parse("["+data+"]");
-    	let str = "<table><thead><tr><th>주차</th><th>시작 날짜</th><th>종료 날짜</th></tr></thead><tbody>";	
+    	let str = "<table style='width:1000px;'><thead><tr><th>주차</th><th>시작 날짜</th><th>종료 날짜</th></tr></thead><tbody>";	
     	parsedData.forEach(function (item){
     		
     		str += "<tr><td>"+item.w_week+"</td>" +
@@ -208,29 +208,30 @@
            </ul>
           </div>
         </div>
-
 	    <div class="contents">
 	    <form name="frm" >
 	        <h3>개강일자 등록</h3>
 	        <div class="first_line"> 
-	        	<br>
-		        <input type="date" id="dateInput" name="dateInput" />
+		        개강일자 선택&emsp;<input type="date" id="dateInput" name="dateInput" style="width:150px;"/>
 		        <input type="hidden" id="dateInfoYear" name="dateInfoYear" />
 	            <input type="hidden" id="dateInfoSemester" name="dateInfoSemester" />
 	        </div>
 	        <br>
 	        <h3>현재 학기에 등록된 날짜</h3>
+	        <div style="display:flex;">
 	        <div id="openDateList">
 	        <!-- 등록된 날짜가 주차배열로 보여줌 -->
+	        </div>
+	        <div class="fixed">
+	        <h2>※ 공지 ※</h2>
+	        <br>
+	        개강일자는 1학기 기준 <span>2~3월</span> / 2학기 기준 <span>8~9월</span>, 요일은 <span>월요일</span>만 등록 가능합니다.
+	        </div>
 	        </div>
 	    </form>
 	    </div>
 	    
 	    
-	    <fieldset class="fixed">
-        <legend>공지</legend>
-        이젠 대학에서의 개강날짜 입력은 월요일과 1학기 기준 2~3월, 2학기 기준 8~9월만 가능합니다.
-    	</fieldset>
 	</div>
 </div>
 
