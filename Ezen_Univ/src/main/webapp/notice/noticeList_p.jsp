@@ -132,7 +132,7 @@ function professorInfo(){
 			${nv.nidx}
 			</td>
 			<td style="text-align: left; padding-left: 20px" class="subject">
-            <a href="${pageContext.request.contextPath}/notice/noticeContents.do?nidx=${nv.nidx}">
+            <a href="${pageContext.request.contextPath}/notice/noticeContents_p.do?nidx=${nv.nidx}">
                 <c:if test="${nv.n_dday eq 'true'}">
                 <mark><span style="color: orange; font-weight: bold;">new</span></mark>
                 </c:if>

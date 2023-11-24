@@ -72,18 +72,19 @@ function check(){
 
 <link rel="stylesheet" href="../css/iframe.css">
 <style>
+
+
  h3 {
     
     font-size: 1.47em;
     font-weight: 500;
     color: #0067b3;
+    margin-bottom: 10px;
    
 }
 
-
 .subject {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
     background: #f2f2f2;
@@ -93,32 +94,30 @@ function check(){
     display: flex;
 }
 .writebtn{
-    background: #0078ff;
-width: 70px;
-height: 38px;
-text-align: center;
-color: white;
-border-radius: 5px;
-font-size:17px;
-font-weight: bold;
-border: 0;
+    background: #0067b3;
+    width: 70px;
+    height: 38px;
+    text-align: center;
+    color: white;
+    font-size:17px;
+    font-weight: bold;
+    border: 0;
 
 }
 .list1{
     display: flex;
     justify-content: space-between;
-   
+    border: 0;
 }
 
 .material-symbols-outlined{
 
 
-background: #0078ff;
+background: #0067b3;
 width: 40px;
 height: 38px;
 text-align: center;
 color: white;
-border-radius: 5px;
 font-size:35px;
 padding-top : 3px;
 border: 0;
@@ -137,6 +136,7 @@ border: 0;
 }
 .container{
     display: flex;
+   
 } 
 .list{
    
@@ -148,39 +148,40 @@ border: 0;
     
 .text-area{
     width: 100%;
-    border: 2px solid #0067b3;
+    border: 1px solid #ccc;
     height: 500px;
-    margin-bottom: 10px;
+    
 }
 
-.noticewrite{
+.noticeWrite{
     border-collapse: collapse;
+    width: 50%;   
+}
+
+
+.subject td{
+    
+    text-align: center;
+    align-items: center;
+    border: 0;
+    margin: 10px;
+    margin-top: 12px;
   
 }
 
-.contents{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: -70px;        
-}
-
-
-.subject td{ 
-    margin: 5px;
-}
 .btnlist{
 
-
-    margin-top: 10px;
+  
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    
-   
+       
 }
 
+td {
+    border:  none;
+}
 
 
 </style>
@@ -236,12 +237,12 @@ border: 0;
           </div>
         </div>
     <div class="contents">
-        <h3>휴보강 공지등록</h3>
         
         <form name="frm">
         <table class="noticeWrite">
-        <tr class="subject">
-            <td><strong>제목</td>
+                <h3>휴보강 공지등록</h3>
+             <tr class="subject">
+            <td><strong>제목</strong>&nbsp;&nbsp;&nbsp;</td>
             <td>
             <select name="noticetype">
                 <option value="휴강">휴강</option>
@@ -260,17 +261,27 @@ border: 0;
             </td>
         </tr>
         <tr>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
             
             <td>
                 <textarea name="contents" class="text-area"></textarea>
             </td>
             
         </tr>
+        
+        <tr style="border: none;">
+            <td style="height: 10px; border: none;"></td>
+        </tr>
+
         <tr>
            
             <td class="list1">
     			<a class="list" href="noticeList_p.do" onclick="return confirm('글은 저장되지 않습니다. 정말 나가시겠습니까?')">
-      				  <span class="material-symbols-outlined">list_alt</span>
+                    <input type="button" class="writebtn" value="목록" ></input> 
    				</a>
                     <input type="button" class="writebtn" value="등록" onclick="check();" ></input> 
             </td>
