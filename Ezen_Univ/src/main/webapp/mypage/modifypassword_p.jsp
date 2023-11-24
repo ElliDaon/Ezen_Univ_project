@@ -164,7 +164,7 @@
 				 <td>
 				  <table width="100%">
 				   <tr align="center">
-					<td style="font-size:20px"><b><i class="fa fa-keyboard-o" aria-hidden="true"></i> 비밀번호 변경</b></td>
+					<td style="font-size:20px"><h3><i class="fa fa-keyboard-o" aria-hidden="true"></i> 비밀번호 변경</h3></td>
 				   </tr>
 				  </table>
 				  
@@ -172,19 +172,19 @@
 				   <form name="modifypass">
 					<table>
 					   <tr>
-						   <td width="35%" align="right">아이디</td>
+						   <td width="35%" align="right" style="font-weight:bold; color:#555555;">아이디</td>
 						   <td width="65%">${p_id}</td>
 					   </tr>
 					   <tr>
-						   <td align="right">현재 비밀번호</td>
+						   <td align="right" style="font-weight:bold; color:#555555;">현재 비밀번호</td>
 						   <td><input type="password" id="nowPass" name="nowPass" required /></td>
 					   </tr>
 					   <tr>
-						   <td align="right">비밀번호</td>
+						   <td align="right" style="font-weight:bold; color:#555555;">비밀번호</td>
 						   <td><input type="password" id="newPass" name="newPass" oninput="pwcheck()" /></td>
 					   </tr>
 					   <tr>
-						   <td align="right">비밀번호 확인</td>
+						   <td align="right" style="font-weight:bold; color:#555555;">비밀번호 확인</td>
 						   <td><input type="password" id="newPassCheck" name="newPassCheck" oninput="pwcheck()" /></td>
 					   </tr>
 					   <tr>

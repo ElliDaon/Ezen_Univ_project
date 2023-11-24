@@ -118,15 +118,15 @@
             <div class="p-table">
               <div class="thisis">2023년도 2학기 시간표</div>
               <div>
-                <table class="table" id="mytable">
+                <table class="timetable" id="mytable">
                     <thead>
                         <tr>
-                            <td style="width:5%; font-weight: bold; font-size: 15px;">교시</td>
-                            <td style="width:15%; font-weight: bold; font-size: 15px;">월</td>
-                            <td style="width:15%; font-weight: bold; font-size: 15px;">화</td>
-                            <td style="width:15%; font-weight: bold; font-size: 15px;">수</td>
-                            <td style="width:15%; font-weight: bold; font-size: 15px;">목</td>
-                            <td style="width:15%; font-weight: bold; font-size: 15px;">금</td>
+                            <th style="width:5%; font-weight: bold; font-size: 15px;">교시</th>
+                            <th style="width:15%; font-weight: bold; font-size: 15px;">월</th>
+                            <th style="width:15%; font-weight: bold; font-size: 15px;">화</th>
+                            <th style="width:15%; font-weight: bold; font-size: 15px;">수</th>
+                            <th style="width:15%; font-weight: bold; font-size: 15px;">목</th>
+                            <th style="width:15%; font-weight: bold; font-size: 15px;">금</th>
                         </tr>
                     </thead>
                     <tbody>
