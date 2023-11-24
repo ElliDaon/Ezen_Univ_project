@@ -143,7 +143,7 @@
 		</header>
 	</div>
     <div class="main">
-      <div class="container">
+      <div class="container" style="height: 1000px;">
         <div class="sidebar">
           <div class="top">
             <div id="myinfo" class="myinfo">
@@ -160,8 +160,8 @@
            <ul>
              <li class="personalinfo">
               <ul>
-               <li><i class="fa fa-user-circle" aria-hidden="true"></i>
-               개인정보</li>
+               <li><a href="../mypage/personalinfo_p.do" target="_parent"><i class="fa fa-user-circle" aria-hidden="true"></i>
+               개인정보</a></li>
               </ul>
                <ul>
                  <li><a href="../mypage/personalinfo_p.do" target="_parent">&ensp;&ensp;개인정보</a></li>
@@ -170,8 +170,8 @@
              </li>
              <li class="personalinfo">
               <ul>
-               <li><i class="fa fa-book" aria-hidden="true"></i>
-               강의정보</li>
+               <li><a href="../mypage/courseList_p.do" target="_parent"><i class="fa fa-book" aria-hidden="true"></i>
+               강의정보</a></li>
               </ul>
                <ul>
                  <li><a href="../mypage/courseList_p.do" target="_parent">&ensp;&ensp;강의 현황</a></li>
@@ -183,7 +183,7 @@
         </div>
         <div class="contents">
             <h3>교수 시간표 조회</h3>
-            <div class="first_line">
+            <div class="first_line" style="width: 800px;">
             	<form name="pnamefrm">
             		년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="turm" value="${semester}" disabled/>
             		교수이름 <input type="text" id="p_name" name="p_name" style="width:120px;">&emsp;<button type="button" name="namebtn" onclick="searchP()"><i class="fa fa-search" aria-hidden="true"></i></button>

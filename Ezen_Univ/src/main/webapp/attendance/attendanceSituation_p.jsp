@@ -135,7 +135,7 @@
     				});
     				
     				str = str + "</tbody>";
-    				$("#list_table").html("<table class='listNo' style='width:1000px;'>"+str+"</table>");
+    				$("#list_table").html("<table class='listNo'>"+str+"</table>");
     				
 		    		$("td span").each(function(){
 		    			var txt = $(this).text();
@@ -306,7 +306,7 @@
             <br>
             <div class="first_line">
                 <div style="display:inline-block;" class="selectedWrap">
-                강의명 : <input type="text" id="selectedCourse" value="" name="selectedC_name" style="width:250px;" disabled/>
+                강의명 <input type="text" id="selectedCourse" value="" name="selectedC_name" style="width:250px;" disabled/>
                 </div>
                 <input class="date" type="date" id="attendanceDate" name="attendanceDate" onChange="periodList()" style="width:150px;">
                 <div id="selected_periodList" class="selected_periodList"></div>
