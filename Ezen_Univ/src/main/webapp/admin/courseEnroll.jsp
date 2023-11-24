@@ -292,8 +292,8 @@
                <table>
                    <thead>
                        <tr>
-                           <th style="width:30px">과목번호</th>
-                           <th style="width:100px">과목명</th>
+                           <th style="width:30px">강의번호</th>
+                           <th style="width:100px">강의명</th>
                            <th style="width:10px">교수번호</th>
                            <th style="width:30px">교수이름</th>
                            <th style="width:80px">전공</th>
