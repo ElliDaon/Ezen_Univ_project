@@ -206,7 +206,7 @@
                             		"<td>" + periodValue + "</td>" +
                             		"<td>" + semesterValue + "</td>" +
                             		"<td>" + yearValue + "</td>" +
-                            		"<td><button class='deleteRow'>Delete</button></td></tr>";
+                            		"<td><button class='deleteRow'>삭제</button></td></tr>";
                             $("#timeTable").append(newRow);
                         }
 
@@ -218,7 +218,7 @@
                             if ($(this).find("td").length > 0) {
                                 let lastCell = $(this).find("td").last();
                                 if (lastCell.find(".deleteRow").length === 0) {
-                                    lastCell.append('<button class="deleteRow">Delete</button>');
+                                    lastCell.append('<button class="deleteRow">삭제</button>');
                                 }
                             }
                         });
