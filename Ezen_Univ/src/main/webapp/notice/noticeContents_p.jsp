@@ -58,6 +58,7 @@ h3 {
     border: 1px solid #ccc;
     height: 36px ;
     height: 500px;
+    padding: 15px;
 }
 
 .noticewrite{
@@ -249,8 +250,9 @@ function professorInfo(){
        		
         </tr>
         <tr>
-            <td class="text-box">
-                ${nv.n_contents}
+            <td class="text-box">              
+                <p style="white-space: pre;">${nv.n_contents}
+                </p>
             </td>
         </tr>
         <tr>
