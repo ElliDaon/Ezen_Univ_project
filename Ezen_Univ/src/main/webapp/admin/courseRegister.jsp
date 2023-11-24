@@ -510,18 +510,18 @@
 					</td>
 					<th>전공</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_major" id="c_major" list="major-options" Placeholder="목록을 선택, 조회하세요" autocomplete="off"/>
-						<datalist id="major-options">
-							<option value="건축학과" />
-							<option value="경제학과" />
-							<option value="경영학과" />
-							<option value="정보통신공학과" />
-							<option value="기계공학과" />
-							<option value="기계설계공학부" />
-							<option value="기계시스템공학부" />
-							<option value="도시공학과" />
-							<option value="바이오메디컬공학부" />
-						</datalist>
+						<select name="c_major" id="c_major">
+							<option key="default-empty" hidden></option>
+							<option value="건축학과">건축학과</option>
+							<option value="경제학과">경제학과</option>
+							<option value="경영학과">경영학과</option>
+							<option value="정보통신공학과">정보통신공학과</option>
+							<option value="기계공학과">기계공학과</option>
+							<option value="기계설계공학부">기계설계공학부</option>
+							<option value="기계시스템공학부">기계시스템공학부</option>
+							<option value="도시공학과">도시공학과</option>
+							<option value="바이오메디컬공학부">바이오메디컬공학부</option>
+						</select>
 						&ensp;
 						<button type="button" name="btn" id="registerView">조회</button>
 		            </td>

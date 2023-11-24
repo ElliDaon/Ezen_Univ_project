@@ -247,13 +247,18 @@ function CheckEmail(str){
 				</div>
 				<div class="input-box birth">
 					<span class="icon"><ion-icon name="school"></ion-icon></span>
-					<input type="text" list="depList" name="memberMajor" id="memberMajor" required>
-					<datalist id="depList" name="country" size="50" autocomplete="off">
-						<option value="정보통신공학과"></option>
-						<option value="전기공학과"></option>
-						<option value="전자공학과"></option>
-						<option value="건축학과"></option>
-					</datalist>
+					<select name="memberMajor" id="memberMajor" required>
+						<option key="default-empty" hidden></option>
+						<option value="건축학과">건축학과</option>
+	                    <option value="경제학과">경제학과</option>
+	                    <option value="경영학과">경영학과</option>
+	                    <option value="정보통신공학과">정보통신공학과</option>
+	                    <option value="기계공학과">기계공학과</option>
+	                    <option value="기계설계공학부">기계설계공학부</option>
+	                    <option value="기계시스템공학부">기계시스템공학부</option>
+	                    <option value="도시공학과">도시공학과</option>
+	                    <option value="바이오메디컬공학부">바이오메디컬공학부</option>
+					</select>
 					<label class="choosemajor">학과</label>
 				</div>
 				<div class="choosejoin">

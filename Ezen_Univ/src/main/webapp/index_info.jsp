@@ -17,6 +17,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <script>
+$(document).ready(function(){
+	$("#idcheck").on("click",function(){
+		let memberIdCheck=document.joinfrm.memberId.value;
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/memberIdCheck.do",
+			data: {"memberId" : memberIdCheck},
+			dataType: "json",
+			success: function(data){
+				if(memberIdCheck==""){
+					alert("아이디를 입력해주세요!!");
+				}else if(data.value == 0){
+					alert("사용할 수 있는 아이디입니다.");
+					$('#check-id-icon').css('color','green');
+				}else{
+
+					alert("중복되는 아이디 입니다.");
+					$('#check-id-icon').css('color','red');
+					memberIdCheck = "";
+				}
+			},
+			error: function(){
+				alert("실패");
+			}
+		});
+	});
+});
+</script>
+<script>
 
 
 function adminLogin(){
@@ -143,6 +173,13 @@ function guideForStudent(){
         alert('팝업 창이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
     }
 }
+function guideForProfessor(){
+	var pdfPath = "<%=request.getContextPath()%>/guide/guide_professor.jsp";
+	window.open(pdfPath, '_blank');
+	if (!pdfPath) {
+        alert('팝업 창이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
+    }
+}
 </script>
 <body>	
 	<header>
@@ -216,7 +253,7 @@ function guideForStudent(){
 			
 			
 			<div class="info-btn">
-				<button onclick="">
+				<button onclick="guideForProfessor()">
 					<label>교수 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
 				</button>
 				<button onclick="guideForStudent()">
@@ -294,20 +331,27 @@ function guideForStudent(){
 					<span class="icon"><ion-icon name="person"></ion-icon></span>
 					<input type="text" name="memberId" id="memberId" required>
 					<label>ID</label>
+					<button type="button" class="check-id" id="idcheck">
+						<span class="check-id-icon" id="check-id-icon"><ion-icon name="checkbox-outline"></ion-icon></span>
+					</button>
 				</div>
-				<div class="input-box">
+				<div class="input-box" id="input-box-pwd">
 					<span class="icon"><ion-icon name="key"></ion-icon></span>
-					<input type="password" name="memberPwd" id="memberPwd" required>
+					<input type="password" name="memberPwd" id="memberPwd" oninput="pwcheck()" required>
 					<label>password</label>
+					<div class="pass-info"><span id="pass-info"></span></div>
+					<div class="check-pwd-icon" id="pwd-check1"><ion-icon name="checkbox-outline"></ion-icon></div>
 				</div>
-				<div class="input-box">
+				<div class="input-box" id="input-box-pwd2">
 					<span class="icon"><ion-icon name="key"></ion-icon></span>
-					<input type="password" name="memberPwd2" id="memberPwd2" required>
+					<input type="password" name="memberPwd2" id="memberPwd2" oninput="pwcheck()" required>
 					<label>password 확인</label>
+					<div class="pass-check-info"><span id="pass-check-info"></span></div>
+					<div class="check-pwd-icon2" id="pwd-check2"><ion-icon name="checkbox-outline"></ion-icon></div>
 				</div>
-				<div class="input-box">
+				<div class="input-box" id="input-box-name">
 					<span class="icon"><ion-icon name="pricetag"></ion-icon></span>
-					<input type="text" name="memberName" id="memberName" required>
+					<input type="text" name="memberName" id="memberName" oninput="pwcheck()" required>
 					<label>이름<span>(홍길동)</span></label>
 				</div>
 				<div class="input-box">
@@ -327,13 +371,18 @@ function guideForStudent(){
 				</div>
 				<div class="input-box birth">
 					<span class="icon"><ion-icon name="school"></ion-icon></span>
-					<input type="text" list="depList" name="memberMajor" id="memberMajor" required>
-					<datalist id="depList" name="country" size="50" autocomplete="off">
-						<option value="정보통신공학과"></option>
-						<option value="전기공학과"></option>
-						<option value="전자공학과"></option>
-						<option value="건축학과"></option>
-					</datalist>
+					<select name="memberMajor" id="memberMajor" required>
+						<option key="default-empty" hidden></option>
+						<option value="건축학과">건축학과</option>
+	                    <option value="경제학과">경제학과</option>
+	                    <option value="경영학과">경영학과</option>
+	                    <option value="정보통신공학과">정보통신공학과</option>
+	                    <option value="기계공학과">기계공학과</option>
+	                    <option value="기계설계공학부">기계설계공학부</option>
+	                    <option value="기계시스템공학부">기계시스템공학부</option>
+	                    <option value="도시공학과">도시공학과</option>
+	                    <option value="바이오메디컬공학부">바이오메디컬공학부</option>
+					</select>
 					<label class="choosemajor">학과</label>
 				</div>
 				<div class="choosejoin">

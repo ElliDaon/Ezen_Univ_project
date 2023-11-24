@@ -61,9 +61,9 @@ function studentInfo(){
 	return;
 }
 
-
 function search_detail(cidx){
-
+	
+	
 	countAction(cidx);
 	listAction(cidx);
 	//alert(cidx);
@@ -71,7 +71,7 @@ function search_detail(cidx){
 }
 
 function countAction(cidx){
-
+	
 	
 	$.ajax({
 		type : "get",	//cidx값 하나만 넘기니까 get방식으로 주소를 넘긴다 -> get방식은 하단의 URL 끝에 ?붙여서 cidx 붙여주기
@@ -216,11 +216,11 @@ function listAction(cidx){
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="av" items="${list}">
+                    <c:forEach var="av" items="${list}" varStatus="i">
                         <tr>
                             <td></td>
                             <td>${av.c_sep}</td>
-                            <td><button type="button" id="c_name" value="${av.cidx}" onclick="search_detail(${av.cidx})">${av.c_name}</button></td>
+                            <td><button type="button" id="c_name" class="c_name${i.count}" value="${av.cidx}" onclick="search_detail(${av.cidx})">${av.c_name}</button></td>
                             <td>${av.c_score}</td>
                             <td>${av.p_name}</td>
                             <td>${av.ct_room}</td>
@@ -235,6 +235,15 @@ function listAction(cidx){
 	                            </c:otherwise>
                             </c:choose>
                         </tr>
+                        <script>
+                        $(document).ready(function(){
+                        	$("button").click(function() {
+                        		var c_name= $(this).val();
+                        		$(this).css('color','blue');
+                        		$("button").not('[value='+c_name+']').css( 'color', 'black');
+                        	});
+                        });
+                        </script>
                     </c:forEach>
                     </tbody>
                 </table>

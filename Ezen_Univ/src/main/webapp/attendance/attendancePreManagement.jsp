@@ -203,7 +203,7 @@ function chooseCourse(selectedCidx) {
 		});
 	
 		
-		str += "cidx: "+cidx+"\n 주차: " +no+"\n 수업일자: "+dates+"\n 수업요일: "+week+"\n 수업교시: "+period;	
+		str += " 주차: " +no+"주차\n 수업일자: "+dates+"\n 수업요일: "+week+"\n 수업교시: "+period+"교시";	
 		
 		alert(str);
 		//return;

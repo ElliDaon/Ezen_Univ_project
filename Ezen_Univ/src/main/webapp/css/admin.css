@@ -52,7 +52,7 @@ h3 {
 }
 
 
-.contents input[type=text]{ 
+.contents input[type=text],select{ 
     flex-grow: 1;
     padding: 5px;
     border: #e6eef5 solid 2px;
