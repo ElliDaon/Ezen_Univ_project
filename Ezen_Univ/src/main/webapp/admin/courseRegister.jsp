@@ -476,8 +476,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th style="width:30px">과목번호</th>
-                            <th style="width:100px">과목명</th>
+                            <th style="width:30px">강의번호</th>
+                            <th style="width:100px">강의명</th>
                             <th style="width:20px">교수번호</th>
                             <th style="width:30px">교수이름</th>
                             <th style="width:80px">전공</th>
@@ -504,7 +504,7 @@
 			<br>
 			<table id="registerTable">
 				<tr>
-					<th>과목명</th>
+					<th>강의명</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
 						<input type="text" name="c_name" value="" Placeholder="이곳에 직접 입력하세요" autocomplete="off"/>
 					</td>
