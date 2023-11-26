@@ -46,7 +46,13 @@
           $("#myinfo").html(str);
   	  return;
       }
-	
+      
+  	function enterkey() {
+		if (window.event.keyCode == 13) {
+			$('#namebtn').click();
+	    }
+	}
+  	
 	function searchP(){
 		let p_name = $("#p_name").val();
 		
@@ -193,7 +199,7 @@
             <div class="first_line" style="width: 800px;">
             	<form name="pnamefrm">
             		년도 <input type="text" name="year" value="${year}" disabled/> 학기 <input type="text" name="turm" value="${semester}" disabled/>
-            		교수이름 <input type="text" id="p_name" name="p_name" style="width:120px;">&emsp;<button type="button" class="btn1" name="namebtn" onclick="searchP()"><i class="fa fa-search" aria-hidden="true"></i></button>
+            		교수이름 <input type="text" id="p_name" name="p_name" onkeyup="enterkey()" style="width:120px;">&emsp;<button type="button" class="btn1" name="namebtn" id="namebtn" onclick="searchP()"><i class="fa fa-search" aria-hidden="true"></i></button>
             	</form>
             </div>
             <div class="professor_list" id="professor_list">

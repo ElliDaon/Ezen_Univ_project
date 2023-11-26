@@ -180,6 +180,13 @@ function guideForProfessor(){
         alert('팝업 창이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
     }
 }
+function guideForAdmin(){
+	var pdfPath = "<%=request.getContextPath()%>/guide/guide_admin.jsp";
+	window.open(pdfPath, '_blank');
+	if (!pdfPath) {
+        alert('팝업 창이 차단되었습니다. 팝업 차단을 해제하고 다시 시도하세요.');
+    }
+}
 </script>
 <body>	
 	<header>
@@ -259,7 +266,7 @@ function guideForProfessor(){
 				<button onclick="guideForStudent()">
 					<label>학생 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
 				</button>
-				<button>
+				<button onclick="guideForAdmin()">
 					<label>관리자 &nbsp&nbsp&nbsp&nbsp<ion-icon name="exit-outline"></ion-icon></label>
 				</button>
 			</div>
