@@ -282,23 +282,26 @@ function guideForAdmin(){
 					<div class="personal-info">
 						<div class="personal-info-detail">
 							<h4>문다온</h4><br>
-							<span>[ PM | BACKEND ]</span>
+							<span>[ PM ]</span>
 						</div>
 						<div class="personal-info-detail">
 							<h4>김민정</h4><br>
-							<span>[ PL | FRONTEND ]</span>
+							<span>[ PL ]</span>
 						</div>
 						<div class="personal-info-detail">
 							<h4>박건도</h4><br>
-							<span>[ PA | FRONTEND ]</span>
+							<span>[ PA ]</span>
 						</div>
 						<div class="personal-info-detail">
 							<h4>윤대희</h4><br>
-							<span>[ PA | BACKEND ]</span>
+							<span>[ PA ]</span>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="bottom">
+	
 		</div>
 	</div>
 	
@@ -402,6 +405,7 @@ function guideForAdmin(){
 				</div>
 			</form>
 		</div>
+	
 	</div>
 	<script src="js/index.js"></script>
 </body>
