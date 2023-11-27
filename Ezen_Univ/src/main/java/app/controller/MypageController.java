@@ -80,6 +80,10 @@ public class MypageController extends HttpServlet{
 			
 			MemberVo mv = md.studentInfo(sidx);
 			
+			String phone = mv.getS_phone();
+			phone = phone.substring(0, 3)+"-"+phone.substring(3, 7)+"-"+phone.substring(7);
+			mv.setS_phone(phone);
+			
 			request.setAttribute("mv", mv);
 			
 			String path = "/mypage/personalinfo_s.jsp";
