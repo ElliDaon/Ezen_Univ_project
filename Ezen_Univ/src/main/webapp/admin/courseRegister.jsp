@@ -483,7 +483,7 @@
 		</header>
 	</div>
    <div class="main">
-      <div class="container">
+      <div class="container" style="height:1000px;">
         <div class="sidebar">
           <div class="top">
             <div id="myinfo" class="myinfo" style="margin-top:20px;">

@@ -60,6 +60,10 @@
         
      	// 일괄 처리 버튼 클릭 이벤트
         $("#batchBtn").click(function () {
+            if ($('input[name="studentCheckbox"]:checked').length === 0) {
+                alert("한 명 이상의 학생을 선택하세요."); // 알림창 표시
+                return false; // 폼 제출 방지
+            }
             let confirmation = confirm("일괄 등록하겠습니까?"); // 확인 창 표시
             if (confirmation) {
 	        	let cidx = $(this).val();
@@ -256,7 +260,7 @@
 		</header>
 	</div>
    <div class="main">
-      <div class="container">
+      <div class="container" style="height:2200px;">
         <div class="sidebar">
           <div class="top">
             <div id="myinfo" class="myinfo" style="margin-top:20px;">

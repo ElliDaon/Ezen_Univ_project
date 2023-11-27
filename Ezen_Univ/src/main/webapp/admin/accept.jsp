@@ -112,6 +112,10 @@
 			
 	        // 학생 일괄승인 버튼 클릭 이벤트
             $('#submitButton1').on('click', function(event) {
+                if ($('input[name="student"]:checked').length === 0) {
+                    alert("한 명 이상의 학생을 선택하세요."); // 알림창 표시
+                    return false; // 폼 제출 방지
+                }
                 let confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllOk.do';
@@ -121,6 +125,10 @@
             });
             // 학생 일괄거부 버튼 클릭 이벤트
             $('#submitButton2').on('click', function(event) {
+                if ($('input[name="student"]:checked').length === 0) {
+                    alert("한 명 이상의 학생을 선택하세요."); // 알림창 표시
+                    return false; // 폼 제출 방지
+                }
                 let confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptStudentAllNo.do';
@@ -130,8 +138,13 @@
             });
 	        // 교수 일괄승인 버튼 클릭 이벤트
             $('#submitButton3').on('click', function(event) {
+                if ($('input[name="professor"]:checked').length === 0) {
+                    alert("한 명 이상의 교수를 선택하세요."); // 알림창 표시
+                    return false; // 폼 제출 방지
+                }
                 let confirmation = confirm("일괄승인하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
+                	
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllOk.do';
 	                $('#professorAccept').prop('action', newAction);
 	                $('#professorAccept').submit(); // 폼 제출
@@ -139,6 +152,10 @@
             });
             // 교수 일괄거부 버튼 클릭 이벤트
             $('#submitButton4').on('click', function(event) {
+                if ($('input[name="professor"]:checked').length === 0) {
+                    alert("한 명 이상의 교수를 선택하세요."); // 알림창 표시
+                    return false; // 폼 제출 방지
+                }
                 let confirmation = confirm("일괄거부하겠습니까?"); // 확인 창 표시
                 if (confirmation) {
 	                let newAction = '${pageContext.request.contextPath}/admin/acceptProfessorAllNo.do';
@@ -261,7 +278,7 @@
 		</header>
 	</div>
    <div class="main">
-      <div class="container">
+      <div class="container" style="height:2000px;">
         <div class="sidebar">
           <div class="top">
             <div id="myinfo" class="myinfo" style="margin-top:20px;">
