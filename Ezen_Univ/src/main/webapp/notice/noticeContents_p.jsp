@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../css/nav_style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style>
 
 h3 {
@@ -251,7 +252,7 @@ function professorInfo(){
         </tr>
         <tr>
             <td class="text-box">              
-                <p style="white-space: pre;">${nv.n_contents}
+                <p style="white-space: pre;">${fn:replace(fn:replace(nv.n_contents,'<','&lt;'),'>','&gt;')}
                 </p>
             </td>
         </tr>

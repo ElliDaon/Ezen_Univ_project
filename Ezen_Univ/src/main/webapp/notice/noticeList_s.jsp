@@ -34,6 +34,9 @@
       	var s_name = "${sessionScope.s_name}"
       	var s_major = "${sessionScope.s_major}";
       	
+
+
+
       	str = "<strong>[학생]</strong><br>"
       		 + s_name + "("+ s_no +")<br>"
       		 + "[" + s_major + "]";
@@ -57,7 +60,7 @@
 
  
   .searchtbl{
-    margin-left: 540px;
+    margin-left: 537px;
   }
 
 
@@ -161,7 +164,7 @@
 			<td style="text-align: left; padding-left: 20px" class="subject">
             <a href="${pageContext.request.contextPath}/notice/noticeContents_s.do?nidx=${nv.nidx}">
                 <c:if test="${nv.n_dday eq 'true'}">
-               <span style="color: orange; font-weight: bold;">new</span>
+               <mark><span style="color: orange; font-weight: bold;">new</span></mark>
                 </c:if>
                 ${nv.n_subject}
             </a>

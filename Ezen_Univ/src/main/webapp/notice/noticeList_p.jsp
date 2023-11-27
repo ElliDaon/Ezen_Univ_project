@@ -53,10 +53,15 @@ function professorInfo(){
 
 
 
+  .writetbl  {
+    margin-top: -20px; 
+    
+  } 
   .writetbl td {
     border: 0px; 
-  }
-  
+    
+  } 
+
 </style>
 
 </head>
@@ -159,8 +164,8 @@ function professorInfo(){
     </table>
 
 <c:set var="parm" value="&subject=${pm.scri.subject}" />
-    <table class="writetbl">
-        <tr>
+      <table class="writetbl">
+          <tr>
             
             <td>
                 <div class="writediv"> 
@@ -170,29 +175,59 @@ function professorInfo(){
                 </div>
             </td>
             
-            <td style="padding-left: 457px;">
+            <td style="padding-left: 453px;">
               
             </td>
             
-              <td class="sub">
-              <select class="searchsubject" name="subject" id="subject">
-                  <option value="0">과목을 선택해주세요</option>
-                  <c:forEach var="cv" items="${courselist}">
-                     <option value="${cv.cidx}" <c:if test="${subb == cv.cidx}">selected</c:if>>${cv.c_name}</option>
-                 </c:forEach>
-              </select>
-            </td>
-      
+           <form name="frm" 
+              action="${pageContext.request.contextPath}/notice/noticeList_p.do"
+              method="post"
+              onsubmit="saveSelectedValue()"> 
               
-          <td><button style="background-color: color: #0067b3; border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
+              
+              <!--td style="width:450px; font-weight:bold">
+                <span style="color:#0067b3;">
+        <c:set var="subb" value="${sub}" />
+        <c:choose>
+          <c:when test="${subb == 0}">
+            선택된 과목 : 전체 과목
+          </c:when>
+          <c:otherwise>
+            <c:forEach var="cv" items="${courselist}">
+              <c:if test="${cv.cidx == subb}">
+                선택된 과목 : ${cv.c_name} 
+            	</c:if>
+            </c:forEach>
+          </c:otherwise>
+        </c:choose>
+      </span>
+    </td-->
+    
+    
+    
+    
+
+    <td class="sub">
+      <select class="searchsubject" name="subject" id="subject">
+        <option value="0">강의를 선택해주세요</option>
+        <c:forEach var="cv" items="${courselist}">
+          <option value="${cv.cidx}" <c:if test="${subb == cv.cidx}">selected</c:if>>${cv.c_name}</option>
+        </c:forEach>
+      </select>
+    </td>
+    
+    
+    <td><button style="background-color: color: #0067b3; border: 2px solid #0067b3;" type="submit" class="btn"><span class="material-symbols-outlined">
             search
-            </span></td>
+          </span></button></td>
           
-
+          
         </tr>
-    </table>
-    <br>
+        
 
+      <br>
+      
+  </form> 
 <table class="pagination" border=0 style="width:700px;text-align:center;">
 <tr>
 <td style="width:100px;text-align:right;">
@@ -239,35 +274,7 @@ arrow_forward_ios
    
 <br>
     
-<form name="frm" 
-action="${pageContext.request.contextPath}/notice/noticeList_p.do"
-method="post"
-onsubmit="saveSelectedValue()">
-<table class="searchtbl">
-    <tr>
-  
-    <!--td style="width:450px; font-weight:bold">
-      <span style="color:#0067b3;">
-      <c:set var="subb" value="${sub}" />
-	<c:choose>
-    	<c:when test="${subb == 0}">
-         선택된 과목 : 전체 과목
-    	</c:when>
-    		<c:otherwise>
-        		<c:forEach var="cv" items="${courselist}">
-            	<c:if test="${cv.cidx == subb}">
- 		 선택된 과목 : ${cv.c_name} 
-            	</c:if>
-        	</c:forEach>
-    		</c:otherwise>
-	</c:choose>
-  </span>
-	</td-->
-	
 
- </tr>
-</table>
-</form>
 
       
    

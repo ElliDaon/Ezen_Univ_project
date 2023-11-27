@@ -133,8 +133,9 @@ iframe{
 
 .btn{
     background-color: #0067b3;
-
     color: whitesmoke;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 
@@ -172,7 +173,8 @@ iframe{
 .searchsubject{
     font-size : 14px;
     height : 30px;
-    border : 2px solid black
+    border : 2px solid black;
+    cursor : pointer;
 }
 
 .material-symbols-outlined{
