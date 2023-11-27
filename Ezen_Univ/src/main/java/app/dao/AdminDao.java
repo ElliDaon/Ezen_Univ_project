@@ -659,7 +659,7 @@ public class AdminDao {
 		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
 		ResultSet rs = null;
 		
-		String sql = "select p_no,p_name from professor where p_major=?";
+		String sql = "select p_no from professor where p_major=?";
 		
 		try{
 			pstmt = conn.prepareStatement(sql);
@@ -669,7 +669,6 @@ public class AdminDao {
 			while(rs.next()){
 				MemberVo mv = new MemberVo();
 				mv.setP_no( rs.getInt("p_no") ); 
-				mv.setP_name( rs.getString("p_name") );
 				list.add(mv);
 
 			}
@@ -719,28 +718,64 @@ public class AdminDao {
 		}
 		return value;
 	}
+	
+	
+	public MemberVo courseProfessorCheck(int p_no) {
+	    ResultSet rs = null;
+	    MemberVo memberVo = null; 
+		
+		String sql = "select p_name from professor where p_no =?";
+		
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, p_no);
+			rs = pstmt.executeQuery();
+		
+			if (rs.next()){
+	            memberVo = new MemberVo(); // 객체를 생성합니다.
+	            memberVo.setP_name(rs.getString("p_name"));
+			}
+			
 
-	public int courseTimeVerification(String ct_room, String ct_week, int pe_period, int ct_semester, int ct_year, String c_major, int c_grade) {
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return memberVo;
+	}
+
+	public int courseTimeVerification(String ct_room, String ct_week, int pe_period, int ct_semester, int ct_year, String c_major, int c_grade, String p_name) {
 		ResultSet rs = null;
 		int value=0;
 		
-		String sql = "select count(*) as cnt from course a join coursetime b on a.cidx=b.cidx\n"
-				+ "where (ct_room=? and ct_week=? and pe_period=? and ct_semester=? and ct_year=?) or\n"
-				+ "c_major=? and c_grade=? and ct_week=? and pe_period=? and ct_semester=? and ct_year=?";
+		String sql = "SELECT COUNT(*) AS cnt\n"
+				+ "FROM course a\n"
+				+ "JOIN coursetime b ON a.cidx = b.cidx\n"
+				+ "JOIN professor c ON c.pidx = a.pidx\n"
+				+ "WHERE (\n"
+				+ "    (ct_room = ? OR (c_major = ? AND c_grade = ?) OR p_name = ?)\n"
+				+ "    AND ct_week = ?\n"
+				+ "    AND pe_period = ?\n"
+				+ "    AND ct_semester = ?\n"
+				+ "    AND ct_year = ?\n"
+				+ ")";
 		
 		try{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, ct_room);
-			pstmt.setString(2, ct_week);
-			pstmt.setInt(3, pe_period);
-			pstmt.setInt(4, ct_semester);
-			pstmt.setInt(5, ct_year);
-			pstmt.setString(6, c_major);
-			pstmt.setInt(7, c_grade);
-			pstmt.setString(8, ct_week);
-			pstmt.setInt(9, pe_period);
-			pstmt.setInt(10, ct_semester);
-			pstmt.setInt(11, ct_year);
+			pstmt.setString(2, c_major);
+			pstmt.setInt(3, c_grade);
+			pstmt.setString(4, p_name);
+			pstmt.setString(5, ct_week);
+			pstmt.setInt(6, pe_period);
+			pstmt.setInt(7, ct_semester);
+			pstmt.setInt(8, ct_year);
 			
 			rs = pstmt.executeQuery();
 		
