@@ -182,9 +182,9 @@
 		</header>
 	</div>
     <div class="main">
-      <div class="container">
+      <div class="container" style="height:1100px;">
         <div class="sidebar">
-          <div class="top">
+          <div class="top">	
             <div id="myinfo" class="myinfo" style="margin-top:20px;">
               <!-- <iframe src = "../leftmenu/myinfo_s.jsp" width="100%" height="100%"></iframe> -->
               [관리자모드]
