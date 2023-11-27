@@ -15,6 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <style>
  h3 {
     
@@ -228,7 +230,7 @@
         </tr>
         <tr>
             <td class="text-box">
-                <p style="white-space: pre;">${nv.n_contents}
+                <p style="white-space: pre;">${fn:replace(fn:replace(nv.n_contents,'<','&lt;'),'>','&gt;')}
                 </p>
             </td>
         </tr>
