@@ -42,7 +42,9 @@
 	font-size : 15px;
 	cursor: pointer;
 }
-
+.countNo tbody tr:hover{
+    background-color: aliceblue;
+}
 /* .mytable{
     margin-top: 5px;
 } */
