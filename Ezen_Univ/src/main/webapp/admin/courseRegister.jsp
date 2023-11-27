@@ -117,6 +117,7 @@
             let semesterValue = $("input[list='semester-options']").val();
             let yearValue = $("input[list='year-options']").val();
             let c_major = $('#c_major').val();
+            let c_grade = $('#c_grade').val();
 
             
             if(courseroomValue ===""){
@@ -145,7 +146,8 @@
                     "periodValue": periodValue,
                     "semesterValue": semesterValue,
                     "yearValue": yearValue,
-                    "c_major": c_major
+                    "c_major": c_major,
+                    "c_grade": c_grade
                 },
                 cache: false,
                 success: function (data) {
@@ -244,7 +246,7 @@
    		
    		
 		// 강의등록 조회버튼 시 교수번호와 교수이름 가져오는 펑션
-        $('#registerView').on('click', function() {
+        $('#c_major').on('change', function() {
             //alert("확인");
             let c_major = $('#c_major').val();
 
@@ -522,8 +524,6 @@
 							<option value="도시공학과">도시공학과</option>
 							<option value="바이오메디컬공학부">바이오메디컬공학부</option>
 						</select>
-						&ensp;
-						<button type="button" name="btn" id="registerView">조회</button>
 		            </td>
 				</tr>
 				<tr>
@@ -546,7 +546,7 @@
 				<tr>
 					<th>수강학년</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_grade" list="grade-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
+						<input type="text" name="c_grade" id="c_grade" list="grade-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
 						<datalist id="grade-options">
 							<option value="1" />
 							<option value="2" />

@@ -432,11 +432,12 @@ public class AdminController extends HttpServlet {
 			String ct_semester = request.getParameter("semesterValue");
 			String ct_year = request.getParameter("yearValue");
 			String c_major = request.getParameter("c_major");
+			String c_grade = request.getParameter("c_grade");
 			
 			
 			int value = 0;
 			AdminDao add= new AdminDao();
-			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major);
+			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major,Integer.parseInt(c_grade));
 			
 			//System.out.println("value?"+value);
 			
