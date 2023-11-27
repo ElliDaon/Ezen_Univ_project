@@ -68,17 +68,26 @@
         
         $('#nextBtn').on('click', function() {
         	//alert("확인");
-        	let p_no = $("input[list='professorNumber-options']").val();
-        	let p_name = $("input[list='courseprofessor-options']").val();
+        	let p_no = $("#p_no").val();
+        	let p_name = $('#p_name').val();
+        	let c_grade = $('#c_grade').val();
+        	let c_major = $('#c_major').val();
         	
-            if(p_no ===""){
-            	alert("교수번호를 입력하세요");
+        	
+      	
+        	if(c_major == null || c_major === ""){
+            	alert("전공을 선택하세요");
             	return;
-            }else if(p_name ===""){
+            }else if (p_no == null || p_no === "") {
+        	    alert("교수번호를 선택하세요");
+        	    return;
+        	}else if(p_name == null || p_name === ""){
             	alert("교수이름을 입력하세요");
             	return;
+            }else if(c_grade == null || c_grade === ""){
+            	alert("수강학년을 선택하세요");
+            	return;
             }
-        	
               $.ajax({
                 type: "post",
                 url: "${pageContext.request.contextPath}/admin/professorVerification.do",
@@ -106,30 +115,32 @@
         $('#previousBtn').on('click', function() {
             $('#courseTimeListInput').hide();
             $('#courseListInput').show();
+            $("#timeTable tbody").empty();
         });
         
         //테이블 행추가
              
         $("#addRow").on("click", function() {
             let courseroomValue = $("input[name='ct_room']").val();
-            let weekValue = $("input[list='courseweek-options']").val();
+            let weekValue = $("#ct_week").val();
             let periodValue = $("input[name='pe_period']:checked").val();
-            let semesterValue = $("input[list='semester-options']").val();
-            let yearValue = $("input[list='year-options']").val();
+            let semesterValue = $("#ct_semester").val();
+            let yearValue = $("#ct_year").val();
             let c_major = $('#c_major').val();
             let c_grade = $('#c_grade').val();
+            let p_name = $('#p_name').val();
 
             
-            if(courseroomValue ===""){
+            if(courseroomValue == null || courseroomValue === ""){
             	alert("강의실을 입력하세요");
             	return;
-            }else if(weekValue ===""){
+            }else if(weekValue == null || weekValue === ""){
             	alert("요일을 입력하세요");
             	return;
-            }else if(semesterValue ===""){
+            }else if(semesterValue == null || semesterValue === ""){
             	alert("학기를 입력하세요");
             	return;
-            }else if(yearValue ===""){
+            }else if(yearValue == null || yearValue === ""){
             	alert("년도를 입력하세요");
             	return;
             }
@@ -147,7 +158,9 @@
                     "semesterValue": semesterValue,
                     "yearValue": yearValue,
                     "c_major": c_major,
-                    "c_grade": c_grade
+                    "c_grade": c_grade,
+                    "p_name": p_name
+                    
                 },
                 cache: false,
                 success: function (data) {
@@ -213,7 +226,7 @@
                         }
 
                         // 입력값 초기화
-                        $("input[list='courseweek-options']").val("");
+                        $("#ct_week").val("");
 
                         // 버튼을 행의 마지막 셀에 추가
                         $("#timeTable tbody tr").each(function() {
@@ -245,9 +258,10 @@
         });
    		
    		
-		// 강의등록 조회버튼 시 교수번호와 교수이름 가져오는 펑션
+		// 전공 선택시 교수번호 가져오는 함수
         $('#c_major').on('change', function() {
-            //alert("확인");
+            $('#p_name').val("");
+            $('#p_no').val("");
             let c_major = $('#c_major').val();
 
             $.ajax({
@@ -259,19 +273,19 @@
                 dataType: "json",
                 cache: false,
                 success: function(data) {
-                    let professorNumberOption = $("#professorNumber-options");
-                    let professorNameOption = $("#courseprofessor-options");
+                    let professorNumberOption = $("#p_no");
 
                     // 기존 datalist 비우기
                     professorNumberOption.empty();
-                    professorNameOption.empty();
+                    
+                 // 첫 번째 옵션 추가
+                    professorNumberOption.append('<option value="" disabled selected>전공 조회시 목록선택</option>');
 
                     // JSON 데이터를 datalist에 추가
                     $.each(data, function(index, item) {
-                        let NumberOption = $("<option>").attr("value", item.p_no);
-                        let NameOption = $("<option>").attr("value", item.p_name);
+                        let NumberOption = $("<option>").attr("value", item.p_no).text(item.p_no);
                         professorNumberOption.append(NumberOption);
-                        professorNameOption.append(NameOption);
+
                     });
                 },
                 error: function(request, status, error) {
@@ -280,6 +294,33 @@
                 }
             });
         });
+		
+		// 강의등록 조회버튼 시 교수번호와 교수이름 가져오는 펑션
+        $('#p_no').on('change', function() {
+            $('#p_name').val("");
+            let p_no = $('#p_no').val();
+
+            $.ajax({
+                type: "post",
+                url: "${pageContext.request.contextPath}/admin/registerProfessorView.do",
+                data: {
+                    "p_no": p_no
+                },
+                dataType: "json",
+                cache: false,
+                success: function(data) {
+					if(data.value !== undefined && data.value !== null && data.value !== ""){
+                  		$('#p_name').val(data.value); // p_name 값을 input에 설정
+					}else alert("해당 교수번호와 매칭되는 교수이름이 없습니다.");
+
+                },
+                error: function(request, status, error) {
+                    alert("통신오류 실패");
+                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            });
+        });
+		
   
     });
 	
@@ -354,28 +395,28 @@
 			let fm = document.frm; //문서객체안의 폼객체이름
 		
 			if(fm.c_name.value ==""){
-				alert("과목명을 입력하세요");
+				alert("강의명을 입력하세요");
 				return;
 			}else if (fm.c_major.value ==""){
-				alert("전공을 입력하세요");
+				alert("전공을 선택하세요");
 				return;		
 			}else if (fm.c_sep.value ==""){
-				alert("이수구분을 입력하세요");
+				alert("이수구분을 선택하세요");
 				return;		
 			}else if (fm.p_no.value ==""){
-				alert("교수번호을 입력하세요");
+				alert("교수번호을 선택하세요");
 				return;		
 			}else if (fm.c_grade.value ==""){
-				alert("수강학년을 입력하세요");
+				alert("수강학년을 선택하세요");
 				return;		
 			}else if (fm.p_name.value ==""){
 				alert("교수이름을 입력하세요");
 				return;		
 			}else if (fm.c_score.value ==""){
-				alert("학점을 입력하세요");
+				alert("학점을 선택하세요");
 				return;
 			}else if (fm.c_totaltime.value ==""){
-				alert("총강의시간을 입력하세요");
+				alert("총강의시간을 선택하세요");
 				return;
 			}
 			
@@ -512,8 +553,8 @@
 					</td>
 					<th>전공</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<select name="c_major" id="c_major">
-							<option key="default-empty" hidden></option>
+						<select name="c_major" id="c_major" style="width: 303px;">
+							<option value="" disabled selected>목록을 선택하세요</option>
 							<option value="건축학과">건축학과</option>
 							<option value="경제학과">경제학과</option>
 							<option value="경영학과">경영학과</option>
@@ -529,55 +570,54 @@
 				<tr>
 					<th>이수구분</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_sep" list="seperation-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
-						<datalist id="seperation-options">
-							<option value="교양선택" />
-							<option value="교양필수" />
-							<option value="전공선택" />
-							<option value="전공필수" />
-						</datalist>
+						<select name="c_sep" id="c_sep" style="width: 303px;">
+							<option value="" disabled selected>목록을 선택하세요</option>
+							<option value="교양선택">교양선택</option>
+							<option value="교양필수">교양필수</option>
+							<option value="전공선택">전공선택</option>
+							<option value="전공필수">전공필수</option>
+						</select>
 					</td>
 		            <th>교수번호</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="p_no" list="professorNumber-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
-						<datalist id="professorNumber-options">
-						</datalist>
+						<select name="p_no" id="p_no" style="width: 303px;">
+							<option value="" disabled selected>전공 조회시 목록선택</option>
+						</select>
 		            </td>
 				<tr>
 					<th>수강학년</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_grade" id="c_grade" list="grade-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
-						<datalist id="grade-options">
-							<option value="1" />
-							<option value="2" />
-							<option value="3" />
-							<option value="4" />
-					</datalist>
+						<select name="c_grade" id="c_grade" style="width: 303px;">
+							<option value="" disabled selected>목록을 선택하세요</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+
 					</td>
 					<th>담당교수</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="p_name" list="courseprofessor-options" Placeholder="전공조회시 목록선택" autocomplete="off"/>
-						<datalist id="courseprofessor-options">
-						</datalist>
+						<input type="text" name="p_name" id="p_name" Placeholder="교수번호 선택시 자동입력" autocomplete="off" readonly/>
 		            </td>
 				</tr>
 				<tr>
 					<th>학점</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_score" list="score-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
-						<datalist id="score-options">
-							<option value="1" />
-							<option value="2" />
-							<option value="3" />
-						</datalist>
+						<select name="c_score" id="c_score" style="width: 303px;">
+							<option value="" disabled selected>목록을 선택하세요</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
 					</td>
 					<th>총강의시간</th>
 					<td style="text-align: left; padding: 0px 0px 0px 15px; width:35%;">
-						<input type="text" name="c_totaltime" list="totalTime-options" Placeholder="목록을 선택하세요" autocomplete="off"/>
-						<datalist id="totalTime-options">
-							<option value="32" />
-							<option value="48" />
-						</datalist>
+						<select name="c_totaltime" id="c_totaltime" style="width: 303px;">
+							<option value="" disabled selected>목록을 선택하세요</option>
+							<option value="32">32</option>
+							<option value="48">48</option>
+						</select>
 					</td>
 				</tr>
 			</table>
@@ -621,15 +661,15 @@
 				</td>
 				<th>요일</th>
 				<td style="padding: 0px 0px 0px 0px; width:12%;">
-					<input type="text" name="ct_week" list="courseweek-options" Placeholder="목록선택" autocomplete="off"/>
-					<datalist id="courseweek-options">
-						<option value="월" />
-						<option value="화" />
-						<option value="수" />
-						<option value="목" />
-						<option value="금" />
-						<option value="토" />
-					</datalist>
+					<select name="ct_week" id="ct_week">
+						<option value="" disabled selected>목록선택</option>
+						<option value="월">월</option>
+						<option value="화">화</option>
+						<option value="수">수</option>
+						<option value="목">목</option>
+						<option value="금">금</option>
+						<option value="토">토</option>
+					</select>
 				</td>
 				<th>교시</th>
 				<td style="padding: 0px 0px 0px 0px; width:20%;">
@@ -647,26 +687,27 @@
 				</td>
 				<th>학기</th>
 				<td style="padding: 0px 0px 0px 0px; width:12%;">
-					<input type="text" name="ct_semester" list="semester-options" Placeholder="목록선택"/>
-					<datalist id="semester-options">
-						<option value="1" />
-						<option value="2" />
-					</datalist>
+					<select name="ct_semester" id="ct_semester">
+						<option value="" disabled selected>목록선택</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+					</select>
+
 				</td>
 				<th>년도</th>
 				<td style="padding: 0px 0px 0px 0px; width:12%;">
-					<input type="text" name="ct_year" list="year-options" Placeholder="목록선택"/>
-					<datalist id="year-options">
-						<option value="2023" />
-						<option value="2024" />
-						<option value="2025" />
-						<option value="2026" />
-						<option value="2027" />
-						<option value="2028" />
-						<option value="2029" />
-						<option value="2030" />
-						<option value="2031" />
-					</datalist>
+					<select name="ct_year" id="ct_year">
+						<option value="" disabled selected>목록선택</option>
+						<option value="2023">2023</option>
+						<option value="2024">2024</option>
+						<option value="2025">2025</option>
+						<option value="2026">2026</option>
+						<option value="2027">2027</option>
+						<option value="2028">2028</option>
+						<option value="2029">2029</option>
+						<option value="2030">2030</option>
+						<option value="2031">2031</option>
+					</select>
 				</td>
 			</tr>
 			</table>
