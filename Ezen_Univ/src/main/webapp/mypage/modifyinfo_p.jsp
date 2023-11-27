@@ -31,7 +31,7 @@
 	        professorInfo();
 	  });
 	  
-	  function professorInfo(){
+	function professorInfo(){
 	  	
 	  	var str = "";
 	  	
@@ -45,13 +45,18 @@
 	  	
 	  	$("#myinfo").html(str);
 	  	return;
-	  }
+	}
     
     
+	function doublecheck(){
+		phonecheck();
+		emailcheck();
+	}
+	
     function phonecheck() {
     	var inputPhone = $('#professorPhone').val();
     	// 입력 값이 01000000000 형식인지 확인
-    	var phoneNumberRegex = /^010[0-9]{3,4}[0-9]{4}$/;
+    	var phoneNumberRegex = /^010[0-9]{4}[0-9]{4}$/;
     	if(!phoneNumberRegex.test(inputPhone)) {
     	    $('#phonecheck').text('형식확인').css('color','red');
     	}else {
@@ -197,11 +202,11 @@
 					   </tr>
 					   <tr>
 						   <td align="right" style="font-weight:bold; color:#555555;">연락처</td>
-						   <td><input type="tel" id="professorPhone" name="professorPhone" placeholder="01000000000" value="${mv.p_phone}" oninput="phonecheck()" /></td>
+						   <td><input type="tel" id="professorPhone" name="professorPhone" placeholder="01000000000" value="${mv.p_phone}" oninput="doublecheck()" /></td>
 					   </tr>
 					   <tr>
 						   <td align="right" style="font-weight:bold; color:#555555;">이메일</td>
-						   <td><input type="email" id="professorEmail" name="professorEmail" placeholder="id@ezen_univ.com" value="${mv.p_email}" oninput="emailcheck()" /></td>
+						   <td><input type="email" id="professorEmail" name="professorEmail" placeholder="id@ezen_univ.com" value="${mv.p_email}" oninput="doublecheck()" /></td>
 					   </tr>
 					</table>
 					<table class="table3" style="width:100%;">
