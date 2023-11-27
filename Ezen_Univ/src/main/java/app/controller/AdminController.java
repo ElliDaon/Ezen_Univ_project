@@ -366,7 +366,7 @@ public class AdminController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println(str);
 	
-		}else if(location.equals("registerView.do")) {		// 강의등록 조회시 교수번호,교수이름
+		}else if(location.equals("registerView.do")) {		// 전공 조회시 교수번호
 			HttpSession session = request.getSession();
 			PrintWriter out = response.getWriter();
 			
@@ -385,12 +385,11 @@ public class AdminController extends HttpServlet {
 			//System.out.println("list?"+list);
 			int listCnt = list.size();
 			int p_no = 0;
-			String p_name ="";
 			String str = "";
 			
 			for(int i=0; i< listCnt; i++){
 				p_no = list.get(i).getP_no();
-				p_name = list.get(i).getP_name();
+
 				String comma = "";
 				if(i == listCnt-1) { 
 					comma = "";
@@ -398,10 +397,32 @@ public class AdminController extends HttpServlet {
 				}else {
 					comma = ",";
 				}
-				str = str +"{\"p_no\":\""+p_no+"\",\"p_name\":\""+p_name+"\"}"+comma;
+				str = str +"{\"p_no\":\""+p_no+"\"}"+comma;
 			}
 			//System.out.println("str?"+str);
 			out.println("["+str+"]");
+
+		}else if(location.equals("registerProfessorView.do")) {		// 교수번호 조회시 교수이름
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			if(session.getAttribute("adidx")==null) {
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+				out.flush();
+			}
+			
+			String p_no = request.getParameter("p_no");
+					
+			AdminDao add= new AdminDao();
+			MemberVo mv=add.courseProfessorCheck(Integer.parseInt(p_no));
+			String p_name = mv.getP_name();
+					
+			String str = "";
+			
+			str = "{\"value\":\""+p_name+"\"}";
+
+			out.println(str);
 
 		}else if(location.equals("professorVerification.do")) {	// 강의등록 조회된 교수번호, 교수이름 교차검증
 			HttpSession session = request.getSession();
@@ -433,11 +454,12 @@ public class AdminController extends HttpServlet {
 			String ct_year = request.getParameter("yearValue");
 			String c_major = request.getParameter("c_major");
 			String c_grade = request.getParameter("c_grade");
+			String p_name = request.getParameter("p_name");
 			
 			
 			int value = 0;
 			AdminDao add= new AdminDao();
-			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major,Integer.parseInt(c_grade));
+			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major,Integer.parseInt(c_grade),p_name);
 			
 			//System.out.println("value?"+value);
 			
