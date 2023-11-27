@@ -47,8 +47,33 @@
 	  	return;
 	  }
     
+    
+    function phonecheck() {
+    	var inputPhone = $('#professorPhone').val();
+    	// 입력 값이 01000000000 형식인지 확인
+    	var phoneNumberRegex = /^010[0-9]{3,4}[0-9]{4}$/;
+    	if(!phoneNumberRegex.test(inputPhone)) {
+    	    $('#phonecheck').text('형식확인').css('color','red');
+    	}else {
+    		$('#phonecheck').text('OK').css('color','green');
+    	}
+    }
+    
+    function emailcheck() {
+    	var inputEmail = $('#professorEmail').val();
+    	var emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    	if(!emailRegex.test(inputEmail)) {
+    	    $('#emailcheck').text('형식확인').css('color','red');
+    	}else {
+    		$('#emailcheck').text('OK').css('color','green');
+    	}
+    }
+    
+    
     function check(){
     	var fm = document.modify;
+    	var ch1 = document.getElementById('phonecheck').innerHTML;
+    	var ch2 = document.getElementById('emailcheck').innerHTML;
     	
     	if(fm.professorPhone.value==""){
     		alert("번호를 입력해주세요.");
@@ -58,6 +83,14 @@
     		alert("이메일을 입력해주세요.");
     		fm.professorEmail.focus();
     		return;
+    	}else if(ch1 !== "OK"){	// input된 핸드폰번호 형식이 OK가 아닐때 수정페이지가 넘어가지 않도록 
+    		alert("핸드폰번호 형식을 확인해주세요.");
+    		fm.professorPhone.focus();
+			return;
+    	}else if(ch2 !== "OK"){	// input된 이메일 형식이 OK가 아닐때 수정페이지가 넘어가지 않도록 
+    		alert("이메일 형식을 확인해주세요.");
+    		fm.professorEmail.focus();
+			return;
     	}
     	
     	fm.action = "<%=request.getContextPath()%>/mypage/modifyinfo_pAction.do";
@@ -164,11 +197,11 @@
 					   </tr>
 					   <tr>
 						   <td align="right" style="font-weight:bold; color:#555555;">연락처</td>
-						   <td><input type="tel" id="professorPhone" name="professorPhone" placeholder="01000000000" value="${mv.p_phone}" /></td>
+						   <td><input type="tel" id="professorPhone" name="professorPhone" placeholder="01000000000" value="${mv.p_phone}" oninput="phonecheck()" /></td>
 					   </tr>
 					   <tr>
 						   <td align="right" style="font-weight:bold; color:#555555;">이메일</td>
-						   <td><input type="email" id="professorEmail" name="professorEmail" placeholder="id@ezen_univ.com" value="${mv.p_email}" /></td>
+						   <td><input type="email" id="professorEmail" name="professorEmail" placeholder="id@ezen_univ.com" value="${mv.p_email}" oninput="emailcheck()" /></td>
 					   </tr>
 					</table>
 					<table class="table3" style="width:100%;">
@@ -183,20 +216,19 @@
 				 </td>
 				</tr>
 			   </table>
-			   
-			   <table name="frm">
-				<tr>
-				 <td>
-				  <table class="table4" style="width:100%;">
-				   <tr>
-					<td class="pwd" onClick="location.href='../mypage/modifypassword_p.do'" style="cursor:pointer;">
-					<b><i class="fa fa-keyboard-o" aria-hidden="true"></i> 비밀번호 변경하기</b>
-					</td>
-				   </tr>
-				  </table>
-				 </td>
+            <br>
+            <table>
+            	<tr>
+				<td class="pwd" onClick="location.href='../mypage/modifypassword_p.do'" style="cursor:pointer;">
+				<i class="fa fa-keyboard-o" aria-hidden="true"></i>&ensp;비밀번호 변경하기</td>
 				</tr>
-			   </table>
+			</table>
+			   <div class="phonecheck">
+			   <span id="phonecheck"></span>
+			   </div>
+			   <div class="emailcheck">
+			   <span id="emailcheck"></span>
+			   </div>
         </div>
       </div>
     </div>

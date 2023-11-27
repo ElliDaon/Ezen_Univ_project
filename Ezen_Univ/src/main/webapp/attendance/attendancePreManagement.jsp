@@ -22,7 +22,7 @@
 		width: 1330px;
 	} */
 	tbody tr:hover {
-	background: #F2F2F2;
+	background: aliceblue;
 	}
 	h3{
 		font-size: 1.47em;
@@ -257,7 +257,7 @@ function chooseCourse(selectedCidx) {
 		</header>
 	</div>
 	<div class="main">
-      <div class="container">
+      <div class="container" style="height:2200px;">
         <div class="sidebar">
           <div class="top">
             <div id="myinfo" class="myinfo">

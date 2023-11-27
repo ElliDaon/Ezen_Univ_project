@@ -170,7 +170,7 @@ function listAction(cidx){
 		</header>
 	</div>
    <div class="main">
-      <div class="container">
+      <div class="container" style="height:2500px;">
         <div class="sidebar">
           <div class="top">
             <div id="myinfo" class="myinfo">
@@ -239,7 +239,7 @@ function listAction(cidx){
                         $(document).ready(function(){
                         	$("button").click(function() {
                         		var c_name= $(this).val();
-                        		$(this).css('color','blue');
+                        		$(this).css('color','#0067B3');
                         		$("button").not('[value='+c_name+']').css( 'color', 'black');
                         	});
                         });
