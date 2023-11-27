@@ -70,3 +70,15 @@ input[type=button] {
 }
 .pwd:hover:after { transform: scaleX(1); }
 .pwd:after{  transform-origin:  0% 50%; } */
+.phonecheck{
+	position: relative;
+	top: -222px;
+	left: 480px;
+	font-size: 15px;
+}
+.emailcheck{
+	position: relative;
+	top: -190px;
+	left: 480px;
+	font-size: 15px;
+}

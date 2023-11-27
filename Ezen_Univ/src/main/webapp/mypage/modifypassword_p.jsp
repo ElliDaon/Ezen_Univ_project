@@ -210,6 +210,7 @@
 			   <span id="pwcheck"></span>
 			   </div>
         </div>
+      </div>
     </div>
 </body>
 </html>
