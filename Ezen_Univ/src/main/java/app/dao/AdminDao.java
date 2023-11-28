@@ -759,7 +759,7 @@ public class AdminDao {
 				+ "JOIN coursetime b ON a.cidx = b.cidx\n"
 				+ "JOIN professor c ON c.pidx = a.pidx\n"
 				+ "WHERE (\n"
-				+ "    (ct_room = ? OR (c_major = ? AND c_grade = ?) OR p_name = ?)\n"
+				+ "    (REPLACE(ct_room, ' ', '') = REPLACE(?,' ','') OR (c_major = ? AND c_grade = ?) OR p_name = ?)\n"
 				+ "    AND ct_week = ?\n"
 				+ "    AND pe_period = ?\n"
 				+ "    AND ct_semester = ?\n"

@@ -188,7 +188,10 @@
            			<i class="fa fa-pencil-square" aria-hidden="true"></i>
            			${str2}(${av.pe_start}~${av.pe_end})
            		</h3>
+           			<div class="attclass">
+           			<button type="button" name="allatt" id="allatt" class="btn">전체출석</button>
                 	<button type="button" name="attbtn" id="attbtn" class="btn">저장</button>
+                	</div>
                 </div>
                     <div class="std-list">
                         <table class="std-list-tbl">
@@ -206,6 +209,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <script>
+                            $(document).ready(function(){
+								$("#allatt").on("click",function(){
+									var size = $('input:checkbox[name="student"]').length;
+									for(var i=1; i<size; i++){
+										var ra = "#att"+i;
+										var cs = "input[name=\"attendvalue"+i+"\"][value='출석']"
+										var tex = "#value"+i;
+										$(ra).prop('checked', true);
+										var ne = $(cs).next();
+										ne.css('background-color', '#459B60');
+                                        ne.css('border', '1px solid #459B60');
+                                        ne.css('color', 'white');
+                                        $(tex).val('출석');
+									}
+								});
+							});
+                            </script>
                            		<c:forEach var="mv" items="${list}" varStatus="i">
                                 <tr style="height: 20px;">
                                     <td>
@@ -225,6 +246,7 @@
 	                                            var value = $("input[name='value${i.count}']").val();
 	                                            var radioName = "attendvalue${i.count}";
 	                                            
+	                                            
 	                                            if (value === '출석') {
 	                                                $("input[name='" + radioName + "'][value='출석']").prop('checked', true);
 	                                            } else if (value === '지각') {
@@ -234,9 +256,7 @@
 	                                            }else if (value === '결석') {
 	                                                $("input[name='" + radioName + "'][value='결석']").prop('checked', true);
 	                                            }
-	                                            
-	                                           
-	                                            
+
 	                                       
 	                                        
 	                                     // 페이지 로드 시 체크된 상태를 감지하여 CSS 변경

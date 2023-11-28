@@ -56,20 +56,10 @@ input[type=button] {
 }
 
 .pwd:hover {
-	border: white solid 2px;
     background-color: #0067B3;
     color: #fff; 
-}
+} 
 
-/* .pwd:after {
-  display:block;
-  content: '';
-  border-bottom: solid 2px red;  
-  transform: scaleX(0);  
-  transition: transform 250ms ease-in-out;
-}
-.pwd:hover:after { transform: scaleX(1); }
-.pwd:after{  transform-origin:  0% 50%; } */
 .phonecheck{
 	position: relative;
 	top: -222px;
