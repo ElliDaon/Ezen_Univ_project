@@ -230,7 +230,7 @@ public class AdminDao {
             
             do {
                 // 랜덤으로 s_no 생성
-                p_no = currentYear * 10000 + (int) (Math.random() * 89999);
+                p_no = currentYear * 10000 + (int) (Math.random() * 9000) + 1000;
 
                 // 중복 체크
                 selectP_no = conn.prepareStatement(selectCnt);
@@ -454,7 +454,7 @@ public class AdminDao {
 
                 // 각 value에 대해 새로운 p_no 생성 및 중복 체크
                 do {
-                    p_no = currentYear * 10000 + (int) (Math.random() * 89999);
+                    p_no = currentYear * 10000 + (int) (Math.random() * 9000) + 1000;
 
                     // 중복 체크
                     selectP_no = conn.prepareStatement(selectCnt);
