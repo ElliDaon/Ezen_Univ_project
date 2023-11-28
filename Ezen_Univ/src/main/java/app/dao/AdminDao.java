@@ -442,7 +442,7 @@ public class AdminDao {
         int currentYear = Year.now().getValue();
 
         String selectCnt = "select count(*) as cnt from professor where p_no=?";
-        String selectedS_no = "update professor set p_yn='Y', p_no=? where pidx=?";
+        String selectedP_no = "update professor set p_yn='Y', p_no=? where pidx=?";
 		
 		try{
 			
@@ -463,7 +463,7 @@ public class AdminDao {
                 } while (rs.next() && rs.getInt("cnt") > 0);
 
                 // 중복이 아닐 때 업데이트
-                insertP_no = conn.prepareStatement(selectedS_no);
+                insertP_no = conn.prepareStatement(selectedP_no);
                 insertP_no.setInt(1, p_no);
                 insertP_no.setInt(2, value);
                 int rowsAffected = insertP_no.executeUpdate();
