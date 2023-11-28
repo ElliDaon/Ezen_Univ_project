@@ -105,12 +105,10 @@ public class AdminController extends HttpServlet {
 			}
 			
 			String sidx = request.getParameter("sidx");
-			//System.out.println("sidx?"+sidx);
 			int value = 0;
 			AdminDao add= new AdminDao();
 			value =add.studentAccept(Integer.parseInt(sidx));
 			
-			//System.out.println("value?"+value);
 			String str ="{\"value\":\""+value+"\"}";
 			out.println(str);
 			
@@ -148,7 +146,6 @@ public class AdminController extends HttpServlet {
 			AdminDao add= new AdminDao();
 			value =add.studentDeny(Integer.parseInt(sidx));
 			
-			//System.out.println("value?"+value);
 			String str ="{\"value\":\""+value+"\"}";
 			out.println(str);
 			
@@ -377,12 +374,10 @@ public class AdminController extends HttpServlet {
 			}
 			
 			String c_major = request.getParameter("c_major");
-			//System.out.println("c_major?"+c_major);
 			
 			AdminDao add= new AdminDao();
 			ArrayList<MemberVo> list=add.courseRegisterCheck(c_major);
 			
-			//System.out.println("list?"+list);
 			int listCnt = list.size();
 			int p_no = 0;
 			String str = "";
@@ -399,7 +394,6 @@ public class AdminController extends HttpServlet {
 				}
 				str = str +"{\"p_no\":\""+p_no+"\"}"+comma;
 			}
-			//System.out.println("str?"+str);
 			out.println("["+str+"]");
 
 		}else if(location.equals("registerProfessorView.do")) {		// 교수번호 조회시 교수이름
@@ -461,8 +455,6 @@ public class AdminController extends HttpServlet {
 			AdminDao add= new AdminDao();
 			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major,Integer.parseInt(c_grade),p_name);
 			
-			//System.out.println("value?"+value);
-			
 			String str ="{\"cnt\":\""+value+"\"}";
 			PrintWriter out = response.getWriter();
 			out.println(str);
@@ -488,7 +480,6 @@ public class AdminController extends HttpServlet {
 			String c_totaltime = request.getParameter("c_totaltime");
 			String tableData = request.getParameter("tableData");
 			
-			//System.out.println("tableData?"+tableData);
 			
 			JSONParser parser = new JSONParser();
 			// tableData를 JSON 배열로 파싱
@@ -564,14 +555,9 @@ public class AdminController extends HttpServlet {
 			String c_major = request.getParameter("c_major");
 			String c_grade = request.getParameter("c_grade");
 			
-			//System.out.println("cidx?"+cidx);
-			//System.out.println("c_major?"+c_major);
-			//System.out.println("c_grade?"+c_grade);
-			
 			AdminDao add= new AdminDao();
 			ArrayList<MemberVo> list = add.courseMatchStudentList(Integer.parseInt(cidx),c_major,Integer.parseInt(c_grade));
 			
-			//System.out.println("list?"+list);
 			int listCnt = list.size();	
 			int sidx = 0;
 			String s_name ="";
@@ -596,7 +582,6 @@ public class AdminController extends HttpServlet {
 				str = str +"{\"sidx\":\""+sidx+"\",\"s_name\":\""+s_name+"\",\"s_no\":\""+s_no+"\",\"s_grade\":\""+s_grade+"\",\r\n"
 						+ "\"s_major\":\""+s_major+"\"}"+comma;
 			}
-			//System.out.println(str);
 			out.println(str);
 			
 		}else if(location.equals("checkedEnrollAction.do")) { // 체크된 학생들 수강등록
@@ -746,10 +731,6 @@ public class AdminController extends HttpServlet {
 			int startyear =Integer.parseInt(year);
 			int tm =Integer.parseInt(semester);
 			
-			//System.out.println("startdate?"+startdate);
-			//System.out.println("startyear?"+startyear);
-			//System.out.println("tm?"+tm);
-			  
 			int value = 0;
 			AdminDao add= new AdminDao();
 			value = add.openDateRegister(startdate,startyear,tm);
@@ -772,10 +753,6 @@ public class AdminController extends HttpServlet {
 				int syear =Integer.parseInt(year);
 				int stm =Integer.parseInt(semester);
 				
-				//System.out.println("startdate?"+startdate);
-				//System.out.println("syear?"+syear);
-				//System.out.println("stm?"+stm);
-				    
 				int value = 0;
 				AdminDao add= new AdminDao();
 				value = add.openDateUpdate(startdate,syear,stm);

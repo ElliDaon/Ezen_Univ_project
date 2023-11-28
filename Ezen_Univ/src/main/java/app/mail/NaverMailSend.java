@@ -63,9 +63,6 @@ public final class NaverMailSend {
 		    // Send the message
 		    Transport.send(message);
 
-		    System.out.println(" NaverMailSend : Email sent successfully.");
-		    
-
 
 	        // 세션에 authenCode 저장
 	        forsession.setAttribute("authenCode", authenCode);
@@ -75,7 +72,6 @@ public final class NaverMailSend {
 		    e.printStackTrace();
 		}
 
-		System.out.println(" NaverMailSend : sendEmail() 종료");
 		return authenCode;
 	}
 	

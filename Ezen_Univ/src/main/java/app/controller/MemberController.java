@@ -30,18 +30,6 @@ public class MemberController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		/*요청 주소 파악*/
-		//String requestURI = request.getRequestURI();
-		//String contextPath = request.getContextPath();
-		//String command = requestURI.substring(contextPath.length());
-		//System.out.println("M.Front.C : 1. 요청 주소 계산 완료");
-		
-		/*각 요청 주소의 매핑 처리*/
-		//ActionForward forward = null;
-		//Action action = null;
-		
-		
-		
 		if(location.equals("memberIdCheck.do")) {
 			MemberDao md = new MemberDao();
 			String memberId = request.getParameter("memberId");
@@ -78,10 +66,6 @@ public class MemberController extends HttpServlet {
 			int exec = md.studentInsert(s_id, s_pwd, s_name, s_phone, s_email, s_birth, s_major);
 
 			PrintWriter out = response.getWriter();
-			//boolean tf = stmt.execute(sql);//해당 구문(쿼리)를 실행시킨다
-
-			//System.out.println(sql);
-			//System.out.println(tf);
 			if(exec == 1){
 				//자동 이동 메소드
 				//response.sendRedirect(request.getContextPath()+"/member/memberList.html");
@@ -113,13 +97,9 @@ public class MemberController extends HttpServlet {
 			int exec = md.professorInsert(p_id, p_pwd, p_name, p_phone, p_email, p_birth, p_major);
 
 			PrintWriter out = response.getWriter();
-			//boolean tf = stmt.execute(sql);//해당 구문(쿼리)를 실행시킨다
 
-			//System.out.println(sql);
-			//System.out.println(tf);
 			if(exec == 1){
 				//자동 이동 메소드
-				//response.sendRedirect(request.getContextPath()+"/member/memberList.html");
 				out.println("<script>alert(\"회원가입되었습니다.\");"
 				+"document.location.href='"+request.getContextPath()+"/index.jsp'</script>");
 			}else{
@@ -134,9 +114,6 @@ public class MemberController extends HttpServlet {
 			
 			out.println("<script>alert('로그아웃이 완료되었습니다.'); localStorage.clear(); document.location.href='"+request.getContextPath() +"/index.jsp'</script>");
 			
-			
-			//response.sendRedirect(request.getContextPath()+"/index.jsp");
-			
 		}else if(location.equals("studentLoginAction.do")) {
 			
 			String s_id = request.getParameter("memberId");
@@ -146,8 +123,7 @@ public class MemberController extends HttpServlet {
 			MemberDao md = new MemberDao();
 			int midx = 0;
 			midx = md.studentLoginCheck(s_id, s_pwd);
-			if (midx!=0){ //아이디비번 일치
-				//세션에 회원 아이디를 담는다
+			if (midx!=0){ 
 				HttpSession session = request.getSession();
 				MemberVo mv = new MemberVo();
 				
@@ -166,13 +142,12 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect(request.getContextPath()+"/main/main_s.do");
 				}
 				
-			}else{//아이디 비번 불일치
+			}else{
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript' type='text/javascript'> alert('로그인 실패'); </script>");
 				out.println("<script>location.href='../index.jsp';</script>");
-				//response.sendRedirect("./main/main_s.do");
 			}
 			
 		}else if(location.equals("professorLoginAction.do")) {
@@ -204,13 +179,12 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect(request.getContextPath()+"/main/main_p.do");
 				}
 				
-			}else{//아이디 비번 불일치
+			}else{
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript' type='text/javascript'> alert('로그인 실패'); </script>");
 				out.println("<script>location.href='../index.jsp';</script>");
-				//response.sendRedirect("./main/main_s.do");
 			}
 			
 		}else if(location.equals("searchStudentId.do")) {
@@ -229,7 +203,6 @@ public class MemberController extends HttpServlet {
 			}
 			PrintWriter out = response.getWriter();
 			out.println(str);
-			//System.out.println(str);
 		}else if(location.equals("searchProfessorId.do")) {
 			String memberName = request.getParameter("memberName");
 			String memberEmail = request.getParameter("memberEmail");
@@ -262,10 +235,7 @@ public class MemberController extends HttpServlet {
 				str = "{\"value\" : \""+value+"\"}";
 				NaverMailSend nm = new NaverMailSend();
 				try {
-					System.out.println("메일인증 컨트롤러");
 					nm.sendEmail(memberEmail, session);
-					System.out.println("저장된 세션값:"+session.getAttribute("authenCode"));
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -287,15 +257,12 @@ public class MemberController extends HttpServlet {
 				str = "{\"value\" : \""+value+"\"}";
 				NaverMailSend nm = new NaverMailSend();
 				try {
-					System.out.println("메일인증 컨트롤러");
 					nm.sendEmail(memberEmail, session);
-					System.out.println(nm.toString());
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			//System.out.println("저장된 세션값:"+session.getAttribute("authenCode"));
 			PrintWriter out = response.getWriter();
 			out.println(str);
 

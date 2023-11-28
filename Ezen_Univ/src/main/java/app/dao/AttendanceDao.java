@@ -118,7 +118,6 @@ public class AttendanceDao {
 			
 			while(rs.next()) {
 				av.setAttendanceCount(rs.getInt("attendance"));
-				System.out.println(av.getAttendanceCount());
 			}
 			
 		} catch (SQLException e) {

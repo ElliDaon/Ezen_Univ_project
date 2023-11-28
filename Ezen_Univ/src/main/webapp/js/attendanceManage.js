@@ -46,3 +46,38 @@ $('input[name="attendvalue1"]').change(function() {
     });
 });
 
+$(document).ready(function(){
+	$("#allatt").on("click",function(){
+		var size = $('input:checkbox[name="student"]').length;
+		for(var i=1; i<size; i++){
+			var ra = "#att"+i;
+			var cs = "input[name=\"attendvalue"+i+"\"][value='출석']"
+			var cs1 = "input[name=\"attendvalue"+i+"\"][value='지각']"
+			var cs2 = "input[name=\"attendvalue"+i+"\"][value='조퇴']"
+			var cs3 = "input[name=\"attendvalue"+i+"\"][value='결석']"
+			var tex = "#value"+i;
+			$(ra).prop('checked', true);
+			var val = "input[name='attendvalue"+i+"']";
+			var val1 = $(val).val();
+			var ne = $(cs).next();
+			var ne1 = $(cs1).next();
+			var ne2 = $(cs2).next();
+			var ne3 = $(cs3).next();
+			ne.css('background-color', '#459B60');
+            ne.css('border', '1px solid #459B60');
+            ne.css('color', 'white');
+            $(tex).val('출석');
+            ne1.css('background-color', 'white');
+            ne1.css('border', '1px solid #555555');
+            ne1.css('color', '#555555');
+            
+            ne2.css('background-color', 'white');
+            ne2.css('border', '1px solid #555555');
+            ne2.css('color', '#555555');
+            
+            ne3.css('background-color', 'white');
+            ne3.css('border', '1px solid #555555');
+            ne3.css('color', '#555555');
+		}
+	});
+});

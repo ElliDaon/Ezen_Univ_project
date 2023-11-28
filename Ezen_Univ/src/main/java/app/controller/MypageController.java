@@ -376,7 +376,6 @@ public class MypageController extends HttpServlet{
 			request.setAttribute("year", year);
 			request.setAttribute("semester", term);
 			
-			
 			String path = "/mypage/searchP_table_s.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
@@ -401,7 +400,6 @@ public class MypageController extends HttpServlet{
 			
 			request.setAttribute("year", year);
 			request.setAttribute("semester", term);
-			
 			
 			String path = "/mypage/searchP_table_p.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(path);

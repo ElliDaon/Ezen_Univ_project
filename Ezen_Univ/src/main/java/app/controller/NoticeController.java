@@ -37,9 +37,9 @@ public class NoticeController {
 			 HttpSession session = request.getSession();
 			 
 			 if(session.getAttribute("pidx")==null) {
-					String path = request.getContextPath();
-					out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
-			}
+				String path = request.getContextPath();
+				out.println("<script>alert('로그인이 필요합니다'); location.href='"+path+"/index.jsp';</script>");
+			 }
 			 
 			 int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			 NoticeDao nd = new NoticeDao();
@@ -57,9 +57,6 @@ public class NoticeController {
 		}else if(location.equals("noticeWriteAction.do")) {
 			
 
-			
-			//String nidx = request.getParameter("nidx");
-			
 			HttpSession session = request.getSession();
 			int pidx = ((Integer)(session.getAttribute("pidx"))).intValue();
 			
@@ -132,8 +129,6 @@ public class NoticeController {
 			
 			int cnt = nd.noticeTotalCount_p(pidx,scri);
 			pm.setTotalCount(cnt);
-			//System.out.println("cnt?"+cnt);
-			
 						
 			request.setAttribute("pm", pm);
 			request.setAttribute("alist", alist);
@@ -181,7 +176,6 @@ public class NoticeController {
 			
 			int cnt = nd.noticeTotalCount_s(sidx,scri);
 			pm.setTotalCount(cnt);
-			
 						
 			request.setAttribute("pm", pm);
 			request.setAttribute("alist", alist);
@@ -209,7 +203,6 @@ public class NoticeController {
 			NoticeDao nd = new NoticeDao();
 			int exec = nd.noticeCntUpdate(nidx_int);
 			NoticeVo nv = nd.noticeSelectOne(nidx_int);	
-			
 			
 			request.setAttribute("nv", nv);
 			
@@ -296,20 +289,13 @@ public class NoticeController {
 			
 			request.setAttribute("nv", nv);	
 			request.setAttribute("courselist", courselist);
-			System.out.println(pidx );
-			
-			System.out.println(nv.getPidx());
 			
 			String path= "";
 			if(pidx != nv.getPidx()) {
-			
 				out.println("<script>alert('권한이 없습니다.');location.href='"+request.getContextPath()+"/main/main_p.jsp'</script>");	
-
 			}
 			else {
-				
 			    path ="/notice/noticeModify.jsp";
-			
 			}
 			
 			//화면용도의 주소는 포워드로 토스해서 해당 찐주소로 보낸다
@@ -326,7 +312,6 @@ public class NoticeController {
 			int coursetype = Integer.parseInt(request.getParameter("coursetype"));
 			String when = request.getParameter("when");
 			String contents = request.getParameter("contents");
-			
 	
 			
 			//2. 받은값을 입력한다

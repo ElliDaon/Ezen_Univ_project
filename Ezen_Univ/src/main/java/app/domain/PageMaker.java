@@ -64,8 +64,6 @@ public class PageMaker {
 				
 		endPage = (int)(Math.ceil(scri.getPage()/(double)displayPageNum)*displayPageNum);
 
-		System.out.println(totalCount);
-		
 		//2.endPage를 설정했으면 시작페이지도 설정
 		startPage  = (endPage-displayPageNum)+1;
 		

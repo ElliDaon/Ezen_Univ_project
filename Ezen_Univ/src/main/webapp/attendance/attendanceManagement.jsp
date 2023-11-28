@@ -85,7 +85,7 @@
 	    			if(data.value == 0){
 						alert("입력오류");	    				
 	    			}else{
-		    			alert("성공");
+		    			alert("출석이 완료되었습니다.");
 		    			var loc = "<%=request.getContextPath()%>/attendance/attendancePreManagement.do";
 		    			location.href=loc;
 	    			}
@@ -209,24 +209,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <script>
-                            $(document).ready(function(){
-								$("#allatt").on("click",function(){
-									var size = $('input:checkbox[name="student"]').length;
-									for(var i=1; i<size; i++){
-										var ra = "#att"+i;
-										var cs = "input[name=\"attendvalue"+i+"\"][value='출석']"
-										var tex = "#value"+i;
-										$(ra).prop('checked', true);
-										var ne = $(cs).next();
-										ne.css('background-color', '#459B60');
-                                        ne.css('border', '1px solid #459B60');
-                                        ne.css('color', 'white');
-                                        $(tex).val('출석');
-									}
-								});
-							});
-                            </script>
                            		<c:forEach var="mv" items="${list}" varStatus="i">
                                 <tr style="height: 20px;">
                                     <td>
@@ -307,7 +289,7 @@
 		                                                    $label.css('color', 'white');
 		                                                } else {
 		                                                    $label.css('background-color', 'white');
-		                                                    $label.css('border', '1px solid 555555');
+		                                                    $label.css('border', '1px solid #555555');
 		                                                    $label.css('color', '#555555');
 		                                                }
 		                                            });
