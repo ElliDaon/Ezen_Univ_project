@@ -128,7 +128,7 @@
             let yearValue = $("#ct_year").val();
             let c_major = $('#c_major').val();
             let c_grade = $('#c_grade').val();
-            let p_name = $('#p_name').val();
+            let p_no = $('#p_no').val();
 
             
             if(courseroomValue == null || courseroomValue === ""){
@@ -159,7 +159,7 @@
                     "yearValue": yearValue,
                     "c_major": c_major,
                     "c_grade": c_grade,
-                    "p_name": p_name
+                    "p_no": p_no
                     
                 },
                 cache: false,

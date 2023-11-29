@@ -448,12 +448,12 @@ public class AdminController extends HttpServlet {
 			String ct_year = request.getParameter("yearValue");
 			String c_major = request.getParameter("c_major");
 			String c_grade = request.getParameter("c_grade");
-			String p_name = request.getParameter("p_name");
+			String p_no = request.getParameter("p_no");
 			
 			
 			int value = 0;
 			AdminDao add= new AdminDao();
-			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major,Integer.parseInt(c_grade),p_name);
+			value =add.courseTimeVerification(ct_room,ct_week,Integer.parseInt(pe_period),Integer.parseInt(ct_semester),Integer.parseInt(ct_year),c_major,Integer.parseInt(c_grade),Integer.parseInt(p_no));
 			
 			String str ="{\"cnt\":\""+value+"\"}";
 			PrintWriter out = response.getWriter();

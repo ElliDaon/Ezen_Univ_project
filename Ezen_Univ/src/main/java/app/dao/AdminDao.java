@@ -750,7 +750,7 @@ public class AdminDao {
 		return memberVo;
 	}
 
-	public int courseTimeVerification(String ct_room, String ct_week, int pe_period, int ct_semester, int ct_year, String c_major, int c_grade, String p_name) {
+	public int courseTimeVerification(String ct_room, String ct_week, int pe_period, int ct_semester, int ct_year, String c_major, int c_grade, int p_no) {
 		ResultSet rs = null;
 		int value=0;
 		
@@ -759,7 +759,7 @@ public class AdminDao {
 				+ "JOIN coursetime b ON a.cidx = b.cidx\n"
 				+ "JOIN professor c ON c.pidx = a.pidx\n"
 				+ "WHERE (\n"
-				+ "    (REPLACE(ct_room, ' ', '') = REPLACE(?,' ','') OR (c_major = ? AND c_grade = ?) OR p_name = ?)\n"
+				+ "    (REPLACE(ct_room, ' ', '') = REPLACE(?,' ','') OR (c_major = ? AND c_grade = ?) OR p_no = ?)\n"
 				+ "    AND ct_week = ?\n"
 				+ "    AND pe_period = ?\n"
 				+ "    AND ct_semester = ?\n"
@@ -771,7 +771,7 @@ public class AdminDao {
 			pstmt.setString(1, ct_room);
 			pstmt.setString(2, c_major);
 			pstmt.setInt(3, c_grade);
-			pstmt.setString(4, p_name);
+			pstmt.setInt(4, p_no);
 			pstmt.setString(5, ct_week);
 			pstmt.setInt(6, pe_period);
 			pstmt.setInt(7, ct_semester);
