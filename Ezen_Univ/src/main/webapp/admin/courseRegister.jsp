@@ -559,6 +559,7 @@
 							<option value="경제학과">경제학과</option>
 							<option value="경영학과">경영학과</option>
 							<option value="정보통신공학과">정보통신공학과</option>
+							<option value="전기공학과">전기공학과</option>
 							<option value="기계공학과">기계공학과</option>
 							<option value="기계설계공학부">기계설계공학부</option>
 							<option value="기계시스템공학부">기계시스템공학부</option>
