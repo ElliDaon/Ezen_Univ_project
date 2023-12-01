@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import app.dbconn.DbConn;
@@ -180,12 +182,7 @@ public class NoticeDao {
 	}
 	public ArrayList<NoticeVo> getList_p(int pidx,SearchCriteria scri){
 		
-		LocalDate now = LocalDate.now();
-		String year = Integer.toString(now.getYear());
-		String month = Integer.toString(now.getMonthValue());
-		String day = Integer.toString(now.getDayOfMonth());
-		String nowdate = year+month+day;
-		int nowdate_i = Integer.parseInt(nowdate);
+		LocalDate currentDate = LocalDate.now();
 		
 		ResultSet rs = null;
 		String str= "";
@@ -220,13 +217,14 @@ public class NoticeDao {
 				nv.setN_writeday(rs.getString("A.n_writeday"));
 				nv.setN_count(rs.getInt("A.n_count"));
 				
-				String wyear = nv.getN_writeday().substring(0,4);
-				String wmonth = nv.getN_writeday().substring(5,7);
-				String wday = nv.getN_writeday().substring(8,10);
-				String wdate = wyear+wmonth+wday;
-				int wdate_i = Integer.parseInt(wdate);
-				
-				if(nowdate_i-wdate_i<3) {
+				int wyear = Integer.parseInt(nv.getN_writeday().substring(0,4));
+				int wmonth = Integer.parseInt(nv.getN_writeday().substring(5,7));
+				int wday = Integer.parseInt(nv.getN_writeday().substring(8,10));
+				LocalDate date1 = LocalDate.of(wyear, wmonth, wday);
+
+				 long daysDifference = ChronoUnit.DAYS.between(date1, currentDate);
+
+				if(Math.abs(daysDifference)<3) {
 					nv.setN_dday(true);
 				}else {
 					nv.setN_dday(false);
@@ -253,13 +251,10 @@ public class NoticeDao {
 	}
 	public ArrayList<NoticeVo> getList_s(int sidx,SearchCriteria scri){
 		
-		LocalDate now = LocalDate.now();
-		String year = Integer.toString(now.getYear());
-		String month = Integer.toString(now.getMonthValue());
-		String day = Integer.toString(now.getDayOfMonth());
-		String nowdate = year+month+day;
-		int nowdate_i = Integer.parseInt(nowdate);
 		
+		LocalDate currentDate = LocalDate.now();
+		
+		 
 		ResultSet rs = null;
 		String str= "";
 		if (scri.getSubject()!=0) {
@@ -295,13 +290,14 @@ public class NoticeDao {
 				nv.setN_writeday(rs.getString("B.n_writeday"));
 				nv.setN_count(rs.getInt("B.n_count"));
 				
-				String wyear = nv.getN_writeday().substring(0,4);
-				String wmonth = nv.getN_writeday().substring(5,7);
-				String wday = nv.getN_writeday().substring(8,10);
-				String wdate = wyear+wmonth+wday;
-				int wdate_i = Integer.parseInt(wdate);
-				
-				if(nowdate_i-wdate_i<3) {
+				int wyear = Integer.parseInt(nv.getN_writeday().substring(0,4));
+				int wmonth = Integer.parseInt(nv.getN_writeday().substring(5,7));
+				int wday = Integer.parseInt(nv.getN_writeday().substring(8,10));
+				LocalDate date1 = LocalDate.of(wyear, wmonth, wday);
+
+				 long daysDifference = ChronoUnit.DAYS.between(date1, currentDate);
+
+				if(Math.abs(daysDifference)<3) {
 					nv.setN_dday(true);
 				}else {
 					nv.setN_dday(false);

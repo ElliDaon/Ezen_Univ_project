@@ -258,6 +258,7 @@ function CheckEmail(str){
 	                    <option value="기계시스템공학부">기계시스템공학부</option>
 	                    <option value="도시공학과">도시공학과</option>
 	                    <option value="바이오메디컬공학부">바이오메디컬공학부</option>
+	                    <option value="전기공학과">전기공학과</option>
 					</select>
 					<label class="choosemajor">학과</label>
 				</div>
