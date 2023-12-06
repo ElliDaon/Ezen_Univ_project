@@ -63,10 +63,10 @@
             content: counter(aaa) " ";
          }
          
-         .listNo tbody>tr {
+         .list_table_student tbody>tr {
             counter-increment: aaa;
          }
-        .listNo tbody>tr>td:first-child:before {
+        .list_table_student tbody>tr>td:first-child:before {
             content: counter(aaa) " ";
          }
          
@@ -74,6 +74,16 @@
     <script>
 	$(document).ready(function(){
 	        professorInfo();
+	        
+	        $("button[name='c_name']").click(function () {
+	        	var c_name = $(this).text();
+	        	$(".selectedWrap>input[name='selectedC_name']").val(c_name);
+	        	var cidx = $(this).val();
+	        	getAttendanceTable(cidx);
+
+	        	
+
+	        }); 
 	});
 	  
 	function professorInfo(){
@@ -92,115 +102,116 @@
 	  	return;
 	}
   
-    	function search_detail(c_name){
-			$('#selectedCourse').empty();
-			$('#selected_periodList').empty();
-			$("#attendanceDate").val("");
-			
-			var str = c_name;
-			$(".selectedWrap>input[name='selectedC_name']").val(str);
-			
-			return;
-		}
-    	
-    	function searchList(){
-    		let c_name = $("#selectedCourse").val();
-    		let a_date = $("#attendanceDate").val();
-    		let a_start = $("#timeSlot").val();
-    		
-    		$.ajax({
-    			type : "post",
-    			url : "${pageContext.request.contextPath}/attendance/searchList.do",
-    			data : {
-    				"c_name" : c_name,
-    				"a_date" : a_date,
-    				"a_start" : a_start
-    				},
-    			dataType : "json",
-    			success : function(data){
-    				
-    				var str = "";
-    				str = "<thead><tr>"
-    				+ "<td style='width:10%'>NO</td>"
-    				+ "<td style='width:30%'>전공</td>"
-    				+ "<td style='width:20%'>이름</td>"
-    				+ "<td style='width:20%'>학번</td>"
-    				+ "<td style='width:20%'>출석상태</td>"
-    				+ "</tr></thead><tbody>";
-    				
-    				$(data).each(function(){
-    					str = str + "<tr><td></td><td>" + this.s_major + "</td><td>" 
-    					+ this.s_name + "</td><td>" + this.s_no+ "</td><td><span>"
-    					+ this.e_attendance + "</span></td></tr>";
-    				});
-    				
-    				str = str + "</tbody>";
-    				$("#list_table").html("<table class='listNo'>"+str+"</table>");
-    				
-		    		$("td span").each(function(){
-		    			var txt = $(this).text();
-		    			if (txt === '결석') {
-		    				$(this).css('color','red');
-		    			}else if (txt === '지각' || txt === '조퇴') {
-		    				$(this).css('color','orange');
-		    			}else {
-		    				$(this).css('color','black');
-		    			}
-		    		});
-		    		
-    				return;
-    			},
-    			error: function(request, status, error){
-    				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    			}
-    		});
-    	
-    	
-    	}
-    	function periodList(){
-    		let c_name = $("#selectedCourse").val();
-    		let a_date = $("#attendanceDate").val();
-    		
-    		$.ajax({
-    			type : "post",
-    			url : "${pageContext.request.contextPath}/attendance/periodList.do",
-    			data : {
-    				"a_date" : a_date,
-    				"c_name" : c_name
-    				},
-    			dataType : "json",
-    			success : function(data){
-    				var str = "<select id='timeSlot' name='timeSlot'>";
-    				$(data).each(function(){
-    					if(this.period == 1){
-    						str += "<option value='09:00'>1교시</option>";
-    					}else if(this.period ==2){
-    						str += "<option value='10:00'>2교시</option>";
-    					}else if(this.period ==3){
-    						str += "<option value='11:00'>3교시</option>";
-    					}else if(this.period ==4){
-    						str += "<option value='12:00'>4교시</option>";
-    					}else if(this.period ==5){
-    						str += "<option value='13:00'>5교시</option>";
-    					}else if(this.period ==6){
-    						str += "<option value='14:00'>6교시</option>";
-    					}else if(this.period ==7){
-    						str += "<option value='15:00'>7교시</option>";
-    					}else if(this.period ==8){
-    						str += "<option value='16:00'>8교시</option>";
-    					}else if(this.period ==9){
-    						str += "<option value='17:00'>9교시</option>";
-    					}
-    				});
-    				str +="</select>";
-    				$("#selected_periodList").html(str);
-    				return;
-    			},
-    			error: function(request, status, error){
-    				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    			}
-    		});
-    	}
+	
+   	
+   	function getAttendanceTable(cidx){
+   		
+   		$.ajax({
+   			type : "post",
+   			url : "${pageContext.request.contextPath}/attendance/getAttendanceTable.do",
+   			data : {
+   				"cidx" : cidx
+   				},
+   			dataType : "json",
+   			success : function(data){
+   				
+   				var str = "";
+   				str = "<thead><tr>";
+   				
+   				$(data).each(function(){
+   					str = str + "<td style='width: 60px; height: 50px;'>"+this.a_date+"("+this.ct_week+")<br>"+this.pe_period+"교시</td>";
+   				});
+   				
+   				str = str + "</tr></thead><tbody></tbody>";
+   				$("#list_table").html("<table class='listNo' id='listNo'>"+str+"</table>");
+   				
+				getStudentList(cidx);
+   				
+   				return ;
+   			},
+   			error: function(request, status, error){
+   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+   			}
+   		});
+   	
+   	
+   	}
+
+   	function getStudentList(cidx){
+
+   		$.ajax({
+   			type : "post",
+   			url : "${pageContext.request.contextPath}/attendance/getStudentList.do",
+   			data : {
+   				"cidx" : cidx
+   				},
+   			dataType : "json",
+   			success : function(data){
+   				var studentlist = "<table style='width: 80px;'><thead><tr><td style='width: 30px; height: 60px;'>No</td><td style='width: 50px;'>학생</td></tr></thead><tbody>";
+   				$(data).each(function(){
+	   				var str = "<tr>";
+
+   					studentlist = studentlist + "<tr><td style='height:60px;'></td><td>"+this.s_name+"<br>("+this.s_no+")</td></tr>"
+   					var count = this.c_totaltime;
+   					
+   					for(var i=0; i<count; i++){
+   						var tablehead = $('#listNo thead');
+   						var headtr= tablehead.children();
+   						var td = headtr.children();
+   						var tddate = td.eq(i).text();
+   						var onlydate = tddate.substring(0,2)+tddate.substring(3,5)+"_"+tddate.substring(8,9);
+   						str = str + "<td id='"+this.s_no+"_"+onlydate+"' style='height: 60px;'></td>";
+   					}
+   					str = str + "</tr>";
+   					$("#listNo tbody").append(str);
+   				});
+   					studentlist = studentlist + "</tbody></table>";
+   					$("#list_table_student").html(studentlist);
+				
+	    		
+   				getEachCheck(cidx);
+   				return;
+   			},
+   			error: function(request, status, error){
+   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+   			}
+   		});
+   	}
+	
+   	function getEachCheck(cidx){
+   		$.ajax({
+   			type : "post",
+   			url : "${pageContext.request.contextPath}/attendance/getEachCheck.do",
+   			data : {
+   				"cidx" : cidx
+   				},
+   			dataType : "json",
+   			success : function(data){
+   				var td_id = "";
+   				
+   				$(data).each(function(){
+					var attend = this.e_attendance;
+   					
+					td_id = "#" + this.s_no + "_" + this.a_date + "_" + this.pe_period;
+					$(td_id).html(attend);
+					var attend_style = $(td_id);
+					if(attend ==='결석'){
+						attend_style.css('color','red');
+					}else if(attend === '지각' || attend ==='조퇴'){
+						attend_style.css('color','orange');
+					}
+
+   				});
+				
+   				
+	    		
+   				return;
+   			},
+   			error: function(request, status, error){
+   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+   			}
+   		});
+   	}
     </script>
 </head>
 <body>
@@ -291,7 +302,7 @@
                         <tr>
                             <td></td>
                             <td>${av.c_sep}</td>
-                            <td><button type="button" id="c_name" value="${av.cidx}" onclick="search_detail('${av.c_name}')">${av.c_name}</button></td>
+                            <td><button type="button" name="c_name" id="c_name" value="${av.cidx}" >${av.c_name}</button></td>
                             <td>${av.c_major}</td>
                             <td>${av.c_grade}</td>
                             <td>${av.ct_room}</td>
@@ -308,12 +319,14 @@
                 <div style="display:inline-block;" class="selectedWrap">
                 강의명 <input type="text" id="selectedCourse" value="" name="selectedC_name" style="width:250px;" disabled/>
                 </div>
-                <input class="date" type="date" id="attendanceDate" name="attendanceDate" onChange="periodList()" style="width:150px;">
-                <div id="selected_periodList" class="selected_periodList"></div>
-                &emsp;<button type="button" id="showAttendanceList" onclick="searchList()">출석 목록 조회</button>
             </div>
-            <div id="list_table" class="list_table_slist">
-            
+            <div style="display: flex; flex-direction: row; ">
+	            <div id="list_table_student" class="list_table_student" style="width: 115px; ">
+
+	            </div>
+	            <div id="list_table" class="list_table_slist" style="width: 1185px; overflow: scroll;">
+	            
+	            </div>
             </div>
           </div>
         </div>

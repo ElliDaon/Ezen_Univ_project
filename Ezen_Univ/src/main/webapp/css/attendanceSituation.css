@@ -35,6 +35,9 @@
 .list_table_slist table tbody tr:nth-child(even){
     background: rgb(236, 236, 236);
 }
+.list_table_student table tbody tr:nth-child(even){
+    background: rgb(236, 236, 236);
+}
 #c_name {
 	background : none;
 	border : none;

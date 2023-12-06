@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -198,39 +199,41 @@ public class AttendanceController extends HttpServlet{
 			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
 			RequestDispatcher rd = request.getRequestDispatcher(path);
 			rd.forward(request, response);
-			
-		}else if(location.equals("searchList.do")) {
+		}else if(location.equals("getAttendanceTable.do")) {
 			
 			
 			AttendanceDao ad = new AttendanceDao();
 			
-			String c_name = request.getParameter("c_name");
-			String a_date = request.getParameter("a_date");
-			String a_start = request.getParameter("a_start");
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
 			
-			ArrayList<AttendanceVo> searchlist = ad.searchList(c_name, a_date, a_start);
-			int list_size = searchlist.size();
-			String s_name = "";
-			String s_major = "";
-			int s_no = 0;
-			String e_attendance = "";
-			
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int semester = 0;
+			if(month >= 1 && month <= 7) {
+				semester = 1;
+			}else {
+				semester = 2;
+			}
+			ArrayList<AttendanceVo> getDate = ad.getAttendanceDate(cidx, year, semester);
+			int listsize = getDate.size();
+			String a_date = "";
+			String ct_week = "";
+			int pe_period = 0;
 			String str = "";
 			
-			for(int i=0; i<list_size; i++) {
-				s_name = searchlist.get(i).getS_name();
-				s_major = searchlist.get(i).getS_major();
-				s_no = searchlist.get(i).getS_no();
-				e_attendance = searchlist.get(i).getE_attendance();
+			for(int i=0; i<listsize; i++) {
+				a_date = getDate.get(i).getA_date();
+				ct_week = getDate.get(i).getCt_week();
+				pe_period = getDate.get(i).getPe_period();
 				
 				String comma = "";
-				if (i == list_size - 1) {
+				if (i == listsize - 1) {
 					comma = "";
 				} else {
 					comma = ",";
 				}
-				
-				str = str + "{\"s_name\" : \""+s_name+"\" , \"s_major\" : \""+s_major+"\", \"s_no\" : \""+s_no+"\", \"e_attendance\" : \""+e_attendance+"\"}"+comma;
+				str = str+"{\"a_date\" : \""+a_date+"\", \"ct_week\" : \""+ct_week+"\", \"pe_period\" : \""+pe_period+"\"}"+comma;
 			}
 			
 			PrintWriter out = response.getWriter();
@@ -515,26 +518,78 @@ public class AttendanceController extends HttpServlet{
 			
 			out.println("["+str+"]");
 			
-		}else if(location.equals("periodList.do")) {
-			String a_date = request.getParameter("a_date");
-			String c_name = request.getParameter("c_name");
+		}else if(location.equals("getStudentList.do")) {
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
 			
 			AttendanceDao ad = new AttendanceDao();
-			ArrayList<Integer> pelist = ad.periodList(a_date, c_name);
-			
+			ArrayList<MemberVo> studentlist = ad.getAttendanceStudent(cidx);
+			String s_name = "";
+			int s_no = 0;
+			int c_totaltime = 0;
 			String str = "";
-			for(int i=0; i<pelist.size(); i++) {
+			for(int i=0; i<studentlist.size(); i++) {
 				String comma = "";
-				if (i == pelist.size() - 1) {
+				if (i == studentlist.size() - 1) {
 					comma = "";
 				} else {
 					comma = ",";
 				}
 				
-				int period = pelist.get(i);
-				str = str+"{\"period\":\""+period+"\"}"+comma;
+				s_name = studentlist.get(i).getS_name();
+				s_no = studentlist.get(i).getS_no();
+				c_totaltime = studentlist.get(i).getC_totaltime();
+				str = str + "{\"s_name\" : \""+s_name+"\", \"s_no\" : \""+s_no+"\",\"c_totaltime\" : \""+c_totaltime+"\"}"+comma;
 			}
-
+			PrintWriter out = response.getWriter();
+			out.println("["+str+"]");
+		}else if(location.equals("getEachCheck.do")) {
+			int cidx = Integer.parseInt(request.getParameter("cidx"));
+			
+			AttendanceDao ad = new AttendanceDao();
+			List<AttendanceVo> eachlist = ad.getEachCehck(cidx);
+			int s_no = 0;
+			String a_date = "";
+			String a_start = "";
+			String e_attendance = "";
+			String str = "";
+			int pe_period = 0;
+			for(int i=0; i<eachlist.size(); i++) {
+				String comma = "";
+				if (i == eachlist.size() - 1) {
+					comma = "";
+				} else {
+					comma = ",";
+				}
+				
+				s_no = eachlist.get(i).getS_no();
+				a_date = eachlist.get(i).getA_date();
+				a_date = a_date.substring(5, 7)+a_date.substring(8,10);
+				a_start = eachlist.get(i).getA_start();
+				a_start = a_start.substring(0,5);
+				
+				if(a_start.equals("09:00")) {
+					pe_period = 1;
+				}else if(a_start.equals("10:00")) {
+					pe_period = 2;
+				}else if(a_start.equals("11:00")) {
+					pe_period = 3;
+				}else if(a_start.equals("12:00")) {
+					pe_period = 4;
+				}else if(a_start.equals("13:00")) {
+					pe_period = 5;
+				}else if(a_start.equals("14:00")) {
+					pe_period = 6;
+				}else if(a_start.equals("15:00")) {
+					pe_period = 7;
+				}else if(a_start.equals("16:00")) {
+					pe_period = 8;
+				}else if(a_start.equals("17:00")) {
+					pe_period = 9;
+				}
+				e_attendance = eachlist.get(i).getE_attendance();
+				
+				str = str + "{\"s_no\" : \""+s_no+"\", \"a_date\" : \""+a_date+"\", \"pe_period\" : \""+pe_period+"\", \"e_attendance\" : \""+e_attendance+"\"}"+comma;
+			}
 			PrintWriter out = response.getWriter();
 			out.println("["+str+"]");
 		}

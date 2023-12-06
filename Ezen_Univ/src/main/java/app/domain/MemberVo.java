@@ -17,6 +17,7 @@ public class MemberVo {
 	private String e_attendance;
 	private String abcount;
 	private String abper;
+	private int c_totaltime;
 	
 	private int pidx;
 	private int p_no;
@@ -186,6 +187,12 @@ public class MemberVo {
 	}
 	public void setAbper(String abper) {
 		this.abper = abper;
+	}
+	public int getC_totaltime() {
+		return c_totaltime;
+	}
+	public void setC_totaltime(int c_totaltime) {
+		this.c_totaltime = c_totaltime;
 	}
 
 	

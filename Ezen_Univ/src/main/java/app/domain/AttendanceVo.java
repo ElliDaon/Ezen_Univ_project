@@ -30,6 +30,7 @@ public class AttendanceVo extends CourseVo  {
 	private int w_week;
 	private String abperal;
 	
+	
 	public int getAidx() {
 		return aidx;
 	}

@@ -130,7 +130,7 @@ function chooseCourse(selectedCidx) {
 	                    cnt += parseInt(data[i].att, 10) + parseInt(data[i].early, 10) + parseInt(data[i].late, 10) + parseInt(data[i].absent, 10);
 
 	                	if(cnt>=totalcnt){
-		                	str +="</td><td><button type='button' class='btn' style='background-color:#F2F2F2;'>출결수정</button></td></tr>";
+		                	str +="</td><td><button type='button' class='btn' style='background-color:#F2F2F2;'>출결조회</button></td></tr>";
 	                	}else{
 		                	str +="</td><td><button type='button' class='btn' style='background-color:#0067B3; color:white; border:1px solid #0067B3;'>출결처리</button></td></tr>";
 	                	}

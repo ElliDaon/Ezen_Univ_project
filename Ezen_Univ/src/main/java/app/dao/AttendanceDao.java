@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import app.dbconn.DbConn;
 import app.domain.AttendanceVo;
@@ -237,42 +238,6 @@ public class AttendanceDao {
 			e.printStackTrace();
 		}
 		return av;
-	}
-	
-	public ArrayList<AttendanceVo> searchList(String c_name, String a_date, String a_start) {
-		
-		ArrayList<AttendanceVo> searchlist = new ArrayList<>();
-		ResultSet rs;
-		String sql= "SELECT s.s_major, s.s_name, s.s_no, ec.e_attendance\r\n"
-				+ "FROM eachcheck ec\r\n"
-				+ "	join attendance a on a.aidx = ec.aidx\r\n"
-				+ "	join courselist cl on cl.clidx = a.clidx\r\n"
-				+ "	join course c on cl.cidx = c.cidx\r\n"
-				+ "	join student s on s.sidx = cl.sidx\r\n"
-				+ "where c.c_name=? and a_date = ? AND a_start = ?";
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, c_name);
-			pstmt.setString(2, a_date);
-			pstmt.setString(3, a_start);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				AttendanceVo av = new AttendanceVo();
-				
-				av.setS_major(rs.getString("S.s_major"));
-				av.setS_name(rs.getString("S.s_name"));
-				av.setS_no(rs.getInt("S.s_no"));
-				av.setE_attendance(rs.getString("Ec.e_attendance"));
-				searchlist.add(av);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return searchlist;
 	}
 	
 	public ArrayList<AttendanceVo> selectCourse(int pidx, int year, int semester) {
@@ -613,31 +578,98 @@ public class AttendanceDao {
 		return list;
 	}
 	
-	public ArrayList<Integer> periodList(String a_date, String c_name){
-		ArrayList<Integer> list = new ArrayList<>();
+	
+	public ArrayList<AttendanceVo> getAttendanceDate(int cidx, int year, int tm){
+		ArrayList<AttendanceVo> getDate = new ArrayList<>();
 		ResultSet rs;
-		String sql = "select ct.pe_period\r\n"
-				+ "from course c\r\n"
-				+ "join coursetime ct on c.cidx=ct.cidx\r\n"
-				+ "join attendance a on ct.cidx=a.cidx and ct.ctidx = a.ctidx\r\n"
-				+ "where a.a_date=? and c.c_name=?\r\n"
-				+ "group by ct.pe_period\r\n"
-				+ "order by 1";
+		String sql = "select\r\n"
+				+ "      date_format((case\r\n"
+				+ "      when  ct.ct_week='월' then date_add(w.w_start, interval 0 day)\r\n"
+				+ "      when  ct.ct_week='화' then date_add(w.w_start, interval 1 day)\r\n"
+				+ "      when  ct.ct_week='수' then date_add(w.w_start, interval 2 day)\r\n"
+				+ "      when  ct.ct_week='목' then date_add(w.w_start, interval 3 day)\r\n"
+				+ "      when  ct.ct_week='금' then date_add(w.w_start, interval 4 day)\r\n"
+				+ "      end),'%m.%d') as wk, ct.ct_week, ct.pe_period\r\n"
+				+ "from weektb w, coursetime ct\r\n"
+				+ "where ct.cidx=? and w.startyear=? and w.starttm=?\r\n"
+				+ "order by 1, 3";
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, a_date);
-			pstmt.setString(2, c_name);
-			rs=pstmt.executeQuery();
+			pstmt.setInt(1, cidx);
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, tm);
+			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				int period = rs.getInt("ct.pe_period");
-				list.add(period);
+				AttendanceVo av = new AttendanceVo();
+				av.setA_date(rs.getString("wk"));
+				av.setCt_week(rs.getString("ct_week"));
+				av.setPe_period(rs.getInt("pe_period"));
+				getDate.add(av);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		return getDate;
+	}
+	
+	public ArrayList<MemberVo> getAttendanceStudent(int cidx){
+		ArrayList<MemberVo> getStudent = new ArrayList<>();
+		ResultSet rs;
+		String sql = "select s.s_name, s.s_no, c.c_totaltime\r\n"
+				+ "from courselist cl\r\n"
+				+ "join student s on cl.sidx=s.sidx\r\n"
+				+ "join course c on cl.cidx = c.cidx\r\n"
+				+ "where cl.cidx=?\r\n"
+				+ "group by s.s_name, s.s_no order by 2";
 		
-		return list;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MemberVo mv = new MemberVo();
+				mv.setS_name(rs.getString("s_name"));
+				mv.setS_no(rs.getInt("s_no"));
+				mv.setC_totaltime(rs.getInt("c_totaltime"));
+				getStudent.add(mv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return getStudent;
+	}
+	
+	public List<AttendanceVo> getEachCehck(int cidx){
+		List<AttendanceVo> getEach = new ArrayList<>();
+		ResultSet rs;
+		String sql = "SELECT s.s_no, a.a_date, a.a_start, ec.e_attendance\r\n"
+				+ "FROM eachcheck ec\r\n"
+				+ "join attendance a on a.aidx = ec.aidx\r\n"
+				+ "join courselist cl on cl.clidx = a.clidx\r\n"
+				+ "join course c on cl.cidx = c.cidx\r\n"
+				+ "join student s on s.sidx = cl.sidx\r\n"
+				+ "where c.cidx=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				AttendanceVo av = new AttendanceVo();
+				av.setS_no(rs.getInt("s_no"));
+				av.setA_date(rs.getString("a_date"));
+				av.setA_start(rs.getString("a_start"));
+				av.setE_attendance(rs.getString("e_attendance"));
+				getEach.add(av);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return getEach;
 	}
 }
