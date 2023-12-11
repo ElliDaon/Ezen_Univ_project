@@ -147,7 +147,9 @@
    				},
    			dataType : "json",
    			success : function(data){
-   				var studentlist = "<table style='width: 80px;'><thead><tr><td style='width: 30px; height: 60px;'>No</td><td style='width: 50px;'>학생</td></tr></thead><tbody>";
+   				var studentlist = "<table style='width: 80px;'><thead><tr>"
+   								+"<td style='width: 30px; height: 60px;'>No</td>"
+   								+"<td style='width: 50px;'>학생</td></tr></thead><tbody>";
    				$(data).each(function(){
 	   				var str = "<tr>";
 

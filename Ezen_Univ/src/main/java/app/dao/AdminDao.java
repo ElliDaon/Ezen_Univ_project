@@ -659,7 +659,7 @@ public class AdminDao {
 		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
 		ResultSet rs = null;
 		
-		String sql = "select p_no from professor where p_major=?";
+		String sql = "select p_no from professor where p_major=? and p_yn='Y'";
 		
 		try{
 			pstmt = conn.prepareStatement(sql);
