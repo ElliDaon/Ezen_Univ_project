@@ -112,9 +112,7 @@ public class NoticeController {
 
 			int cidx = Integer.parseInt(subject);
 			scri.setSubject(cidx);
-			
-			
-			
+
 			
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
