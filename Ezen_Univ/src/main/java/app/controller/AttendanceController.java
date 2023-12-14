@@ -179,21 +179,24 @@ public class AttendanceController extends HttpServlet{
 			
 			
 			CourseDao cd = new CourseDao();
+			//교수 강의 목록
 			ArrayList<CourseVo> courselist = cd.professorCourseList(pidx,year,semester);
 
-			ArrayList<Integer> clist = new ArrayList<>();
-			for(int i=0; i<courselist.size(); i++) {
-				clist.add(courselist.get(i).getCidx());
-			}
+			//강의별 학생수
+			ArrayList<Integer> courseListCnt = ad.courseListCount(pidx);
 			
-			ArrayList<AttendanceVo> plist = new ArrayList<>();
+			//강의별 결석률
+			ArrayList<AttendanceVo> absentRate = new ArrayList<>();
 			for(int i=0; i<courselist.size(); i++) {
-				AttendanceVo av = ad.attendanceCourseList_p(clist.get(i));
-				plist.add(av);
+				int cidx = courselist.get(i).getCidx();
+				absentRate.add(ad.toomuchAbsenceList(cidx));
 			}
-			request.setAttribute("list", plist);
+			request.setAttribute("list", courselist);
+			request.setAttribute("cnt", courseListCnt);
+			request.setAttribute("rate", absentRate);
 			request.setAttribute("year", year);
 			request.setAttribute("semester", semester);
+			
 			
 			String path = "/attendance/attendanceSituation_p.jsp";
 			//화면용도의 주소는 forward로 토스해서 해당 찐 주소로 보낸다.
@@ -430,7 +433,6 @@ public class AttendanceController extends HttpServlet{
 			
 		    ArrayList<EachCheckVo> list = new ArrayList<>();
 		    for(int i=1; i<jsonArray.size(); i++){
-				//배열 안에 있는것도 JSON형식 이기 때문에 JSON Object 로 추출            
 				JSONObject insertData = (JSONObject) jsonArray.get(i);
 				int clidx = Integer.parseInt((String) insertData.get("clidx"));
 				String attvalue = (String)insertData.get("attendvalue");

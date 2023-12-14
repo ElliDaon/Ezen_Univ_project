@@ -14,10 +14,7 @@ function selectAtt(selectAll){
     })
 }
 
-var attval = $("input[name='attendvalue1']:checked").val();
-if(attval === '지각'){
-	
-}
+/*
 $('input[name="attendvalue1"]').change(function() {
     $('input[name="attendvalue1"]').each(function() {
         var value = $(this).val();             
@@ -44,7 +41,7 @@ $('input[name="attendvalue1"]').change(function() {
 			$label.css('color','gray');
 		}
     });
-});
+});*/
 
 $(document).ready(function(){
 	$("#allatt").on("click",function(){
