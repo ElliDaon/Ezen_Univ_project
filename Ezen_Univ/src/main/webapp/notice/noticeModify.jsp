@@ -24,6 +24,9 @@ NoticeVo nv = (NoticeVo)request.getAttribute("nv");
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="../css/nav_style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script>
 $(document).ready(function(){
@@ -46,6 +49,7 @@ function professorInfo(){
 	return;
 }
 
+
 function check(){
 	
 	var fm = document.frm; //문서객체안의 폼객체이름
@@ -59,7 +63,13 @@ function check(){
 		fm.contents.focus();
 		return;		
 	}
-	
+    // Datepicker의 형식("yyyy-MM-dd")에 맞게 변경
+    var selectedDate = new Date(fm.when.value);
+    var formattedDate = selectedDate.toISOString().split('T')[0];
+
+    // 변경된 형식의 날짜를 다시 입력 필드에 설정
+    fm.when.value = formattedDate;
+    
 	//처리하기위해 이동하는 주소
 	fm.action ="<%=request.getContextPath()%>/notice/noticeModifyAction.do";  
 	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
@@ -68,7 +78,16 @@ function check(){
 	alert("글이 수정되었습니다.");
 	return;
 }
+$(document).ready(function(){
+    $("#date").datepicker({
+        minDate: 0,
+        showOn: "button",
+        buttonText: "&nbsp;&nbsp;날짜 선택&nbsp;&nbsp;&nbsp;",
+        dateFormat: "yy-mm-dd" // 날짜 형식 설정 (yyyy-mm-dd)
 
+         
+    });
+});
 </script>
 
 
@@ -258,7 +277,7 @@ border: 0;
         <table class="noticeWrite">
 
         <tr class="subject">
-            <td><strong>제목</strong>&nbsp;&nbsp;&nbsp;</td>
+            <td style="white-space: nowrap;"><strong>제목</strong>&nbsp;&nbsp;&nbsp;</td>
             <td>
 
             <select name="noticetype">
@@ -275,7 +294,7 @@ border: 0;
                 </select>
             </td>
             <td>
-                <input type="date" name="when" value="<%=nv.getN_skipdate()%>">
+                <input id="date" type="date" name="when" value="<%=nv.getN_skipdate()%>" readonly>
             </td>
         </tr>
         <tr>

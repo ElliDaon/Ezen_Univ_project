@@ -50,7 +50,6 @@
 	    		var tr = checkbox.parent().parent().eq(i);
 				var td = tr.children();
 				var attendvalue = td.eq(4).children().val();
-				
 				jsonObj.clidx = $(this).val();
 				jsonObj.attendvalue = attendvalue;
 				jsonObj = JSON.stringify(jsonObj);
