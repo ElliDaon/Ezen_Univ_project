@@ -100,6 +100,36 @@ public class AttendanceDao {
 		return alist;
 	}
 	
+	
+	
+	public ArrayList<Integer> courseListCount(int pidx){
+		ArrayList<Integer> cnt = new ArrayList<>();
+		ResultSet rs;
+		String sql = "select ifnull(tableb.s_cnt,0) as cnt\r\n"
+				+ "from course co\r\n"
+				+ "left join \r\n"
+				+ "(select c.cidx, count(distinct cl.sidx) as s_cnt \r\n"
+				+ "from (select cidx, pidx from course	where pidx=?) c	\r\n"
+				+ "join courselist cl on c.cidx=cl.cidx\r\n"
+				+ "group by c.cidx,c.pidx) tableb on co.cidx=tableb.cidx \r\n"
+				+ "where co.pidx=? order by co.cidx";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pidx);
+			pstmt.setInt(2, pidx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cnt.add(rs.getInt("cnt"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return cnt;
+	}
+	
 	public AttendanceVo attendanceCount(int sidx, int cidx) {
 
 		AttendanceVo av = new AttendanceVo();
@@ -208,37 +238,7 @@ public class AttendanceDao {
 		return abv;
 	}
 	
-	public AttendanceVo attendanceCourseList_p(int pidx) {
-		
-		AttendanceVo av = new AttendanceVo();
-		ResultSet rs;
-		String sql= "call attendanceSituation_p(?)";
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pidx);
 
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				
-				av.setC_sep(rs.getString("c_sep"));
-				av.setCidx(rs.getInt("cidx"));
-				av.setC_name(rs.getString("c_name"));
-				av.setC_major(rs.getString("c_major"));
-				av.setC_grade(rs.getInt("c_grade"));
-				av.setCt_room(rs.getString("ct_room"));
-				av.setC_times(rs.getString("times"));
-				av.setS_cnt(rs.getInt("s_cnt"));
-				av.setAtpercent(rs.getString("rate"));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return av;
-	}
 	
 	public ArrayList<AttendanceVo> selectCourse(int pidx, int year, int semester) {
 		
@@ -484,7 +484,6 @@ public class AttendanceDao {
 				}
 				
 				if(counting == 0) {
-					//System.out.println(list.get(i).getE_attendance());
 					pstmt = conn.prepareStatement(insertAtt);
 					pstmt.setInt(1, av.getCtidx());
 					pstmt.setString(2, av.getA_date());

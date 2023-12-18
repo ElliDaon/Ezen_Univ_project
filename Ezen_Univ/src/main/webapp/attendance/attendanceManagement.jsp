@@ -42,30 +42,22 @@
 	    	var cidx = fm.cidx.value;
 	    	var widx = fm.widx.value;
 	    	var period = fm.period.value;
-	    	
 	    	var checkbox = $("input[name='student']:checked");
-	    	
 	    	var jsonArray 	= new Array();
-	    	//jsonArray.push(list);
+	    	
 	    	checkbox.each(function (i) {
 	    		var jsonObj = new Object();
-	    		
 	    		var tr = checkbox.parent().parent().eq(i);
 				var td = tr.children();
 				var attendvalue = td.eq(4).children().val();
-				
 				jsonObj.clidx = $(this).val();
 				jsonObj.attendvalue = attendvalue;
-				
 				jsonObj = JSON.stringify(jsonObj);
-				
 				jsonArray.push(JSON.parse(jsonObj));
-				
+					
 	        });
 			
-	    	
 	    	let arrays = JSON.stringify(jsonArray);
-	    	//alert("list:\n"+JSON.stringify(list));
 	    	
 	    	$.ajax({
 	    		type : "get",

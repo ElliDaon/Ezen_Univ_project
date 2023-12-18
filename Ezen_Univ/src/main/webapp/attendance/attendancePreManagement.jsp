@@ -132,11 +132,9 @@ function chooseCourse(selectedCidx) {
 	                	if(cnt>=totalcnt){
 		                	str +="</td><td><button type='button' class='btn' style='background-color:#F2F2F2;'>출결조회</button></td></tr>";
 	                	}else{
-		                	str +="</td><td><button type='button' class='btn' style='background-color:#0067B3; color:white; border:1px solid #0067B3;'>출결처리</button></td></tr>";
+		                	str +="</td><td><button type='button' class='btn' style='background-color:#0067B3;"
+		                		 +" color:white; border:1px solid #0067B3;'>출결처리</button></td></tr>";
 	                	}
-	               
-	
-	               
 	            });
 	            str += "</tbody></table>";
 	            $('#mytable').append(str);
@@ -145,9 +143,7 @@ function chooseCourse(selectedCidx) {
 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			} 
 		});
-	            
 		return; 
-		
 	}
 	
 	

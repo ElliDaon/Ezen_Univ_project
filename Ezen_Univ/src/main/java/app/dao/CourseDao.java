@@ -29,7 +29,7 @@ public class CourseDao {
 				+ "	join coursetime D on A.cidx = D.cidx\r\n"
 				+ "	join professor P on P.pidx = A.pidx\r\n"
 				+ "	where P.pidx=? and D.ct_year=? and D.ct_semester=?\r\n"
-				+ "	group by A.cidx, A.c_name,D.ct_room,A.c_major,A.c_sep,A.c_grade,A.c_score,P.p_name;"
+				+ "	group by A.cidx, A.c_name,D.ct_room,A.c_major,A.c_sep,A.c_grade,A.c_score,P.p_name order by 1;"
 ;
 				try{
 				pstmt = conn.prepareStatement(sql);
@@ -157,8 +157,7 @@ public class CourseDao {
 				+ "  MAX(CASE WHEN ct.ct_week = '수' THEN concat(co.c_name, '<br>', ct.ct_room) ELSE '' END) AS 수,\r\n"
 				+ "  MAX(CASE WHEN ct.ct_week = '목' THEN concat(co.c_name, '<br>', ct.ct_room) ELSE '' END) AS 목,\r\n"
 				+ "  MAX(CASE WHEN ct.ct_week = '금' THEN concat(co.c_name, '<br>', ct.ct_room) ELSE '' END) AS 금\r\n"
-				+ "FROM courselist cl\r\n"
-				+ "JOIN coursetime ct ON ct.ctidx = cl.ctidx\r\n"
+				+ "FROM coursetime ct\r\n"
 				+ "JOIN course co ON ct.cidx = co.cidx\r\n"
 				+ "JOIN professor p ON p.pidx = co.pidx\r\n"
 				+ "WHERE p.pidx = ? and ct.ct_year=? and ct.ct_semester=?\r\n"

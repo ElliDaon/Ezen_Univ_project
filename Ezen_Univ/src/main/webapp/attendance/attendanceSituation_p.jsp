@@ -296,21 +296,27 @@
                             <td style="width:150px">강의실</td>
                             <td style="width:150px">시간표</td>
                             <td style="width:80px">수강인원</td>
-                            <td style="width:80px">출석률</td>
+                            <td style="width:80px">미달률</td>
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="av" items="${list}">
+                    <c:forEach var="cv" items="${list}" varStatus="status">
                         <tr>
                             <td></td>
-                            <td>${av.c_sep}</td>
-                            <td><button type="button" name="c_name" id="c_name" value="${av.cidx}" >${av.c_name}</button></td>
-                            <td>${av.c_major}</td>
-                            <td>${av.c_grade}</td>
-                            <td>${av.ct_room}</td>
-                            <td>${av.c_times}</td>
-                            <td>${av.s_cnt}</td>
-                            <td>${av.atpercent}</td>
+                            <td>${cv.c_sep}</td>
+                            <td><button type="button" name="c_name" id="c_name" value="${cv.cidx}" >${cv.c_name}</button></td>
+                            <td>${cv.c_major}</td>
+                            <td>${cv.c_grade}</td>
+                            <td>${cv.ct_room}</td>
+                            <td>${cv.c_times}</td>
+                            <td>${cnt[status.index]}</td>
+                            <c:forEach var="rate" items="${rate}" varStatus="statuss">
+	                            <c:choose>
+	                            	<c:when test="${cv.cidx eq rate.cidx}">
+	                            		<td>${rate.abpercent}</td>
+	                            	</c:when>
+	                            </c:choose>	
+                            </c:forEach>
                         </tr>
                     </c:forEach>
                     </tbody>
