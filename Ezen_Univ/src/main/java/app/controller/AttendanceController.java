@@ -421,7 +421,7 @@ public class AttendanceController extends HttpServlet{
 			av.setPe_period(period);
 			
 			String attendValue = request.getParameter("Array");
-			
+			System.out.println(attendValue);
 			JSONParser parser = new JSONParser();
 		    JSONArray jsonArray = null;
 		    

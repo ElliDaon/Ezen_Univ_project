@@ -19,6 +19,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
 $(document).ready(function(){
     professorInfo();
@@ -40,33 +43,46 @@ function professorInfo(){
 	return;
 }
 
-function check(){
+function check() {
+    var fm = document.frm;
 
-	var fm = document.frm; //문서객체안의 폼객체이름
-	
-	
-	if(fm.when.value ==""){
-		alert("날짜를 선택하세요");
-		fm.when.focus();
-		
-		return;
-		
-	}else if (fm.contents.value ==""){
-		alert("내용을 입력하세요");
-		fm.contents.focus();
-		
-		return;
-	}
-	
-	confirm('정말 글을 등록하시겠습니까?');
-	
-	//처리하기위해 이동하는 주소
-	fm.action ="<%=request.getContextPath()%>/notice/noticeWriteAction.do";  
-	fm.method = "post";  //이동하는 방식  get 노출시킴 post 감추어서 전달
-	fm.submit(); //전송시킴
-	alert("글이 작성되었습니다.");
-	return;
+    if (fm.when.value == "") {
+        alert("날짜를 선택하세요");
+        fm.when.focus();
+        return;
+    } else if (fm.contents.value == "") {
+        alert("내용을 입력하세요");
+        fm.contents.focus();
+        return;
+    }
+
+    // Datepicker의 형식("yyyy-MM-dd")에 맞게 변경
+    var selectedDate = new Date(fm.when.value);
+    var formattedDate = selectedDate.toISOString().split('T')[0];
+
+    confirm('정말 글을 등록하시겠습니까?');
+
+    // 변경된 형식의 날짜를 다시 입력 필드에 설정
+    fm.when.value = formattedDate;
+
+    // 처리하기 위해 이동하는 주소
+    fm.action = "<%=request.getContextPath()%>/notice/noticeWriteAction.do";
+    fm.method = "post";
+    fm.submit();
+    alert("글이 작성되었습니다.");
+    return;
 }
+$(document).ready(function(){
+    $("#date").datepicker({
+        minDate: 0,
+        showOn: "button",
+        buttonText: "&nbsp;&nbsp;날짜 선택&nbsp;&nbsp;&nbsp;",
+        dateFormat: "yy-mm-dd" // 날짜 형식 설정 (yyyy-mm-dd)
+
+         
+    });
+});
+
 
 </script>
 
@@ -241,8 +257,8 @@ td {
         <form name="frm">
         <table class="noticeWrite">
                 <h3>휴보강 공지등록</h3>
-             <tr class="subject">
-            <td><strong>제목</strong>&nbsp;&nbsp;&nbsp;</td>
+            <tr class="subject">
+            <td style="white-space: nowrap;"><strong>제목</strong>&nbsp;&nbsp;&nbsp;</td>
             <td>
             <select name="noticetype">
                 <option value="휴강">휴강</option>
@@ -257,7 +273,7 @@ td {
             </select>
             </td>
             <td>
-                <input type="date" name="when">
+                <input id="date" type="date" name="when" readonly>
             </td>
         </tr>
         <tr>
